@@ -32,6 +32,21 @@ def first_order_belief_accuracy(ep: Dict[str, Any]) -> Optional[float]:
     return _safe_mean(scores)
 
 
+def first_order_precision_coverage(ep: Dict[str, Any]) -> Dict[str, Optional[float]]:
+    if not ep.get("steps"):
+        return {"precision": None, "coverage": None}
+    truth = ep["steps"][-1].get("global_state_snapshot", {}).get("object_locations", {})
+    if not truth:
+        return {"precision": None, "coverage": None}
+    task_keys = {"red_key", "blue_key", "medical_kit", "victim"}
+    b = ep["steps"][-1].get("agent_first_order_belief", {}).get("known_object_locations", {})
+    asserted = {k: v for k, v in b.items() if k in task_keys}
+    correct = sum(1 for k, v in asserted.items() if truth.get(k) == v)
+    precision = (correct / len(asserted)) if asserted else None
+    coverage = (len(asserted) / len(task_keys)) if task_keys else None
+    return {"precision": precision, "coverage": coverage}
+
+
 def second_order_belief_accuracy(ep: Dict[str, Any]) -> Optional[float]:
     rec = ep.get("policy_records", {}).get("second_order_beliefs")
     if not rec:
@@ -41,11 +56,32 @@ def second_order_belief_accuracy(ep: Dict[str, Any]) -> Optional[float]:
     ok = 0
     for agent_data in rec.values():
         for other_data in agent_data.values():
-            for _, room in other_data.items():
+            for _, state_val in other_data.items():
+                state = state_val.get("state") if isinstance(state_val, dict) else "unknown"
+                val = state_val.get("value") if isinstance(state_val, dict) else None
+                if state == "unknown":
+                    continue
                 total += 1
-                if isinstance(room, str) and room.startswith("room_"):
+                if state == "knows" and isinstance(val, str) and val.startswith("room_"):
                     ok += 1
-    return (ok / total) if total else 0.0
+                if state == "does_not_know":
+                    ok += 1
+    return (ok / total) if total else None
+
+
+def second_order_coverage(ep: Dict[str, Any]) -> Optional[float]:
+    rec = ep.get("policy_records", {}).get("second_order_beliefs")
+    if not rec:
+        return None
+    total = 0
+    non_unknown = 0
+    for a in rec.values():
+        for o in a.values():
+            for v in o.values():
+                total += 1
+                if isinstance(v, dict) and v.get("state") != "unknown":
+                    non_unknown += 1
+    return (non_unknown / total) if total else None
 
 
 def aggregate_metrics(episodes: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
@@ -60,6 +96,8 @@ def aggregate_metrics(episodes: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
         msg_tokens = 0
         f1 = []
         f2 = []
+        f1p, f1c, f2c = [], [], []
+        comm_use = []
         for ep in eps:
             for st in ep.get("steps", []):
                 msg = st.get("message_sent")
@@ -67,6 +105,13 @@ def aggregate_metrics(episodes: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
                     msg_tokens += len(msg["text"].split())
             f1.append(first_order_belief_accuracy(ep))
             f2.append(second_order_belief_accuracy(ep))
+            pc = first_order_precision_coverage(ep)
+            f1p.append(pc["precision"])
+            f1c.append(pc["coverage"])
+            f2c.append(second_order_coverage(ep))
+            sent = ep.get("policy_records", {}).get("sent_message_cache_size")
+            useful = ep.get("policy_records", {}).get("useful_messages_estimate")
+            comm_use.append((useful / sent) if sent else 0.0)
 
         conflict_total = sum(ep.get("belief_conflict_count", 0) for ep in eps)
         resolved = sum(ep.get("resolved_belief_conflict_count", 0) for ep in eps)
@@ -84,6 +129,11 @@ def aggregate_metrics(episodes: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
                 "mean_message_tokens_approx": msg_tokens / len(eps),
                 "mean_first_order_belief_accuracy": _safe_mean(f1),
                 "mean_second_order_belief_accuracy": _safe_mean(f2),
+                "first_order_precision": _safe_mean(f1p),
+                "first_order_coverage": _safe_mean(f1c),
+                "second_order_precision": _safe_mean(f2),
+                "second_order_coverage": _safe_mean(f2c),
+                "communication_usefulness_proxy": _safe_mean(comm_use),
                 "belief_conflict_resolution_rate": (resolved / conflict_total) if conflict_total else 0.0,
             }
         )
