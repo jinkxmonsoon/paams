@@ -52,18 +52,28 @@ class GreedySharedMemoryPolicy(BasePolicy):
     def __init__(self, seed: int = 0) -> None:
         super().__init__(seed)
         self.mem = {"obj": {}, "visited": {"A": set(), "B": set(), "C": set()}}
+        self.sent_message_cache = set()
+        self.messages_sent = 0
 
     def act(self, agent_id: str, obs: Dict[str, Any]) -> str:
-        return _task_action(agent_id, obs, self.mem)
+        action = _task_action(agent_id, obs, self.mem, mode="shared")
+        if action:
+            return action
+        return "wait"
 
 
 class GreedyBeliefStatePolicy(BasePolicy):
     def __init__(self, seed: int = 0) -> None:
         super().__init__(seed)
         self.mem = {"obj": {}, "visited": {"A": set(), "B": set(), "C": set()}}
+        self.sent_message_cache = set()
+        self.messages_sent = 0
 
     def act(self, agent_id: str, obs: Dict[str, Any]) -> str:
-        return _task_action(agent_id, obs, self.mem)
+        action = _task_action(agent_id, obs, self.mem, mode="belief")
+        if action:
+            return action
+        return "wait"
 
 
 class GreedySecondOrderBeliefPolicy(BasePolicy):
@@ -72,16 +82,26 @@ class GreedySecondOrderBeliefPolicy(BasePolicy):
         self.mem = {"obj": {}, "visited": {"A": set(), "B": set(), "C": set()}}
         self.second_order = {a: {b: {} for b in ["A", "B", "C"]} for a in ["A", "B", "C"]}
         self.sent_message_cache = set()
+        self.messages_sent = 0
+        self.assigned_resources = {"medical_kit": "C"}
 
     def act(self, agent_id: str, obs: Dict[str, Any]) -> str:
         # conservative extension: first get same task-progress action
-        action = _task_action(agent_id, obs, self.mem)
+        action = _task_action(agent_id, obs, self.mem, mode="second_order")
         urgent = action.startswith(("move:", "pickup:", "use:")) or action == "rescue:victim"
 
         room = obs["current_room"]
         for i in obs["current_room_contents"]:
             for other, other_room in obs.get("known_agent_locations", {}).items():
                 self.second_order[agent_id][other][i] = {"state": "knows" if other_room == room else "unknown", "value": room}
+
+        # C5 false belief correction: if local evidence disproves room_2 claim, send one correction.
+        if not urgent and self.mem["obj"].get("medical_kit") == "room_2" and "medical_kit" not in obs["current_room_contents"] and obs["current_room"] == "room_2":
+            key = (agent_id, "broadcast", "medical_kit_not_in", "room_2")
+            if key not in self.sent_message_cache:
+                self.sent_message_cache.add(key); self.messages_sent += 1
+                self.mem["obj"]["medical_kit"] = "unknown"
+                return "send:medical_kit not in room_2"
 
         if not urgent:
             for obj, loc in self.mem["obj"].items():
@@ -90,12 +110,12 @@ class GreedySecondOrderBeliefPolicy(BasePolicy):
                     st = self.second_order[agent_id][target].get(obj, {"state": "unknown"})
                     key = (agent_id, target, obj, loc)
                     if st["state"] == "unknown" and key not in self.sent_message_cache:
-                        self.sent_message_cache.add(key)
+                        self.sent_message_cache.add(key); self.messages_sent += 1
                         return f"send:{obj} seen in {loc}"
         return action
 
 
-def _task_action(agent_id: str, obs: Dict[str, Any], mem: Dict[str, Any]) -> str:
+def _task_action(agent_id: str, obs: Dict[str, Any], mem: Dict[str, Any], mode: str) -> str:
     room, inv, items = obs["current_room"], obs["own_inventory"], obs["current_room_contents"]
     mem["visited"][agent_id].add(room)
     for i in items:

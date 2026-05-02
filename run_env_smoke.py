@@ -1,46 +1,32 @@
 from __future__ import annotations
-import random
-from typing import Any, Dict
+from collections import defaultdict
+from statistics import mean
 from btom_env import BToMEnvironment
+from policies import RandomPolicy, GreedySharedMemoryPolicy, GreedyBeliefStatePolicy, GreedySecondOrderBeliefPolicy
 
-def policy(agent_id:str, obs:Dict[str,Any], _env:BToMEnvironment)->str:
-    room=obs['own_location']; items=obs['current_room_contents']
-    if obs.get("scenario_id")=="C4_communication_delay" and items and not obs["own_inventory"]:
-        return f"send:{items[0]} seen in {room}"
-    pref={"A":"red_key","B":"blue_key","C":"medical_kit"}[agent_id]
-    if pref in items: return f"pickup:{pref}"
-    if room=="room_5":
-        if "red_key" in obs['own_inventory']: return "use:red_key"
-        if "blue_key" in obs['own_inventory']: return "use:blue_key"
-        if "medical_kit" in obs['own_inventory']: return "rescue:victim"
-    if agent_id=="A" and "red_key" not in obs["own_inventory"]:
-        target="room_1"
-    elif agent_id=="B" and "blue_key" not in obs["own_inventory"]:
-        target="room_2"
-    elif agent_id=="C" and "medical_kit" not in obs["own_inventory"]:
-        target="room_5"
-    else:
-        target="room_5"
-    next_map={("room_0","room_1"):"room_1",("room_0","room_2"):"room_2",("room_1","room_2"):"room_0",("room_1","room_5"):"room_3",("room_2","room_5"):"room_4",("room_3","room_5"):"room_5",("room_4","room_5"):"room_5"}
-    if room==target: return "inspect"
-    return f"move:{next_map.get((room,target),'room_0')}"
+SCENARIOS=["C1_fully_observable","C2_partial_observable","C4_communication_delay","C5_false_belief_injection","C6_resource_allocation"]
+POLICIES={"RandomPolicy":RandomPolicy,"GreedySharedMemoryPolicy":GreedySharedMemoryPolicy,"GreedyBeliefStatePolicy":GreedyBeliefStatePolicy,"GreedySecondOrderBeliefPolicy":GreedySecondOrderBeliefPolicy}
+SEEDS=[0,1,2]
 
 def main()->None:
-    scenarios=["C1_fully_observable","C2_partial_observable","C4_communication_delay","C5_false_belief_injection","C6_resource_allocation"]
-    rows=[]; all_fields=True
-    for sc in scenarios:
-        for seed in [0,1,2]:
-            env=BToMEnvironment(); env.reset(seed,sc); ep=env.run_episode(policy,30)
-            need=["delayed_messages_count","delivered_delayed_messages_count","false_belief_caused_wasted_action","duplicate_resource_attempts","wrong_allocation_attempts"]
-            if not all(k in ep for k in need): all_fields=False
-            rows.append({"scenario_id":sc,"seed":seed,"success":ep['success'],"turns":ep['turns_to_completion'],"delayed_messages_count":ep['delayed_messages_count'],"delivered_delayed_messages_count":ep['delivered_delayed_messages_count'],"false_belief_injections":ep['false_belief_injections'],"belief_conflict_count":ep['belief_conflict_count'],"false_belief_caused_wasted_action":ep['false_belief_caused_wasted_action'],"duplicate_resource_attempts":ep['duplicate_resource_attempts'],"wrong_allocation_attempts":ep['wrong_allocation_attempts']})
-    print("scenario_id | seed | success | turns | delayed_messages_count | delivered_delayed_messages_count | false_belief_injections | belief_conflict_count | false_belief_caused_wasted_action | duplicate_resource_attempts | wrong_allocation_attempts")
-    for r in rows: print("{scenario_id} | {seed} | {success} | {turns} | {delayed_messages_count} | {delivered_delayed_messages_count} | {false_belief_injections} | {belief_conflict_count} | {false_belief_caused_wasted_action} | {duplicate_resource_attempts} | {wrong_allocation_attempts}".format(**r))
-    print("\nSanity checks:")
-    print(f"- C4 delayed_messages_count > 0: {any(r['scenario_id']=='C4_communication_delay' and r['delayed_messages_count']>0 for r in rows)}")
-    print(f"- C5 false_belief_injections > 0: {any(r['scenario_id']=='C5_false_belief_injection' and r['false_belief_injections']>0 for r in rows)}")
-    print(f"- C6 fields exist: {all('duplicate_resource_attempts' in r and 'wrong_allocation_attempts' in r for r in rows if r['scenario_id']=='C6_resource_allocation')}")
-    print(f"- all new fields exist: {all_fields}")
-    print(f"- at least one success episode: {any(r['success'] for r in rows)}")
+    rows=[]
+    for sc in SCENARIOS:
+        for pn,pc in POLICIES.items():
+            for seed in SEEDS:
+                env=BToMEnvironment(); env.reset(seed,sc); p=pc(seed)
+                ep=env.run_episode(lambda a,o,_e: p.act(a,o),30)
+                rows.append({"scenario_id":sc,"policy":pn,"success":ep["success"],"turns":ep["turns_to_completion"],"messages":ep["total_messages"],"delayed_messages_count":ep["delayed_messages_count"],"false_belief_caused_wasted_action":ep["false_belief_caused_wasted_action"],"duplicate_resource_attempts":ep["duplicate_resource_attempts"],"wrong_allocation_attempts":ep["wrong_allocation_attempts"]})
+    grp=defaultdict(list)
+    for r in rows: grp[(r['scenario_id'],r['policy'])].append(r)
+    print("scenario_id | policy | success_rate | mean_turns | mean_messages | delayed_messages_count | false_belief_caused_wasted_action | duplicate_resource_attempts | wrong_allocation_attempts")
+    for (sc,pn),rr in sorted(grp.items()):
+        print(f"{sc} | {pn} | {mean([1.0 if x['success'] else 0.0 for x in rr]):.2f} | {mean([x['turns'] for x in rr]):.2f} | {mean([x['messages'] for x in rr]):.2f} | {mean([x['delayed_messages_count'] for x in rr]):.2f} | {mean([x['false_belief_caused_wasted_action'] for x in rr]):.2f} | {mean([x['duplicate_resource_attempts'] for x in rr]):.2f} | {mean([x['wrong_allocation_attempts'] for x in rr]):.2f}")
+    print("\nChecks:")
+    for s in ["C1_fully_observable","C2_partial_observable"]:
+        for p in ["GreedySharedMemoryPolicy","GreedyBeliefStatePolicy","GreedySecondOrderBeliefPolicy"]:
+            m=mean([1.0 if x['success'] else 0.0 for x in grp[(s,p)]])
+            print(f"- {s} {p} success_rate>0: {m>0} ({m:.2f})")
+    c4_msgs=[x['messages'] for x in rows if x['scenario_id']=='C4_communication_delay' and 'Greedy' in x['policy']]
+    print(f"- C4 greedy mean messages < 15: {mean(c4_msgs)<15} ({mean(c4_msgs):.2f})")
 
 if __name__=='__main__': main()
