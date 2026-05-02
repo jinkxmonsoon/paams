@@ -20,7 +20,7 @@
     "second_order_records_present": true,
     "anti_leakage_structural_check": true,
     "metrics_handle_nulls_without_crash": true,
-    "second_order_policy_success_in_some_scenario": false,
+    "second_order_policy_success_in_some_scenario": true,
     "second_order_mean_messages_below_20": true,
     "second_order_coverage_not_saturated": true,
     "second_order_precision_null_when_no_assertions": true,

@@ -69,17 +69,25 @@ class BToMEnvironment:
         self.agent_locations = {"A": "room_0", "B": "room_1", "C": "room_2"}
         self.agent_inventory = {a: [] for a in self.agents}
         self.room_contents = {room: [] for room in self.rooms_graph}
+        # Option 1 mission semantics: locked_box requires both keys; medical_kit is revealed only after box opens.
         self.object_locations = {
             "red_key": "room_1",
             "blue_key": "room_2",
             "locked_box": "room_5",
-            "medical_kit": "room_4",
+            "medical_kit": "inside_locked_box",
             "victim": "room_5",
         }
         for obj, room in self.object_locations.items():
-            self.room_contents[room].append(obj)
+            if room in self.room_contents:
+                self.room_contents[room].append(obj)
 
-        self.task_status = {"locked_box_open": False, "victim_rescued": False, "medical_kit_used": False}
+        self.task_status = {
+            "red_key_applied": False,
+            "blue_key_applied": False,
+            "locked_box_open": False,
+            "victim_rescued": False,
+            "medical_kit_used": False,
+        }
         self.pending_messages = {a: [] for a in self.agents}
         self.beliefs = {a: self._init_belief() for a in self.agents}
         self.trace_steps = []
@@ -221,7 +229,14 @@ class BToMEnvironment:
         elif action.startswith("pickup:"):
             obj = action.split(":", 1)[1]
             room = self.agent_locations[agent_id]
-            if obj in self.room_contents[room]:
+            role_owner = {"red_key": "A", "blue_key": "B", "medical_kit": "C"}
+            if obj in role_owner and role_owner[obj] != agent_id:
+                action_valid = False
+                result = f"role_restricted_pickup:{obj}:owner={role_owner[obj]}"
+            elif obj == "medical_kit" and not self.task_status["locked_box_open"]:
+                action_valid = False
+                result = "medical_kit_not_available_before_locked_box_open"
+            elif obj in self.room_contents[room]:
                 self.room_contents[room].remove(obj)
                 self.agent_inventory[agent_id].append(obj)
                 self.object_locations[obj] = f"inventory:{agent_id}"
@@ -231,12 +246,26 @@ class BToMEnvironment:
                 result = f"object_not_in_room:{obj}"
         elif action.startswith("use:"):
             obj = action.split(":", 1)[1]
-            if obj not in self.agent_inventory[agent_id]:
+            role_owner = {"red_key": "A", "blue_key": "B", "medical_kit": "C"}
+            if obj in role_owner and role_owner[obj] != agent_id:
+                action_valid = False
+                result = f"role_restricted_use:{obj}:owner={role_owner[obj]}"
+            elif obj not in self.agent_inventory[agent_id]:
                 action_valid = False
                 result = f"missing_in_inventory:{obj}"
-            elif obj == "red_key" and self.agent_locations[agent_id] == "room_5":
-                self.task_status["locked_box_open"] = True
-                result = "locked_box_opened"
+            elif obj in {"red_key", "blue_key"} and self.agent_locations[agent_id] == "room_5":
+                if self.task_status["locked_box_open"]:
+                    result = "no_effect_already_open"
+                else:
+                    self.task_status[f"{obj}_applied"] = True
+                    if self.task_status["red_key_applied"] and self.task_status["blue_key_applied"]:
+                        self.task_status["locked_box_open"] = True
+                        if self.object_locations["medical_kit"] == "inside_locked_box":
+                            self.object_locations["medical_kit"] = "room_5"
+                            self.room_contents["room_5"].append("medical_kit")
+                        result = "locked_box_opened"
+                    else:
+                        result = f"{obj}_applied"
             elif obj == "medical_kit" and self.agent_locations[agent_id] == "room_5":
                 self.task_status["medical_kit_used"] = True
                 self.agent_inventory[agent_id].remove("medical_kit")
@@ -248,10 +277,17 @@ class BToMEnvironment:
         elif action == "rescue:victim":
             room = self.agent_locations[agent_id]
             has_victim = "victim" in self.room_contents[room]
-            if room == "room_5" and has_victim and self.task_status["medical_kit_used"]:
+            has_kit = "medical_kit" in self.agent_inventory[agent_id]
+            if agent_id != "C":
+                action_valid = False
+                result = "role_restricted_rescue:owner=C"
+            elif room == "room_5" and has_victim and has_kit:
                 self.task_status["victim_rescued"] = True
+                self.task_status["medical_kit_used"] = True
                 self.room_contents[room].remove("victim")
                 self.object_locations["victim"] = "rescued"
+                self.agent_inventory[agent_id].remove("medical_kit")
+                self.object_locations["medical_kit"] = "used_on_victim_site"
                 self.success = True
                 self.done = True
                 result = "victim_rescued"
