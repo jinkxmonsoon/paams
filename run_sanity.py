@@ -30,6 +30,7 @@ REQUIRED_FIELDS = {
 
 def run_all() -> List[Dict[str, Any]]:
     episodes = []
+    by_key = {}
     for scenario in SCENARIOS:
         for variant_name, variant_cls in VARIANTS.items():
             for seed in SEEDS:
@@ -47,6 +48,24 @@ def run_all() -> List[Dict[str, Any]]:
                     "useful_messages_estimate": len(getattr(policy, "sent_message_cache", set())),
                 }
                 episodes.append(ep)
+                by_key[(scenario, seed, variant_name)] = ep
+    # Debug comparison prints for second-order failures.
+    for scenario in SCENARIOS:
+        for seed in SEEDS:
+            so = by_key.get((scenario, seed, "GreedySecondOrderBeliefPolicy"))
+            bs = by_key.get((scenario, seed, "GreedyBeliefStatePolicy"))
+            if so and not so.get("success"):
+                print(f"DEBUG FAIL SO | scenario={scenario} seed={seed}")
+                for st in so.get("steps", [])[-8:]:
+                    print(f"  s{st['step_idx']} {st['agent_id']} {st['action']} valid={st['action_valid']} result={st['action_result']}")
+                snap = so["steps"][-1]["global_state_snapshot"] if so.get("steps") else {}
+                print(f"  final task_status={snap.get('task_status')}")
+                print(f"  final agent_locations={snap.get('agent_locations')}")
+                print(f"  final inventories={snap.get('inventories')}")
+                print(f"  SO known_object_locations={so.get('policy_records',{}).get('second_order_beliefs',{})}")
+                if bs:
+                    bss = bs['steps'][-1]['global_state_snapshot'] if bs.get('steps') else {}
+                    print(f"  COMPARE BS success={bs.get('success')} task_status={bss.get('task_status')}")
     return episodes
 
 
