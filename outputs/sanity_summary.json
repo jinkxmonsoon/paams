@@ -1,0 +1,35 @@
+{
+  "total_episodes": 60,
+  "expected_episodes": 60,
+  "scenarios": [
+    "C1_fully_observable",
+    "C2_partial_observable",
+    "C5_false_belief_injection"
+  ],
+  "variants": [
+    "RandomPolicy",
+    "GreedySharedMemoryPolicy",
+    "GreedyBeliefStatePolicy",
+    "GreedySecondOrderBeliefPolicy"
+  ],
+  "sanity_checks": {
+    "expected_60_episodes_completed": true,
+    "all_jsonl_lines_parse": true,
+    "all_required_episode_fields_exist": true,
+    "c5_has_false_belief_injections": true,
+    "second_order_records_present": true,
+    "anti_leakage_structural_check": true,
+    "metrics_handle_nulls_without_crash": true
+  },
+  "limitations": [
+    "resolved_belief_conflict_count is not implemented; conflict resolution metric defaults to 0.",
+    "second-order accuracy is a symbolic proxy based on policy records."
+  ],
+  "metric_definitions_short": {
+    "task_success_rate": "mean(success)",
+    "invalid_action_rate": "total_invalid_actions / total_steps",
+    "mean_message_tokens_approx": "whitespace token count over sent messages",
+    "first_order_belief_accuracy": "final known first-order facts vs final truth; unknown not penalized",
+    "second_order_belief_accuracy": "symbolic comparison/proxy over second-order records"
+  }
+}

@@ -1,0 +1,13 @@
+scenario_id,variant,N,task_success_rate,mean_normalized_team_score,mean_turns_to_completion,invalid_action_rate,mean_messages_per_episode,mean_message_tokens_approx,mean_first_order_belief_accuracy,mean_second_order_belief_accuracy,belief_conflict_resolution_rate
+C1_fully_observable,RandomPolicy,5,0.0,0.0,30,0.6933333333333334,0,0.0,1.0,,0.0
+C1_fully_observable,GreedySharedMemoryPolicy,5,0.4,0.4,26.4,0.45454545454545453,0,0.0,0.92,,0.0
+C1_fully_observable,GreedyBeliefStatePolicy,5,0.8,0.8,23.6,0.3983050847457627,0,0.0,0.7733333333333333,,0.0
+C1_fully_observable,GreedySecondOrderBeliefPolicy,5,0.0,0.0,30,0.04666666666666667,26,104.0,1.0,1.0,0.0
+C2_partial_observable,RandomPolicy,5,0.0,0.0,30,0.6933333333333334,0,0.0,0.6,,0.0
+C2_partial_observable,GreedySharedMemoryPolicy,5,0.4,0.4,26.4,0.45454545454545453,0,0.0,0.16111111111111112,,0.0
+C2_partial_observable,GreedyBeliefStatePolicy,5,0.8,0.8,23.6,0.3983050847457627,0,0.0,0.14722222222222223,,0.0
+C2_partial_observable,GreedySecondOrderBeliefPolicy,5,0.0,0.0,30,0.04666666666666667,26,104.0,0.0,1.0,0.0
+C5_false_belief_injection,RandomPolicy,5,0.0,0.0,30,0.6933333333333334,0,0.0,0.45,,0.0
+C5_false_belief_injection,GreedySharedMemoryPolicy,5,0.4,0.4,26.4,0.45454545454545453,0,0.0,0.13055555555555554,,0.0
+C5_false_belief_injection,GreedyBeliefStatePolicy,5,0.8,0.8,23.6,0.3983050847457627,0,0.0,0.11944444444444444,,0.0
+C5_false_belief_injection,GreedySecondOrderBeliefPolicy,5,0.0,0.0,30,0.04666666666666667,26,104.0,0.0,1.0,0.0
