@@ -22,6 +22,7 @@ class Observation:
     visible_items: List[str]
     inventory: List[str]
     task_status: Dict[str, bool]
+    beliefs: Dict[str, str]
 
 
 @dataclass
@@ -39,6 +40,9 @@ class EpisodeSummary:
     success: bool
     turns: int
     invalid_actions: int
+    false_belief_injections: int
+    belief_conflict_count: int
+    false_belief_caused_wasted_action: int
     task_status: Dict[str, bool]
     agent_locations: Dict[str, str]
     inventories: Dict[str, List[str]]

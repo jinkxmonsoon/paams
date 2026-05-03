@@ -10,6 +10,7 @@ Action = Tuple[str, str]
 
 class DeterministicBaselinePolicy:
     def act(self, env: BTomEnvV2, agent: str, t: int) -> Action:
+        obs = env.get_observation(agent)
         s = env.state
 
         if agent == "A":
@@ -30,10 +31,15 @@ class DeterministicBaselinePolicy:
                 return ("open_box", "locked_box")
             return ("move", s.locations["B"])
 
-        if not s.task_status["medical_kit_revealed"]:
-            return ("move", s.locations["C"])
+        believed_loc = obs.beliefs.get("medical_kit_location", "unknown")
         if "medical_kit" not in s.inventories["C"]:
-            return ("move", "med_room") if s.locations["C"] != "med_room" else ("pickup", "medical_kit")
+            if believed_loc == "decoy_room" and not s.task_status["medical_kit_revealed"]:
+                return ("move", "decoy_room")
+            if "medical_kit" in obs.visible_items:
+                return ("move", "box_room") if s.locations["C"] != "box_room" else ("pickup", "medical_kit")
+            if s.task_status["medical_kit_revealed"]:
+                return ("move", "box_room") if s.locations["C"] != "box_room" else ("pickup", "medical_kit")
+            return ("move", s.locations["C"])
         if s.locations["C"] != "victim_room":
             return ("move", "victim_room")
         if not s.task_status["victim_rescued"]:
