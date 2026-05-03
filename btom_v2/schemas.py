@@ -23,6 +23,7 @@ class Observation:
     inventory: List[str]
     task_status: Dict[str, bool]
     beliefs: Dict[str, str]
+    delivered_messages: List[Dict[str, object]]
 
 
 @dataclass
@@ -50,6 +51,9 @@ class EpisodeSummary:
     time_to_medical_kit_revealed: Optional[int]
     time_to_medical_kit_acquired: Optional[int]
     time_to_rescue: Optional[int]
+    delayed_messages_count: int
+    delivered_delayed_messages_count: int
+    pending_messages_final_count: int
     task_status: Dict[str, bool]
     agent_locations: Dict[str, str]
     inventories: Dict[str, List[str]]

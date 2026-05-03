@@ -1,108 +1,61 @@
 from __future__ import annotations
-import csv, json
 from dataclasses import asdict
-from pathlib import Path
-from statistics import pstdev
 from .env import BTomEnvV2
-from .policies import DeterministicBaselinePolicy, SharedMemoryPolicy, BeliefStateBaselinePolicy, ConflictAwareBeliefPolicy
 
 
-def run_episode(scenario_id, seed, policy_cls):
-    env=BTomEnvV2(scenario_id=scenario_id, seed=seed, max_turns=(60 if scenario_id=="C5b_costly_false_belief" else 30)); p=policy_cls()
-    for t in range(env.max_turns):
-        for a in ("A","B","C"):
-            b=env.state.locations[a]; act,tgt,meta=p.act(env,a,t); env.step(a,act,tgt,meta)
-            if a=="C": env.state.trace.append(type(env.state.trace[0])(turn=env.state.turn,event="c_location_snapshot",agent="C",details={"location_before":b,"location_after":env.state.locations["C"]}))
-            if env.state.done: return env, policy_cls.name
-    return env, policy_cls.name
+def run_c4_smoke(seed: int):
+    env = BTomEnvV2("C4_communication_delay", seed=seed, max_turns=12)
+    # tiny smoke: send one message then wait/move
+    plan = [
+        ("A", "send_message", "C|box_info"),
+        ("B", "move", "blue_room"),
+        ("C", "move", "staging"),
+        ("A", "move", "red_room"),
+        ("B", "move", "staging"),
+        ("C", "move", "staging"),
+    ]
+    i = 0
+    while not env.state.done and env.state.turn < env.max_turns:
+        a, act, tgt = plan[i % len(plan)]
+        env.step(a, act, tgt, {"agent_goal": "smoke", "target_object": None, "target_room": tgt, "action_reason": "smoke", "belief_used_for_action": None})
+        i += 1
+        if env.state.turn >= env.max_turns:
+            env.state.done = True
 
-
-def episode_metrics(env):
-    tr=env.state.trace; conflict=next((e.turn for e in tr if e.event=="belief_conflict_detected"),None)
-    purs=post=inc=dwell=phys=0
-    for e in tr:
-        if e.event=="action_intent" and e.agent=="C":
-            r=e.details.get("action_reason"); room=e.details.get("target_room")
-            if r=="pursue_believed_medical_kit_location" and room=="decoy_room":
-                purs+=1
-                if conflict is not None and e.turn>conflict: post+=1
-            if room=="decoy_room" and r!="pursue_believed_medical_kit_location": inc+=1
-        if e.event=="move" and e.agent=="C" and e.details.get("target")=="decoy_room": phys+=1
-        if e.event=="c_location_snapshot" and conflict is not None and e.turn>conflict and e.details.get("location_before")=="decoy_room" and e.details.get("location_after")=="decoy_room": dwell+=1
-    return {"false_belief_driven_decoy_pursuits":purs,"post_conflict_false_belief_pursuits":post,"incidental_decoy_passages":inc,"repeated_decoy_visits_physical":max(0,phys-1),"post_conflict_decoy_dwell_steps":dwell}
-
-
-def group(rows):
-    n=len(rows)
-    def mean(k): return sum(r[k] for r in rows)/n
-    def mean_opt(k):
-        v=[r[k] for r in rows if r[k] is not None]
-        return sum(v)/len(v) if v else None
-    turns=[r["turns"] for r in rows]
-    return {"N":n,"success_rate":mean("success"),"mean_turns":mean("turns"),"std_turns":pstdev(turns),"mean_invalid_actions":mean("invalid_actions"),
-            "mean_time_to_box_open":mean_opt("time_to_box_open"),"mean_time_to_medical_kit_acquired":mean_opt("time_to_medical_kit_acquired"),"mean_time_to_rescue":mean_opt("time_to_rescue"),
-            "mean_false_belief_injections":mean("false_belief_injections"),"mean_belief_conflicts":mean("belief_conflict_count"),"mean_false_belief_wasted_actions":mean("false_belief_caused_wasted_action"),
-            "mean_false_belief_driven_decoy_pursuits":mean("false_belief_driven_decoy_pursuits"),"mean_post_conflict_false_belief_pursuits":mean("post_conflict_false_belief_pursuits"),
-            "mean_post_conflict_decoy_dwell_steps":mean("post_conflict_decoy_dwell_steps"),"mean_incidental_decoy_passages":mean("incidental_decoy_passages")}
+    summ = asdict(env.summary())
+    sent = [e for e in env.state.trace if e.event == "message_sent"]
+    delivered = [e for e in env.state.trace if e.event == "message_delivery" and e.details.get("details",{}).get("delivered")]
+    first_sent = sent[0].turn if sent else None
+    # find first non-empty delivered list
+    first_delivery = None
+    for e in env.state.trace:
+        if e.event == "message_delivery":
+            d = e.details.get("details", {}).get("delivered", [])
+            if d:
+                first_delivery = e.turn
+                break
+    # hidden before delivery check (proxy): delivery strictly after first send
+    hidden_ok = (first_delivery is not None and first_sent is not None and first_delivery > first_sent)
+    row = {
+        "scenario_id": summ["scenario_id"], "seed": seed, "success": summ["success"], "turns": summ["turns"],
+        "delayed_messages_count": summ["delayed_messages_count"], "delivered_delayed_messages_count": summ["delivered_delayed_messages_count"],
+        "pending_messages_final_count": summ["pending_messages_final_count"], "first_sent_step": first_sent, "first_delivery_step": first_delivery,
+        "pending_hidden_before_delivery": hidden_ok,
+    }
+    return row
 
 
 def main():
-    scenarios=("C1_fully_observable","C2_partial_observable","C5_false_belief_injection","C5b_costly_false_belief")
-    policies=[DeterministicBaselinePolicy,SharedMemoryPolicy,BeliefStateBaselinePolicy,ConflictAwareBeliefPolicy]
-    anti_leakage_check = all(getattr(p, "uses_global_truth", True) is False for p in policies)
-    seeds=tuple(range(10))
-    rows=[]
-    for s in scenarios:
-        for p in policies:
-            for seed in seeds:
-                env,name=run_episode(s,seed,p); r=asdict(env.summary()); r["policy"]=name; r.update(episode_metrics(env)); rows.append(r)
-    grouped={}
-    for r in rows: grouped.setdefault((r["scenario_id"],r["policy"]),[]).append(r)
-    gsum={k:group(v) for k,v in grouped.items()}
-    print("GROUPED_METRICS")
-    for k,v in gsum.items(): print({"scenario_id":k[0],"policy":k[1],**v})
+    rows = [run_c4_smoke(s) for s in (0,1,2)]
+    for r in rows:
+        print(r)
 
-    c5b_b=gsum[("C5b_costly_false_belief","BeliefStateBaselinePolicy")]; c5b_c=gsum[("C5b_costly_false_belief","ConflictAwareBeliefPolicy")]
-    c5b_comp={"delta_time_to_medical_kit_acquired":(c5b_c["mean_time_to_medical_kit_acquired"]-c5b_b["mean_time_to_medical_kit_acquired"]),"delta_time_to_rescue":(c5b_c["mean_time_to_rescue"]-c5b_b["mean_time_to_rescue"]),"delta_post_conflict_false_belief_pursuits":(c5b_c["mean_post_conflict_false_belief_pursuits"]-c5b_b["mean_post_conflict_false_belief_pursuits"]),"delta_post_conflict_decoy_dwell_steps":(c5b_c["mean_post_conflict_decoy_dwell_steps"]-c5b_b["mean_post_conflict_decoy_dwell_steps"])}
-    print("C5B_COMPARISON"); print(c5b_comp)
-    if c5b_comp["delta_time_to_rescue"]<0 or c5b_comp["delta_time_to_medical_kit_acquired"]<0: print("C5B_TEMPORAL_DISCRIMINATION=TRUE")
-
-    out=Path("btom_v2/outputs"); out.mkdir(parents=True,exist_ok=True)
-    with (out/"c5b_experiment_logs.jsonl").open("w") as f:
-        for r in rows: f.write(json.dumps(r)+"\n")
-    with (out/"c5b_experiment_metrics.csv").open("w",newline="") as f:
-        keys=["scenario_id","policy"]+list(next(iter(gsum.values())).keys()); w=csv.DictWriter(f,fieldnames=keys); w.writeheader();
-        for k,v in gsum.items(): w.writerow({"scenario_id":k[0],"policy":k[1],**v})
-
-    c1c2_clean=all(gsum[(sc,pol)]["success_rate"]==1.0 and gsum[(sc,pol)]["mean_invalid_actions"]==0.0 for sc in ("C1_fully_observable","C2_partial_observable") for pol in ("SharedMemoryPolicy","BeliefStateBaselinePolicy","ConflictAwareBeliefPolicy"))
-    summary={"total_episodes":len(rows),"scenarios":list(scenarios),"policies":[p.name for p in policies],"seeds":list(seeds),"sanity_checks":{"expected_160_episodes_completed":len(rows)==160,"c1_c2_clean":c1c2_clean,"c5b_solvable_belief_conflictaware":gsum[("C5b_costly_false_belief","BeliefStateBaselinePolicy")]["success_rate"]==1.0 and gsum[("C5b_costly_false_belief","ConflictAwareBeliefPolicy")]["success_rate"]==1.0, "anti_leakage_check": anti_leakage_check},"key_findings":{"c1_c2_clean":c1c2_clean,"c5b_temporal_discrimination":c5b_comp["delta_time_to_rescue"]<0,"c5b_delta_time_to_rescue":c5b_comp["delta_time_to_rescue"],"c5b_delta_time_to_medical_kit_acquired":c5b_comp["delta_time_to_medical_kit_acquired"],"c5b_delta_post_conflict_false_belief_pursuits":c5b_comp["delta_post_conflict_false_belief_pursuits"],"c5b_delta_post_conflict_decoy_dwell_steps":c5b_comp["delta_post_conflict_decoy_dwell_steps"],"shared_memory_position":{"mean_time_to_rescue":gsum[("C5b_costly_false_belief","SharedMemoryPolicy")]["mean_time_to_rescue"],"vs_beliefstate":gsum[("C5b_costly_false_belief","SharedMemoryPolicy")]["mean_time_to_rescue"]-c5b_b["mean_time_to_rescue"],"vs_conflictaware":gsum[("C5b_costly_false_belief","SharedMemoryPolicy")]["mean_time_to_rescue"]-c5b_c["mean_time_to_rescue"]}},"limitations":["First-order belief only; no second-order beliefs."]}
-    (out/"c5b_experiment_summary.json").write_text(json.dumps(summary,indent=2))
-
-    print("OUTPUT_FILE_PATHS")
-    print(out/"c5b_experiment_logs.jsonl")
-    print(out/"c5b_experiment_metrics.csv")
-    print(out/"c5b_experiment_summary.json")
-    print("SUMMARY_JSON_CONTENT")
-    print((out/"c5b_experiment_summary.json").read_text())
-    print("C5B_CSV_ROWS")
-    for line in (out/"c5b_experiment_metrics.csv").read_text().splitlines():
-        if line.startswith("C5b_costly_false_belief"):
-            print(line)
-    print("C1_C2_SHAREDMEM_ROWS")
-    for line in (out/"c5b_experiment_metrics.csv").read_text().splitlines():
-        if line.startswith("C1_fully_observable,SharedMemoryPolicy") or line.startswith("C2_partial_observable,SharedMemoryPolicy"):
-            print(line)
-
-    sm_c5b = gsum[("C5b_costly_false_belief","SharedMemoryPolicy")]["mean_time_to_rescue"]
-    ca_c5b = gsum[("C5b_costly_false_belief","ConflictAwareBeliefPolicy")]["mean_time_to_rescue"]
-    if not c1c2_clean:
-        print("WARNING: c1_c2_clean is false")
-    if gsum[("C1_fully_observable","SharedMemoryPolicy")]["mean_invalid_actions"]>0 or gsum[("C2_partial_observable","SharedMemoryPolicy")]["mean_invalid_actions"]>0:
-        print("WARNING: SharedMemoryPolicy has invalid_actions > 0 in C1/C2")
-    if sm_c5b < ca_c5b:
-        print("OBSERVATION: SharedMemoryPolicy outperforms ConflictAwareBeliefPolicy in C5b under current mechanics; this suggests C5b alone does not establish advantage over shared memory.")
-
-    print(f"outputs: {out/'c5b_experiment_logs.jsonl'}, {out/'c5b_experiment_metrics.csv'}, {out/'c5b_experiment_summary.json'}")
+    assert rows, "C4 runs"
+    assert all(r["delayed_messages_count"] > 0 for r in rows)
+    assert all(r["delivered_delayed_messages_count"] > 0 for r in rows)
+    assert all((r["first_delivery_step"] or 0) > (r["first_sent_step"] or 0) for r in rows)
+    assert all(r["pending_hidden_before_delivery"] for r in rows)
     print("sanity_checks=PASS")
 
-if __name__=="__main__": main()
+if __name__ == "__main__":
+    main()

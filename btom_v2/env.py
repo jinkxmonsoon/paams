@@ -36,11 +36,15 @@ class WorldState:
 
     task_status: Dict[str, bool]
     trace: List[Event]
+    delayed_queue: List[dict]
+    inboxes: Dict[str, List[dict]]
+    delayed_messages_count: int
+    delivered_delayed_messages_count: int
 
 
 class BTomEnvV2:
     def __init__(self, scenario_id: str, seed: int, max_turns: int = 30) -> None:
-        if scenario_id not in {"C1_fully_observable", "C2_partial_observable", "C5_false_belief_injection", "C5b_costly_false_belief"}:
+        if scenario_id not in {"C1_fully_observable", "C2_partial_observable", "C4_communication_delay", "C5_false_belief_injection", "C5b_costly_false_belief"}:
             raise ValueError(f"unsupported scenario: {scenario_id}")
         self.scenario_id = scenario_id
         self.seed = seed
@@ -81,6 +85,10 @@ class BTomEnvV2:
                 "victim_rescued": False,
             },
             trace=[],
+            delayed_queue=[],
+            inboxes={a: [] for a in AGENTS},
+            delayed_messages_count=0,
+            delivered_delayed_messages_count=0,
         )
         if self.scenario_id in {"C5_false_belief_injection", "C5b_costly_false_belief"}:
             s.beliefs["C"]["medical_kit_location"] = "decoy_room"
@@ -93,7 +101,7 @@ class BTomEnvV2:
         loc = s.locations[agent]
         visible = sorted({item for v in s.room_items.values() for item in v}) if self.scenario_id == "C1_fully_observable" else list(s.room_items[loc])
         self._update_belief_from_observation(agent, loc, visible)
-        return Observation(agent=agent, location=loc, visible_items=visible, inventory=list(s.inventories[agent]), task_status=dict(s.task_status), beliefs=dict(s.beliefs[agent]))
+        return Observation(agent=agent, location=loc, visible_items=visible, inventory=list(s.inventories[agent]), task_status=dict(s.task_status), beliefs=dict(s.beliefs[agent]), delivered_messages=list(s.inboxes[agent]))
 
     def _update_belief_from_observation(self, agent: str, loc: str, visible: List[str]) -> None:
         s = self.state
@@ -153,11 +161,27 @@ class BTomEnvV2:
     def _record(self, event: str, agent: str | None = None, **details: object) -> None:
         self.state.trace.append(Event(turn=self.state.turn, event=event, agent=agent, details=details))
 
+
+    def _deliver_messages(self) -> None:
+        s = self.state
+        delivered = []
+        still = []
+        for m in s.delayed_queue:
+            if s.turn >= m["delivery_step"]:
+                s.inboxes[m["to"]].append(m)
+                delivered.append(m)
+                s.delivered_delayed_messages_count += 1
+            else:
+                still.append(m)
+        s.delayed_queue = still
+        self._record("message_delivery", details={"delivered": delivered, "pending": len(still)})
+
     def step(self, agent: str, action: str, target: str, intent: dict | None = None) -> StepResult:
         s = self.state
         if s.done:
             return StepResult(False, True, True, "episode_done")
         s.turn += 1
+        self._deliver_messages()
         if intent is not None:
             self._record("action_intent", agent, **intent)
         invalid, reason = False, None
@@ -175,6 +199,8 @@ class BTomEnvV2:
             invalid, reason = self._open_box(agent)
         elif action == "rescue":
             invalid, reason = self._rescue(agent)
+        elif action == "send_message":
+            invalid, reason = self._send_message(agent, target)
         else:
             invalid, reason = True, "unknown_action"
         self._record("action_result", agent, action=action, target=target, action_valid=(not invalid), reason=reason,
@@ -260,6 +286,22 @@ class BTomEnvV2:
         self._record("victim_rescued", agent)
         return False, None
 
+
+    def _send_message(self, agent: str, target: str) -> Tuple[bool, str | None]:
+        s = self.state
+        try:
+            to, content = target.split("|", 1)
+        except ValueError:
+            return True, "bad_message_format"
+        if to not in AGENTS:
+            return True, "bad_recipient"
+        delay = 1 + ((s.seed + s.turn) % 2)
+        msg = {"from": agent, "to": to, "content": content, "sent_step": s.turn, "delivery_step": s.turn + delay}
+        s.delayed_queue.append(msg)
+        s.delayed_messages_count += 1
+        self._record("message_sent", agent, **msg)
+        return False, None
+
     def summary(self) -> EpisodeSummary:
         s = self.state
         return EpisodeSummary(
@@ -273,5 +315,8 @@ class BTomEnvV2:
             time_to_medical_kit_revealed=s.time_to_medical_kit_revealed,
             time_to_medical_kit_acquired=s.time_to_medical_kit_acquired,
             time_to_rescue=s.time_to_rescue,
+            delayed_messages_count=s.delayed_messages_count,
+            delivered_delayed_messages_count=s.delivered_delayed_messages_count,
+            pending_messages_final_count=len(s.delayed_queue),
             task_status=dict(s.task_status), agent_locations=dict(s.locations), inventories={k: list(v) for k, v in s.inventories.items()},
         )
