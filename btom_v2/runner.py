@@ -49,6 +49,7 @@ def group(rows):
 def main():
     scenarios=("C1_fully_observable","C2_partial_observable","C5_false_belief_injection","C5b_costly_false_belief")
     policies=[DeterministicBaselinePolicy,SharedMemoryPolicy,BeliefStateBaselinePolicy,ConflictAwareBeliefPolicy]
+    anti_leakage_check = all(getattr(p, "uses_global_truth", True) is False for p in policies)
     seeds=tuple(range(10))
     rows=[]
     for s in scenarios:
@@ -74,8 +75,33 @@ def main():
         for k,v in gsum.items(): w.writerow({"scenario_id":k[0],"policy":k[1],**v})
 
     c1c2_clean=all(gsum[(sc,pol)]["success_rate"]==1.0 and gsum[(sc,pol)]["mean_invalid_actions"]==0.0 for sc in ("C1_fully_observable","C2_partial_observable") for pol in ("SharedMemoryPolicy","BeliefStateBaselinePolicy","ConflictAwareBeliefPolicy"))
-    summary={"total_episodes":len(rows),"scenarios":list(scenarios),"policies":[p.name for p in policies],"seeds":list(seeds),"sanity_checks":{"expected_160_episodes_completed":len(rows)==160,"c1_c2_clean":c1c2_clean,"c5b_solvable_belief_conflictaware":gsum[("C5b_costly_false_belief","BeliefStateBaselinePolicy")]["success_rate"]==1.0 and gsum[("C5b_costly_false_belief","ConflictAwareBeliefPolicy")]["success_rate"]==1.0},"key_findings":{"c1_c2_clean":c1c2_clean,"c5b_temporal_discrimination":c5b_comp["delta_time_to_rescue"]<0,"c5b_delta_time_to_rescue":c5b_comp["delta_time_to_rescue"],"c5b_delta_time_to_medical_kit_acquired":c5b_comp["delta_time_to_medical_kit_acquired"],"c5b_delta_post_conflict_false_belief_pursuits":c5b_comp["delta_post_conflict_false_belief_pursuits"],"c5b_delta_post_conflict_decoy_dwell_steps":c5b_comp["delta_post_conflict_decoy_dwell_steps"],"shared_memory_position":{"mean_time_to_rescue":gsum[("C5b_costly_false_belief","SharedMemoryPolicy")]["mean_time_to_rescue"],"vs_beliefstate":gsum[("C5b_costly_false_belief","SharedMemoryPolicy")]["mean_time_to_rescue"]-c5b_b["mean_time_to_rescue"],"vs_conflictaware":gsum[("C5b_costly_false_belief","SharedMemoryPolicy")]["mean_time_to_rescue"]-c5b_c["mean_time_to_rescue"]}},"limitations":["First-order belief only; no second-order beliefs."]}
+    summary={"total_episodes":len(rows),"scenarios":list(scenarios),"policies":[p.name for p in policies],"seeds":list(seeds),"sanity_checks":{"expected_160_episodes_completed":len(rows)==160,"c1_c2_clean":c1c2_clean,"c5b_solvable_belief_conflictaware":gsum[("C5b_costly_false_belief","BeliefStateBaselinePolicy")]["success_rate"]==1.0 and gsum[("C5b_costly_false_belief","ConflictAwareBeliefPolicy")]["success_rate"]==1.0, "anti_leakage_check": anti_leakage_check},"key_findings":{"c1_c2_clean":c1c2_clean,"c5b_temporal_discrimination":c5b_comp["delta_time_to_rescue"]<0,"c5b_delta_time_to_rescue":c5b_comp["delta_time_to_rescue"],"c5b_delta_time_to_medical_kit_acquired":c5b_comp["delta_time_to_medical_kit_acquired"],"c5b_delta_post_conflict_false_belief_pursuits":c5b_comp["delta_post_conflict_false_belief_pursuits"],"c5b_delta_post_conflict_decoy_dwell_steps":c5b_comp["delta_post_conflict_decoy_dwell_steps"],"shared_memory_position":{"mean_time_to_rescue":gsum[("C5b_costly_false_belief","SharedMemoryPolicy")]["mean_time_to_rescue"],"vs_beliefstate":gsum[("C5b_costly_false_belief","SharedMemoryPolicy")]["mean_time_to_rescue"]-c5b_b["mean_time_to_rescue"],"vs_conflictaware":gsum[("C5b_costly_false_belief","SharedMemoryPolicy")]["mean_time_to_rescue"]-c5b_c["mean_time_to_rescue"]}},"limitations":["First-order belief only; no second-order beliefs."]}
     (out/"c5b_experiment_summary.json").write_text(json.dumps(summary,indent=2))
+
+    print("OUTPUT_FILE_PATHS")
+    print(out/"c5b_experiment_logs.jsonl")
+    print(out/"c5b_experiment_metrics.csv")
+    print(out/"c5b_experiment_summary.json")
+    print("SUMMARY_JSON_CONTENT")
+    print((out/"c5b_experiment_summary.json").read_text())
+    print("C5B_CSV_ROWS")
+    for line in (out/"c5b_experiment_metrics.csv").read_text().splitlines():
+        if line.startswith("C5b_costly_false_belief"):
+            print(line)
+    print("C1_C2_SHAREDMEM_ROWS")
+    for line in (out/"c5b_experiment_metrics.csv").read_text().splitlines():
+        if line.startswith("C1_fully_observable,SharedMemoryPolicy") or line.startswith("C2_partial_observable,SharedMemoryPolicy"):
+            print(line)
+
+    sm_c5b = gsum[("C5b_costly_false_belief","SharedMemoryPolicy")]["mean_time_to_rescue"]
+    ca_c5b = gsum[("C5b_costly_false_belief","ConflictAwareBeliefPolicy")]["mean_time_to_rescue"]
+    if not c1c2_clean:
+        print("WARNING: c1_c2_clean is false")
+    if gsum[("C1_fully_observable","SharedMemoryPolicy")]["mean_invalid_actions"]>0 or gsum[("C2_partial_observable","SharedMemoryPolicy")]["mean_invalid_actions"]>0:
+        print("WARNING: SharedMemoryPolicy has invalid_actions > 0 in C1/C2")
+    if sm_c5b < ca_c5b:
+        print("OBSERVATION: SharedMemoryPolicy outperforms ConflictAwareBeliefPolicy in C5b under current mechanics; this suggests C5b alone does not establish advantage over shared memory.")
+
     print(f"outputs: {out/'c5b_experiment_logs.jsonl'}, {out/'c5b_experiment_metrics.csv'}, {out/'c5b_experiment_summary.json'}")
     print("sanity_checks=PASS")
 

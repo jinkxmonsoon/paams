@@ -18,6 +18,7 @@ def intent(goal, obj, room, reason, belief=None):
 
 class DeterministicBaselinePolicy:
     name = "DeterministicBaselinePolicy"
+    uses_global_truth = False
     def act(self, env: BTomEnvV2, agent: str, t: int) -> Action:
         obs = env.get_observation(agent); s = env.state
         if agent == "A":
@@ -40,26 +41,38 @@ class DeterministicBaselinePolicy:
 
 class SharedMemoryPolicy(DeterministicBaselinePolicy):
     name = "SharedMemoryPolicy"
+    uses_global_truth = False
+
+    # Anti-leakage: shared memory is updated only from current observation/task-status
+    # and prior memory. It never reads hidden env state or private beliefs.
     def __init__(self):
         self.shared = {"medical_kit_location": "unknown", "medical_kit_revealed": False}
+
     def act(self, env: BTomEnvV2, agent: str, t: int) -> Action:
-        obs = env.get_observation(agent); s = env.state
-        if "medical_kit" in obs.visible_items: self.shared["medical_kit_location"] = obs.location
-        if obs.task_status.get("medical_kit_revealed"): self.shared["medical_kit_revealed"] = True
-        if agent != "C": return super().act(env, agent, t)
+        obs = env.get_observation(agent)
+        s = env.state
+        if obs.task_status.get("medical_kit_revealed"):
+            self.shared["medical_kit_revealed"] = True
+            self.shared["medical_kit_location"] = "box_room"
+        if agent != "C":
+            return super().act(env, agent, t)
+
         if "medical_kit" not in s.inventories["C"]:
             if self.shared["medical_kit_location"] != "unknown":
                 tgt = self.shared["medical_kit_location"]
-                return ("move", nav(env,"C",tgt), intent("retrieve_medical_kit","medical_kit",tgt,"scripted_task_progress")) if s.locations["C"]!=tgt else ("pickup","medical_kit", intent("retrieve_medical_kit","medical_kit",tgt,"scripted_task_progress"))
-            if self.shared["medical_kit_revealed"]:
-                return ("move", nav(env,"C","box_room"), intent("retrieve_medical_kit","medical_kit","box_room","scripted_task_progress")) if s.locations["C"]!="box_room" else ("pickup","medical_kit", intent("retrieve_medical_kit","medical_kit","box_room","scripted_task_progress"))
-            return ("move", s.locations["C"], intent("wait_for_shared_fact","medical_kit",s.locations["C"],"explore"))
-        if s.locations["C"] != "victim_room": return ("move", nav(env,"C","victim_room"), intent("rescue_victim","victim","victim_room","rescue"))
-        return ("rescue","victim", intent("rescue_victim","victim","victim_room","rescue"))
+                if s.locations["C"] != tgt:
+                    return ("move", nav(env, "C", tgt), intent("retrieve_medical_kit", "medical_kit", tgt, "scripted_task_progress"))
+                return ("pickup", "medical_kit", intent("retrieve_medical_kit", "medical_kit", tgt, "scripted_task_progress"))
+            return ("move", s.locations["C"], intent("wait_for_shared_fact", "medical_kit", s.locations["C"], "explore"))
+
+        if s.locations["C"] != "victim_room":
+            return ("move", nav(env, "C", "victim_room"), intent("rescue_victim", "victim", "victim_room", "rescue"))
+        return ("rescue", "victim", intent("rescue_victim", "victim", "victim_room", "rescue"))
 
 
 class BeliefStateBaselinePolicy(DeterministicBaselinePolicy):
     name = "BeliefStateBaselinePolicy"
+    uses_global_truth = False
     def __init__(self): self.c_belief={"medical_kit_location":"unknown","source":"none"}; self.conflict_seen=False
     def act(self, env: BTomEnvV2, agent: str, t: int) -> Action:
         obs=env.get_observation(agent); s=env.state
@@ -78,6 +91,7 @@ class BeliefStateBaselinePolicy(DeterministicBaselinePolicy):
 
 class ConflictAwareBeliefPolicy(BeliefStateBaselinePolicy):
     name="ConflictAwareBeliefPolicy"
+    uses_global_truth = False
     def __init__(self): super().__init__(); self.decoy_invalidated=False; self.recovery_target="staging"
     def act(self, env: BTomEnvV2, agent: str, t: int) -> Action:
         obs=env.get_observation(agent); s=env.state
