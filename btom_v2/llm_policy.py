@@ -36,15 +36,20 @@ class LLMPolicyAdapter:
         try:
             out=self.client.generate(prompt,seed=env.seed,turn=t,agent=agent,call_index=self.calls,**self.llm_kwargs)
         except Exception:
-            self.budget.invalid_actions_from_llm += 1
             out=json.dumps({"action":"wait","message":"","reason":"api_error_fallback"})
             raw_model_error=True
+            err=getattr(self.client,"last_error",None) or {}
         else:
             raw_model_error=False
         self.budget.add_call(prompt,out)
         parsed=parse_action(out,allowed,self.budget)
         if parsed["action"]=="wait":
-            return ("move",env.state.locations[agent],{"llm_reason":parsed["reason"],"parser_error_type":parsed["parser_error_type"],"raw_model_error":raw_model_error})
+            meta={"llm_reason":parsed["reason"],"parser_error_type":parsed["parser_error_type"],"raw_model_error":raw_model_error}
+            if raw_model_error:
+                meta.update({"raw_model_error_type":err.get("error_type","unknown"),"sanitized_error_message":err.get("sanitized_error_message",""),"http_status":err.get("http_status")})
+            if parsed["reason"]=="unsupported_action":
+                self.budget.invalid_actions_from_llm += 1
+            return ("move",env.state.locations[agent],meta)
         act,tgt,meta=self.base.act(env,agent,t)
         meta=dict(meta); meta.update({"llm_reason":parsed["reason"],"llm_variant":self.variant,"parser_error_type":parsed["parser_error_type"],"raw_model_error":raw_model_error})
         return (act,tgt,meta)

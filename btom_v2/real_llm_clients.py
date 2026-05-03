@@ -4,17 +4,32 @@ import json,os,urllib.request,urllib.error
 class RealLLMSetupError(Exception):
     def __init__(self,reason): super().__init__(reason); self.reason=reason
 
+class RealLLMClientError(Exception):
+    def __init__(self,error_type,http_status,sanitized_error_message,model_name):
+        super().__init__(sanitized_error_message)
+        self.error_type=error_type; self.http_status=http_status; self.sanitized_error_message=sanitized_error_message; self.model_name=model_name
+
 class GroqClient:
     def __init__(self,model="llama-3.1-8b-instant"):
         key=os.getenv("GROQ_API_KEY")
         if not key: raise RealLLMSetupError("SKIP_REAL_LLM_SMOKE_NO_GROQ_API_KEY")
-        self.key=key; self.model=model
+        self.key=key; self.model=model; self.last_error=None
     def generate(self,prompt:str,**kwargs)->str:
         body={"model":kwargs.get("model",self.model),"messages":[{"role":"user","content":prompt}],"temperature":kwargs.get("temperature",0),"top_p":kwargs.get("top_p",1),"max_tokens":kwargs.get("max_tokens",128)}
         req=urllib.request.Request("https://api.groq.com/openai/v1/chat/completions",data=json.dumps(body).encode(),headers={"Authorization":f"Bearer {self.key}","Content-Type":"application/json"})
-        with urllib.request.urlopen(req,timeout=20) as r:
-            d=json.loads(r.read().decode())
-        return d["choices"][0]["message"]["content"]
+        try:
+            with urllib.request.urlopen(req,timeout=20) as r:
+                d=json.loads(r.read().decode())
+            self.last_error=None
+            return d["choices"][0]["message"]["content"]
+        except urllib.error.HTTPError as e:
+            msg=(e.read().decode(errors="ignore")[:240] if hasattr(e,"read") else str(e))
+            self.last_error={"error_type":"http_error","http_status":e.code,"sanitized_error_message":msg,"model_name":body["model"]}
+            raise RealLLMClientError("http_error",e.code,msg,body["model"])
+        except Exception as e:
+            msg=str(e)[:240]
+            self.last_error={"error_type":"client_error","http_status":None,"sanitized_error_message":msg,"model_name":body["model"]}
+            raise RealLLMClientError("client_error",None,msg,body["model"])
 
 class OllamaClient:
     def __init__(self,model="llama3.1:8b"):
@@ -34,16 +49,13 @@ class OllamaClient:
 class TransformersLocalClient:
     def __init__(self,model,allow_download=False):
         try:
-            import torch  # noqa
             from transformers import pipeline
         except Exception:
             raise RealLLMSetupError("SKIP_REAL_LLM_SMOKE_TRANSFORMERS_UNAVAILABLE")
         try:
-            local_only=not allow_download
-            self.pipe=pipeline("text-generation",model=model,device_map="auto",local_files_only=local_only)
+            self.pipe=pipeline("text-generation",model=model,device_map="auto",local_files_only=(not allow_download))
         except Exception:
             raise RealLLMSetupError("SKIP_REAL_LLM_SMOKE_TRANSFORMERS_MODEL_LOAD_FAILED")
     def generate(self,prompt:str,**kwargs)->str:
         out=self.pipe(prompt,max_new_tokens=kwargs.get("max_tokens",128),temperature=kwargs.get("temperature",0),top_p=kwargs.get("top_p",1),do_sample=kwargs.get("temperature",0)>0)
-        txt=out[0]["generated_text"]
-        return txt[len(prompt):] if txt.startswith(prompt) else txt
+        txt=out[0]["generated_text"]; return txt[len(prompt):] if txt.startswith(prompt) else txt
