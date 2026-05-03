@@ -28,8 +28,6 @@ class WorldState:
 
 
 class BTomEnvV2:
-    """Deterministic symbolic environment for initial v2 implementation."""
-
     def __init__(self, scenario_id: str, seed: int, max_turns: int = 24) -> None:
         if scenario_id not in {"C1_fully_observable", "C2_partial_observable"}:
             raise ValueError(f"unsupported scenario: {scenario_id}")
@@ -39,14 +37,6 @@ class BTomEnvV2:
         self.state = self._init_state()
 
     def _init_state(self) -> WorldState:
-        room_items = {
-            "staging": [],
-            "red_room": ["red_key"],
-            "blue_room": ["blue_key"],
-            "box_room": ["locked_box"],
-            "med_room": [],
-            "victim_room": ["victim"],
-        }
         state = WorldState(
             scenario_id=self.scenario_id,
             seed=self.seed,
@@ -57,13 +47,19 @@ class BTomEnvV2:
             invalid_actions=0,
             locations={a: "staging" for a in AGENTS},
             inventories={a: [] for a in AGENTS},
-            room_items=room_items,
+            room_items={
+                "staging": [],
+                "red_room": ["red_key"],
+                "blue_room": ["blue_key"],
+                "box_room": ["locked_box"],
+                "med_room": [],
+                "victim_room": ["victim"],
+            },
             task_status={
-                "a_has_red_key": False,
-                "b_has_blue_key": False,
+                "red_key_applied": False,
+                "blue_key_applied": False,
                 "locked_box_open": False,
                 "medical_kit_revealed": False,
-                "c_has_medical_kit": False,
                 "victim_rescued": False,
             },
             trace=[],
@@ -73,17 +69,8 @@ class BTomEnvV2:
     def get_observation(self, agent: str) -> Observation:
         s = self.state
         loc = s.locations[agent]
-        if self.scenario_id == "C1_fully_observable":
-            visible = sorted({item for v in s.room_items.values() for item in v})
-        else:
-            visible = list(s.room_items[loc])
-        return Observation(
-            agent=agent,
-            location=loc,
-            visible_items=visible,
-            inventory=list(s.inventories[agent]),
-            task_status=dict(s.task_status),
-        )
+        visible = sorted({item for v in s.room_items.values() for item in v}) if self.scenario_id == "C1_fully_observable" else list(s.room_items[loc])
+        return Observation(agent=agent, location=loc, visible_items=visible, inventory=list(s.inventories[agent]), task_status=dict(s.task_status))
 
     def _record(self, event: str, agent: str | None = None, **details: object) -> None:
         self.state.trace.append(Event(turn=self.state.turn, event=event, agent=agent, details=details))
@@ -94,8 +81,7 @@ class BTomEnvV2:
             return StepResult(False, True, True, "episode_done")
 
         s.turn += 1
-        invalid = False
-        reason = None
+        invalid, reason = False, None
 
         if action == "move":
             if target not in LOCATIONS:
@@ -103,16 +89,12 @@ class BTomEnvV2:
             else:
                 s.locations[agent] = target
                 self._record("move", agent, target=target)
-
         elif action == "pickup":
             invalid, reason = self._pickup(agent, target)
-
         elif action == "open_box":
             invalid, reason = self._open_box(agent)
-
         elif action == "rescue":
             invalid, reason = self._rescue(agent)
-
         else:
             invalid, reason = True, "unknown_action"
 
@@ -131,8 +113,6 @@ class BTomEnvV2:
         loc = s.locations[agent]
         if item not in s.room_items[loc]:
             return True, "item_not_in_room"
-
-        # Role-gated pickups
         if item == "red_key" and agent != "A":
             return True, "role_mismatch_pickup"
         if item == "blue_key" and agent != "B":
@@ -143,34 +123,42 @@ class BTomEnvV2:
         s.room_items[loc].remove(item)
         s.inventories[agent].append(item)
         self._record("pickup", agent, item=item)
-
-        if agent == "A" and item == "red_key":
-            s.task_status["a_has_red_key"] = True
-        if agent == "B" and item == "blue_key":
-            s.task_status["b_has_blue_key"] = True
-        if agent == "C" and item == "medical_kit":
-            s.task_status["c_has_medical_kit"] = True
-
         return False, None
 
     def _open_box(self, agent: str) -> Tuple[bool, str | None]:
         s = self.state
         if s.locations[agent] != "box_room":
             return True, "not_at_box_room"
-        if "locked_box" not in s.room_items["box_room"]:
+        if "locked_box" not in s.room_items["box_room"] and not s.task_status["locked_box_open"]:
             return True, "locked_box_missing"
+        if s.task_status["locked_box_open"]:
+            return True, "locked_box_already_open"
 
-        a_ok = "red_key" in s.inventories["A"]
-        b_ok = "blue_key" in s.inventories["B"]
-        if not (a_ok and b_ok):
-            return True, "keys_missing"
+        if agent == "A":
+            if "red_key" not in s.inventories["A"]:
+                return True, "red_key_missing"
+            if s.task_status["red_key_applied"]:
+                return True, "red_key_already_applied"
+            s.task_status["red_key_applied"] = True
+            self._record("red_key_applied", agent)
+        elif agent == "B":
+            if "blue_key" not in s.inventories["B"]:
+                return True, "blue_key_missing"
+            if s.task_status["blue_key_applied"]:
+                return True, "blue_key_already_applied"
+            s.task_status["blue_key_applied"] = True
+            self._record("blue_key_applied", agent)
+        else:
+            return True, "role_mismatch_open"
 
-        s.room_items["box_room"].remove("locked_box")
-        s.task_status["locked_box_open"] = True
-        s.task_status["medical_kit_revealed"] = True
-        s.room_items["med_room"].append("medical_kit")
-        self._record("locked_box_open", agent)
-        self._record("medical_kit_revealed", item="medical_kit")
+        if s.task_status["red_key_applied"] and s.task_status["blue_key_applied"]:
+            s.task_status["locked_box_open"] = True
+            s.task_status["medical_kit_revealed"] = True
+            if "locked_box" in s.room_items["box_room"]:
+                s.room_items["box_room"].remove("locked_box")
+            s.room_items["med_room"].append("medical_kit")
+            self._record("locked_box_open")
+            self._record("medical_kit_revealed", item="medical_kit")
         return False, None
 
     def _rescue(self, agent: str) -> Tuple[bool, str | None]:
