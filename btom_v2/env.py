@@ -1,0 +1,169 @@
+from __future__ import annotations
+from dataclasses import dataclass
+from typing import Dict, List, Tuple
+from .schemas import AGENTS, EpisodeSummary, Event, Observation, StepResult
+
+LOCATIONS = (
+    "staging", "wait_room", "box_path_1", "red_room", "blue_room", "box_room", "med_room", "victim_room",
+    "decoy_room", "long_decoy_1", "long_decoy_2", "corridor_1", "wrong_branch_1", "wrong_branch_2", "wrong_room",
+)
+
+@dataclass
+class WorldState:
+    scenario_id: str; seed: int; turn: int; max_turns: int; done: bool; success: bool; invalid_actions: int
+    false_belief_injections: int; belief_conflict_count: int; false_belief_caused_wasted_action: int
+    time_to_red_key_applied: int | None; time_to_blue_key_applied: int | None; time_to_box_open: int | None
+    time_to_false_belief_conflict: int | None; time_to_medical_kit_revealed: int | None; time_to_medical_kit_acquired: int | None; time_to_rescue: int | None
+    locations: Dict[str, str]; inventories: Dict[str, List[str]]; room_items: Dict[str, List[str]]; beliefs: Dict[str, Dict[str, str]]
+    task_status: Dict[str, bool]; trace: List[Event]; delayed_queue: List[dict]; inboxes: Dict[str, List[dict]]
+    delayed_messages_count: int; delivered_delayed_messages_count: int; messages_sent_count: int
+    premature_shared_memory_assumptions: int; delayed_message_confusion_events: int; second_order_delivery_waits: int
+    premature_arrival_or_wrong_positioning_steps: int; wrong_branch_steps: int; recovery_from_wrong_branch_steps: int
+
+class BTomEnvV2:
+    def __init__(self, scenario_id: str, seed: int, max_turns: int = 30) -> None:
+        supported = {"C1_fully_observable", "C2_partial_observable", "C4_communication_delay", "C4b_costly_communication_delay", "C4c_wrong_branch_communication_delay", "C5_false_belief_injection", "C5b_costly_false_belief"}
+        if scenario_id not in supported: raise ValueError(f"unsupported scenario: {scenario_id}")
+        self.scenario_id, self.seed, self.max_turns = scenario_id, seed, max_turns
+        self.state = self._init_state()
+
+    def _init_state(self) -> WorldState:
+        s = WorldState(self.scenario_id, self.seed, 0, self.max_turns, False, False, 0, 0, 0, 0, None, None, None, None, None, None, None,
+            {a: "staging" for a in AGENTS}, {a: [] for a in AGENTS}, {k: [] for k in LOCATIONS}, {a: {"medical_kit_location": "unknown"} for a in AGENTS},
+            {"red_key_applied": False, "blue_key_applied": False, "locked_box_open": False, "medical_kit_revealed": False, "victim_rescued": False},
+            [], [], {a: [] for a in AGENTS}, 0, 0, 0, 0, 0, 0, 0, 0, 0)
+        s.room_items["red_room"] = ["red_key"]; s.room_items["blue_room"] = ["blue_key"]; s.room_items["box_room"] = ["locked_box"]; s.room_items["victim_room"] = ["victim"]
+        if self.scenario_id in {"C5_false_belief_injection", "C5b_costly_false_belief"}:
+            s.beliefs["C"]["medical_kit_location"] = "decoy_room"; s.false_belief_injections = 1
+            s.trace.append(Event(turn=0, event="false_belief_injected", agent="C", details={"medical_kit_location": "decoy_room"}))
+        return s
+
+    def get_observation(self, agent: str) -> Observation:
+        s = self.state; loc = s.locations[agent]
+        visible = sorted({i for v in s.room_items.values() for i in v}) if self.scenario_id == "C1_fully_observable" else list(s.room_items[loc])
+        self._update_belief_from_observation(agent, loc, visible)
+        return Observation(agent, loc, visible, list(s.inventories[agent]), dict(s.task_status), dict(s.beliefs[agent]), list(s.inboxes[agent]))
+
+    def _update_belief_from_observation(self, agent: str, loc: str, visible: List[str]) -> None:
+        s = self.state
+        if agent == "C" and loc == "decoy_room" and s.beliefs["C"]["medical_kit_location"] == "decoy_room" and "medical_kit" not in visible:
+            s.belief_conflict_count += 1; s.false_belief_caused_wasted_action += 1; s.beliefs["C"]["medical_kit_location"] = "unknown"
+            if s.time_to_false_belief_conflict is None: s.time_to_false_belief_conflict = s.turn
+            self._record("belief_conflict_detected", "C", expected="decoy_room", observed_absent="medical_kit")
+        if "medical_kit" in visible: s.beliefs[agent]["medical_kit_location"] = loc
+
+    def neighbors(self, room: str) -> list[str]:
+        if self.scenario_id == "C5b_costly_false_belief":
+            return {"staging": ["red_room", "blue_room", "corridor_1", "long_decoy_1"], "red_room": ["staging"], "blue_room": ["staging"], "corridor_1": ["staging", "box_room"], "box_room": ["corridor_1", "victim_room", "med_room"], "victim_room": ["box_room"], "med_room": ["box_room"], "long_decoy_1": ["staging", "long_decoy_2"], "long_decoy_2": ["long_decoy_1", "decoy_room"], "decoy_room": ["long_decoy_2"]}.get(room, [])
+        if self.scenario_id == "C4b_costly_communication_delay":
+            return {"staging": ["wait_room", "box_path_1", "red_room", "blue_room"], "wait_room": ["staging"], "box_path_1": ["staging", "box_room"], "red_room": ["staging"], "blue_room": ["staging"], "box_room": ["box_path_1", "victim_room", "med_room"], "victim_room": ["box_room"], "med_room": ["box_room"]}.get(room, [])
+        if self.scenario_id == "C4c_wrong_branch_communication_delay":
+            return {"staging": ["wait_room", "wrong_branch_1", "red_room", "blue_room"], "wrong_branch_1": ["staging", "wrong_branch_2"], "wrong_branch_2": ["wrong_branch_1", "wrong_room"], "wrong_room": ["wrong_branch_2"], "wait_room": ["staging", "box_path_1"], "box_path_1": ["wait_room", "box_room"], "red_room": ["staging"], "blue_room": ["staging"], "box_room": ["box_path_1", "victim_room", "med_room"], "victim_room": ["box_room"], "med_room": ["box_room"]}.get(room, [])
+        return [r for r in LOCATIONS if r != room]
+
+    def next_step_toward(self, start: str, goal: str) -> str:
+        if start == goal: return start
+        from collections import deque
+        q, prev = deque([start]), {start: None}
+        while q:
+            c = q.popleft()
+            for n in self.neighbors(c):
+                if n in prev: continue
+                prev[n] = c
+                if n == goal: q.clear(); break
+                q.append(n)
+        if goal not in prev: return start
+        cur = goal
+        while prev[cur] != start: cur = prev[cur]
+        return cur
+
+    def _record(self, event: str, agent: str | None = None, **details: object) -> None: self.state.trace.append(Event(turn=self.state.turn, event=event, agent=agent, details=details))
+    def _deliver_messages(self) -> None:
+        s, delivered, still = self.state, [], []
+        for m in s.delayed_queue:
+            if s.turn >= m["delivery_step"]: s.inboxes[m["to"]].append(m); delivered.append(m); s.delivered_delayed_messages_count += 1
+            else: still.append(m)
+        s.delayed_queue = still; self._record("message_delivery", details={"delivered": delivered, "pending": len(still)})
+
+    def _apply_delay_cost(self, agent: str, action: str, target: str, intent: dict | None) -> None:
+        s = self.state
+        if self.scenario_id not in {"C4b_costly_communication_delay", "C4c_wrong_branch_communication_delay"} or agent != "C" or action != "move": return
+        assumes = bool((intent or {}).get("premature_shared_memory_assumption", False))
+        in_cost_zone = target in {"box_path_1", "box_room", "wrong_branch_1", "wrong_branch_2", "wrong_room"}
+        if in_cost_zone and assumes: s.premature_arrival_or_wrong_positioning_steps += 1; s.delayed_message_confusion_events += 1; self._record("premature_arrival_or_wrong_positioning", agent, target=target)
+        if self.scenario_id == "C4c_wrong_branch_communication_delay" and target in {"wrong_branch_1", "wrong_branch_2", "wrong_room"}:
+            s.wrong_branch_steps += 1
+            if (intent or {}).get("recovering_from_wrong_branch", False): s.recovery_from_wrong_branch_steps += 1
+
+    def step(self, agent: str, action: str, target: str, intent: dict | None = None) -> StepResult:
+        s = self.state
+        if s.done: return StepResult(False, True, True, "episode_done")
+        s.turn += 1; self._deliver_messages()
+        if intent is not None:
+            self._record("action_intent", agent, **intent)
+            s.premature_shared_memory_assumptions += int(intent.get("premature_shared_memory_assumption", False)); s.delayed_message_confusion_events += int(intent.get("delayed_message_confusion", False)); s.second_order_delivery_waits += int(intent.get("second_order_delivery_wait", False))
+        invalid, reason = False, None
+        if action == "move":
+            if target not in LOCATIONS: invalid, reason = True, "unknown_location"
+            elif target not in self.neighbors(s.locations[agent]) and target != s.locations[agent]: invalid, reason = True, "non_adjacent_move"
+            else: self._apply_delay_cost(agent, action, target, intent); s.locations[agent] = target; self._record("move", agent, target=target)
+        elif action == "pickup": invalid, reason = self._pickup(agent, target)
+        elif action == "open_box": invalid, reason = self._open_box(agent)
+        elif action == "rescue": invalid, reason = self._rescue(agent)
+        elif action == "send_message": invalid, reason = self._send_message(agent, target)
+        else: invalid, reason = True, "unknown_action"
+        self._record("action_result", agent, action=action, target=target, action_valid=(not invalid), reason=reason)
+        if invalid: s.invalid_actions += 1
+        if s.turn >= s.max_turns and not s.done: s.done = True; self._record("episode_timeout")
+        return StepResult(success=not invalid, done=s.done, invalid=invalid, reason=reason)
+
+    def _pickup(self, agent: str, item: str) -> Tuple[bool, str | None]:
+        s = self.state; loc = s.locations[agent]
+        if item not in s.room_items[loc]: return True, "item_not_in_room"
+        if item == "red_key" and agent != "A": return True, "role_mismatch_pickup"
+        if item == "blue_key" and agent != "B": return True, "role_mismatch_pickup"
+        if item == "medical_kit" and agent != "C": return True, "role_mismatch_pickup"
+        s.room_items[loc].remove(item); s.inventories[agent].append(item); self._record("pickup", agent, item=item)
+        if agent == "C" and item == "medical_kit" and s.time_to_medical_kit_acquired is None: s.time_to_medical_kit_acquired = s.turn
+        return False, None
+
+    def _open_box(self, agent: str) -> Tuple[bool, str | None]:
+        s = self.state
+        if s.locations[agent] != "box_room": return True, "not_at_box_room"
+        if s.task_status["locked_box_open"]: return True, "locked_box_already_open"
+        if agent == "A":
+            if "red_key" not in s.inventories["A"] or s.task_status["red_key_applied"]: return True, "red_key_unavailable"
+            s.task_status["red_key_applied"] = True; s.time_to_red_key_applied = s.time_to_red_key_applied or s.turn
+        elif agent == "B":
+            if "blue_key" not in s.inventories["B"] or s.task_status["blue_key_applied"]: return True, "blue_key_unavailable"
+            s.task_status["blue_key_applied"] = True; s.time_to_blue_key_applied = s.time_to_blue_key_applied or s.turn
+        else: return True, "role_mismatch_open"
+        if s.task_status["red_key_applied"] and s.task_status["blue_key_applied"]:
+            s.task_status["locked_box_open"] = True; s.task_status["medical_kit_revealed"] = True; s.time_to_box_open = s.time_to_box_open or s.turn; s.time_to_medical_kit_revealed = s.time_to_medical_kit_revealed or s.turn
+            s.room_items["box_room"] = [i for i in s.room_items["box_room"] if i != "locked_box"] + ["medical_kit"]
+        return False, None
+
+    def _rescue(self, agent: str) -> Tuple[bool, str | None]:
+        s = self.state
+        if agent != "C": return True, "role_mismatch_rescue"
+        if s.locations[agent] != "victim_room": return True, "not_at_victim"
+        if "medical_kit" not in s.inventories["C"]: return True, "medical_kit_missing"
+        s.task_status["victim_rescued"] = True; s.time_to_rescue = s.time_to_rescue or s.turn; s.success = True; s.done = True
+        return False, None
+
+    def _send_message(self, agent: str, target: str) -> Tuple[bool, str | None]:
+        s = self.state
+        try: to, content = target.split("|", 1)
+        except ValueError: return True, "bad_message_format"
+        if to not in AGENTS: return True, "bad_recipient"
+        delay = 1 + ((s.seed + s.turn) % 2); msg = {"from": agent, "to": to, "content": content, "sent_step": s.turn, "delivery_step": s.turn + delay}
+        s.delayed_queue.append(msg); s.delayed_messages_count += 1; s.messages_sent_count += 1; self._record("message_sent", agent, **msg)
+        return False, None
+
+    def summary(self) -> EpisodeSummary:
+        s = self.state
+        return EpisodeSummary(s.scenario_id, s.seed, s.success, s.turn, s.invalid_actions, s.false_belief_injections, s.belief_conflict_count, s.false_belief_caused_wasted_action,
+            s.time_to_red_key_applied, s.time_to_blue_key_applied, s.time_to_box_open, s.time_to_false_belief_conflict, s.time_to_medical_kit_revealed, s.time_to_medical_kit_acquired, s.time_to_rescue,
+            s.delayed_messages_count, s.delivered_delayed_messages_count, len(s.delayed_queue), s.messages_sent_count, s.premature_shared_memory_assumptions, s.delayed_message_confusion_events,
+            s.second_order_delivery_waits, s.premature_arrival_or_wrong_positioning_steps, s.wrong_branch_steps, s.recovery_from_wrong_branch_steps,
+            dict(s.task_status), dict(s.locations), {k: list(v) for k, v in s.inventories.items()})
