@@ -40,6 +40,10 @@ class WorldState:
     inboxes: Dict[str, List[dict]]
     delayed_messages_count: int
     delivered_delayed_messages_count: int
+    messages_sent_count: int
+    premature_shared_memory_assumptions: int
+    delayed_message_confusion_events: int
+    second_order_delivery_waits: int
 
 
 class BTomEnvV2:
@@ -89,6 +93,10 @@ class BTomEnvV2:
             inboxes={a: [] for a in AGENTS},
             delayed_messages_count=0,
             delivered_delayed_messages_count=0,
+            messages_sent_count=0,
+            premature_shared_memory_assumptions=0,
+            delayed_message_confusion_events=0,
+            second_order_delivery_waits=0,
         )
         if self.scenario_id in {"C5_false_belief_injection", "C5b_costly_false_belief"}:
             s.beliefs["C"]["medical_kit_location"] = "decoy_room"
@@ -184,6 +192,9 @@ class BTomEnvV2:
         self._deliver_messages()
         if intent is not None:
             self._record("action_intent", agent, **intent)
+            s.premature_shared_memory_assumptions += int(intent.get("premature_shared_memory_assumption", False))
+            s.delayed_message_confusion_events += int(intent.get("delayed_message_confusion", False))
+            s.second_order_delivery_waits += int(intent.get("second_order_delivery_wait", False))
         invalid, reason = False, None
         if action == "move":
             if target not in LOCATIONS:
@@ -299,6 +310,7 @@ class BTomEnvV2:
         msg = {"from": agent, "to": to, "content": content, "sent_step": s.turn, "delivery_step": s.turn + delay}
         s.delayed_queue.append(msg)
         s.delayed_messages_count += 1
+        s.messages_sent_count += 1
         self._record("message_sent", agent, **msg)
         return False, None
 
@@ -318,5 +330,9 @@ class BTomEnvV2:
             delayed_messages_count=s.delayed_messages_count,
             delivered_delayed_messages_count=s.delivered_delayed_messages_count,
             pending_messages_final_count=len(s.delayed_queue),
+            messages_sent_count=s.messages_sent_count,
+            premature_shared_memory_assumptions=s.premature_shared_memory_assumptions,
+            delayed_message_confusion_events=s.delayed_message_confusion_events,
+            second_order_delivery_waits=s.second_order_delivery_waits,
             task_status=dict(s.task_status), agent_locations=dict(s.locations), inventories={k: list(v) for k, v in s.inventories.items()},
         )

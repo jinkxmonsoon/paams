@@ -54,6 +54,10 @@ class EpisodeSummary:
     delayed_messages_count: int
     delivered_delayed_messages_count: int
     pending_messages_final_count: int
+    messages_sent_count: int
+    premature_shared_memory_assumptions: int
+    delayed_message_confusion_events: int
+    second_order_delivery_waits: int
     task_status: Dict[str, bool]
     agent_locations: Dict[str, str]
     inventories: Dict[str, List[str]]
