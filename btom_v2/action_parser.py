@@ -34,6 +34,8 @@ def parse_action(text,allowed_actions,budget):
     act=obj.get("action") if isinstance(obj,dict) else None
     if not act:
         budget.parse_failures+=1
+        if isinstance(obj,dict) and any(k in obj for k in ("variant","agent_id","current_observation","task_status")):
+            return {"action":"wait","message":"","reason":"missing_action","parser_error_type":"copied_context_no_action"}
         return {"action":"wait","message":"","reason":"missing_action","parser_error_type":"missing_action"}
     if act not in allowed_actions:
         budget.parse_failures+=1
