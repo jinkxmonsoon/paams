@@ -11,25 +11,28 @@ class RealLLMClientError(Exception):
 
 class GroqClient:
     def __init__(self,model="llama-3.1-8b-instant"):
+        try:
+            from groq import Groq
+        except Exception:
+            raise RealLLMSetupError("SKIP_REAL_LLM_SMOKE_GROQ_PACKAGE_MISSING")
         key=os.getenv("GROQ_API_KEY")
         if not key: raise RealLLMSetupError("SKIP_REAL_LLM_SMOKE_NO_GROQ_API_KEY")
-        self.key=key; self.model=model; self.last_error=None
+        self.client=Groq(api_key=key); self.model=model; self.last_error=None; self.last_usage=None
     def generate(self,prompt:str,**kwargs)->str:
         body={"model":kwargs.get("model",self.model),"messages":[{"role":"user","content":prompt}],"temperature":kwargs.get("temperature",0),"top_p":kwargs.get("top_p",1),"max_tokens":kwargs.get("max_tokens",128)}
-        req=urllib.request.Request("https://api.groq.com/openai/v1/chat/completions",data=json.dumps(body).encode(),headers={"Authorization":f"Bearer {self.key}","Content-Type":"application/json"})
         try:
-            with urllib.request.urlopen(req,timeout=20) as r:
-                d=json.loads(r.read().decode())
+            d=self.client.chat.completions.create(**body)
+            usage=getattr(d,"usage",None)
+            if usage is not None:
+                self.last_usage={"prompt_tokens":getattr(usage,"prompt_tokens",None),"completion_tokens":getattr(usage,"completion_tokens",None),"total_tokens":getattr(usage,"total_tokens",None)}
             self.last_error=None
-            return d["choices"][0]["message"]["content"]
-        except urllib.error.HTTPError as e:
-            msg=(e.read().decode(errors="ignore")[:240] if hasattr(e,"read") else str(e))
-            self.last_error={"error_type":"http_error","http_status":e.code,"sanitized_error_message":msg,"model_name":body["model"]}
-            raise RealLLMClientError("http_error",e.code,msg,body["model"])
+            return d.choices[0].message.content
         except Exception as e:
-            msg=str(e)[:240]
-            self.last_error={"error_type":"client_error","http_status":None,"sanitized_error_message":msg,"model_name":body["model"]}
-            raise RealLLMClientError("client_error",None,msg,body["model"])
+            status=getattr(e,"status_code",None)
+            msg=str(e)[:1000]
+            et=type(e).__name__
+            self.last_error={"error_type":et,"http_status":status,"sanitized_error_message":msg,"model_name":body["model"]}
+            raise RealLLMClientError(et,status,msg,body["model"])
 
 class OllamaClient:
     def __init__(self,model="llama3.1:8b"):
