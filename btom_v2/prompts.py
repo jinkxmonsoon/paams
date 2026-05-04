@@ -4,11 +4,11 @@ TASK_OBJECTIVE="Rescue victim: open locked box with A/B keys, have C acquire med
 
 class PromptBuilder:
     def build(self,variant,agent_id,scenario_id,observation,allowed_actions,belief_state=None,second_order_state=None):
-        payload={
+        state={
             "variant":variant,
             "agent_id":agent_id,
             "scenario_id":scenario_id,
-            "current_observation":{
+            "observation":{
                 "location":observation.location,
                 "visible_items":observation.visible_items,
                 "inventory":observation.inventory,
@@ -19,10 +19,12 @@ class PromptBuilder:
             "task_objective":TASK_OBJECTIVE,
             "belief_state":belief_state,
             "second_order_or_responsibility_state":second_order_state,
-            "required_output_format":{
-                "action":"...",
-                "message":"...",
-                "reason":"..."
-            }
         }
-        return "Return one JSON object only.\n"+json.dumps(payload)
+        contract=(
+            "You are an action selection engine.\n"
+            "Return EXACTLY one JSON object with keys: action, message, reason.\n"
+            "Do NOT return markdown. Do NOT return explanations. Do NOT echo the context.\n"
+            "If uncertain, choose action='wait'.\n"
+            "Output schema example: {\"action\":\"wait\",\"message\":\"\",\"reason\":\"...\"}\n"
+        )
+        return contract + "\nCONTEXT:\n" + json.dumps(state,separators=(",",":"))
