@@ -33,7 +33,7 @@ def run_episode(sc,seed,pc,client,args):
             if sr.invalid and isinstance(meta,dict) and not meta.get("raw_model_error"):
                 p.budget.invalid_actions_from_llm += 1
             if env.state.done: break
-    s=asdict(env.summary()); s["policy"]=pc.name; s.update(p.budget.as_dict()); s["raw_model_error_types"]=dict(raw_types); s["first_error_sanitized"]=first_err; s["fallback_actions_due_to_api_error"]=fallback_due_api; s["invalid_env_actions_from_parsed_model_output"]=p.budget.invalid_actions_from_llm; s["api_success_rate"]=0 if p.budget.llm_calls==0 else (p.budget.llm_calls-fallback_due_api)/p.budget.llm_calls
+    s=asdict(env.summary()); s["policy"]=pc.name; s.update(p.budget.as_dict()); s["raw_model_error_types"]=dict(raw_types); s["first_error_sanitized"]=first_err; s["fallback_actions_due_to_api_error"]=fallback_due_api; s["invalid_env_actions_from_parsed_model_output"]=p.budget.invalid_actions_from_llm; s["api_success_rate"]=0 if p.budget.llm_calls==0 else (p.budget.llm_calls-fallback_due_api)/p.budget.llm_calls; s["call_audit"]=p.call_audit
     return s
 
 def group(rows,sc,pol):
@@ -65,10 +65,14 @@ def main():
             for p in policies:
                 for sd in seeds: rows.append(run_episode(sc,sd,p,client,args))
     grouped=[group(rows,sc,p.name) for sc in scenarios for p in policies] if rows else []
+    audit_records=[]
+    for r in rows: audit_records.extend(r.get("call_audit",[]))
     raw_types=Counter();
     for r in rows: raw_types.update(r["raw_model_error_types"])
     first_err=next((r["first_error_sanitized"] for r in rows if r["first_error_sanitized"]),"")
     with open(logs,'w') as f: [f.write(json.dumps(r)+"\n") for r in rows] if rows else f.write(json.dumps({"skipped":True,"skip_reason":skip_reason})+"\n")
+    with open(f"{OUTDIR}/llm_real_pilot_v0_call_audit.jsonl",'w') as af:
+        [af.write(json.dumps(a)+"\n") for a in audit_records] if audit_records else af.write(json.dumps({"skipped":True,"skip_reason":skip_reason})+"\n")
     with open(metrics,'w',newline='') as f:
         if grouped:
             w=csv.DictWriter(f,fieldnames=list(grouped[0].keys())); w.writeheader(); w.writerows(grouped)
@@ -77,11 +81,12 @@ def main():
     if skipped: sanity.update({"skipped":True,"skip_reason_present":bool(skip_reason)})
     else: sanity.update({"expected_8_episodes_completed":len(rows)==8,"budget_metrics_present":True,"parse_failures_tracked":True,"llm_calls_within_cap":all(r['llm_calls']<=args.max_llm_calls for r in rows),"raw_model_errors_tracked":True})
     summary={"backend":args.backend,"model":args.model or 'default',"skipped":skipped,"skip_reason":skip_reason,"total_episodes":len(rows),"scenarios":scenarios,"policies":[p.name for p in policies],"seeds":seeds,"budget_config":{"max_llm_calls":args.max_llm_calls,"max_steps":args.max_steps,"temperature":args.temperature,"top_p":args.top_p,"max_tokens":args.max_tokens},"grouped_metrics":grouped,"raw_model_error_types":dict(raw_types),"first_error_sanitized":first_err,"sanity_checks":sanity,"limitations":["Small pilot only; results are not benchmark conclusions."]}
-    summary["sanity_checks"]["output_files_exist_and_non_empty"]=all(os.path.exists(p) and os.path.getsize(p)>0 for p in (logs,metrics))
+    summary["sanity_checks"]["output_files_exist_and_non_empty"]=all(os.path.exists(p) and os.path.getsize(p)>0 for p in (logs,metrics,f"{OUTDIR}/llm_real_pilot_v0_call_audit.jsonl"))
     with open(summ,'w') as f: json.dump(summary,f,indent=2)
     summary["sanity_checks"]["output_files_exist_and_non_empty"] = summary["sanity_checks"]["output_files_exist_and_non_empty"] and os.path.getsize(summ)>0
     with open(summ,'w') as f: json.dump(summary,f,indent=2)
     print("LLM_REAL_PILOT_V0_GROUPED_METRICS"); print(grouped if grouped else [{"skipped":True,"skip_reason":skip_reason}])
+    print("LLM_CALL_AUDIT_FIRST_RECORDS"); print(audit_records[:5])
     print("LLM_REAL_PILOT_V0_SUMMARY_JSON"); print(json.dumps(summary,indent=2))
     print("OUTPUT_FILES",logs,metrics,summ)
 
