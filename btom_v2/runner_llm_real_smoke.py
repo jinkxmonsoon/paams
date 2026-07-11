@@ -21,7 +21,7 @@ def select_client(args):
 def run_episode(sc,seed,pc,client,args):
     env=BTomEnvV2(sc,seed,max_turns=args.max_steps)
     p=pc(client=client,budget_kwargs={"max_llm_calls":args.max_llm_calls},llm_kwargs={"model":args.model,"temperature":args.temperature,"top_p":args.top_p,"max_tokens":args.max_tokens})
-    raw_types=Counter(); first_err=""; fallback_due_api=0
+    raw_types=Counter(); first_err=""; fallback_due_api=0; invalid_env_from_parsed=0
     for t in range(env.max_turns):
         for a in ("A","B","C"):
             act,tgt,meta=p.act(env,a,t)
@@ -30,15 +30,18 @@ def run_episode(sc,seed,pc,client,args):
                     fallback_due_api+=1; rt=meta.get("raw_model_error_type","unknown"); raw_types[rt]+=1
                     if not first_err: first_err=meta.get("sanitized_error_message","")
             sr=env.step(a,act,tgt,meta)
-            if sr.invalid and isinstance(meta,dict) and not meta.get("raw_model_error"):
-                p.budget.invalid_actions_from_llm += 1
+            if p.call_audit and p.call_audit[-1].get("agent")==a and p.call_audit[-1].get("environment_turn")==t:
+                p.call_audit[-1]["environment_action_valid"] = not sr.invalid
+                p.call_audit[-1]["environment_rejection_reason"] = sr.reason
+            if sr.invalid and isinstance(meta,dict) and not meta.get("raw_model_error") and not meta.get("budget_cap_active"):
+                invalid_env_from_parsed += 1
             if env.state.done: break
-    s=asdict(env.summary()); s["policy"]=pc.name; s.update(p.budget.as_dict()); s["raw_model_error_types"]=dict(raw_types); s["first_error_sanitized"]=first_err; s["fallback_actions_due_to_api_error"]=fallback_due_api; s["invalid_env_actions_from_parsed_model_output"]=p.budget.invalid_actions_from_llm; s["api_success_rate"]=0 if p.budget.llm_calls==0 else (p.budget.llm_calls-fallback_due_api)/p.budget.llm_calls; s["call_audit"]=p.call_audit
+    s=asdict(env.summary()); s["policy"]=pc.name; s.update(p.budget.as_dict()); s["raw_model_error_types"]=dict(raw_types); s["first_error_sanitized"]=first_err; s["fallback_actions_due_to_api_error"]=fallback_due_api; s["invalid_env_actions_from_parsed_model_output"]=invalid_env_from_parsed; s["api_success_rate"]=0 if p.budget.llm_calls==0 else (p.budget.llm_calls-fallback_due_api)/p.budget.llm_calls; s["parse_success_rate"]=0 if p.budget.llm_calls==0 else (p.budget.llm_calls-p.budget.parse_failures)/p.budget.llm_calls; env_checks=[a for a in p.call_audit if a.get("environment_action_valid") is not None]; s["environment_action_valid_rate"]=0 if not env_checks else sum(1 for a in env_checks if a.get("environment_action_valid"))/len(env_checks); s["num_calls_with_progress_action"]=sum(1 for a in p.call_audit if a.get("env_action")!="move" or a.get("env_target") not in (None, a.get("current_location"))); s["num_calls_stuck_at_current_location"]=sum(1 for a in p.call_audit if a.get("env_action")=="move" and a.get("env_target")==a.get("current_location")); s["call_audit"]=p.call_audit
     return s
 
 def group(rows,sc,pol):
     rs=[r for r in rows if r["scenario_id"]==sc and r["policy"]==pol]; n=len(rs); mean=lambda k: sum((r[k] if r[k] is not None else 0) for r in rs)/n
-    return {"scenario_id":sc,"policy":pol,"N":n,"success_rate":mean("success"),"mean_turns":mean("turns"),"mean_invalid_actions":mean("invalid_actions"),"mean_time_to_rescue":mean("time_to_rescue"),"mean_llm_calls":mean("llm_calls"),"mean_input_tokens_approx":mean("input_tokens_approx"),"mean_output_tokens_approx":mean("output_tokens_approx"),"mean_parse_failures":mean("parse_failures"),"mean_invalid_actions_from_llm":mean("invalid_actions_from_llm"),"mean_budget_cap_hits":mean("budget_cap_hits"),"mean_raw_model_errors":sum(sum(v.values()) for v in [r['raw_model_error_types'] for r in rs])/n,"mean_false_belief_driven_decoy_pursuits":0.0,"mean_post_conflict_false_belief_pursuits":0.0,"mean_post_conflict_decoy_dwell_steps":0.0,"mean_delayed_message_confusion_events":mean("delayed_message_confusion_events"),"mean_wrong_branch_steps":mean("wrong_branch_steps"),"mean_premature_shared_memory_assumptions":mean("premature_shared_memory_assumptions"),"mean_second_order_delivery_waits":mean("second_order_delivery_waits"),"fallback_actions_due_to_api_error":mean("fallback_actions_due_to_api_error"),"invalid_env_actions_from_parsed_model_output":mean("invalid_env_actions_from_parsed_model_output"),"api_success_rate":mean("api_success_rate")}
+    return {"scenario_id":sc,"policy":pol,"N":n,"success_rate":mean("success"),"mean_turns":mean("turns"),"mean_invalid_actions":mean("invalid_actions"),"mean_time_to_rescue":mean("time_to_rescue"),"mean_llm_calls":mean("llm_calls"),"mean_input_tokens_approx":mean("input_tokens_approx"),"mean_output_tokens_approx":mean("output_tokens_approx"),"mean_parse_failures":mean("parse_failures"),"mean_invalid_actions_from_llm":mean("invalid_actions_from_llm"),"mean_budget_cap_hits":mean("budget_cap_hits"),"mean_raw_model_errors":mean("raw_model_errors"),"mean_false_belief_driven_decoy_pursuits":0.0,"mean_post_conflict_false_belief_pursuits":0.0,"mean_post_conflict_decoy_dwell_steps":0.0,"mean_delayed_message_confusion_events":mean("delayed_message_confusion_events"),"mean_wrong_branch_steps":mean("wrong_branch_steps"),"mean_premature_shared_memory_assumptions":mean("premature_shared_memory_assumptions"),"mean_second_order_delivery_waits":mean("second_order_delivery_waits"),"fallback_actions_due_to_api_error":mean("fallback_actions_due_to_api_error"),"invalid_env_actions_from_parsed_model_output":mean("invalid_env_actions_from_parsed_model_output"),"api_success_rate":mean("api_success_rate"),"parse_success_rate":mean("parse_success_rate"),"environment_action_valid_rate":mean("environment_action_valid_rate")}
 
 def main():
     ap=argparse.ArgumentParser(); ap.add_argument("--backend",choices=["mock","groq","ollama","transformers_local"],default="mock"); ap.add_argument("--model",default=None); ap.add_argument("--scenario",default="C5b_costly_false_belief"); ap.add_argument("--policies",default="LLMReactiveReal,LLMBToMReal"); ap.add_argument("--seeds",default="0"); ap.add_argument("--max-llm-calls",type=int,default=30); ap.add_argument("--max-steps",type=int,default=40); ap.add_argument("--temperature",type=float,default=0); ap.add_argument("--top-p",type=float,default=1); ap.add_argument("--max-tokens",type=int,default=128); ap.add_argument("--allow-download",action="store_true"); ap.add_argument("--debug-single-call",action="store_true"); args=ap.parse_args(); os.makedirs(OUTDIR,exist_ok=True)
@@ -67,8 +70,11 @@ def main():
     grouped=[group(rows,sc,p.name) for sc in scenarios for p in policies] if rows else []
     audit_records=[]
     for r in rows: audit_records.extend(r.get("call_audit",[]))
-    raw_types=Counter();
-    for r in rows: raw_types.update(r["raw_model_error_types"])
+    raw_types=Counter(); parser_types=Counter(); parsed_actions=Counter()
+    for r in rows:
+        raw_types.update(r["raw_model_error_types"])
+        parser_types.update(a.get("parser_error_type","none") for a in r.get("call_audit",[]))
+        parsed_actions.update(a.get("parsed_action","none") for a in r.get("call_audit",[]))
     first_err=next((r["first_error_sanitized"] for r in rows if r["first_error_sanitized"]),"")
     with open(logs,'w') as f: [f.write(json.dumps(r)+"\n") for r in rows] if rows else f.write(json.dumps({"skipped":True,"skip_reason":skip_reason})+"\n")
     with open(f"{OUTDIR}/llm_real_pilot_v0_call_audit.jsonl",'w') as af:
@@ -79,8 +85,8 @@ def main():
         else: f.write("backend,model,skipped,skip_reason\n"+f"{args.backend},{args.model or 'default'},true,{skip_reason}\n")
     sanity={"no_api_key_printed":True}
     if skipped: sanity.update({"skipped":True,"skip_reason_present":bool(skip_reason)})
-    else: sanity.update({"expected_8_episodes_completed":len(rows)==8,"budget_metrics_present":True,"parse_failures_tracked":True,"llm_calls_within_cap":all(r['llm_calls']<=args.max_llm_calls for r in rows),"raw_model_errors_tracked":True})
-    summary={"backend":args.backend,"model":args.model or 'default',"skipped":skipped,"skip_reason":skip_reason,"total_episodes":len(rows),"scenarios":scenarios,"policies":[p.name for p in policies],"seeds":seeds,"budget_config":{"max_llm_calls":args.max_llm_calls,"max_steps":args.max_steps,"temperature":args.temperature,"top_p":args.top_p,"max_tokens":args.max_tokens},"grouped_metrics":grouped,"raw_model_error_types":dict(raw_types),"first_error_sanitized":first_err,"sanity_checks":sanity,"limitations":["Small pilot only; results are not benchmark conclusions."]}
+    else: expected=len(scenarios)*len(policies)*len(seeds); sanity.update({"expected_episodes_completed":len(rows)==expected,"expected_episode_count":expected,"budget_metrics_present":True,"parse_failures_tracked":True,"llm_calls_within_cap":all(r['llm_calls']<=args.max_llm_calls for r in rows),"raw_model_errors_tracked":True})
+    summary={"backend":args.backend,"model":args.model or 'default',"skipped":skipped,"skip_reason":skip_reason,"total_episodes":len(rows),"scenarios":scenarios,"policies":[p.name for p in policies],"seeds":seeds,"budget_config":{"max_llm_calls":args.max_llm_calls,"max_steps":args.max_steps,"temperature":args.temperature,"top_p":args.top_p,"max_tokens":args.max_tokens},"grouped_metrics":grouped,"raw_model_error_types":dict(raw_types),"parser_error_type_counts":dict(parser_types),"parsed_action_counts":dict(parsed_actions),"api_success_rate":(0 if not audit_records else sum(1 for a in audit_records if a.get("api_call_success"))/len(audit_records)),"parse_success_rate":(0 if not audit_records else sum(1 for a in audit_records if a.get("parser_error_type")=="none")/len(audit_records)),"environment_action_valid_rate":(0 if not audit_records else sum(1 for a in audit_records if a.get("environment_action_valid"))/len(audit_records)),"num_calls_with_progress_action":sum(r.get("num_calls_with_progress_action",0) for r in rows),"num_calls_stuck_at_current_location":sum(r.get("num_calls_stuck_at_current_location",0) for r in rows),"first_error_sanitized":first_err,"sanity_checks":sanity,"limitations":["Small pilot only; results are not benchmark conclusions."]}
     summary["sanity_checks"]["output_files_exist_and_non_empty"]=all(os.path.exists(p) and os.path.getsize(p)>0 for p in (logs,metrics,f"{OUTDIR}/llm_real_pilot_v0_call_audit.jsonl"))
     with open(summ,'w') as f: json.dump(summary,f,indent=2)
     summary["sanity_checks"]["output_files_exist_and_non_empty"] = summary["sanity_checks"]["output_files_exist_and_non_empty"] and os.path.getsize(summ)>0
