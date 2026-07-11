@@ -7,6 +7,9 @@ class BudgetTracker:
     output_tokens_approx:int=0
     parse_failures:int=0
     invalid_actions_from_llm:int=0
+    raw_model_errors:int=0
+    parser_fallbacks:int=0
+    api_error_fallbacks:int=0
     budget_cap_hits:int=0
     max_llm_calls:int|None=None
     max_input_tokens:int|None=None
@@ -27,4 +30,4 @@ class BudgetTracker:
         self.output_tokens_approx+=len(output.split())
 
     def as_dict(self):
-        return {"llm_calls":self.llm_calls,"input_tokens_approx":self.input_tokens_approx,"output_tokens_approx":self.output_tokens_approx,"parse_failures":self.parse_failures,"invalid_actions_from_llm":self.invalid_actions_from_llm,"budget_cap_hits":self.budget_cap_hits}
+        return {"llm_calls":self.llm_calls,"input_tokens_approx":self.input_tokens_approx,"output_tokens_approx":self.output_tokens_approx,"parse_failures":self.parse_failures,"invalid_actions_from_llm":self.invalid_actions_from_llm,"raw_model_errors":self.raw_model_errors,"parser_fallbacks":self.parser_fallbacks,"api_error_fallbacks":self.api_error_fallbacks,"budget_cap_hits":self.budget_cap_hits}

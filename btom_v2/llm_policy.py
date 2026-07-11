@@ -28,7 +28,7 @@ class LLMPolicyAdapter:
     def act(self,env,agent,t):
         ok,cap=self.budget.can_call()
         if not ok:
-            return ("move",env.state.locations[agent],{"llm_reason":"budget_cap","cap_type":cap})
+            return ("move",env.state.locations[agent],{"llm_reason":"budget_cap","cap_type":cap,"budget_cap_active":True})
         obs=env.get_observation(agent); allowed=["follow_baseline","wait"]
         prompt=self.builder.build(self.variant,agent,env.scenario_id,obs,allowed,belief_state=obs.beliefs if self.variant!="LLMReactive" else None,second_order_state=self.second_order if self.variant=="LLMBToM" else None)
         self.calls+=1
@@ -39,19 +39,22 @@ class LLMPolicyAdapter:
         except Exception:
             out=json.dumps({"action":"wait","message":"","reason":"api_error_fallback"})
             raw_model_error=True; err=getattr(self.client,"last_error",None) or {}
+            self.budget.raw_model_errors += 1
+            self.budget.api_error_fallbacks += 1
         self.budget.add_call(prompt,out)
         parsed=parse_action(out,allowed,self.budget)
+        if parsed.get("parse_fallback_used") and not raw_model_error:
+            self.budget.parser_fallbacks += 1
         if parsed["action"]=="wait":
             meta={"llm_reason":parsed["reason"],"parser_error_type":parsed["parser_error_type"],"raw_model_error":raw_model_error}
             if raw_model_error:
                 meta.update({"raw_model_error_type":err.get("error_type","unknown"),"sanitized_error_message":err.get("sanitized_error_message",""),"http_status":err.get("http_status")})
-            if parsed["reason"]=="unsupported_action": self.budget.invalid_actions_from_llm += 1
             env_action=("move",env.state.locations[agent],meta)
         else:
             act,tgt,meta=self.base.act(env,agent,t)
             meta=dict(meta); meta.update({"llm_reason":parsed["reason"],"llm_variant":self.variant,"parser_error_type":parsed["parser_error_type"],"raw_model_error":raw_model_error})
             env_action=(act,tgt,meta)
-        self.call_audit.append({"call_idx":self.call_idx,"backend":self.client.__class__.__name__,"model":self.llm_kwargs.get("model","default"),"scenario_id":env.scenario_id,"policy":self.name,"seed":env.seed,"step_or_turn":t,"agent_id":agent,"prompt_excerpt":prompt[:500],"raw_response_excerpt":str(out)[:1000],"parsed_action":parsed.get("action"),"parsed_message":parsed.get("message"),"parsed_reason":parsed.get("reason"),"parser_error_type":parsed.get("parser_error_type"),"parse_fallback_used":parsed.get("action")=="wait","env_action":env_action[0],"env_target":env_action[1],"raw_model_error":raw_model_error,"raw_model_error_type":(err.get("error_type") if raw_model_error else "none")})
+        self.call_audit.append({"llm_call_index":self.call_idx,"backend":self.client.__class__.__name__,"model":self.llm_kwargs.get("model","default"),"scenario_id":env.scenario_id,"policy":self.name,"seed":env.seed,"environment_turn":t,"agent":agent,"current_location":obs.location,"prompt_excerpt":prompt[:500],"raw_response_excerpt":str(out)[:1000],"parsed_action":parsed.get("action"),"parsed_message":parsed.get("message"),"parsed_reason":parsed.get("reason"),"parser_error_type":parsed.get("parser_error_type"),"api_call_success":not raw_model_error,"parse_fallback_used":parsed.get("parse_fallback_used",False),"env_action":env_action[0],"env_target":env_action[1],"raw_model_error":raw_model_error,"raw_model_error_type":(err.get("error_type") if raw_model_error else "none"),"environment_action_valid":None,"environment_rejection_reason":None,"budget_cap_active":False})
         return env_action
 
 class LLMReactiveMock(LLMPolicyAdapter): name="LLMReactiveMock"; variant="LLMReactive"
