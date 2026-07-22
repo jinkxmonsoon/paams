@@ -3,6 +3,7 @@ from collections import Counter
 
 from .action_parser import parse_action
 from .budget import BudgetTracker
+from .epistemic_state import AgentEpistemicState
 from .prompts import PromptBuilder
 from .schemas import AGENTS
 
@@ -76,10 +77,7 @@ class LLMPolicyAdapter:
         self.client = client or ValidMockLLMClient()
         self.budget = BudgetTracker(**(budget_kwargs or {}))
         self.calls = 0
-        self.second_order = {
-            "responsible_agent_for_medical_kit": "C",
-            "other_agents_task_knowledge": "unknown unless communicated",
-        }
+        self.epistemic_state = AgentEpistemicState()
         self.llm_kwargs = llm_kwargs or {}
         self.call_audit = []
         self.call_idx = 0
@@ -129,8 +127,9 @@ class LLMPolicyAdapter:
 
         observation = env.get_observation(agent)
         valid_actions = enumerate_valid_actions(env, agent, observation)
-        belief_state = observation.beliefs if self.variant in {"LLMBeliefState", "LLMBToM"} else None
-        second_order_state = self.second_order if self.variant == "LLMBToM" else None
+        self.epistemic_state.update_from_observation(agent, observation)
+        belief_state = self.epistemic_state.first_order_for(agent) if self.variant in {"LLMBeliefState", "LLMBToM"} else None
+        second_order_state = self.epistemic_state.second_order_for(agent) if self.variant == "LLMBToM" else None
         prompt = self.builder.build(
             self.variant,
             agent,
@@ -231,8 +230,14 @@ class LLMPolicyAdapter:
             "prompt_excerpt": prompt[:1000],
             "valid_actions": valid_actions,
             "information_condition": {
-                "explicit_first_order_beliefs": belief_state is not None,
-                "explicit_second_order_state": second_order_state is not None,
+                "first_order_enabled": belief_state is not None,
+                "second_order_enabled": second_order_state is not None,
+                "observer_agent": agent,
+                "modeled_target_agents": sorted(second_order_state["beliefs_about_others"]) if second_order_state else [],
+                "first_order_proposition_count": len(belief_state["beliefs"]) if belief_state else 0,
+                "second_order_proposition_count": sum(len(items) for items in second_order_state["beliefs_about_others"].values()) if second_order_state else 0,
+                "prompt_character_count": len(prompt),
+                "prompt_token_count_approx": len(prompt.split()),
             },
             "raw_response_excerpt": str(output)[:1000],
             "parsed_action": parsed["action"] if parsed["parse_success"] else None,

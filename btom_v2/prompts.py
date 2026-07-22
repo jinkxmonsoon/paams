@@ -2,6 +2,11 @@ import json
 
 
 TASK_OBJECTIVE = "Rescue victim: open locked box with A/B keys, have C acquire medical_kit, then C rescues victim."
+PUBLIC_TASK_RULES = [
+    "A may pick up and apply the red key.",
+    "B may pick up and apply the blue key.",
+    "C may pick up the medical kit and rescue the victim.",
+]
 
 
 def _fmt_task_status(task_status):
@@ -39,13 +44,14 @@ class PromptBuilder:
             f"Delivered messages: {_fmt_messages(observation.delivered_messages)}",
         ]
         if belief_state is not None:
-            context.append(f"First-order beliefs: {json.dumps(belief_state, sort_keys=True)}")
+            context.append(f"FIRST-ORDER BELIEFS: {json.dumps(belief_state, sort_keys=True)}")
         if second_order_state is not None:
-            context.append(f"Second-order/responsibility model: {json.dumps(second_order_state, sort_keys=True)}")
+            context.append(f"SECOND-ORDER BELIEFS: {json.dumps(second_order_state, sort_keys=True)}")
 
         return (
             "You control one agent in a symbolic multi-agent rescue task.\n"
             f"Objective: {TASK_OBJECTIVE}\n"
+            "PUBLIC TASK RULES:\n- " + "\n- ".join(PUBLIC_TASK_RULES) + "\n"
             "Choose exactly one currently valid executable action from VALID ACTIONS.\n"
             "Return only one JSON object with this schema:\n"
             '{"action":"move|pickup|open_box|rescue|send_message","target":"valid target or null",'

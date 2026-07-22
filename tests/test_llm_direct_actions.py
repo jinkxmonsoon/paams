@@ -1,4 +1,5 @@
 import json
+from dataclasses import replace
 from types import SimpleNamespace
 
 import pytest
@@ -6,10 +7,11 @@ import pytest
 from btom_v2.action_parser import parse_action
 from btom_v2.budget import BudgetTracker
 from btom_v2.env import BTomEnvV2
+from btom_v2.epistemic_state import AgentEpistemicState, MEDICAL_KIT_LOCATION
 from btom_v2.llm_policy import LLMPolicyAdapter, enumerate_valid_actions
 from btom_v2.policies import DeterministicBaselinePolicy
 from btom_v2.prompts import PromptBuilder
-from btom_v2.runner_llm_real_smoke import LLMReactiveReal, run_episode
+from btom_v2.runner_llm_real_smoke import LLMBeliefStateReal, LLMBToMReal, LLMReactiveReal, run_episode
 
 
 ALL_ACTIONS = [
@@ -121,32 +123,42 @@ def _prompts_for_variants():
     env = BTomEnvV2("C5b_costly_false_belief", 0)
     observation = env.get_observation("C")
     actions = enumerate_valid_actions(env, "C", observation)
+    epistemic = AgentEpistemicState()
+    epistemic.update_from_observation("C", observation)
     builder = PromptBuilder()
     reactive = builder.build("LLMReactive", "C", env.scenario_id, observation, actions)
-    belief = builder.build("LLMBeliefState", "C", env.scenario_id, observation, actions, belief_state=observation.beliefs)
+    belief = builder.build("LLMBeliefState", "C", env.scenario_id, observation, actions, belief_state=epistemic.first_order_for("C"))
     tom = builder.build(
         "LLMBToM",
         "C",
         env.scenario_id,
         observation,
         actions,
-        belief_state=observation.beliefs,
-        second_order_state={"responsible_agent_for_medical_kit": "C"},
+        belief_state=epistemic.first_order_for("C"),
+        second_order_state=epistemic.second_order_for("C"),
     )
     return reactive, belief, tom
 
 
 def test_policy_prompts_differ_only_by_intended_belief_layers():
     reactive, belief, tom = _prompts_for_variants()
-    assert "First-order beliefs:" not in reactive
-    assert "Second-order/responsibility model:" not in reactive
+    assert "FIRST-ORDER BELIEFS:" not in reactive
+    assert "SECOND-ORDER BELIEFS:" not in reactive
     assert "medical_kit_location" not in reactive
-    assert "First-order beliefs:" in belief
+    assert "FIRST-ORDER BELIEFS:" in belief
     assert "medical_kit_location" in belief
-    assert "Second-order/responsibility model:" not in belief
-    assert "First-order beliefs:" in tom
-    assert "Second-order/responsibility model:" in tom
-    assert "responsible_agent_for_medical_kit" in tom
+    assert "SECOND-ORDER BELIEFS:" not in belief
+    assert "FIRST-ORDER BELIEFS:" in tom
+    assert "SECOND-ORDER BELIEFS:" in tom
+    assert '"observer": "C"' in tom
+    assert '"beliefs_about_others"' in tom
+    assert "responsible_agent_for_medical_kit" not in tom
+
+    remove_belief_layers = lambda prompt: "\n".join(
+        line for line in prompt.splitlines()
+        if not line.startswith(("FIRST-ORDER BELIEFS:", "SECOND-ORDER BELIEFS:"))
+    )
+    assert remove_belief_layers(reactive) == remove_belief_layers(belief) == remove_belief_layers(tom)
 
 
 def test_prompts_do_not_expose_prohibited_global_truth():
@@ -156,6 +168,137 @@ def test_prompts_do_not_expose_prohibited_global_truth():
         assert "C5b_costly_false_belief" not in prompt
         assert '"A": "staging"' not in prompt
         assert '"B": "staging"' not in prompt
+
+
+def test_role_metadata_is_public_task_rule_not_second_order_belief():
+    reactive, belief, tom = _prompts_for_variants()
+    for prompt in (reactive, belief, tom):
+        assert "C may pick up the medical kit and rescue the victim." in prompt
+    second_order = AgentEpistemicState().second_order_for("A")
+    assert "responsible_agent_for_medical_kit" not in json.dumps(second_order)
+
+
+def test_epistemic_models_are_partitioned_by_observer():
+    env = BTomEnvV2("C2_partial_observable", 0)
+    state = AgentEpistemicState()
+    message = {
+        "from": "B",
+        "to": "A",
+        "content": "belief:medical_kit_location=decoy_room",
+        "sent_step": 1,
+        "delivery_step": 2,
+    }
+    observation_a = replace(env.get_observation("A"), delivered_messages=[message])
+    state.update_from_observation("A", observation_a)
+
+    assert state.second_order_for("A")["beliefs_about_others"]["B"][MEDICAL_KIT_LOCATION]["believed_value"] == "decoy_room"
+    assert state.second_order_for("B")["beliefs_about_others"]["A"][MEDICAL_KIT_LOCATION]["believed_value"] == "unknown"
+    assert state.second_order_for("C")["beliefs_about_others"]["B"][MEDICAL_KIT_LOCATION]["believed_value"] == "unknown"
+
+
+def test_unstructured_rationalization_is_not_mental_state_evidence():
+    env = BTomEnvV2("C2_partial_observable", 0)
+    state = AgentEpistemicState()
+    message = {"from": "B", "to": "A", "content": "I think the kit may be in decoy_room"}
+    state.update_from_observation("A", replace(env.get_observation("A"), delivered_messages=[message]))
+    assert state.second_order_for("A")["beliefs_about_others"]["B"][MEDICAL_KIT_LOCATION]["believed_value"] == "unknown"
+
+
+def test_message_addressed_to_another_agent_is_ignored():
+    env = BTomEnvV2("C2_partial_observable", 0)
+    state = AgentEpistemicState()
+    message = {"from": "A", "to": "B", "content": "belief:medical_kit_location=decoy_room"}
+    state.update_from_observation("C", replace(env.get_observation("C"), delivered_messages=[message]))
+    assert state.second_order_for("C")["beliefs_about_others"]["A"][MEDICAL_KIT_LOCATION]["believed_value"] == "unknown"
+
+
+def test_undelivered_messages_do_not_update_any_epistemic_model():
+    env = BTomEnvV2("C4_communication_delay", 0)
+    state = AgentEpistemicState()
+    result = env.step("B", "send_message", "A|belief:medical_kit_location=decoy_room", {})
+    assert result.invalid is False
+    assert env.state.delayed_queue
+    observation_a = env.get_observation("A")
+    assert observation_a.delivered_messages == []
+    state.update_from_observation("A", observation_a)
+    assert state.second_order_for("A")["beliefs_about_others"]["B"][MEDICAL_KIT_LOCATION]["believed_value"] == "unknown"
+
+
+def test_unknown_and_hidden_room_contents_remain_unknown():
+    env = BTomEnvV2("C2_partial_observable", 0)
+    env.state.room_items["box_room"].append("medical_kit")
+    state = AgentEpistemicState()
+    observation = env.get_observation("A")
+    state.update_from_observation("A", observation)
+    assert state.first_order_for("A")["beliefs"][MEDICAL_KIT_LOCATION]["believed_value"] == "unknown"
+    for target in ("B", "C"):
+        assert state.second_order_for("A")["beliefs_about_others"][target][MEDICAL_KIT_LOCATION]["believed_value"] == "unknown"
+    prompt = PromptBuilder().build("LLMBToM", "A", env.scenario_id, observation, enumerate_valid_actions(env, "A", observation), state.first_order_for("A"), state.second_order_for("A"))
+    assert '"believed_value": "box_room"' not in prompt
+    assert "Visible items: []" in prompt
+
+
+def test_second_order_preserves_target_false_belief_when_observer_sees_truth():
+    env = BTomEnvV2("C2_partial_observable", 0)
+    state = AgentEpistemicState()
+    env.state.beliefs["B"][MEDICAL_KIT_LOCATION] = "decoy_room"
+    state.update_from_observation("B", env.get_observation("B"))
+    communicated_false_belief = {
+        "from": "B",
+        "to": "A",
+        "content": "belief:medical_kit_location=decoy_room",
+        "sent_step": 1,
+        "delivery_step": 2,
+    }
+    at_staging = replace(env.get_observation("A"), delivered_messages=[communicated_false_belief])
+    state.update_from_observation("A", at_staging)
+
+    env.state.room_items["box_room"].append("medical_kit")
+    env.state.locations["A"] = "box_room"
+    truth_observation = env.get_observation("A")
+    state.update_from_observation("A", truth_observation)
+
+    world_value = "box_room"
+    target_first_order_belief = state.first_order_for("B")["beliefs"][MEDICAL_KIT_LOCATION]["believed_value"]
+    observer_second_order = state.second_order_for("A")["beliefs_about_others"]["B"][MEDICAL_KIT_LOCATION]
+    assert world_value != target_first_order_belief
+    assert observer_second_order["believed_value"] == target_first_order_belief
+    assert observer_second_order["epistemic_status"] == "stale"
+    assert state.first_order_for("A")["beliefs"][MEDICAL_KIT_LOCATION]["believed_value"] == world_value
+
+
+class FirstValidActionClient:
+    no_external_api_calls = True
+
+    def generate(self, prompt, **kwargs):
+        self.last_prompt = prompt
+        return json.dumps({**kwargs["valid_actions"][0], "message": "", "reason": "audit test"})
+
+
+@pytest.mark.parametrize(
+    ("policy_class", "first_enabled", "second_enabled", "first_count", "second_count"),
+    [
+        (LLMReactiveReal, False, False, 0, 0),
+        (LLMBeliefStateReal, True, False, 1, 0),
+        (LLMBToMReal, True, True, 1, 2),
+    ],
+)
+def test_call_audit_records_epistemic_condition_and_prompt_size(
+    policy_class, first_enabled, second_enabled, first_count, second_count
+):
+    env = BTomEnvV2("C5b_costly_false_belief", 0)
+    client = FirstValidActionClient()
+    policy = policy_class(client=client)
+    policy.act(env, "A", 0)
+    condition = policy.call_audit[0]["information_condition"]
+    assert condition["first_order_enabled"] is first_enabled
+    assert condition["second_order_enabled"] is second_enabled
+    assert condition["observer_agent"] == "A"
+    assert condition["modeled_target_agents"] == (["B", "C"] if second_enabled else [])
+    assert condition["first_order_proposition_count"] == first_count
+    assert condition["second_order_proposition_count"] == second_count
+    assert condition["prompt_character_count"] == len(client.last_prompt)
+    assert condition["prompt_token_count_approx"] == len(client.last_prompt.split())
 
 
 class CoordinatedDirectClient:
