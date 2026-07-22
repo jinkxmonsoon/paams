@@ -1,0 +1,11 @@
+{
+  "protocol_version": "btom-v2-functional-micro-pilot-1.1-rate-aware",
+  "authorization": "single_execution",
+  "authorized_matrix_size": 12,
+  "authorized_seeds": [0],
+  "parent_failed_run_id": 29891488868,
+  "expected_pre_activation_remote_head": "3b85691ad24c721a691a9280506eccabc2509efe",
+  "manifest_v1_sha256": "d0495c6f5eca130ef9cbaf153b860ffc6fe257adf215e525c156e7425a073bf9",
+  "manifest_v1_1_sha256": "495c7a870b2fbbe9eb2987ad9225683cb0b3cdd556340fd4af5bb3c0941f0e31",
+  "interpretation_constraint": "This one-seed functional pilot cannot decide H1, H2, or H3 and cannot demonstrate Theory of Mind or autonomous planning."
+}
