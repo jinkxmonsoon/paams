@@ -69,3 +69,13 @@ class EpisodeSummary:
     task_status: Dict[str, bool]
     agent_locations: Dict[str, str]
     inventories: Dict[str, List[str]]
+    correction_opportunities: int
+    necessary_correction_messages: int
+    missed_necessary_corrections: int
+    unnecessary_correction_messages: int
+    evidence_to_correction_send_steps: Optional[int]
+    correction_delivery_latency: Optional[int]
+    target_stale_belief_steps: int
+    target_decoy_branch_steps: int
+    post_correction_decoy_steps: int
+    total_messages: int

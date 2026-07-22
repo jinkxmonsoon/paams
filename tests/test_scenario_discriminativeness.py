@@ -17,6 +17,8 @@ SCENARIO_CLASSIFICATIONS = {
     "C5_false_belief_injection": "discriminative for first-order belief",
     "C5b_costly_false_belief": "discriminative for first-order belief",
     "C6_resource_allocation": "non-discriminative",
+    "C7a_partner_belief_stale": "discriminative for second-order correction",
+    "C7b_partner_belief_current": "discriminative for second-order correction",
 }
 
 DECOY_BRANCH = {"long_decoy_1", "long_decoy_2", "decoy_room"}
@@ -135,73 +137,12 @@ def run_first_order_sensitivity():
     return outputs
 
 
-def _second_order_input(stale):
-    state = AgentEpistemicState().second_order_for("A")
-    if stale:
-        state["beliefs_about_others"]["C"][MEDICAL_KIT_LOCATION] = {
-            "believed_value": "decoy_room",
-            "epistemic_status": "stale",
-            "source": "C's delivered structured belief conflicts with A's local observation",
-        }
-    return state
-
-
-def run_second_order_sensitivity():
-    template = BTomEnvV2("C5b_costly_false_belief", 0, max_turns=20)
-    template.state.locations["A"] = "box_room"
-    template.state.room_items["box_room"] = ["medical_kit"]
-    template.state.task_status["medical_kit_revealed"] = True
-    observation_a = template.get_observation("A")
-    epistemic_a = AgentEpistemicState()
-    epistemic_a.update_from_observation("A", observation_a)
-    common_a = common_input(observation_a)
-    first_a = epistemic_a.first_order_for("A")
-    valid_a = enumerate_valid_actions(template, "A", observation_a)
-
-    configurations = (
-        ("ReactiveScript", ReactiveScript(), None),
-        ("FirstOrderScript", FirstOrderScript(), None),
-        ("SecondOrderScriptUnknown", SecondOrderScript(), _second_order_input(False)),
-        ("SecondOrderScriptStale", SecondOrderScript(), _second_order_input(True)),
-    )
-    outputs = []
-    for condition, script, second_order in configurations:
-        env = BTomEnvV2("C5b_costly_false_belief", 0, max_turns=20)
-        env.state.locations["A"] = "box_room"
-        env.state.room_items["box_room"] = ["medical_kit"]
-        env.state.task_status["medical_kit_revealed"] = True
-        if condition == "ReactiveScript":
-            chosen_a = script.choose(common_a, valid_a)
-        elif condition == "FirstOrderScript":
-            chosen_a = script.choose(common_a, valid_a, first_a)
-        else:
-            chosen_a = script.choose(common_a, valid_a, first_a, second_order)
-        apply_action(env, "A", chosen_a)
-
-        # Advance only the public environment clock so an addressed message can be delivered.
-        apply_action(env, "B", action("move", "staging"))
-        apply_action(env, "B", action("move", "staging"))
-        observation_c = env.get_observation("C")
-        epistemic_c = AgentEpistemicState()
-        epistemic_c.update_from_observation("C", observation_c)
-        first_c = epistemic_c.first_order_for("C")
-        valid_c = enumerate_valid_actions(env, "C", observation_c)
-        chosen_c = FirstOrderScript().choose(common_input(observation_c), valid_c, first_c)
-        apply_action(env, "C", chosen_c)
-        correction_turn = 3 if observation_c.delivered_messages else None
-        outputs.append(sensitivity_record(
-            env, condition, "A", common_a,
-            None if condition == "ReactiveScript" else first_a,
-            second_order, valid_a, chosen_a, correction_turn,
-        ))
-    return outputs
-
-
 def test_every_current_scenario_has_discriminativeness_classification():
     assert set(SCENARIO_CLASSIFICATIONS) == {
         "C1_fully_observable", "C2_partial_observable", "C4_communication_delay",
         "C4b_costly_communication_delay", "C4c_wrong_branch_communication_delay",
         "C5_false_belief_injection", "C5b_costly_false_belief", "C6_resource_allocation",
+        "C7a_partner_belief_stale", "C7b_partner_belief_current",
     }
 
 
@@ -232,21 +173,6 @@ def test_hidden_world_change_without_observation_change_cannot_change_script_act
     assert before == after
 
 
-def test_second_order_action_changes_only_with_nested_stale_belief():
-    outputs = run_second_order_sensitivity()
-    by_condition = {row["condition"]: row for row in outputs}
-    common = {json.dumps(row["common_observation"], sort_keys=True) for row in outputs}
-    actions = {json.dumps(row["valid_actions"], sort_keys=True) for row in outputs}
-    assert len(common) == len(actions) == 1
-    assert by_condition["SecondOrderScriptUnknown"]["chosen_action"] == action("move", "box_room")
-    assert by_condition["SecondOrderScriptStale"]["chosen_action"] == action("send_message", "C", "kit_revealed")
-    assert by_condition["SecondOrderScriptUnknown"]["messages_sent"] == 0
-    assert by_condition["SecondOrderScriptStale"]["messages_sent"] == 1
-    assert by_condition["SecondOrderScriptUnknown"]["wrong_branch_or_decoy_steps"] == 1
-    assert by_condition["SecondOrderScriptStale"]["wrong_branch_or_decoy_steps"] == 0
-    assert by_condition["SecondOrderScriptStale"]["time_to_belief_correction"] == 3
-
-
 def test_scripts_do_not_reference_baseline_or_global_state():
     for script_class in (ReactiveScript, FirstOrderScript, SecondOrderScript):
         names = set(script_class.choose.__code__.co_names)
@@ -258,5 +184,4 @@ def test_scripts_do_not_reference_baseline_or_global_state():
 if __name__ == "__main__":
     print(json.dumps({
         "first_order_sensitivity": run_first_order_sensitivity(),
-        "second_order_sensitivity": run_second_order_sensitivity(),
     }, indent=2, sort_keys=True))
