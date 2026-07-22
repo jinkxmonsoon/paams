@@ -1,5 +1,7 @@
 import json
 
+from .epistemic_state import EXPECTED_MEDICAL_KIT_LOCATION_AFTER_BOX_OPEN, PROPOSITION_SEMANTICS
+
 
 TASK_OBJECTIVE = "Rescue victim: open locked box with A/B keys, have C acquire medical_kit, then C rescues victim."
 PUBLIC_TASK_RULES = [
@@ -43,6 +45,11 @@ class PromptBuilder:
             f"Task status: {_fmt_task_status(observation.task_status)}",
             f"Delivered messages: {_fmt_messages(observation.delivered_messages)}",
         ]
+        if EXPECTED_MEDICAL_KIT_LOCATION_AFTER_BOX_OPEN in observation.beliefs:
+            context.append(
+                f"BELIEF PROPOSITION SEMANTICS: {EXPECTED_MEDICAL_KIT_LOCATION_AFTER_BOX_OPEN} = "
+                f"{PROPOSITION_SEMANTICS[EXPECTED_MEDICAL_KIT_LOCATION_AFTER_BOX_OPEN]}"
+            )
         if belief_state is not None:
             context.append(f"FIRST-ORDER BELIEFS: {json.dumps(belief_state, sort_keys=True)}")
         if second_order_state is not None:

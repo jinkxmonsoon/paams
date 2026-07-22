@@ -4,7 +4,9 @@ from copy import deepcopy
 import pytest
 
 from btom_v2.env import BTomEnvV2
-from btom_v2.epistemic_state import AgentEpistemicState, MEDICAL_KIT_LOCATION
+from btom_v2.epistemic_state import (
+    AgentEpistemicState, EXPECTED_MEDICAL_KIT_LOCATION_AFTER_BOX_OPEN, MEDICAL_KIT_LOCATION,
+)
 from btom_v2.llm_policy import enumerate_valid_actions
 
 
@@ -57,7 +59,9 @@ class FirstOrderScript:
     received_layers = ("common", "valid_actions", "first_order")
 
     def choose(self, common, valid_actions, first_order):
-        belief = first_order["beliefs"][MEDICAL_KIT_LOCATION]["believed_value"]
+        beliefs = first_order["beliefs"]
+        proposition = EXPECTED_MEDICAL_KIT_LOCATION_AFTER_BOX_OPEN if EXPECTED_MEDICAL_KIT_LOCATION_AFTER_BOX_OPEN in beliefs else MEDICAL_KIT_LOCATION
+        belief = beliefs[proposition]["believed_value"]
         move_targets = {item["target"] for item in valid_actions if item["action"] == "move"}
         if belief == "decoy_room" and "long_decoy_1" in move_targets:
             return action("move", "long_decoy_1")
@@ -72,7 +76,9 @@ class SecondOrderScript:
     received_layers = ("common", "valid_actions", "first_order", "second_order")
 
     def choose(self, common, valid_actions, first_order, second_order):
-        modeled_c = second_order["beliefs_about_others"]["C"][MEDICAL_KIT_LOCATION]
+        beliefs = second_order["beliefs_about_others"]["C"]
+        proposition = EXPECTED_MEDICAL_KIT_LOCATION_AFTER_BOX_OPEN if EXPECTED_MEDICAL_KIT_LOCATION_AFTER_BOX_OPEN in beliefs else MEDICAL_KIT_LOCATION
+        modeled_c = beliefs[proposition]
         can_message_c = {item["target"] for item in valid_actions if item["action"] == "send_message"}
         if modeled_c["epistemic_status"] == "stale" and modeled_c["believed_value"] == "decoy_room" and "C" in can_message_c:
             return action("send_message", "C", "kit_revealed")

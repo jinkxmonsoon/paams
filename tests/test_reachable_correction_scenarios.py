@@ -1,9 +1,12 @@
 import json
+from pathlib import Path
 
 import pytest
 
 from btom_v2.env import BTomEnvV2
-from btom_v2.epistemic_state import AgentEpistemicState, MEDICAL_KIT_LOCATION
+from btom_v2.epistemic_state import (
+    AgentEpistemicState, EXPECTED_MEDICAL_KIT_LOCATION_AFTER_BOX_OPEN, PROPOSITION_SEMANTICS,
+)
 from btom_v2.llm_policy import enumerate_valid_actions
 from btom_v2.prompts import PromptBuilder
 from test_scenario_discriminativeness import FirstOrderScript, ReactiveScript, SecondOrderScript, action, common_input
@@ -11,6 +14,7 @@ from test_scenario_discriminativeness import FirstOrderScript, ReactiveScript, S
 
 SCENARIOS = ("C7a_partner_belief_stale", "C7b_partner_belief_current")
 DECOY_ROUTE = {"long_decoy_1", "long_decoy_2", "decoy_room"}
+EXPECTED_LOCATION = EXPECTED_MEDICAL_KIT_LOCATION_AFTER_BOX_OPEN
 
 
 def legal_step(env, agent, action_type, target):
@@ -26,8 +30,8 @@ def reach_correction_decision(scenario):
     env.assert_invariants()
 
     c_initial = env.get_observation("C")
-    stated_belief = c_initial.beliefs[MEDICAL_KIT_LOCATION]
-    legal_step(env, "C", "send_message", f"A|belief:{MEDICAL_KIT_LOCATION}={stated_belief}")
+    stated_belief = c_initial.beliefs[EXPECTED_LOCATION]
+    legal_step(env, "C", "send_message", f"A|belief:{EXPECTED_LOCATION}={stated_belief}")
     legal_step(env, "A", "move", "red_room")
     legal_step(env, "B", "move", "blue_room")
     legal_step(env, "A", "pickup", "red_key")
@@ -90,7 +94,7 @@ class TargetRouteScript:
 
     def choose(self, common, valid_actions, first_order):
         available = {(item["action"], item["target"]) for item in valid_actions}
-        belief = first_order["beliefs"][MEDICAL_KIT_LOCATION]["believed_value"]
+        belief = first_order["beliefs"][EXPECTED_LOCATION]["believed_value"]
         location = common["location"]
         inventory = common["inventory"]
         for candidate in (("rescue", None), ("pickup", "medical_kit")):
@@ -190,8 +194,8 @@ def test_paired_decision_states_are_legally_reachable_and_physically_matched():
     assert stale_obs.location == current_obs.location == "box_room"
     assert stale_obs.visible_items == current_obs.visible_items == ["medical_kit"]
     assert stale_obs.task_status == current_obs.task_status
-    assert stale_second["beliefs_about_others"]["C"][MEDICAL_KIT_LOCATION]["epistemic_status"] == "stale"
-    assert current_second["beliefs_about_others"]["C"][MEDICAL_KIT_LOCATION]["believed_value"] == "box_room"
+    assert stale_second["beliefs_about_others"]["C"][EXPECTED_LOCATION]["epistemic_status"] == "stale"
+    assert current_second["beliefs_about_others"]["C"][EXPECTED_LOCATION]["believed_value"] == "box_room"
 
 
 @pytest.mark.parametrize("scenario", SCENARIOS)
@@ -222,14 +226,85 @@ def test_key_and_box_status_requires_own_action_or_local_box_observation():
     assert env.get_observation("A").task_status["locked_box_open"] is False
 
 
-def test_delivered_correction_is_observable_to_c_and_updates_location_belief():
+def test_delivered_correction_updates_belief_without_fabricating_factual_status():
     env, observation, valid_actions, first_order, second_order = reach_correction_decision("C7a_partner_belief_stale")
     chosen = SecondOrderScript().choose(common_input(observation), valid_actions, first_order, second_order)
     legal_step(env, "A", "send_message", f'{chosen["target"]}|{chosen["message"]}')
     legal_step(env, "B", "move", "box_room")
     observation_c = env.get_observation("C")
-    assert observation_c.beliefs[MEDICAL_KIT_LOCATION] == "box_room"
-    assert observation_c.task_status["medical_kit_revealed"] is True
+    assert observation_c.beliefs[EXPECTED_LOCATION] == "box_room"
+    assert observation_c.task_status["medical_kit_revealed"] is False
+
+
+@pytest.mark.parametrize(
+    ("scenario", "expected_value"),
+    [("C7a_partner_belief_stale", "decoy_room"), ("C7b_partner_belief_current", "box_room")],
+)
+def test_c7_initial_belief_is_explicitly_a_post_open_expectation(scenario, expected_value):
+    observation = BTomEnvV2(scenario, 0).get_observation("C")
+    assert observation.beliefs == {EXPECTED_LOCATION: expected_value}
+    assert "medical_kit_location" not in observation.beliefs
+    assert PROPOSITION_SEMANTICS[EXPECTED_LOCATION] == (
+        "The location where the agent expects the medical kit to become available after the locked box is opened."
+    )
+
+
+def test_false_premature_reveal_message_changes_belief_not_factual_status():
+    env = BTomEnvV2("C7a_partner_belief_stale", 0)
+    legal_step(env, "A", "send_message", "C|kit_revealed")
+    legal_step(env, "B", "move", "staging")
+    legal_step(env, "B", "move", "staging")
+    observation_c = env.get_observation("C")
+    assert observation_c.beliefs[EXPECTED_LOCATION] == "box_room"
+    assert observation_c.task_status == {
+        "red_key_applied": False, "blue_key_applied": False, "locked_box_open": False,
+        "medical_kit_revealed": False, "victim_rescued": False,
+    }
+    assert observation_c.delivered_messages[-1]["content"] == "kit_revealed"
+    epistemic = AgentEpistemicState()
+    epistemic.update_from_observation("C", observation_c)
+    belief = epistemic.first_order_for("C")["beliefs"][EXPECTED_LOCATION]
+    assert belief["believed_value"] == "box_room"
+    assert belief["epistemic_status"] == "communicated"
+
+
+def test_local_box_observation_after_correct_message_exposes_actual_status():
+    env, observation, valid_actions, first_order, second_order = reach_correction_decision("C7a_partner_belief_stale")
+    chosen = SecondOrderScript().choose(common_input(observation), valid_actions, first_order, second_order)
+    legal_step(env, "A", "send_message", f'{chosen["target"]}|{chosen["message"]}')
+    legal_step(env, "B", "move", "box_room")
+    c_at_staging = env.get_observation("C")
+    assert c_at_staging.task_status["medical_kit_revealed"] is False
+    legal_step(env, "C", "move", "corridor_1")
+    legal_step(env, "C", "move", "box_room")
+    c_at_box = env.get_observation("C")
+    assert c_at_box.visible_items == ["medical_kit"]
+    assert c_at_box.task_status["red_key_applied"] is True
+    assert c_at_box.task_status["blue_key_applied"] is True
+    assert c_at_box.task_status["locked_box_open"] is True
+    assert c_at_box.task_status["medical_kit_revealed"] is True
+
+
+@pytest.mark.parametrize("agent", ("A", "B", "C"))
+def test_self_message_is_not_enumerated_and_is_rejected_without_counters(agent):
+    env = BTomEnvV2("C7a_partner_belief_stale", 0)
+    observation = env.get_observation(agent)
+    valid_actions = enumerate_valid_actions(env, agent, observation)
+    assert {"action": "send_message", "target": agent} not in valid_actions
+    before = (env.state.messages_sent_count, env.state.delayed_messages_count, env.state.delivered_delayed_messages_count, len(env.state.delayed_queue))
+    result = env.step(agent, "send_message", f"{agent}|self", {})
+    after = (env.state.messages_sent_count, env.state.delayed_messages_count, env.state.delivered_delayed_messages_count, len(env.state.delayed_queue))
+    assert result.invalid is True
+    assert result.reason == "self_message_not_allowed"
+    assert after == before
+
+
+def test_legitimate_inter_agent_messages_remain_available():
+    env = BTomEnvV2("C7a_partner_belief_stale", 0)
+    actions_a = enumerate_valid_actions(env, "A", env.get_observation("A"))
+    assert {"action": "send_message", "target": "B"} in actions_a
+    assert {"action": "send_message", "target": "C"} in actions_a
+    assert legal_step(env, "A", "send_message", "C|status").invalid is False
 
 
 @pytest.mark.parametrize("scenario", SCENARIOS)
@@ -248,6 +323,7 @@ def test_prompt_conditions_share_raw_evidence_observation_and_actions(scenario):
     assert "FIRST-ORDER BELIEFS:" in prompts["LLMBeliefState"]
     assert "SECOND-ORDER BELIEFS:" not in prompts["LLMBeliefState"]
     assert "SECOND-ORDER BELIEFS:" in prompts["LLMBToM"]
+    assert PROPOSITION_SEMANTICS[EXPECTED_LOCATION] in prompts["LLMReactive"]
     assert all(item["characters"] > 0 and item["tokens_approx"] > 0 for item in bundle.values())
 
 
@@ -288,7 +364,7 @@ def test_unnecessary_correction_has_objective_message_cost():
 def test_changing_only_nested_target_belief_changes_script_decision():
     env, observation, valid_actions, first_order, stale = reach_correction_decision("C7a_partner_belief_stale")
     current = json.loads(json.dumps(stale))
-    current["beliefs_about_others"]["C"][MEDICAL_KIT_LOCATION].update({
+    current["beliefs_about_others"]["C"][EXPECTED_LOCATION].update({
         "believed_value": "box_room", "epistemic_status": "communicated",
     })
     script = SecondOrderScript()
@@ -303,6 +379,25 @@ def test_reachable_scripts_do_not_access_hidden_state_or_baseline():
         assert "state" not in names
         assert "scenario_id" not in names
         assert "DeterministicBaselinePolicy" not in names
+
+
+def test_real_llm_micro_pilot_manifest_is_frozen_and_budgeted_for_reachable_c7():
+    manifest_path = Path(__file__).parents[1] / "btom_v2" / "real_llm_micro_pilot_manifest.json"
+    manifest = json.loads(manifest_path.read_text())
+    assert manifest["frozen_before_real_execution"] is True
+    assert manifest["scenarios"] == [
+        "C5b_costly_false_belief", "C7a_partner_belief_stale", "C7b_partner_belief_current",
+    ]
+    assert manifest["policies"] == [
+        "DeterministicBaseline", "LLMReactiveReal", "LLMBeliefStateReal", "LLMBToMReal",
+    ]
+    assert manifest["seeds"] == [0]
+    assert manifest["model"] == "llama-3.1-8b-instant"
+    assert manifest["temperature"] == 0 and manifest["top_p"] == 1 and manifest["max_tokens"] == 96
+    assert manifest["max_steps"] == 40
+    assert manifest["max_llm_calls_per_episode"] == 40
+    assert manifest["max_steps"] > run_reachable_trajectory("C7a_partner_belief_stale", "ReactiveScript")["turns"]
+    assert "cannot decide H1 or H2" in manifest["interpretation_constraint"]
 
 
 if __name__ == "__main__":

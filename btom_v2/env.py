@@ -2,6 +2,7 @@ from __future__ import annotations
 from dataclasses import dataclass
 from typing import Dict, List, Tuple
 from .schemas import AGENTS, EpisodeSummary, Event, Observation, StepResult
+from .epistemic_state import EXPECTED_MEDICAL_KIT_LOCATION_AFTER_BOX_OPEN
 
 LOCATIONS = (
     "staging", "wait_room", "box_path_1", "red_room", "blue_room", "box_room", "med_room", "victim_room",
@@ -42,11 +43,13 @@ class BTomEnvV2:
             s.beliefs["C"]["medical_kit_location"] = "decoy_room"; s.false_belief_injections = 1
             s.trace.append(Event(turn=0, event="false_belief_injected", agent="C", details={"medical_kit_location": "decoy_room"}))
         if self.scenario_id == "C7a_partner_belief_stale":
-            s.beliefs["C"]["medical_kit_location"] = "decoy_room"; s.false_belief_injections = 1
-            s.trace.append(Event(turn=0, event="partner_belief_initialized", agent="C", details={"medical_kit_location": "decoy_room"}))
+            for agent in AGENTS: s.beliefs[agent] = {EXPECTED_MEDICAL_KIT_LOCATION_AFTER_BOX_OPEN: "unknown"}
+            s.beliefs["C"][EXPECTED_MEDICAL_KIT_LOCATION_AFTER_BOX_OPEN] = "decoy_room"; s.false_belief_injections = 1
+            s.trace.append(Event(turn=0, event="partner_expectation_initialized", agent="C", details={EXPECTED_MEDICAL_KIT_LOCATION_AFTER_BOX_OPEN: "decoy_room"}))
         elif self.scenario_id == "C7b_partner_belief_current":
-            s.beliefs["C"]["medical_kit_location"] = "box_room"
-            s.trace.append(Event(turn=0, event="partner_belief_initialized", agent="C", details={"medical_kit_location": "box_room"}))
+            for agent in AGENTS: s.beliefs[agent] = {EXPECTED_MEDICAL_KIT_LOCATION_AFTER_BOX_OPEN: "unknown"}
+            s.beliefs["C"][EXPECTED_MEDICAL_KIT_LOCATION_AFTER_BOX_OPEN] = "box_room"
+            s.trace.append(Event(turn=0, event="partner_expectation_initialized", agent="C", details={EXPECTED_MEDICAL_KIT_LOCATION_AFTER_BOX_OPEN: "box_room"}))
         self._assert_state_invariants(s)
         return s
 
@@ -66,7 +69,7 @@ class BTomEnvV2:
     def _update_belief_from_messages(self, agent: str) -> None:
         if not self._is_correction_scenario(): return
         if any(m.get("to") == agent and m.get("content") == "kit_revealed" for m in self.state.inboxes[agent]):
-            self.state.beliefs[agent]["medical_kit_location"] = "box_room"
+            self.state.beliefs[agent][EXPECTED_MEDICAL_KIT_LOCATION_AFTER_BOX_OPEN] = "box_room"
 
     def _observable_task_status(self, agent: str, loc: str) -> Dict[str, bool]:
         s = self.state
@@ -76,30 +79,31 @@ class BTomEnvV2:
         if loc == "box_room":
             for key in ("red_key_applied", "blue_key_applied", "locked_box_open", "medical_kit_revealed"):
                 visible[key] = s.task_status[key]
-        if any(m.get("to") == agent and m.get("content") == "kit_revealed" for m in s.inboxes[agent]):
-            for key in ("red_key_applied", "blue_key_applied", "locked_box_open", "medical_kit_revealed"):
-                visible[key] = True
         if agent == "C" or loc == "victim_room": visible["victim_rescued"] = s.task_status["victim_rescued"]
         return visible
 
     def _maybe_record_correction_opportunity(self, agent: str, observation: Observation) -> None:
         s, instrument = self.state, self.state.correction_instrument
         if agent != "A" or instrument["opportunity_turn"] is not None or "medical_kit" not in observation.visible_items: return
-        evidence = [m for m in observation.delivered_messages if m.get("from") == "C" and str(m.get("content", "")).startswith("belief:medical_kit_location=")]
+        evidence_prefix = f"belief:{EXPECTED_MEDICAL_KIT_LOCATION_AFTER_BOX_OPEN}="
+        evidence = [m for m in observation.delivered_messages if m.get("from") == "C" and str(m.get("content", "")).startswith(evidence_prefix)]
         if not evidence: return
         believed_value = evidence[-1]["content"].split("=", 1)[1]
         instrument["opportunity_turn"] = s.turn
-        instrument["needed"] = s.beliefs["C"]["medical_kit_location"] != "box_room"
-        self._record("correction_opportunity", "A", target_agent="C", target_believed_value=believed_value,
-                     true_value="box_room", correction_needed=instrument["needed"])
+        instrument["needed"] = s.beliefs["C"][EXPECTED_MEDICAL_KIT_LOCATION_AFTER_BOX_OPEN] != "box_room"
+        self._record("correction_opportunity", "A", target_agent="C",
+                     proposition=EXPECTED_MEDICAL_KIT_LOCATION_AFTER_BOX_OPEN,
+                     target_believed_value=believed_value, true_value="box_room", correction_needed=instrument["needed"])
 
     def _update_belief_from_observation(self, agent: str, loc: str, visible: List[str]) -> None:
         s = self.state
-        if agent == "C" and loc == "decoy_room" and s.beliefs["C"]["medical_kit_location"] == "decoy_room" and "medical_kit" not in visible:
-            s.belief_conflict_count += 1; s.false_belief_caused_wasted_action += 1; s.beliefs["C"]["medical_kit_location"] = "unknown"
+        proposition = EXPECTED_MEDICAL_KIT_LOCATION_AFTER_BOX_OPEN if self._is_correction_scenario() else "medical_kit_location"
+        if agent == "C" and loc == "decoy_room" and s.beliefs["C"][proposition] == "decoy_room" and "medical_kit" not in visible:
+            s.belief_conflict_count += 1; s.false_belief_caused_wasted_action += 1
             if s.time_to_false_belief_conflict is None: s.time_to_false_belief_conflict = s.turn
             self._record("belief_conflict_detected", "C", expected="decoy_room", observed_absent="medical_kit")
-        if "medical_kit" in visible: s.beliefs[agent]["medical_kit_location"] = loc
+            s.beliefs["C"][proposition] = "unknown"
+        if "medical_kit" in visible: s.beliefs[agent][proposition] = loc
 
     def neighbors(self, room: str) -> list[str]:
         if self.scenario_id in {"C5b_costly_false_belief", "C7a_partner_belief_stale", "C7b_partner_belief_current"}:
@@ -133,7 +137,7 @@ class BTomEnvV2:
             if s.turn >= m["delivery_step"]:
                 s.inboxes[m["to"]].append(m); delivered.append(m); s.delivered_delayed_messages_count += 1
                 if self._is_correction_scenario() and m.get("from") == "A" and m.get("to") == "C" and m.get("content") == "kit_revealed":
-                    s.beliefs["C"]["medical_kit_location"] = "box_room"
+                    s.beliefs["C"][EXPECTED_MEDICAL_KIT_LOCATION_AFTER_BOX_OPEN] = "box_room"
                     s.correction_instrument["correction_delivered_turn"] = s.turn
                     self._record("belief_correction_delivered", "C", sent_step=m["sent_step"], delivery_step=s.turn)
             else: still.append(m)
@@ -153,7 +157,7 @@ class BTomEnvV2:
         s = self.state
         if s.done: return StepResult(False, True, True, "episode_done")
         s.turn += 1; self._deliver_messages()
-        if self._is_correction_scenario() and agent == "C" and s.correction_instrument["opportunity_turn"] is not None and s.beliefs["C"]["medical_kit_location"] != "box_room":
+        if self._is_correction_scenario() and agent == "C" and s.correction_instrument["opportunity_turn"] is not None and s.beliefs["C"][EXPECTED_MEDICAL_KIT_LOCATION_AFTER_BOX_OPEN] != "box_room":
             s.correction_instrument["target_stale_belief_steps"] += 1
         if intent is not None:
             self._record("action_intent", agent, **intent)
@@ -221,6 +225,7 @@ class BTomEnvV2:
         try: to, content = target.split("|", 1)
         except ValueError: return True, "bad_message_format"
         if to not in AGENTS: return True, "bad_recipient"
+        if to == agent: return True, "self_message_not_allowed"
         delay = 1 + ((s.seed + s.turn) % 2); msg = {"from": agent, "to": to, "content": content, "sent_step": s.turn, "delivery_step": s.turn + delay}
         s.delayed_queue.append(msg); s.delayed_messages_count += 1; s.messages_sent_count += 1; self._record("message_sent", agent, **msg)
         if self._is_correction_scenario() and agent == "A" and to == "C" and content == "kit_revealed" and s.correction_instrument["opportunity_turn"] is not None:

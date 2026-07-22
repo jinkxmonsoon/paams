@@ -31,7 +31,7 @@ def enumerate_valid_actions(env, agent, observation):
             actions.append({"action": "open_box", "target": None})
     if agent == "C" and observation.location == "victim_room" and "medical_kit" in observation.inventory:
         actions.append({"action": "rescue", "target": None})
-    actions.extend({"action": "send_message", "target": recipient} for recipient in AGENTS)
+    actions.extend({"action": "send_message", "target": recipient} for recipient in AGENTS if recipient != agent)
     return actions
 
 
