@@ -58,7 +58,7 @@ def _trace_flag_count(env, flag):
     )
 
 
-def run_episode(scenario, seed, policy_class, client, args):
+def run_episode(scenario, seed, policy_class, client, args, trace_sink=None, episode_id=None):
     env = BTomEnvV2(scenario, seed, max_turns=args.max_steps)
     is_llm = issubclass(policy_class, LLMPolicyAdapter)
     if is_llm:
@@ -161,6 +161,14 @@ def run_episode(scenario, seed, policy_class, client, args):
         "final_task_status": dict(env.state.task_status),
         "final_agent_locations": dict(env.state.locations),
     })
+    if trace_sink is not None:
+        identity = {
+            "episode_id": episode_id,
+            "scenario": scenario,
+            "policy": summary["policy"],
+            "seed": seed,
+        }
+        trace_sink.extend({**identity, "event": asdict(event)} for event in env.state.trace)
     return summary
 
 
