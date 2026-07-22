@@ -73,7 +73,9 @@ def fake_summary(scenario, seed, policy, episode_id, parse_success=True):
     }
 
 
-def episode_runner(scenario, seed, policy_class, client, args, trace_sink, episode_id):
+def episode_runner(
+    scenario, seed, policy_class, client, args, trace_sink, episode_id, partial_sink=None
+):
     policy = "DeterministicBaseline" if policy_class.__name__ == "DeterministicBaselinePolicy" else policy_class.name
     if policy != "DeterministicBaseline":
         client.generate("episode prompt", model=args.model)
@@ -114,6 +116,25 @@ def test_v1_manifest_is_immutable_and_v1_1_matrix_is_unique():
     ]
 
 
+def test_scientific_manifest_mismatch_stops_before_client_construction(tmp_path):
+    manifest = json.loads(harness.MANIFEST_PATH.read_text())
+    manifest["temperature"] = 0.5
+    altered = tmp_path / "altered_manifest.json"
+    altered.write_text(json.dumps(manifest))
+
+    class MustNotConstruct:
+        def __init__(self, **kwargs):
+            pytest.fail("client constructed before manifest freeze validation")
+
+    with pytest.raises(AssertionError, match="temperature"):
+        harness.execute(
+            output_root=tmp_path,
+            client_factory=MustNotConstruct,
+            manifest_path=altered,
+        )
+    assert list(tmp_path.iterdir()) == [altered]
+
+
 def test_global_scheduler_spaces_only_api_calls():
     clock = FakeClock()
     scheduler = harness.GlobalCallScheduler(10.0, clock=clock.monotonic, sleep=clock.sleep)
@@ -130,24 +151,23 @@ def test_global_scheduler_spaces_only_api_calls():
 
 def test_first_429_aborts_without_retry_and_preserves_partial_artifacts(tmp_path):
     clock = FakeClock()
-    SequencedClient.fail_on = 3  # connectivity, first LLM response, then first 429
+    SequencedClient.fail_on = 4  # connectivity, two successful episode calls, then 429
     status, output_dir = harness.execute(
         output_root=tmp_path,
         client_factory=SequencedClient,
-        episode_runner=episode_runner,
         clock=clock.monotonic,
         sleep=clock.sleep,
         timestamp="20260101T000000Z",
     )
     assert status == 5
-    assert SequencedClient.calls == 3
+    assert SequencedClient.calls == 4
     metadata = json.loads((output_dir / "execution_metadata.json").read_text())
     assert metadata["run_status"] == "rate_limit_abort"
-    assert metadata["episodes_completed"] == 2
+    assert metadata["episodes_completed"] == 1
     expected = set(harness.REQUIRED_OUTPUT_FILES + harness.EXTRA_OUTPUT_FILES)
     assert expected <= {path.name for path in output_dir.iterdir()}
     schedule = json.loads((output_dir / "api_call_schedule.json").read_text())
-    assert len(schedule) == 3
+    assert len(schedule) == 4
     assert all(
         later["call_start_monotonic"] - earlier["call_start_monotonic"] >= 10.0
         for earlier, later in zip(schedule, schedule[1:])
@@ -158,6 +178,34 @@ def test_first_429_aborts_without_retry_and_preserves_partial_artifacts(tmp_path
     assert failure["limit"] == 6000
     assert "org_private123" not in json.dumps(failure)
     assert "private-token" not in json.dumps(failure)
+    partial = [
+        json.loads(line)
+        for line in (output_dir / "partial_episode_records.jsonl").read_text().splitlines()
+    ]
+    assert len(partial) == 1
+    record = partial[0]
+    assert record["completed"] is False
+    assert record["policy"] == "LLMReactiveReal"
+    assert record["abort_type"] == "RateLimitAbort"
+    assert record["abort_api_call_order"] == 4
+    assert len(record["call_audit"]) == 2
+    assert record["environment_trace"]
+    assert record["current_turn"] >= 2
+    assert set(record["current_agent_locations"]) == {"A", "B", "C"}
+    assert set(record["current_inventories"]) == {"A", "B", "C"}
+    complete_audit = [
+        json.loads(line)
+        for line in (output_dir / "complete_call_audit.jsonl").read_text().splitlines()
+    ]
+    assert len(complete_audit) == 2
+    assert all(item["completed"] is False for item in complete_audit)
+    assert len({item["call"]["call_idx"] for item in complete_audit}) == 2
+    traces = [
+        json.loads(line)
+        for line in (output_dir / "complete_environment_traces.jsonl").read_text().splitlines()
+    ]
+    assert traces
+    assert all(item["episode_id"] == record["episode_id"] or item["policy"] == "DeterministicBaseline" for item in traces)
     assert "test-secret-value" not in "".join(path.read_text() for path in output_dir.iterdir())
 
 
@@ -192,6 +240,43 @@ def test_api_failure_requires_manual_causal_audit():
     decision = harness._exclusion(row, [{"success": False, "call_order": 2}])
     assert decision["excluded"] is None
     assert decision["exclusion_status"] == "requires_manual_audit"
+
+
+@pytest.mark.parametrize(
+    ("parse_failures", "invalid_actions"),
+    [(1, 0), (0, 1)],
+)
+def test_c7_technical_block_requires_manual_audit(parse_failures, invalid_actions):
+    row = fake_summary("C7a_partner_belief_stale", 0, "LLMReactiveReal", "episode-x")
+    row.update({
+        "correction_opportunities": 0,
+        "parse_failures": parse_failures,
+        "parser_error_type_counts": {"invalid_json": parse_failures},
+        "environment_invalid_action_count": invalid_actions,
+    })
+    row["call_audit"][0].update({
+        "call_idx": 1,
+        "parse_success": not bool(parse_failures),
+        "environment_result": {"valid": not bool(invalid_actions)},
+    })
+    decision = harness._exclusion(row, [])
+    assert decision["excluded"] is None
+    assert decision["exclusion_status"] == "requires_manual_audit"
+    assert decision["criterion"].startswith("episode never reaches the correction opportunity")
+    assert decision["evidence"]["correction_opportunities"] == 0
+    assert decision["evidence"]["relevant_call_orders"] == [1]
+
+
+def test_c7_behavioral_task_failure_without_blockers_is_not_excluded():
+    row = fake_summary("C7b_partner_belief_current", 0, "LLMBToMReal", "episode-x")
+    row.update({
+        "correction_opportunities": 0,
+        "parse_failures": 0,
+        "environment_invalid_action_count": 0,
+    })
+    decision = harness._exclusion(row, [])
+    assert decision["excluded"] is False
+    assert decision["exclusion_status"] == "not_excluded"
 
 
 def test_workflow_is_future_guarded_and_always_uploads():

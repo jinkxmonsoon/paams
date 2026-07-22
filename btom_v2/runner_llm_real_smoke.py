@@ -58,7 +58,16 @@ def _trace_flag_count(env, flag):
     )
 
 
-def run_episode(scenario, seed, policy_class, client, args, trace_sink=None, episode_id=None):
+def run_episode(
+    scenario,
+    seed,
+    policy_class,
+    client,
+    args,
+    trace_sink=None,
+    episode_id=None,
+    partial_sink=None,
+):
     env = BTomEnvV2(scenario, seed, max_turns=args.max_steps)
     is_llm = issubclass(policy_class, LLMPolicyAdapter)
     if is_llm:
@@ -102,6 +111,28 @@ def run_episode(scenario, seed, policy_class, client, args, trace_sink=None, epi
                     break
             if env.state.done:
                 break
+    except BaseException as abort:
+        if partial_sink is not None:
+            partial_sink.append({
+                "episode_id": episode_id,
+                "scenario": scenario,
+                "policy": "DeterministicBaseline" if not is_llm else policy_class.name,
+                "seed": seed,
+                "completed": False,
+                "abort_type": type(abort).__name__,
+                "abort_api_call_order": getattr(abort, "audit_record", {}).get("call_order"),
+                "call_audit": list(policy.call_audit) if is_llm else [],
+                "environment_trace": [asdict(event) for event in env.state.trace],
+                "current_turn": env.state.turn,
+                "current_task_status": dict(env.state.task_status),
+                "current_agent_locations": dict(env.state.locations),
+                "current_inventories": {agent: list(items) for agent, items in env.state.inventories.items()},
+                "policy_budget_counters": policy.budget.as_dict() if is_llm else {},
+                "parser_error_type_counts": dict(policy.parser_error_type_counts) if is_llm else {},
+                "parsed_action_counts": dict(policy.parsed_action_counts) if is_llm else {},
+                "api_failure_count_before_abort": policy.api_failures if is_llm else 0,
+            })
+        raise
     finally:
         if trace_sink is not None:
             identity = {

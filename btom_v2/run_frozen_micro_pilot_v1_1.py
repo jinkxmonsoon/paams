@@ -35,6 +35,21 @@ EXTRA_OUTPUT_FILES = (
     "api_call_schedule.json",
     "api_failure_audit.json",
     "corrected_metrics.json",
+    "partial_episode_records.jsonl",
+)
+SCIENTIFIC_FIELDS = (
+    "scenarios",
+    "policies",
+    "seeds",
+    "model",
+    "temperature",
+    "top_p",
+    "max_tokens",
+    "max_steps",
+    "max_llm_calls_per_episode",
+    "primary_functional_criteria",
+    "primary_behavioral_metrics",
+    "exclusion_criteria",
 )
 
 
@@ -111,6 +126,7 @@ def _write_jsonl(path, rows, secret=None):
 def load_manifest(path=MANIFEST_PATH):
     raw = Path(path).read_bytes()
     manifest = json.loads(raw)
+    parent = json.loads(V1_MANIFEST_PATH.read_bytes())
     assert manifest["protocol_version"] == PROTOCOL_VERSION
     assert manifest["parent_protocol"] == "btom-v2-functional-micro-pilot-1.0"
     assert manifest["global_minimum_inter_api_call_seconds"] == 10.0
@@ -118,6 +134,9 @@ def load_manifest(path=MANIFEST_PATH):
     assert manifest["retry_on_rate_limit"] is False
     assert manifest["retry_on_other_api_failure"] is False
     assert hashlib.sha256(V1_MANIFEST_PATH.read_bytes()).hexdigest() == V1_MANIFEST_SHA256
+    for field in SCIENTIFIC_FIELDS:
+        if manifest[field] != parent[field]:
+            raise AssertionError(f"v1.1 scientific field differs from immutable v1.0 parent: {field}")
     return manifest, raw
 
 
@@ -289,6 +308,32 @@ def _exclusion(row, api_records):
             "evidence": {"api_failure_call_orders": [record["call_order"] for record in failures]},
             "reason": "The available trace does not mechanically establish that the API failure prevented the planned action opportunity.",
         }
+    parser_failures = row.get("parse_failures", 0)
+    invalid_actions = row.get("environment_invalid_action_count", 0)
+    no_correction = row.get("correction_opportunities", 0) == 0
+    if row["scenario_id"].startswith("C7") and no_correction and (parser_failures or invalid_actions):
+        relevant_calls = [
+            call.get("call_idx")
+            for call in row.get("call_audit", [])
+            if (
+                not call.get("parse_success", False)
+                or call.get("environment_result", {}).get("valid") is False
+            )
+        ]
+        return {
+            "episode_id": row["episode_id"],
+            "excluded": None,
+            "exclusion_status": "requires_manual_audit",
+            "criterion": "episode never reaches the correction opportunity because of parser or environment-invalid failures",
+            "evidence": {
+                "correction_opportunities": row.get("correction_opportunities", 0),
+                "parse_failures": parser_failures,
+                "parser_error_type_counts": row.get("parser_error_type_counts", {}),
+                "environment_invalid_action_count": invalid_actions,
+                "relevant_call_orders": [call for call in relevant_calls if call is not None],
+            },
+            "reason": "The technical blockers are observable, but their causal role in preventing the correction opportunity requires manual audit.",
+        }
     return {
         "episode_id": row["episode_id"],
         "excluded": False,
@@ -311,14 +356,26 @@ def _initialize(output_dir, manifest, raw, metadata, secret):
     assert hashlib.sha256(raw).hexdigest() == metadata["manifest_sha256"]
 
 
-def _persist(output_dir, rows, traces, client, exclusions, metrics, metadata, secret):
+def _persist(
+    output_dir, rows, traces, partial_records, client, exclusions, metrics, metadata, secret
+):
     audits = []
     for row in rows:
         identity = {key: row[key] for key in ("episode_id", "scenario_id", "policy", "seed")}
         audits.extend({**identity, "call": call} for call in row.get("call_audit", []))
+    for partial in partial_records:
+        identity = {
+            "episode_id": partial["episode_id"],
+            "scenario_id": partial["scenario"],
+            "policy": partial["policy"],
+            "seed": partial["seed"],
+            "completed": False,
+        }
+        audits.extend({**identity, "call": call} for call in partial.get("call_audit", []))
     _write_jsonl(output_dir / "episode_summaries.jsonl", rows, secret)
     _write_jsonl(output_dir / "complete_environment_traces.jsonl", traces, secret)
     _write_jsonl(output_dir / "complete_call_audit.jsonl", audits, secret)
+    _write_jsonl(output_dir / "partial_episode_records.jsonl", partial_records, secret)
     _write_json(output_dir / "api_call_schedule.json", client.scheduler.records, secret)
     _write_json(output_dir / "api_failure_audit.json", [r for r in client.api_audit if not r["success"]], secret)
     _write_json(output_dir / "corrected_metrics.json", metrics, secret)
@@ -392,8 +449,9 @@ def execute(
     clock=time.monotonic,
     sleep=time.sleep,
     timestamp=None,
+    manifest_path=MANIFEST_PATH,
 ):
-    manifest, raw = load_manifest()
+    manifest, raw = load_manifest(manifest_path)
     matrix = execution_matrix(manifest)
     stamp = timestamp or datetime.now(timezone.utc).strftime("%Y%m%dT%H%M%SZ")
     output_dir = Path(output_root) / f'{manifest["protocol_version"]}_{stamp}'
@@ -429,7 +487,7 @@ def execute(
     except RateLimitAbort as abort:
         metadata.update(run_status="rate_limit_abort", rate_limit_abort=abort.audit_record)
         _write_json(output_dir / "connectivity_result.json", {"success": False, **abort.audit_record}, secret)
-        _persist(output_dir, [], [], client, [], {}, metadata, secret)
+        _persist(output_dir, [], [], [], client, [], {}, metadata, secret)
         return 3, output_dir
     except Exception as error:
         metadata["run_status"] = "connectivity_failed"
@@ -437,7 +495,7 @@ def execute(
             "success": False, "error_type": type(error).__name__,
             "sanitized_error_message": _redact(str(error), secret)[:500],
         }, secret)
-        _persist(output_dir, [], [], client, [], {}, metadata, secret)
+        _persist(output_dir, [], [], [], client, [], {}, metadata, secret)
         return 4, output_dir
     _write_json(output_dir / "connectivity_result.json", {
         "success": True, "transport": client.transport,
@@ -450,7 +508,7 @@ def execute(
         top_p=manifest["top_p"], max_tokens=manifest["max_tokens"],
         max_steps=manifest["max_steps"], max_llm_calls=manifest["max_llm_calls_per_episode"],
     )
-    rows, traces, exclusions, metrics = [], [], [], {}
+    rows, traces, partial_records, exclusions, metrics = [], [], [], [], {}
     aborted = None
     for index, (scenario, policy_name, seed) in enumerate(matrix, start=1):
         episode_id = f"episode-{index:02d}-{scenario}-{policy_name}-seed-{seed}"
@@ -461,7 +519,7 @@ def execute(
         try:
             row = episode_runner(
                 scenario, seed, POLICY_MAP[policy_name], client, args,
-                trace_sink=traces, episode_id=episode_id,
+                trace_sink=traces, episode_id=episode_id, partial_sink=partial_records,
             )
         except RateLimitAbort as abort:
             aborted = abort.audit_record
@@ -486,7 +544,9 @@ def execute(
     else:
         metadata["run_status"] = "completed" if len(rows) == len(matrix) else "episode_failure"
     metadata.update(episodes_planned=len(matrix), episodes_completed=len(rows))
-    _persist(output_dir, rows, traces, client, exclusions, metrics, metadata, secret)
+    _persist(
+        output_dir, rows, traces, partial_records, client, exclusions, metrics, metadata, secret
+    )
     return (5 if aborted else 0 if len(rows) == len(matrix) else 6), output_dir
 
 
