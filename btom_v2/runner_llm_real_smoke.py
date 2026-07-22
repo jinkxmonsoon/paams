@@ -78,22 +78,39 @@ def run_episode(scenario, seed, policy_class, client, args, trace_sink=None, epi
     baseline_valid = 0
     baseline_invalid = 0
     progressed_agents = set()
-    for turn in range(env.max_turns):
-        for agent in ("A", "B", "C"):
-            action, target, meta = policy.act(env, agent, turn)
-            result = env.step(agent, action, target, meta)
-            if not result.invalid and env.state.locations[agent] != "staging":
-                progressed_agents.add(agent)
-            if is_llm:
-                policy.record_step_result(result, meta)
-            elif result.invalid:
-                baseline_invalid += 1
-            else:
-                baseline_valid += 1
+    try:
+        for turn in range(env.max_turns):
+            for agent in ("A", "B", "C"):
+                action, target, meta = policy.act(env, agent, turn)
+                result = env.step(agent, action, target, meta)
+                if not result.invalid and env.state.locations[agent] != "staging":
+                    progressed_agents.add(agent)
+                if is_llm:
+                    policy.record_step_result(result, meta)
+                    if policy.call_audit:
+                        policy.call_audit[-1]["environment_result"] = {
+                            "valid": not result.invalid,
+                            "success": result.success,
+                            "done": result.done,
+                            "reason": result.reason,
+                        }
+                elif result.invalid:
+                    baseline_invalid += 1
+                else:
+                    baseline_valid += 1
+                if env.state.done:
+                    break
             if env.state.done:
                 break
-        if env.state.done:
-            break
+    finally:
+        if trace_sink is not None:
+            identity = {
+                "episode_id": episode_id,
+                "scenario": scenario,
+                "policy": "DeterministicBaseline" if not is_llm else policy_class.name,
+                "seed": seed,
+            }
+            trace_sink.extend({**identity, "event": asdict(event)} for event in env.state.trace)
 
     summary = asdict(env.summary())
     summary["policy"] = "DeterministicBaseline" if not is_llm else policy_class.name
@@ -161,14 +178,6 @@ def run_episode(scenario, seed, policy_class, client, args, trace_sink=None, epi
         "final_task_status": dict(env.state.task_status),
         "final_agent_locations": dict(env.state.locations),
     })
-    if trace_sink is not None:
-        identity = {
-            "episode_id": episode_id,
-            "scenario": scenario,
-            "policy": summary["policy"],
-            "seed": seed,
-        }
-        trace_sink.extend({**identity, "event": asdict(event)} for event in env.state.trace)
     return summary
 
 
