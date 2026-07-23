@@ -1,0 +1,82 @@
+{
+  "protocol_version": "btom-v2-decision-point-prompt-protocol-0.2.1-provenance-separated-mock-only",
+  "status": "mock_only_not_authorized_for_real_execution",
+  "parent_protocol": "btom-v2-decision-point-prompt-protocol-0.2-mock-only",
+  "parent_remote_commit": "1e7cb05d1eddf56d5ccff12e48c1dd15d8556402",
+  "amendment_reason": "The explicit second-order v0.2 block repeated the informative raw statement inside source_message, whereas the matched-neutral arm used an opaque value. This confounded nested representation with evidence repetition and salience.",
+  "cases": [
+    "DP5a_self_belief_false",
+    "DP5b_self_belief_current",
+    "DP7a_partner_belief_stale",
+    "DP7b_partner_belief_current"
+  ],
+  "applicable_conditions_by_family": {
+    "DP5": [
+      "reactive_no_explicit_belief",
+      "reactive_neutral_first_order_matched",
+      "explicit_first_order"
+    ],
+    "DP7": [
+      "reactive_no_explicit_belief",
+      "reactive_neutral_first_order_matched",
+      "explicit_first_order",
+      "first_order_neutral_second_order_matched",
+      "explicit_second_order"
+    ]
+  },
+  "expected_prompt_counts": {
+    "DP5": 6,
+    "DP7": 10,
+    "total": 16
+  },
+  "primary_contrasts": {
+    "H1": {
+      "informative_condition": "explicit_first_order",
+      "matched_neutral_condition": "reactive_neutral_first_order_matched",
+      "paired_cases": [
+        "DP5a_self_belief_false",
+        "DP5b_self_belief_current"
+      ],
+      "future_estimand": "Difference in the false-versus-current change in decoy/productive selection between the informative and matched-neutral arms."
+    },
+    "H2": {
+      "informative_condition": "explicit_second_order",
+      "matched_neutral_condition": "first_order_neutral_second_order_matched",
+      "paired_cases": [
+        "DP7a_partner_belief_stale",
+        "DP7b_partner_belief_current"
+      ],
+      "future_estimand": "Difference in stale-versus-current correction sensitivity between the informative and matched-neutral second-order arms."
+    }
+  },
+  "secondary_descriptive_references": [
+    "explicit_first_order versus reactive_no_explicit_belief",
+    "explicit_second_order versus explicit_first_order"
+  ],
+  "primary_contrast_freeze_rule": "Secondary comparisons may not be designated primary after results are observed.",
+  "required_section_order": [
+    "TASK",
+    "LOCAL OBSERVATION",
+    "RAW DELIVERED MESSAGES",
+    "VALID ACTIONS",
+    "FIRST-ORDER REPRESENTATION when applicable",
+    "SECOND-ORDER REPRESENTATION when applicable",
+    "OUTPUT FORMAT"
+  ],
+  "matching_requirements": {
+    "invariant_core_sections_byte_identical_within_case": true,
+    "first_order_character_line_structure_and_whitespace_tokens_equal": true,
+    "second_order_character_line_structure_and_whitespace_tokens_equal": true,
+    "paired_prompt_length_difference_reproduced_by_neutral_arm": true,
+    "raw_evidence_identical_within_case": true,
+    "valid_actions_identical_within_case": true
+  },
+  "raw_evidence_max_occurrences_per_prompt": 1,
+  "model_visible_source_message_field_allowed": false,
+  "invariant_evidence_reference": "raw_message_1",
+  "provenance_resolution_required_in_audit": true,
+  "model_tokenizer_audit_required": true,
+  "model_tokenizer_status": "unresolved_and_blocks_real_execution",
+  "real_execution_authorized": false,
+  "interpretation_constraint": "This mock-only prompt scaffold does not test H1, H2, or H3 and cannot demonstrate Theory of Mind, coordination improvement, autonomous planning, or cognition from model-written reasons."
+}
