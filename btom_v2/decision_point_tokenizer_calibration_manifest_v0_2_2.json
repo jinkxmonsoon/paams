@@ -1,0 +1,33 @@
+{
+  "calibration_version": "btom-v2-decision-point-tokenizer-calibration-0.2.2",
+  "status": "tokenizer_only_no_model_execution",
+  "parent_prompt_protocol": "btom-v2-decision-point-prompt-protocol-0.2.1-provenance-separated-mock-only",
+  "parent_remote_commit": "c2a2d66475564406e0f5625c73c848e8e4cb8c9b",
+  "provider": "Groq",
+  "model": "openai/gpt-oss-20b",
+  "raw_tokenizer": "o200k_harmony",
+  "harmony_encoding": "HARMONY_GPT_OSS",
+  "python_version": "3.11",
+  "dependencies": {
+    "tiktoken": "0.13.0",
+    "openai-harmony": "0.0.8"
+  },
+  "conversation_layout": {
+    "system_messages": 0,
+    "developer_messages": 0,
+    "user_messages": 1,
+    "assistant_generation_prefix": true
+  },
+  "search_range": {
+    "minimum_variant": 0,
+    "maximum_variant": 9999
+  },
+  "filler_alphabet": "QZX789_",
+  "pair_namespaces": [
+    "DP5_FIRST_ORDER_PAIR",
+    "DP7_FIRST_ORDER_PAIR",
+    "DP7_SECOND_ORDER_PAIR"
+  ],
+  "real_execution_authorized": false,
+  "interpretation_constraint": "This tokenizer-only calibration does not test H1, H2, or H3 and cannot demonstrate Theory of Mind, coordination improvement, autonomous planning, or cognition."
+}
