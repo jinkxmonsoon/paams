@@ -1,0 +1,61 @@
+{
+  "protocol_version": "btom-v2-decision-point-protocol-0.1-scaffold",
+  "status": "mock_only_not_authorized_for_real_execution",
+  "parent_run_id": 29893975248,
+  "parent_remote_commit": "e869b620d984b6172c3e8d2f439ad253dcba90b5",
+  "cases": [
+    "DP5a_self_belief_false",
+    "DP5b_self_belief_current",
+    "DP7a_partner_belief_stale",
+    "DP7b_partner_belief_current"
+  ],
+  "planned_representation_conditions": [
+    "reactive_no_explicit_belief",
+    "reactive_neutral_first_order_matched",
+    "explicit_first_order",
+    "first_order_neutral_second_order_matched",
+    "explicit_second_order"
+  ],
+  "primary_metrics": {
+    "DP5": [
+      "productive_branch_selected",
+      "decoy_branch_selected",
+      "neutral_branch_selected",
+      "invalid_or_unparseable_action"
+    ],
+    "DP7": [
+      "necessary_correction_sent",
+      "missed_necessary_correction",
+      "unnecessary_correction_sent",
+      "appropriate_no_correction",
+      "invalid_or_unparseable_action"
+    ]
+  },
+  "secondary_technical_metrics": [
+    "API response success",
+    "parser success given API response",
+    "direct-action environment validity",
+    "input and output tokens",
+    "prompt characters",
+    "latency",
+    "fallback count"
+  ],
+  "required_controls": [
+    "identical paired physical state",
+    "identical paired visible observation",
+    "identical paired action order",
+    "reactive_neutral_first_order_matched prompt-length and block-structure control",
+    "first_order_neutral_second_order_matched prompt-length and block-structure control",
+    "raw delivered evidence shared across representation conditions",
+    "prompt-layer audit",
+    "single-decision termination"
+  ],
+  "mandatory_controls": {
+    "neutral_first_order_matched": true,
+    "neutral_second_order_matched": true,
+    "required_before_real_execution": true,
+    "real_execution_forbidden_until_implemented_and_audited": true
+  },
+  "metric_amendment_rule": "Primary metrics may not be added after observing real results without a declared protocol amendment.",
+  "interpretation_constraint": "This mock-only scaffold does not test H1, H2, or H3 and cannot demonstrate Theory of Mind, coordination improvement, or autonomous planning."
+}
