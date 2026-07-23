@@ -4,6 +4,7 @@ from collections import Counter
 from .action_parser import parse_action
 from .budget import BudgetTracker
 from .epistemic_state import AgentEpistemicState
+from .env import PORTABLE_ITEMS
 from .prompts import PromptBuilder
 from .schemas import AGENTS
 
@@ -20,7 +21,7 @@ def enumerate_valid_actions(env, agent, observation):
     actions.extend(
         {"action": "pickup", "target": item}
         for item in observation.visible_items
-        if ROLE_ITEMS.get(item, agent) == agent
+        if item in PORTABLE_ITEMS and ROLE_ITEMS.get(item) == agent
     )
 
     status = observation.task_status

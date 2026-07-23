@@ -8,6 +8,7 @@ LOCATIONS = (
     "staging", "wait_room", "box_path_1", "red_room", "blue_room", "box_room", "med_room", "victim_room",
     "decoy_room", "long_decoy_1", "long_decoy_2", "corridor_1", "wrong_branch_1", "wrong_branch_2", "wrong_room",
 )
+PORTABLE_ITEMS = frozenset({"red_key", "blue_key", "medical_kit"})
 
 @dataclass
 class WorldState:
@@ -188,6 +189,7 @@ class BTomEnvV2:
 
     def _pickup(self, agent: str, item: str) -> Tuple[bool, str | None]:
         s = self.state; loc = s.locations[agent]
+        if item not in PORTABLE_ITEMS: return True, "non_portable_item"
         if item not in s.room_items[loc]: return True, "item_not_in_room"
         if item == "red_key" and agent != "A": return True, "role_mismatch_pickup"
         if item == "blue_key" and agent != "B": return True, "role_mismatch_pickup"
