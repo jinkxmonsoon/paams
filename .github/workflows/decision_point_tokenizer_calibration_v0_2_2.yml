@@ -12,7 +12,7 @@ jobs:
   calibrate:
     if: >-
       github.event.head_commit.message ==
-          'Run tokenizer-only decision-point calibration [run-tokenizer-calibration-v0.2.2]'
+          'Retry tokenizer calibration with pinned pytest [run-tokenizer-calibration-v0.2.2-r2]'
     runs-on: ubuntu-latest
     timeout-minutes: 30
     steps:
@@ -57,8 +57,21 @@ jobs:
           python -m pip show tiktoken openai-harmony \
             > tokenizer-calibration-artifact/pip_resolved_versions.txt
 
+      - name: Install pinned test runner
+        shell: bash
+        run: |
+          set -o pipefail
+          python -m pip install --retries 0 pytest==8.4.2 \
+            2>&1 | tee tokenizer-calibration-artifact/pytest_install.log
+          python -m pip show pytest \
+            > tokenizer-calibration-artifact/pytest_resolved_version.txt
+
       - name: Run complete test suite
-        run: pytest -q
+        shell: bash
+        run: |
+          set -o pipefail
+          python -m pytest -q 2>&1 |
+            tee tokenizer-calibration-artifact/pytest.log
 
       - name: Run tokenizer-only calibration
         run: |

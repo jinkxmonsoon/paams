@@ -132,25 +132,47 @@ def test_workflow_has_exact_guard_no_secrets_and_tokenizer_only_steps():
     workflow = WORKFLOW_PATH.read_text()
     guard = (
         "github.event.head_commit.message ==\n"
-        "          'Run tokenizer-only decision-point calibration [run-tokenizer-calibration-v0.2.2]'"
+        "          'Retry tokenizer calibration with pinned pytest [run-tokenizer-calibration-v0.2.2-r2]'"
     )
     assert guard in workflow
     assert "GROQ_API_KEY" not in workflow
     assert "OPENAI_API_KEY" not in workflow
     assert "tiktoken==0.13.0" in workflow
     assert "openai-harmony==0.0.8" in workflow
-    assert "pytest -q" in workflow
+    assert "pytest==8.4.2" in workflow
+    assert "python -m pytest -q 2>&1 |" in workflow
+    assert "tee tokenizer-calibration-artifact/pytest.log" in workflow
+    assert "set -o pipefail" in workflow
+    assert "|| true" not in workflow
+    assert "continue-on-error" not in workflow
     assert workflow.count("run_decision_point_tokenizer_calibration_v0_2_2") == 1
     assert "if: always()" in workflow
     assert "actions/upload-artifact@v4" in workflow
     for forbidden in ("curl ", "wget ", "api.groq.com", "api.openai.com"):
         assert forbidden not in workflow.lower()
 
+    tokenizer_step = workflow.split("- name: Install frozen tokenizer dependencies", 1)[1].split(
+        "- name: Install pinned test runner", 1
+    )[0]
+    pytest_step = workflow.split("- name: Install pinned test runner", 1)[1].split(
+        "- name: Run complete test suite", 1
+    )[0]
+    assert "tiktoken==0.13.0" in tokenizer_step
+    assert "openai-harmony==0.0.8" in tokenizer_step
+    assert "pytest==8.4.2" not in tokenizer_step
+    assert "pytest==8.4.2" in pytest_step
+    assert "tiktoken==0.13.0" not in pytest_step
+    assert "openai-harmony==0.0.8" not in pytest_step
+    assert "tokenizer-calibration-artifact/pytest_install.log" in pytest_step
+    assert "tokenizer-calibration-artifact/pytest_resolved_version.txt" in pytest_step
+    assert "python -m pip show pytest" in pytest_step
+
 
 def test_new_activation_message_does_not_match_old_workflow_guards():
-    message = "Run tokenizer-only decision-point calibration [run-tokenizer-calibration-v0.2.2]"
+    message = "Retry tokenizer calibration with pinned pytest [run-tokenizer-calibration-v0.2.2-r2]"
     old_workflows = (
         ROOT / ".github/workflows/frozen_real_llm_micro_pilot.yml",
         ROOT / ".github/workflows/frozen_real_llm_micro_pilot_v1_1.yml",
     )
     assert all(message not in path.read_text() for path in old_workflows)
+    assert message != "Run tokenizer-only decision-point calibration [run-tokenizer-calibration-v0.2.2]"
