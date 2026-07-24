@@ -1,0 +1,90 @@
+name: Decision-point first-order tokenizer feasibility v0.2.3
+
+on:
+  push:
+    branches:
+      - codex/execute-micro-pilot-on-current-branch-vsnbkd
+
+permissions:
+  contents: read
+
+jobs:
+  feasibility:
+    if: >-
+      github.event.head_commit.message ==
+          'Run structured first-order tokenizer feasibility [run-first-order-feasibility-v0.2.3]'
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    steps:
+      - name: Check out triggering commit
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.sha }}
+
+      - name: Set up Python 3.11
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Initialize artifact directory
+        run: |
+          mkdir -p first-order-feasibility-artifact
+          printf '{"workflow_status":"initialized","model_or_api_execution":false}\n' \
+            > first-order-feasibility-artifact/workflow_status.json
+
+      - name: Verify immutable inputs
+        run: |
+          cat > first-order-feasibility-artifact/immutable_hash_check.txt <<'EOF'
+          a2a6140e4e7676187c589a7e10c61fc6ff1b96f5aa0ba90258d54bb265e8b80f  btom_v2/decision_point_prompting_v0_2_1.py
+          9acec8dba50f0e33082cb8b0b238b8f4d27875b6ee4382fdee7c7e4ea806e8f7  btom_v2/decision_point_prompt_protocol_v0_2_1.json
+          d4f7f9dbf0eda3219716987b379776207f1ad0e8c8131e704ec88a99ddcf55ec  btom_v2/audit_decision_point_prompts_v0_2_1.py
+          032acd30bf00e562530c849b47a0c76608bbd07a1fdfe3982a51c092832054d9  btom_v2/decision_point_prompt_amendment_v0_2_1.md
+          18940981899f4338e23fdab74da830484294afe9d66339b70dc8a98e907718c2  btom_v2/decision_point_tokenizer_calibration_manifest_v0_2_2.json
+          4b6733199b2b802f9c7c5265ae6fb776fad2da33301d8383c19a10c2a9cb36ab  btom_v2/run_decision_point_tokenizer_calibration_v0_2_2.py
+          EOF
+          sha256sum --check first-order-feasibility-artifact/immutable_hash_check.txt
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          parent = json.loads(Path("btom_v2/decision_point_prompt_protocol_v0_2_1.json").read_text())
+          assert parent["real_execution_authorized"] is False
+          PY
+
+      - name: Install frozen tokenizer dependencies
+        shell: bash
+        run: |
+          set -o pipefail
+          python -m pip install --retries 0 tiktoken==0.13.0 openai-harmony==0.0.8 \
+            2>&1 | tee first-order-feasibility-artifact/pip_install.log
+          python -m pip show tiktoken openai-harmony \
+            > first-order-feasibility-artifact/pip_resolved_versions.txt
+
+      - name: Install pinned test runner
+        shell: bash
+        run: |
+          set -o pipefail
+          python -m pip install --retries 0 pytest==8.4.2 \
+            2>&1 | tee first-order-feasibility-artifact/pytest_install.log
+          python -m pip show pytest \
+            > first-order-feasibility-artifact/pytest_resolved_version.txt
+
+      - name: Run complete test suite
+        shell: bash
+        run: |
+          set -o pipefail
+          python -m pytest -q 2>&1 |
+            tee first-order-feasibility-artifact/pytest.log
+
+      - name: Run tokenizer-only first-order feasibility calibration
+        run: |
+          python -m btom_v2.run_decision_point_first_order_feasibility_v0_2_3 \
+            --output-dir first-order-feasibility-artifact/calibration
+
+      - name: Upload feasibility diagnostics
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: decision-point-first-order-feasibility-v0.2.3-${{ github.run_id }}
+          path: first-order-feasibility-artifact/
+          retention-days: 30
+          if-no-files-found: error
