@@ -1,0 +1,54 @@
+{
+  "protocol_version": "btom-v2-decision-point-natural-control-design-0.3.0-mock-only",
+  "status": "mock_only_not_authorized_for_real_execution",
+  "parent_prompt_protocol": "btom-v2-decision-point-prompt-protocol-0.2.1-provenance-separated-mock-only",
+  "parent_placebo_audit_run_id": 30068749379,
+  "parent_placebo_audit_artifact_sha256": "fc03352ad8fadb3faf32e8fe52e238dfb065e6ffe17e906145aa4ecb5f17f390",
+  "parent_remote_commit": "e0ea286d48ccb20bfd60d57e353e6670d5422aff",
+  "immutable_parent_sha256": {
+    "btom_v2/decision_point_prompting_v0_2_1.py": "a2a6140e4e7676187c589a7e10c61fc6ff1b96f5aa0ba90258d54bb265e8b80f",
+    "btom_v2/decision_point_prompt_protocol_v0_2_1.json": "9acec8dba50f0e33082cb8b0b238b8f4d27875b6ee4382fdee7c7e4ea806e8f7",
+    "btom_v2/decision_point_scenarios.py": "e7a936cca701356dc2f9a5c8ab9621b5e593af932b854afe4c9a146acf1994f5"
+  },
+  "conditions_by_family": {
+    "DP5": [
+      "reactive_no_epistemic_representation",
+      "operational_metadata_reference",
+      "explicit_first_order"
+    ],
+    "DP7": [
+      "reactive_no_epistemic_representation",
+      "operational_metadata_reference",
+      "explicit_first_order",
+      "first_order_plus_message_provenance",
+      "explicit_second_order"
+    ]
+  },
+  "expected_prompt_counts": {"DP5": 6, "DP7": 10, "total": 16},
+  "primary_contrasts": {
+    "H1a_H1b": {
+      "informative_condition": "explicit_first_order",
+      "reference_condition": "operational_metadata_reference",
+      "interaction_cases": ["DP5a_self_belief_false", "DP5b_self_belief_current"]
+    },
+    "H2": {
+      "informative_condition": "explicit_second_order",
+      "reference_condition": "first_order_plus_message_provenance",
+      "interaction_cases": ["DP7a_partner_belief_stale", "DP7b_partner_belief_current"]
+    }
+  },
+  "secondary_comparators": {
+    "H1a_H1b": ["reactive_no_epistemic_representation"],
+    "H2": ["explicit_first_order"]
+  },
+  "model_visible_blocks": {
+    "first_order_field_count": 4,
+    "operational_metadata_field_count": 4,
+    "second_order_field_count": 6,
+    "message_provenance_field_count": 6
+  },
+  "tokenizer_parity_claimed": false,
+  "later_tokenizer_only_calibration_required": true,
+  "real_execution_authorized": false,
+  "interpretation_constraint": "This mock-only natural-control design does not test H1a, H1b, or H2 and cannot demonstrate Theory of Mind, coordination improvement, autonomous planning, or model cognition."
+}
