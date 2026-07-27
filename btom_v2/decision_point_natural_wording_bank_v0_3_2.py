@@ -68,8 +68,8 @@ H2_PROVENANCE_VARIANTS = _numbered_variants(
 @dataclass(frozen=True)
 class CandidateSpecification:
     location_surface_id: str
-    H1_operational_variant_id: str
-    H2_provenance_variant_id: str
+    h1_operational_variant_id: str
+    h2_provenance_variant_id: str
     candidate_id: str
 
 
@@ -80,8 +80,8 @@ def _canonical_specification(
 ) -> str:
     return json.dumps(
         {
-            "H1_operational_variant_id": h1_variant_id,
-            "H2_provenance_variant_id": h2_variant_id,
+            "h1_operational_variant_id": h1_variant_id,
+            "h2_provenance_variant_id": h2_variant_id,
             "location_surface_id": location_surface_id,
         },
         sort_keys=True,
@@ -142,7 +142,7 @@ def render_prompt_variant(
     h1_operational_variant_id: str,
     h2_provenance_variant_id: str,
 ):
-    """Render by changing only the five prospectively permitted literal fields."""
+    """Render by changing only the seven prospectively permitted field values."""
     _lookup(location_surface_id, LOCATION_SURFACES)
     _lookup(h1_operational_variant_id, H1_OPERATIONAL_VARIANTS)
     _lookup(h2_provenance_variant_id, H2_PROVENANCE_VARIANTS)
@@ -214,8 +214,8 @@ def render_candidate_set(specification: CandidateSpecification):
             case,
             condition,
             specification.location_surface_id,
-            specification.H1_operational_variant_id,
-            specification.H2_provenance_variant_id,
+            specification.h1_operational_variant_id,
+            specification.h2_provenance_variant_id,
         )
         for case in CASES
         for condition in CONDITIONS_BY_FAMILY[case.family]
@@ -228,6 +228,192 @@ def _natural_ascii(value: str) -> bool:
     )
 
 
+PERMITTED_REPLACEMENT_FIELDS = frozenset({
+    "represented_value",
+    "believed_value",
+    "decision_scope",
+    "action_source",
+    "output_mode",
+    "message_type",
+    "delivery_status",
+})
+PERMITTED_FIELDS_BY_SECTION = {
+    "FIRST-ORDER REPRESENTATION": frozenset({"represented_value"}),
+    "SECOND-ORDER REPRESENTATION": frozenset({"believed_value"}),
+    "DECISION METADATA": frozenset({"decision_scope", "action_source", "output_mode"}),
+    "MESSAGE PROVENANCE METADATA": frozenset({"message_type", "delivery_status"}),
+}
+EXPECTED_FIELDS_BY_SECTION = {
+    "FIRST-ORDER REPRESENTATION": (
+        "agent", "proposition", "represented_value", "representation_scope",
+    ),
+    "SECOND-ORDER REPRESENTATION": (
+        "observer", "target_agent", "proposition", "believed_value",
+        "epistemic_status", "evidence_ref",
+    ),
+    "DECISION METADATA": ("agent", "decision_scope", "action_source", "output_mode"),
+    "MESSAGE PROVENANCE METADATA": (
+        "observer", "message_sender", "message_type", "content_reference",
+        "delivery_status", "evidence_ref",
+    ),
+}
+
+
+def _parse_block(block: str) -> tuple[str, tuple[tuple[str, str], ...]]:
+    """Parse one rendered section, rejecting malformed or duplicate fields."""
+    lines = block.splitlines()
+    if not lines:
+        raise ValueError("empty model-visible section")
+    fields = []
+    for line in lines[1:]:
+        if "=" not in line:
+            raise ValueError("model-visible field line lacks an equals sign")
+        name, quoted = line.split("=", 1)
+        if not name or len(quoted) < 2 or not quoted.startswith('"') or not quoted.endswith('"'):
+            raise ValueError("malformed model-visible field line")
+        fields.append((name, quoted[1:-1]))
+    names = [name for name, _ in fields]
+    if len(names) != len(set(names)):
+        raise ValueError("duplicate model-visible field")
+    return lines[0], tuple(fields)
+
+
+def audit_prompt_structure(prompt, parent, case: DecisionPointCase) -> dict:
+    """Calculate structural invariants for one candidate prompt against v0.3.0."""
+    result = {
+        "section_order_frozen": False,
+        "field_names_frozen": False,
+        "field_order_frozen": False,
+        "field_counts_frozen": False,
+        "line_counts_frozen": False,
+        "permitted_replacement_boundary_passed": False,
+        "common_sections_byte_identical": False,
+        "raw_messages_byte_identical": False,
+        "valid_actions_byte_identical": False,
+        "DP7_raw_evidence_exactly_once": case.family != "DP7",
+        "no_leaks": False,
+    }
+    try:
+        candidate_names = tuple(name for name, _ in prompt.sections)
+        parent_names = tuple(name for name, _ in parent.sections)
+        result["section_order_frozen"] = candidate_names == parent_names
+        candidate_sections = dict(prompt.sections)
+        parent_sections = dict(parent.sections)
+        result["common_sections_byte_identical"] = all(
+            candidate_sections.get(name, "").encode() == parent_sections[name].encode()
+            for name in COMMON_SECTIONS
+        )
+        result["raw_messages_byte_identical"] = (
+            candidate_sections.get("RAW DELIVERED MESSAGES")
+            == parent_sections["RAW DELIVERED MESSAGES"]
+        )
+        result["valid_actions_byte_identical"] = (
+            candidate_sections.get("VALID ACTIONS") == parent_sections["VALID ACTIONS"]
+        )
+
+        names_frozen = True
+        order_frozen = True
+        counts_frozen = True
+        lines_frozen = True
+        boundary_passed = True
+        boundary_passed &= prompt.prompt == "\n\n".join(text for _, text in prompt.sections)
+        for section_name, parent_text in parent.sections:
+            if section_name in COMMON_SECTIONS:
+                continue
+            candidate_text = candidate_sections[section_name]
+            parent_title, parent_fields = _parse_block(parent_text)
+            candidate_title, candidate_fields = _parse_block(candidate_text)
+            parent_field_names = tuple(name for name, _ in parent_fields)
+            candidate_field_names = tuple(name for name, _ in candidate_fields)
+            expected_names = EXPECTED_FIELDS_BY_SECTION[section_name]
+            names_frozen &= set(candidate_field_names) == set(parent_field_names) == set(expected_names)
+            order_frozen &= candidate_field_names == parent_field_names == expected_names
+            counts_frozen &= len(candidate_fields) == len(parent_fields)
+            lines_frozen &= len(candidate_text.splitlines()) == len(parent_text.splitlines())
+            boundary_passed &= candidate_title == parent_title == section_name
+            if candidate_field_names == parent_field_names:
+                for (field, candidate_value), (_, parent_value) in zip(
+                    candidate_fields, parent_fields
+                ):
+                    if (
+                        candidate_value != parent_value
+                        and field not in PERMITTED_FIELDS_BY_SECTION.get(section_name, frozenset())
+                    ):
+                        boundary_passed = False
+            else:
+                boundary_passed = False
+        result.update({
+            "field_names_frozen": names_frozen,
+            "field_order_frozen": order_frozen,
+            "field_counts_frozen": counts_frozen,
+            "line_counts_frozen": lines_frozen,
+            "permitted_replacement_boundary_passed": boundary_passed,
+        })
+        if case.family == "DP7":
+            result["DP7_raw_evidence_exactly_once"] = all(
+                prompt.prompt.count(message) == 1 for message in case.raw_delivered_messages
+            )
+        result["no_leaks"] = (
+            "source_message=" not in prompt.prompt
+            and not any(key in prompt.prompt for key, _ in case.hidden_world_state)
+            and not any(label in prompt.prompt for label in SCORING_LABELS)
+            and prompt.condition not in prompt.prompt
+            and not any(marker in prompt.prompt for marker in ("loc_", "BBBBBBBB", "989_____"))
+        )
+    except (KeyError, ValueError):
+        pass
+    result["passed"] = all(result.values())
+    return result
+
+
+def _candidate_values_match(prompt, case: DecisionPointCase, specification) -> bool:
+    """Verify that permitted replacements come from the selected frozen bank entries."""
+    sections = dict(prompt.sections)
+    if "FIRST-ORDER REPRESENTATION" in sections:
+        _, fields = _parse_block(sections["FIRST-ORDER REPRESENTATION"])
+        expected = location_surface(
+            dict(case.first_order_representation)["medical_kit_location"],
+            specification.location_surface_id,
+        )
+        if dict(fields)["represented_value"] != expected:
+            return False
+    if "SECOND-ORDER REPRESENTATION" in sections:
+        _, fields = _parse_block(sections["SECOND-ORDER REPRESENTATION"])
+        expected = location_surface(
+            case.second_order_representation[0].believed_value,
+            specification.location_surface_id,
+        )
+        if dict(fields)["believed_value"] != expected:
+            return False
+    if "DECISION METADATA" in sections:
+        _, fields = _parse_block(sections["DECISION METADATA"])
+        values = dict(fields)
+        expected = _lookup(
+            specification.h1_operational_variant_id, H1_OPERATIONAL_VARIANTS
+        )
+        if (values["decision_scope"], values["action_source"], values["output_mode"]) != expected:
+            return False
+        if values["agent"] != case.acting_agent:
+            return False
+    if "MESSAGE PROVENANCE METADATA" in sections:
+        _, fields = _parse_block(sections["MESSAGE PROVENANCE METADATA"])
+        values = dict(fields)
+        expected = _lookup(
+            specification.h2_provenance_variant_id, H2_PROVENANCE_VARIANTS
+        )
+        if (values["message_type"], values["delivery_status"]) != expected:
+            return False
+        frozen = dict(_parse_block(
+            dict(render_parent_prompt(case, MESSAGE_PROVENANCE).sections)[
+                "MESSAGE PROVENANCE METADATA"
+            ]
+        )[1])
+        for field in ("observer", "message_sender", "content_reference", "evidence_ref"):
+            if values[field] != frozen[field]:
+                return False
+    return True
+
+
 def audit_wording_bank() -> dict:
     location_values = [value for _, pair in LOCATION_SURFACES for value in pair]
     h1_values = [value for _, variant in H1_OPERATIONAL_VARIANTS for value in variant]
@@ -238,56 +424,38 @@ def audit_wording_bank() -> dict:
     )
     bank_values = location_values + h1_values + h2_values
     specifications = candidate_specifications()
-    representative = (specifications[0], specifications[len(specifications) // 2], specifications[-1])
-    representative_results = []
-    for specification in representative:
+    parent_by_prompt_id = {
+        f"{case.case_id}:{condition}": render_parent_prompt(case, condition)
+        for case in CASES
+        for condition in CONDITIONS_BY_FAMILY[case.family]
+    }
+    cases_by_id = {case.case_id: case for case in CASES}
+    structural_results = []
+    failed_candidate_ids = []
+    prompts_audited = 0
+    for specification in specifications:
         prompts = render_candidate_set(specification)
-        common_immutable = True
-        evidence_once = True
-        no_leaks = True
-        representation_sources_valid = True
+        candidate_passed = len(prompts) == 16
+        candidate_passed &= sum(prompt.family == "DP5" for prompt in prompts) == 6
+        candidate_passed &= sum(prompt.family == "DP7" for prompt in prompts) == 10
         for prompt in prompts:
-            case = next(case for case in CASES if case.case_id == prompt.case_id)
-            parent = render_parent_prompt(case, prompt.condition)
-            common_immutable &= all(
-                dict(prompt.sections)[name].encode() == dict(parent.sections)[name].encode()
-                for name in COMMON_SECTIONS
+            prompts_audited += 1
+            result = audit_prompt_structure(
+                prompt, parent_by_prompt_id[prompt.prompt_id], cases_by_id[prompt.case_id]
             )
-            if case.family == "DP7":
-                evidence_once &= prompt.prompt.count(case.raw_delivered_messages[0]) == 1
-            no_leaks &= (
-                "source_message=" not in prompt.prompt
-                and not any(key in prompt.prompt for key, _ in case.hidden_world_state)
-                and not any(label in prompt.prompt for label in SCORING_LABELS)
-                and prompt.condition not in prompt.prompt
-            )
-            allowed_surfaces = {
-                location_surface(value, specification.location_surface_id)
-                for _, value in case.first_order_representation
-            } | {
-                location_surface(nested.believed_value, specification.location_surface_id)
-                for nested in case.second_order_representation
-            }
-            visible_representation_lines = [
-                line for name, text in prompt.sections
-                if name in {"FIRST-ORDER REPRESENTATION", "SECOND-ORDER REPRESENTATION"}
-                for line in text.splitlines()
-                if line.startswith(("represented_value=", "believed_value="))
-            ]
-            representation_sources_valid &= all(
-                line.split('"', 2)[1] in allowed_surfaces
-                for line in visible_representation_lines
-            )
-        representative_results.append({
-            "candidate_id": specification.candidate_id,
-            "prompt_count": len(prompts),
-            "common_sections_byte_identical": common_immutable,
-            "actions_and_raw_messages_frozen": common_immutable,
-            "DP7_raw_evidence_exactly_once": evidence_once,
-            "no_hidden_scoring_condition_or_source_message_leaks": no_leaks,
-            "representation_sources_valid": representation_sources_valid,
-            "real_execution_authorized": False,
-        })
+            structural_results.append(result)
+            candidate_passed &= result["passed"]
+            candidate_passed &= _candidate_values_match(prompt, cases_by_id[prompt.case_id], specification)
+        if not candidate_passed:
+            failed_candidate_ids.append(specification.candidate_id)
+    structural_keys = (
+        "section_order_frozen", "field_names_frozen", "field_order_frozen",
+        "field_counts_frozen", "line_counts_frozen",
+        "permitted_replacement_boundary_passed",
+    )
+    aggregates = {
+        key: all(result[key] for result in structural_results) for key in structural_keys
+    }
     return {
         "design_version": DESIGN_VERSION,
         "location_surface_count": len(LOCATION_SURFACES),
@@ -299,11 +467,18 @@ def audit_wording_bank() -> dict:
         "metadata_controls_non_epistemic": not any(
             term in value.lower() for value in h1_values + h2_values for term in metadata_forbidden
         ),
-        "field_and_line_counts_frozen": True,
+        "candidate_sets_audited": len(specifications),
+        "prompts_audited": prompts_audited,
+        "candidate_sets_failed": len(failed_candidate_ids),
+        "failed_candidate_ids": failed_candidate_ids,
+        **aggregates,
+        "field_and_line_counts_frozen": all(
+            aggregates[key]
+            for key in ("field_names_frozen", "field_order_frozen", "field_counts_frozen", "line_counts_frozen")
+        ),
         "token_counts_available": False,
         "final_wording_selected": False,
         "real_execution_authorized": False,
-        "representative_candidate_audits": representative_results,
     }
 
 

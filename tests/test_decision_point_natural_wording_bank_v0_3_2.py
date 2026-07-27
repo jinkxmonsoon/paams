@@ -1,5 +1,6 @@
 import hashlib
 import json
+from dataclasses import fields, replace
 from pathlib import Path
 
 from btom_v2.decision_point_natural_control_prompting_v0_3_0 import (
@@ -8,7 +9,8 @@ from btom_v2.decision_point_natural_control_prompting_v0_3_0 import (
 from btom_v2.decision_point_natural_wording_bank_v0_3_2 import (
     ACTION_SOURCES, DECISION_SCOPES, DELIVERY_STATUSES, FUTURE_SELECTION_RULE,
     H1_OPERATIONAL_VARIANTS, H2_PROVENANCE_VARIANTS, LOCATION_SURFACES,
-    MESSAGE_TYPES, OUTPUT_MODES, audit_wording_bank, candidate_id,
+    MESSAGE_TYPES, OUTPUT_MODES, PERMITTED_REPLACEMENT_FIELDS,
+    CandidateSpecification, audit_prompt_structure, audit_wording_bank, candidate_id,
     candidate_specifications, render_candidate_set, render_prompt_variant,
 )
 from btom_v2.decision_point_scenarios import CASES
@@ -55,17 +57,35 @@ def test_candidate_specs_are_complete_unique_stable_and_hash_identified():
         specifications,
         key=lambda item: (
             item.location_surface_id,
-            item.H1_operational_variant_id,
-            item.H2_provenance_variant_id,
+            item.h1_operational_variant_id,
+            item.h2_provenance_variant_id,
         ),
     ))
     first = specifications[0]
     assert first.candidate_id == candidate_id(
         first.location_surface_id,
-        first.H1_operational_variant_id,
-        first.H2_provenance_variant_id,
+        first.h1_operational_variant_id,
+        first.h2_provenance_variant_id,
     )
     assert MANIFEST["expected_candidate_triples"] == 1296
+
+
+def test_corrected_lowercase_schema_and_all_ids_independently_recompute():
+    assert tuple(field.name for field in fields(CandidateSpecification)) == (
+        "location_surface_id", "h1_operational_variant_id",
+        "h2_provenance_variant_id", "candidate_id",
+    )
+    assert MANIFEST["candidate_specification_fields"] == [
+        "location_surface_id", "h1_operational_variant_id", "h2_provenance_variant_id",
+    ]
+    assert MANIFEST["candidate_order"] == MANIFEST["candidate_specification_fields"]
+    for item in candidate_specifications():
+        canonical = json.dumps({
+            "h1_operational_variant_id": item.h1_operational_variant_id,
+            "h2_provenance_variant_id": item.h2_provenance_variant_id,
+            "location_surface_id": item.location_surface_id,
+        }, sort_keys=True, separators=(",", ":"))
+        assert item.candidate_id == hashlib.sha256(canonical.encode("utf-8")).hexdigest()
 
 
 def test_rendering_changes_only_permitted_fields_and_preserves_common_sections():
@@ -86,7 +106,7 @@ def test_rendering_changes_only_permitted_fields_and_preserves_common_sections()
         )
 
 
-def test_all_representative_audits_pass_without_execution():
+def test_all_candidate_sets_and_prompts_are_executably_audited():
     audit = audit_wording_bank()
     assert audit["location_surface_count"] == 4
     assert audit["H1_operational_variant_count"] == 36
@@ -95,18 +115,68 @@ def test_all_representative_audits_pass_without_execution():
     assert audit["unique_candidate_id_count"] == 1296
     assert audit["all_bank_values_natural_ascii"] is True
     assert audit["metadata_controls_non_epistemic"] is True
+    assert audit["candidate_sets_audited"] == 1296
+    assert audit["prompts_audited"] == 20736
+    assert audit["candidate_sets_failed"] == 0
+    assert audit["failed_candidate_ids"] == []
+    for key in (
+        "section_order_frozen", "field_names_frozen", "field_order_frozen",
+        "field_counts_frozen", "line_counts_frozen",
+        "permitted_replacement_boundary_passed",
+    ):
+        assert audit[key] is True
     assert audit["field_and_line_counts_frozen"] is True
     assert audit["token_counts_available"] is False
     assert audit["final_wording_selected"] is False
     assert audit["real_execution_authorized"] is False
-    for record in audit["representative_candidate_audits"]:
-        assert record["prompt_count"] == 16
-        assert record["common_sections_byte_identical"] is True
-        assert record["actions_and_raw_messages_frozen"] is True
-        assert record["DP7_raw_evidence_exactly_once"] is True
-        assert record["no_hidden_scoring_condition_or_source_message_leaks"] is True
-        assert record["representation_sources_valid"] is True
-        assert record["real_execution_authorized"] is False
+
+
+def _mutate_section(prompt, section_name, transform):
+    sections = tuple(
+        (name, transform(text) if name == section_name else text)
+        for name, text in prompt.sections
+    )
+    return replace(prompt, sections=sections, prompt="\n\n".join(text for _, text in sections))
+
+
+def test_structural_helper_rejects_extra_reordered_and_forbidden_fields():
+    case = next(case for case in CASES if case.family == "DP5")
+    condition = "operational_metadata_reference"
+    prompt = render_prompt_variant(
+        case, condition, LOCATION_SURFACES[0][0],
+        H1_OPERATIONAL_VARIANTS[0][0], H2_PROVENANCE_VARIANTS[0][0],
+    )
+    parent = render_parent_prompt(case, condition)
+    extra = _mutate_section(
+        prompt, "DECISION METADATA", lambda text: text + '\nextra_field="extra"'
+    )
+    reordered = _mutate_section(
+        prompt, "DECISION METADATA",
+        lambda text: "\n".join([text.splitlines()[0], text.splitlines()[2], text.splitlines()[1], *text.splitlines()[3:]]),
+    )
+    forbidden = _mutate_section(
+        prompt, "DECISION METADATA", lambda text: text.replace(f'agent="{case.acting_agent}"', 'agent="Z"')
+    )
+    assert audit_prompt_structure(extra, parent, case)["passed"] is False
+    assert audit_prompt_structure(reordered, parent, case)["passed"] is False
+    assert audit_prompt_structure(forbidden, parent, case)["passed"] is False
+
+
+def test_exact_seven_permitted_replacement_fields():
+    assert PERMITTED_REPLACEMENT_FIELDS == {
+        "represented_value", "believed_value", "decision_scope", "action_source",
+        "output_mode", "message_type", "delivery_status",
+    }
+    assert MANIFEST["permitted_replacement_fields"] == [
+        "represented_value", "believed_value", "decision_scope", "action_source",
+        "output_mode", "message_type", "delivery_status",
+    ]
+
+
+def test_successful_structural_aggregate_is_not_hard_coded():
+    source = (ROOT / "btom_v2/decision_point_natural_wording_bank_v0_3_2.py").read_text()
+    assert '"field_and_line_counts_frozen": True' not in source
+    assert '"field_and_line_counts_frozen": all(' in source
 
 
 def test_selection_rule_is_exact_prospective_and_nonrelaxing():

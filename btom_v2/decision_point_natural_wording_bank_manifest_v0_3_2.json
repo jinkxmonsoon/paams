@@ -311,14 +311,14 @@
   "expected_candidate_triples": 1296,
   "candidate_specification_fields": [
     "location_surface_id",
-    "H1_operational_variant_id",
-    "H2_provenance_variant_id"
+    "h1_operational_variant_id",
+    "h2_provenance_variant_id"
   ],
   "candidate_id_rule": "SHA-256 of canonical JSON specification with sorted keys and compact separators",
   "candidate_order": [
     "location_surface_id",
-    "H1_operational_variant_id",
-    "H2_provenance_variant_id"
+    "h1_operational_variant_id",
+    "h2_provenance_variant_id"
   ],
   "future_exact_parity_criteria": {
     "all_16_structural_audits": true,
@@ -342,5 +342,21 @@
   "model_execution_authorized": false,
   "real_execution_authorized": false,
   "final_wording_selected": false,
-  "interpretation_constraint": "This wording-bank design does not test H1a, H1b, H2, Theory of Mind, coordination, autonomous planning, or model cognition."
+  "interpretation_constraint": "This wording-bank design does not test H1a, H1b, H2, Theory of Mind, coordination, autonomous planning, or model cognition.",
+  "candidate_id_amendment": "All 1,296 candidate IDs were regenerated prospectively from the corrected lowercase canonical schema before tokenizer execution.",
+  "permitted_replacement_fields": [
+    "represented_value",
+    "believed_value",
+    "decision_scope",
+    "action_source",
+    "output_mode",
+    "message_type",
+    "delivery_status"
+  ],
+  "structural_audit_scope": {
+    "candidate_sets": 1296,
+    "prompts_per_candidate_set": 16,
+    "total_prompts": 20736,
+    "sampling_or_truncation_allowed": false
+  }
 }
