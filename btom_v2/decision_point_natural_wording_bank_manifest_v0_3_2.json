@@ -1,0 +1,346 @@
+{
+  "design_version": "btom-v2-decision-point-natural-wording-bank-0.3.2-mock-only",
+  "status": "mock_only_not_authorized_for_real_execution",
+  "parent_provenance": {
+    "natural_control_protocol": "btom-v2-decision-point-natural-control-design-0.3.0-mock-only",
+    "tokenizer_measurement": "btom-v2-decision-point-natural-control-tokenizer-0.3.1",
+    "run_id": 30311773726,
+    "artifact_sha256": "5210d8efb69d9dd74265bff6d80a6556ac66fe9bbe63ec8cd86c22db9d4aea2c",
+    "remote_commit": "9bcce7569c3b04c14dca7db3589ae0f506bee4b9"
+  },
+  "immutable_parent_sha256": {
+    "btom_v2/decision_point_natural_control_manifest_v0_3_0.json": "c39b2997282561bdacffa4e6b55e8d26062901e67ce4596a658b569276375549",
+    "btom_v2/decision_point_natural_control_prompting_v0_3_0.py": "08df09f8e5d950f0fde422993133ca59e40362bcd06ba799446951a5701c1961",
+    "btom_v2/decision_point_natural_control_design_v0_3_0.md": "c4c3fbc1de8c4e13af89d56cc5077ab88edac95e7e1edec0f54391a88180d8e4",
+    "btom_v2/decision_point_natural_control_tokenizer_manifest_v0_3_1.json": "7bad288f7a4fd1b0b2855316b76b2dc8199b33f7dfd104a28e473f764441f15a",
+    "btom_v2/run_decision_point_natural_control_tokenizer_v0_3_1.py": "0cafebdba6943de286fd7326ff48a009f70affd3b62214898ec4df8607264e5e",
+    "btom_v2/decision_point_scenarios.py": "e7a936cca701356dc2f9a5c8ab9621b5e593af932b854afe4c9a146acf1994f5"
+  },
+  "location_surface_bank": {
+    "location_surface_01": {
+      "box_room": "box room",
+      "decoy_room": "decoy room"
+    },
+    "location_surface_02": {
+      "box_room": "the box room",
+      "decoy_room": "the decoy room"
+    },
+    "location_surface_03": {
+      "box_room": "box-room location",
+      "decoy_room": "decoy-room location"
+    },
+    "location_surface_04": {
+      "box_room": "location: box room",
+      "decoy_room": "location: decoy room"
+    }
+  },
+  "raw_symbolic_location_reference": {
+    "values": [
+      "box_room",
+      "decoy_room"
+    ],
+    "reference_only": true,
+    "rejected_for_final_selection": true,
+    "rejection_reason": "one-token interaction differential in v0.3.1"
+  },
+  "H1_operational_variants": [
+    {
+      "variant_id": "h1_operational_variant_01",
+      "decision_scope": "single_action",
+      "action_source": "listed_actions",
+      "output_mode": "json_object"
+    },
+    {
+      "variant_id": "h1_operational_variant_02",
+      "decision_scope": "single_action",
+      "action_source": "listed_actions",
+      "output_mode": "single_json_object"
+    },
+    {
+      "variant_id": "h1_operational_variant_03",
+      "decision_scope": "single_action",
+      "action_source": "listed_actions",
+      "output_mode": "one_json_object"
+    },
+    {
+      "variant_id": "h1_operational_variant_04",
+      "decision_scope": "single_action",
+      "action_source": "provided_action_list",
+      "output_mode": "json_object"
+    },
+    {
+      "variant_id": "h1_operational_variant_05",
+      "decision_scope": "single_action",
+      "action_source": "provided_action_list",
+      "output_mode": "single_json_object"
+    },
+    {
+      "variant_id": "h1_operational_variant_06",
+      "decision_scope": "single_action",
+      "action_source": "provided_action_list",
+      "output_mode": "one_json_object"
+    },
+    {
+      "variant_id": "h1_operational_variant_07",
+      "decision_scope": "single_action",
+      "action_source": "available_listed_actions",
+      "output_mode": "json_object"
+    },
+    {
+      "variant_id": "h1_operational_variant_08",
+      "decision_scope": "single_action",
+      "action_source": "available_listed_actions",
+      "output_mode": "single_json_object"
+    },
+    {
+      "variant_id": "h1_operational_variant_09",
+      "decision_scope": "single_action",
+      "action_source": "available_listed_actions",
+      "output_mode": "one_json_object"
+    },
+    {
+      "variant_id": "h1_operational_variant_10",
+      "decision_scope": "exactly_one_action",
+      "action_source": "listed_actions",
+      "output_mode": "json_object"
+    },
+    {
+      "variant_id": "h1_operational_variant_11",
+      "decision_scope": "exactly_one_action",
+      "action_source": "listed_actions",
+      "output_mode": "single_json_object"
+    },
+    {
+      "variant_id": "h1_operational_variant_12",
+      "decision_scope": "exactly_one_action",
+      "action_source": "listed_actions",
+      "output_mode": "one_json_object"
+    },
+    {
+      "variant_id": "h1_operational_variant_13",
+      "decision_scope": "exactly_one_action",
+      "action_source": "provided_action_list",
+      "output_mode": "json_object"
+    },
+    {
+      "variant_id": "h1_operational_variant_14",
+      "decision_scope": "exactly_one_action",
+      "action_source": "provided_action_list",
+      "output_mode": "single_json_object"
+    },
+    {
+      "variant_id": "h1_operational_variant_15",
+      "decision_scope": "exactly_one_action",
+      "action_source": "provided_action_list",
+      "output_mode": "one_json_object"
+    },
+    {
+      "variant_id": "h1_operational_variant_16",
+      "decision_scope": "exactly_one_action",
+      "action_source": "available_listed_actions",
+      "output_mode": "json_object"
+    },
+    {
+      "variant_id": "h1_operational_variant_17",
+      "decision_scope": "exactly_one_action",
+      "action_source": "available_listed_actions",
+      "output_mode": "single_json_object"
+    },
+    {
+      "variant_id": "h1_operational_variant_18",
+      "decision_scope": "exactly_one_action",
+      "action_source": "available_listed_actions",
+      "output_mode": "one_json_object"
+    },
+    {
+      "variant_id": "h1_operational_variant_19",
+      "decision_scope": "one_action_only",
+      "action_source": "listed_actions",
+      "output_mode": "json_object"
+    },
+    {
+      "variant_id": "h1_operational_variant_20",
+      "decision_scope": "one_action_only",
+      "action_source": "listed_actions",
+      "output_mode": "single_json_object"
+    },
+    {
+      "variant_id": "h1_operational_variant_21",
+      "decision_scope": "one_action_only",
+      "action_source": "listed_actions",
+      "output_mode": "one_json_object"
+    },
+    {
+      "variant_id": "h1_operational_variant_22",
+      "decision_scope": "one_action_only",
+      "action_source": "provided_action_list",
+      "output_mode": "json_object"
+    },
+    {
+      "variant_id": "h1_operational_variant_23",
+      "decision_scope": "one_action_only",
+      "action_source": "provided_action_list",
+      "output_mode": "single_json_object"
+    },
+    {
+      "variant_id": "h1_operational_variant_24",
+      "decision_scope": "one_action_only",
+      "action_source": "provided_action_list",
+      "output_mode": "one_json_object"
+    },
+    {
+      "variant_id": "h1_operational_variant_25",
+      "decision_scope": "one_action_only",
+      "action_source": "available_listed_actions",
+      "output_mode": "json_object"
+    },
+    {
+      "variant_id": "h1_operational_variant_26",
+      "decision_scope": "one_action_only",
+      "action_source": "available_listed_actions",
+      "output_mode": "single_json_object"
+    },
+    {
+      "variant_id": "h1_operational_variant_27",
+      "decision_scope": "one_action_only",
+      "action_source": "available_listed_actions",
+      "output_mode": "one_json_object"
+    },
+    {
+      "variant_id": "h1_operational_variant_28",
+      "decision_scope": "one_listed_action",
+      "action_source": "listed_actions",
+      "output_mode": "json_object"
+    },
+    {
+      "variant_id": "h1_operational_variant_29",
+      "decision_scope": "one_listed_action",
+      "action_source": "listed_actions",
+      "output_mode": "single_json_object"
+    },
+    {
+      "variant_id": "h1_operational_variant_30",
+      "decision_scope": "one_listed_action",
+      "action_source": "listed_actions",
+      "output_mode": "one_json_object"
+    },
+    {
+      "variant_id": "h1_operational_variant_31",
+      "decision_scope": "one_listed_action",
+      "action_source": "provided_action_list",
+      "output_mode": "json_object"
+    },
+    {
+      "variant_id": "h1_operational_variant_32",
+      "decision_scope": "one_listed_action",
+      "action_source": "provided_action_list",
+      "output_mode": "single_json_object"
+    },
+    {
+      "variant_id": "h1_operational_variant_33",
+      "decision_scope": "one_listed_action",
+      "action_source": "provided_action_list",
+      "output_mode": "one_json_object"
+    },
+    {
+      "variant_id": "h1_operational_variant_34",
+      "decision_scope": "one_listed_action",
+      "action_source": "available_listed_actions",
+      "output_mode": "json_object"
+    },
+    {
+      "variant_id": "h1_operational_variant_35",
+      "decision_scope": "one_listed_action",
+      "action_source": "available_listed_actions",
+      "output_mode": "single_json_object"
+    },
+    {
+      "variant_id": "h1_operational_variant_36",
+      "decision_scope": "one_listed_action",
+      "action_source": "available_listed_actions",
+      "output_mode": "one_json_object"
+    }
+  ],
+  "H2_provenance_variants": [
+    {
+      "variant_id": "h2_provenance_variant_01",
+      "message_type": "structured_statement",
+      "delivery_status": "available"
+    },
+    {
+      "variant_id": "h2_provenance_variant_02",
+      "message_type": "structured_statement",
+      "delivery_status": "available_to_observer"
+    },
+    {
+      "variant_id": "h2_provenance_variant_03",
+      "message_type": "structured_statement",
+      "delivery_status": "delivered_and_available"
+    },
+    {
+      "variant_id": "h2_provenance_variant_04",
+      "message_type": "one_structured_statement",
+      "delivery_status": "available"
+    },
+    {
+      "variant_id": "h2_provenance_variant_05",
+      "message_type": "one_structured_statement",
+      "delivery_status": "available_to_observer"
+    },
+    {
+      "variant_id": "h2_provenance_variant_06",
+      "message_type": "one_structured_statement",
+      "delivery_status": "delivered_and_available"
+    },
+    {
+      "variant_id": "h2_provenance_variant_07",
+      "message_type": "structured_message",
+      "delivery_status": "available"
+    },
+    {
+      "variant_id": "h2_provenance_variant_08",
+      "message_type": "structured_message",
+      "delivery_status": "available_to_observer"
+    },
+    {
+      "variant_id": "h2_provenance_variant_09",
+      "message_type": "structured_message",
+      "delivery_status": "delivered_and_available"
+    }
+  ],
+  "expected_candidate_triples": 1296,
+  "candidate_specification_fields": [
+    "location_surface_id",
+    "H1_operational_variant_id",
+    "H2_provenance_variant_id"
+  ],
+  "candidate_id_rule": "SHA-256 of canonical JSON specification with sorted keys and compact separators",
+  "candidate_order": [
+    "location_surface_id",
+    "H1_operational_variant_id",
+    "H2_provenance_variant_id"
+  ],
+  "future_exact_parity_criteria": {
+    "all_16_structural_audits": true,
+    "every_H1_primary_raw_and_Harmony_token_delta": 0,
+    "every_H2_primary_raw_and_Harmony_token_delta": 0,
+    "H1_raw_and_Harmony_interaction_token_differentials": 0,
+    "H2_raw_and_Harmony_interaction_token_differentials": 0
+  },
+  "future_ranking": [
+    "fewer_characters_across_four_compared_blocks",
+    "fewer_changed_literal_values_relative_to_v0.3.0",
+    "lexicographic_candidate_specification"
+  ],
+  "no_candidate_rule": "Return no_candidate without automatically relaxing any criterion.",
+  "tolerance_threshold": null,
+  "filler_authorized": false,
+  "padding_authorized": false,
+  "arbitrary_codes_authorized": false,
+  "behavioral_optimization_authorized": false,
+  "tokenizer_execution_authorized": false,
+  "model_execution_authorized": false,
+  "real_execution_authorized": false,
+  "final_wording_selected": false,
+  "interpretation_constraint": "This wording-bank design does not test H1a, H1b, H2, Theory of Mind, coordination, autonomous planning, or model cognition."
+}
