@@ -1,0 +1,81 @@
+name: Decision-point natural-control tokenizer measurement v0.3.1
+
+on:
+  push:
+    branches:
+      - codex/execute-micro-pilot-on-current-branch-vsnbkd
+
+permissions:
+  contents: read
+
+jobs:
+  measure:
+    if: >-
+      github.event.head_commit.message ==
+          'Measure natural-control tokenizer differences [run-natural-control-tokenizer-v0.3.1]'
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - name: Check out triggering commit
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.sha }}
+
+      - name: Set up Python 3.11
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Initialize artifact directory
+        run: |
+          mkdir -p natural-control-tokenizer-artifact
+          printf '{"workflow_status":"initialized","model_or_api_execution":false}\n' \
+            > natural-control-tokenizer-artifact/workflow_status.json
+
+      - name: Verify immutable inputs
+        run: |
+          cat > natural-control-tokenizer-artifact/immutable_hash_check.txt <<'EOF'
+          c39b2997282561bdacffa4e6b55e8d26062901e67ce4596a658b569276375549  btom_v2/decision_point_natural_control_manifest_v0_3_0.json
+          08df09f8e5d950f0fde422993133ca59e40362bcd06ba799446951a5701c1961  btom_v2/decision_point_natural_control_prompting_v0_3_0.py
+          c4c3fbc1de8c4e13af89d56cc5077ab88edac95e7e1edec0f54391a88180d8e4  btom_v2/decision_point_natural_control_design_v0_3_0.md
+          a2a6140e4e7676187c589a7e10c61fc6ff1b96f5aa0ba90258d54bb265e8b80f  btom_v2/decision_point_prompting_v0_2_1.py
+          9acec8dba50f0e33082cb8b0b238b8f4d27875b6ee4382fdee7c7e4ea806e8f7  btom_v2/decision_point_prompt_protocol_v0_2_1.json
+          e7a936cca701356dc2f9a5c8ab9621b5e593af932b854afe4c9a146acf1994f5  btom_v2/decision_point_scenarios.py
+          EOF
+          sha256sum --check natural-control-tokenizer-artifact/immutable_hash_check.txt
+
+      - name: Install frozen tokenizer dependencies
+        shell: bash
+        run: |
+          set -o pipefail
+          python -m pip install --retries 0 tiktoken==0.13.0 openai-harmony==0.0.8 \
+            2>&1 | tee natural-control-tokenizer-artifact/pip_install.log
+          python -m pip show tiktoken openai-harmony > natural-control-tokenizer-artifact/pip_resolved_versions.txt
+
+      - name: Install pinned test runner
+        shell: bash
+        run: |
+          set -o pipefail
+          python -m pip install --retries 0 pytest==8.4.2 \
+            2>&1 | tee natural-control-tokenizer-artifact/pytest_install.log
+          python -m pip show pytest > natural-control-tokenizer-artifact/pytest_resolved_version.txt
+
+      - name: Run complete test suite
+        shell: bash
+        run: |
+          set -o pipefail
+          python -m pytest -q 2>&1 | tee natural-control-tokenizer-artifact/pytest.log
+
+      - name: Run tokenizer-only natural-control measurement
+        run: |
+          python -m btom_v2.run_decision_point_natural_control_tokenizer_v0_3_1 \
+            --output-dir natural-control-tokenizer-artifact/measurement
+
+      - name: Upload tokenizer measurement
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: decision-point-natural-control-tokenizer-v0.3.1-${{ github.run_id }}
+          path: natural-control-tokenizer-artifact/
+          retention-days: 30
+          if-no-files-found: error
