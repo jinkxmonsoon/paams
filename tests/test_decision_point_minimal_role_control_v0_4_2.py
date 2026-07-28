@@ -115,8 +115,24 @@ def test_hashes_no_tokenizers_clients_workflow_or_execution():
     lower=source.lower()
     for bad in ('import groq','from groq','openai import','requests','httpx','urllib','api.groq.com','api.openai.com'):
         assert bad not in lower
-    assert not list((ROOT/'.github/workflows').glob('*minimal_role*'))
+    # Later-version workflows are allowed; this assertion is scoped to the
+    # v0.4.2 design artifact.
+    assert not (
+        ROOT
+        / ".github/workflows"
+        / "decision_point_minimal_role_control_v0_4_2.yml"
+    ).exists()
     assert MANIFEST['tokenizer_parity_claimed'] is False
     assert MANIFEST['tokenizer_execution_authorized'] is False
     assert MANIFEST['model_or_api_execution'] is False
     assert MANIFEST['real_execution_authorized'] is False
+
+
+def test_no_workflow_assertion_is_version_scoped():
+    source = Path(__file__).read_text()
+    old_double_quoted = "glob(" + '"*minimal_role*"' + ")"
+    old_single_quoted = "glob(" + "'*minimal_role*'" + ")"
+    assert old_double_quoted not in source
+    assert old_single_quoted not in source
+    assert "decision_point_minimal_role_control_v0_4_2.yml" in source
+    assert not (ROOT / ".github/workflows" / "decision_point_minimal_role_control_v0_4_2.yml").exists()

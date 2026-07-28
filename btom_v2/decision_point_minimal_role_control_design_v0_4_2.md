@@ -35,3 +35,14 @@ still required and raw evidence remains visible exactly once.
 Lexical salience may remain despite character equality. A later tokenizer-only
 v0.4.3 measurement must test T-CAL-3. This task runs no tokenizer, API, model,
 workflow, or experiment and tests no scientific hypothesis.
+
+
+## Test-infrastructure amendment
+
+The original test used the repository-global assertion
+`glob("*minimal_role*")`, which would prospectively reject a legitimate later
+tokenizer workflow. It is replaced by an existence check scoped only to
+`.github/workflows/decision_point_minimal_role_control_v0_4_2.yml`. Later-version
+workflows are permitted. This amendment changes no prompt, scenario, role,
+contrast, or parent hash; it tests no scientific or technical hypothesis, and
+T-CAL-3 remains untested.

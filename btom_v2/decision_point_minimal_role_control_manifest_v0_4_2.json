@@ -111,5 +111,14 @@
   "tokenizer_execution_authorized": false,
   "model_or_api_execution": false,
   "real_execution_authorized": false,
-  "interpretation_constraint": "This mock-only minimal-role design does not test H1a, H1b, H2, Theory of Mind, coordination, autonomous planning or model cognition. Character equality does not establish token parity, semantic equivalence or cognitive neutrality."
+  "interpretation_constraint": "This mock-only minimal-role design does not test H1a, H1b, H2, Theory of Mind, coordination, autonomous planning or model cognition. Character equality does not establish token parity, semantic equivalence or cognitive neutrality.",
+  "test_infrastructure_amendment": {
+    "file": "tests/test_decision_point_minimal_role_control_v0_4_2.py",
+    "reason": "Scoped a repository-global no-workflow assertion to the v0.4.2 design workflow only.",
+    "scientific_inputs_changed": false,
+    "prompt_content_changed": false,
+    "scenario_content_changed": false,
+    "role_normalization_changed": false,
+    "primary_contrasts_changed": false
+  }
 }
