@@ -34,7 +34,7 @@ IMMUTABLE_PARENT_SHA256 = {
     "btom_v2/decision_point_content_matched_control_manifest_v0_4_0.json": "5a45397e0d420e188b86b2520bc3a701e4dd3e84c6aa4d6d2508b821937999b6",
     "btom_v2/decision_point_content_matched_control_prompting_v0_4_0.py": "ab9c6b01308df15560db4be1a735bb5cef31a101942ff79431b38ce6b0733ccf",
     "btom_v2/decision_point_content_matched_control_design_v0_4_0.md": "581d1e769c792365e8c89dff48093de9af788fc145365d7e6b984e8f66d62c27",
-    "tests/test_decision_point_content_matched_control_v0_4_0.py": "facfcfd231beaee3f460cddba5590e50251840bc8c3afb013c80ab9ef9561786",
+    "tests/test_decision_point_content_matched_control_v0_4_0.py": "4cc27164df30ac9664807e564b65c57e32c6a3f01b24e64052a05c1c12172e5c",
     "btom_v2/decision_point_natural_control_prompting_v0_3_0.py": "08df09f8e5d950f0fde422993133ca59e40362bcd06ba799446951a5701c1961",
     "btom_v2/decision_point_scenarios.py": "e7a936cca701356dc2f9a5c8ab9621b5e593af932b854afe4c9a146acf1994f5",
 }

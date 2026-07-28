@@ -226,4 +226,9 @@ def test_manifest_hashes_and_no_execution_or_dependencies():
         "urllib", "api.groq.com", "api.openai.com",
     ):
         assert forbidden not in lowered
-    assert not list((ROOT / ".github/workflows").glob("*content_matched*"))
+    # Later-version workflows are allowed; this assertion is scoped to the v0.4.0 design artifact.
+    assert not (
+        ROOT
+        / ".github/workflows"
+        / "decision_point_content_matched_control_v0_4_0.yml"
+    ).exists()

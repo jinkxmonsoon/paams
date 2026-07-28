@@ -108,8 +108,38 @@ def test_runtime_only_tokenizers_no_clients_or_search():
 
 
 def test_exact_workflow_guard_full_tests_single_measurement_always_upload():
-    assert "github.event.head_commit.message ==\n          'Measure content-matched control tokenizer parity [run-content-matched-tokenizer-v0.4.1]'" in WORKFLOW
+    assert "github.event.head_commit.message ==\n          'Repair content-matched tokenizer activation [run-content-matched-tokenizer-v0.4.1]'" in WORKFLOW
     assert 'python -m pytest -q 2>&1 | tee content-matched-tokenizer-artifact/pytest.log' in WORKFLOW
     assert WORKFLOW.count('python -m btom_v2.run_decision_point_content_matched_tokenizer_v0_4_1')==1
     assert 'if: always()' in WORKFLOW and 'retention-days: 30' in WORKFLOW
     assert 'GROQ_API_KEY' not in WORKFLOW and 'OPENAI_API_KEY' not in WORKFLOW
+
+
+def test_parent_workflow_assertion_is_version_scoped_and_amendment_is_infrastructure_only():
+    parent_test = (ROOT / "tests/test_decision_point_content_matched_control_v0_4_0.py").read_text()
+    assert 'glob("*content_matched*")' not in parent_test
+    assert """assert not (
+        ROOT
+        / ".github/workflows"
+        / "decision_point_content_matched_control_v0_4_0.yml"
+    ).exists()""" in parent_test
+    assert MANIFEST["immutable_parent_sha256"][
+        "tests/test_decision_point_content_matched_control_v0_4_0.py"
+    ] == "4cc27164df30ac9664807e564b65c57e32c6a3f01b24e64052a05c1c12172e5c"
+    assert MANIFEST["parent_test_amendment"] == {
+        "file": "tests/test_decision_point_content_matched_control_v0_4_0.py",
+        "reason": "Scoped an obsolete repository-global no-workflow assertion to the v0.4.0 design workflow only.",
+        "scientific_inputs_changed": False,
+        "prompt_content_changed": False,
+        "scenario_content_changed": False,
+    }
+
+
+def test_other_five_immutable_hashes_are_unchanged():
+    assert {k: v for k, v in IMMUTABLE_PARENT_SHA256.items() if k != "tests/test_decision_point_content_matched_control_v0_4_0.py"} == {
+        "btom_v2/decision_point_content_matched_control_manifest_v0_4_0.json": "5a45397e0d420e188b86b2520bc3a701e4dd3e84c6aa4d6d2508b821937999b6",
+        "btom_v2/decision_point_content_matched_control_prompting_v0_4_0.py": "ab9c6b01308df15560db4be1a735bb5cef31a101942ff79431b38ce6b0733ccf",
+        "btom_v2/decision_point_content_matched_control_design_v0_4_0.md": "581d1e769c792365e8c89dff48093de9af788fc145365d7e6b984e8f66d62c27",
+        "btom_v2/decision_point_natural_control_prompting_v0_3_0.py": "08df09f8e5d950f0fde422993133ca59e40362bcd06ba799446951a5701c1961",
+        "btom_v2/decision_point_scenarios.py": "e7a936cca701356dc2f9a5c8ab9621b5e593af932b854afe4c9a146acf1994f5",
+    }
