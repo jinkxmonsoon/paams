@@ -1,0 +1,69 @@
+name: Decision-point content-matched tokenizer measurement v0.4.1
+
+on:
+  push:
+    branches:
+      - codex/execute-micro-pilot-on-current-branch-vsnbkd
+
+permissions:
+  contents: read
+
+jobs:
+  measure:
+    if: >-
+      github.event.head_commit.message ==
+          'Measure content-matched control tokenizer parity [run-content-matched-tokenizer-v0.4.1]'
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - name: Check out exact triggering SHA
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.sha }}
+      - name: Set up Python 3.11
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Initialize artifact directory
+        run: |
+          mkdir -p content-matched-tokenizer-artifact
+          printf '{"workflow_status":"initialized","model_or_api_execution":false}\n' > content-matched-tokenizer-artifact/workflow_status.json
+      - name: Verify immutable inputs
+        run: |
+          cat > content-matched-tokenizer-artifact/immutable_hash_check.txt <<'EOF'
+          5a45397e0d420e188b86b2520bc3a701e4dd3e84c6aa4d6d2508b821937999b6  btom_v2/decision_point_content_matched_control_manifest_v0_4_0.json
+          ab9c6b01308df15560db4be1a735bb5cef31a101942ff79431b38ce6b0733ccf  btom_v2/decision_point_content_matched_control_prompting_v0_4_0.py
+          581d1e769c792365e8c89dff48093de9af788fc145365d7e6b984e8f66d62c27  btom_v2/decision_point_content_matched_control_design_v0_4_0.md
+          facfcfd231beaee3f460cddba5590e50251840bc8c3afb013c80ab9ef9561786  tests/test_decision_point_content_matched_control_v0_4_0.py
+          08df09f8e5d950f0fde422993133ca59e40362bcd06ba799446951a5701c1961  btom_v2/decision_point_natural_control_prompting_v0_3_0.py
+          e7a936cca701356dc2f9a5c8ab9621b5e593af932b854afe4c9a146acf1994f5  btom_v2/decision_point_scenarios.py
+          EOF
+          sha256sum --check content-matched-tokenizer-artifact/immutable_hash_check.txt
+      - name: Install frozen tokenizer dependencies
+        shell: bash
+        run: |
+          set -o pipefail
+          python -m pip install --retries 0 tiktoken==0.13.0 openai-harmony==0.0.8 2>&1 | tee content-matched-tokenizer-artifact/tokenizer_install.log
+          python -m pip show tiktoken openai-harmony > content-matched-tokenizer-artifact/tokenizer_resolved_versions.txt
+      - name: Install pinned test runner
+        shell: bash
+        run: |
+          set -o pipefail
+          python -m pip install --retries 0 pytest==8.4.2 2>&1 | tee content-matched-tokenizer-artifact/pytest_install.log
+          python -m pip show pytest > content-matched-tokenizer-artifact/pytest_resolved_version.txt
+      - name: Run complete test suite
+        shell: bash
+        run: |
+          set -o pipefail
+          python -m pytest -q 2>&1 | tee content-matched-tokenizer-artifact/pytest.log
+      - name: Run tokenizer-only measurement exactly once
+        run: |
+          python -m btom_v2.run_decision_point_content_matched_tokenizer_v0_4_1 --output-dir content-matched-tokenizer-artifact/measurement
+      - name: Upload tokenizer measurement artifact
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: decision-point-content-matched-tokenizer-v0.4.1-${{ github.run_id }}
+          path: content-matched-tokenizer-artifact/
+          retention-days: 30
+          if-no-files-found: error
