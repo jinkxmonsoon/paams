@@ -6,7 +6,7 @@ permissions:
   contents: read
 jobs:
   experiment:
-    if: github.event.head_commit.message == 'Run scenario discrimination experiment [experiment-v0.6.0]'
+    if: github.event.head_commit.message == 'Correct scenario discrimination inputs [experiment-v0.6.0]'
     runs-on: ubuntu-latest
     timeout-minutes: 30
     steps:

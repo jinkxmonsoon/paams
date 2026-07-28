@@ -443,5 +443,14 @@
     }
   ],
   "scientific_inference": null,
-  "hypotheses_tested": false
+  "hypotheses_tested": false,
+  "semantic_input_correction": {
+    "H1_truth_field_removed": true,
+    "H2_status_labels_replaced_with_concrete_locations": true,
+    "H2_action_order_balanced": "2/2",
+    "population_changed": false,
+    "request_order_changed": false,
+    "selection_rule_changed": false,
+    "api_configuration_changed": false
+  }
 }
