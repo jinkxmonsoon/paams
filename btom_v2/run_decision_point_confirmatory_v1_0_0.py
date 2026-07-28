@@ -1,0 +1,61 @@
+"""Execute the frozen held-out confirmatory experiment once."""
+from __future__ import annotations
+import argparse,hashlib,importlib.metadata,json,os,platform,sys,time,urllib.error,urllib.request
+from dataclasses import asdict
+from pathlib import Path
+from .action_parser import parse_action
+from .budget import BudgetTracker
+from .decision_point_confirmatory_scenarios_v1_0_0 import BY_KEY,SCENARIOS,bank_records,classify
+from .decision_point_confirmatory_prompting_v1_0_0 import audit_bank,request_order
+from .analyze_decision_point_confirmatory_v1_0_0 import analyze,mcnemar_exact
+from .decision_point_discriminative_prompting_v0_6_0 import frozen_order as development_order
+from .decision_point_discriminative_scenarios_v0_6_0 import SCENARIOS as DEVELOPMENT_SCENARIOS
+from .real_llm_clients import GroqClient
+ROOT=Path(__file__).resolve().parents[1]; MANIFEST=Path(__file__).with_name('decision_point_confirmatory_manifest_v1_0_0.json')
+MAX_REQUESTS=432; DELAY_SECONDS=20; RETRIES=0; MODEL='openai/gpt-oss-20b'; USER_AGENT='Mozilla/5.0 (compatible; BToM-MAS/1.0.0; +https://github.com/jinkxmonsoon/paams)'
+OUTPUTS=('confirmatory_summary.json','confirmatory_manifest_snapshot.json','scenario_bank.jsonl','rendered_prompts.jsonl','prompt_audit.json','token_pair_audit.json','request_order.json','call_records.jsonl','raw_api_responses.jsonl','behavioral_results.jsonl','technical_coverage.json','role_pair_diagnostics.json','variant_level_results.json','archetype_results.json','difficulty_results.json','mcnemar_results.json','role_sensitivity_confidence_bounds.json','seed_and_fingerprint_diagnostics.json','usage_and_latency.json','immutable_input_hashes.json','execution_environment.json')
+def dump(p,v):p.write_text(json.dumps(v,indent=2,sort_keys=True)+'\n')
+def jsonl(p,v):p.write_text(''.join(json.dumps(x,sort_keys=True)+'\n' for x in v))
+def schema(p):
+ return {'type':'json_schema','json_schema':{'name':'heldout_action','strict':True,'schema':{'type':'object','properties':{'action':{'type':'string','enum':sorted({a for a,_ in p.valid_actions})},'target':{'type':'string','enum':sorted({t for _,t in p.valid_actions})},'message':{'type':'string'},'reason':{'type':'string'}},'required':['action','target','message','reason'],'additionalProperties':False}}}
+def body(p):return {'model':MODEL,'messages':[{'role':'user','content':p.prompt}],'temperature':0,'top_p':1,'max_completion_tokens':1024,'reasoning_effort':'low','include_reasoning':False,'response_format':schema(p),'stream':False,'seed':p.seed}
+def verify(m):
+ r={p:{'expected':h,'actual':hashlib.sha256((ROOT/p).read_bytes()).hexdigest()} for p,h in m['immutable_parent_sha256'].items()};
+ if any(x['expected']!=x['actual'] for x in r.values()):raise RuntimeError('immutable parent failure')
+ return r
+def load_tokenizers(m):
+ import tiktoken
+ from openai_harmony import Conversation,HarmonyEncodingName,Message,Role,load_harmony_encoding
+ versions={x:importlib.metadata.version(x) for x in ('tiktoken','openai-harmony','pytest')}; raw=tiktoken.get_encoding('o200k_harmony'); harmony=load_harmony_encoding(HarmonyEncodingName.HARMONY_GPT_OSS)
+ if versions!=m['dependencies']:raise RuntimeError('dependency mismatch')
+ return raw.encode,lambda text:list(harmony.render_conversation_for_completion(Conversation.from_messages([Message.from_role_and_content(Role.USER,text)]),Role.ASSISTANT)),versions
+def token_audit(prompts,raw,harmony):
+ by={(p.family,p.variant_id,p.state,p.condition):p for p in prompts}; rows=[]
+ for s in SCENARIOS:
+  conditions=('matched_decision_record','explicit_self_belief') if s.family=='H1' else ('self_belief_plus_message_record','self_belief_plus_partner_belief'); a,b=(by[(s.family,s.variant_id,s.state,c)] for c in conditions); rows.append({'family':s.family,'variant_id':s.variant_id,'state':s.state,'raw_parity':len(raw(a.prompt))==len(raw(b.prompt)),'harmony_parity':len(harmony(a.prompt))==len(harmony(b.prompt))})
+ return {'pair_count':len(rows),'all_raw_parity':all(r['raw_parity'] for r in rows),'all_harmony_parity':all(r['harmony_parity'] for r in rows),'pairs':rows}
+class Client(GroqClient):
+ def __init__(self):super().__init__(MODEL);self.client=None;self.transport='groq_rest_fallback'
+ def call(self,p):
+  req=urllib.request.Request(self.endpoint,data=json.dumps(body(p)).encode(),headers={'Authorization':'Bearer '+self.api_key,'Content-Type':'application/json','Accept':'application/json','User-Agent':USER_AGENT},method='POST');start=time.time()
+  try:
+   with urllib.request.urlopen(req,timeout=120) as r:return True,r.status,json.loads(r.read()),None,time.time()-start
+  except urllib.error.HTTPError as e:return False,e.code,None,self._sanitize(e.read().decode(errors='replace')),time.time()-start
+  except Exception as e:return False,None,None,self._sanitize(str(e)),time.time()-start
+def execute(out:Path,sleep=time.sleep,client_factory=Client):
+ out.mkdir(parents=True,exist_ok=False)
+ for n in OUTPUTS:(out/n).write_text('' if n.endswith('.jsonl') else '{}\n')
+ try:
+  m=json.loads(MANIFEST.read_text());dump(out/'confirmatory_manifest_snapshot.json',m);dump(out/'immutable_input_hashes.json',verify(m));prompts=request_order();dev_prompts=[p.prompt for p in development_order()];dev_entities=[x for s in DEVELOPMENT_SCENARIOS for x in (s.room_a,s.room_b,s.partner,s.resource) if x];audit=audit_bank(dev_prompts,dev_entities);raw,harmony,versions=load_tokenizers(m);tokens=token_audit(prompts,raw,harmony);dump(out/'prompt_audit.json',audit);dump(out/'token_pair_audit.json',tokens)
+  if not (audit['prompt_count']==audit['unique_prompt_count']==432 and audit['prompt_overlap_count']==audit['entity_overlap_count']==audit['model_visible_state_or_scoring_leaks']==0 and audit['critical_pairs_content_matched'] and audit['role_pairs_adjacent'] and tokens['pair_count']==144 and tokens['all_raw_parity'] and tokens['all_harmony_parity']):raise RuntimeError('pre-API audit failed')
+  jsonl(out/'scenario_bank.jsonl',bank_records());jsonl(out/'rendered_prompts.jsonl',[{'prompt_id':p.prompt_id,'prompt':p.prompt,'sha256':hashlib.sha256(p.prompt.encode()).hexdigest()} for p in prompts]);dump(out/'request_order.json',[{'ordinal':i,'prompt_id':p.prompt_id,'seed':p.seed} for i,p in enumerate(prompts,1)]);client=client_factory();records=[];transport=False
+  for i,p in enumerate(prompts,1):
+   if i>1:sleep(DELAY_SECONDS)
+   ok,status,payload,error,latency=client.call(p);choice=(payload.get('choices') or [{}])[0] if payload else {};message=choice.get('message') or {};content=message.get('content');parsed=parse_action(content,[{'action':a,'target':t} for a,t in p.valid_actions],BudgetTracker(),None) if ok and content else None;parse=bool(parsed and parsed['parse_success']);legal=parse and (parsed['action'],parsed['target']) in p.valid_actions;s=BY_KEY[(p.family,p.variant_id,p.state)];returned=((payload or {}).get('x_groq') or {}).get('seed');record={'ordinal':i,'prompt_id':p.prompt_id,'family':p.family,'variant_id':p.variant_id,'archetype':p.archetype,'difficulty':p.difficulty,'state':p.state,'condition':p.condition,'requested_seed':p.seed,'returned_seed':returned,'seed_matches':returned==p.seed if returned is not None else None,'system_fingerprint':(payload or {}).get('system_fingerprint'),'service_tier':(payload or {}).get('service_tier'),'http_success':ok,'http_status':status,'finish_reason':choice.get('finish_reason') or 'none','nonempty_content':bool(content and content.strip()),'parse_success':parse,'legal_action':legal,'complete':ok and choice.get('finish_reason')=='stop' and bool(content and content.strip()) and parse and legal,'action':parsed['action'] if legal else None,'target':parsed['target'] if legal else None,'classification':classify(s,parsed['action'],parsed['target']) if legal else None,'raw_api_response':payload,'api_error':error,'latency':latency,'usage':(payload or {}).get('usage'),'fallback_counted_as_behavior':False}
+   records.append(record)
+   if status==403 and '1010' in (error or '') and not any(r['http_success'] for r in records):transport=True;break
+  jsonl(out/'call_records.jsonl',records);jsonl(out/'raw_api_responses.jsonl',[{'ordinal':r['ordinal'],'raw_api_response':r['raw_api_response']} for r in records]);jsonl(out/'behavioral_results.jsonl',[{k:r[k] for k in ('ordinal','family','variant_id','state','condition','complete','action','target','classification','fallback_counted_as_behavior')} for r in records]);analysis=analyze(records) if len(records)==432 else {'inferential_unit':'variant','variant_results':[],'role_sensitivity':{}};dump(out/'variant_level_results.json',analysis['variant_results']);dump(out/'role_sensitivity_confidence_bounds.json',analysis['role_sensitivity']);dump(out/'role_pair_diagnostics.json',{'inferential_unit':'variant'});dump(out/'technical_coverage.json',{'requests_attempted':len(records),'complete_calls':sum(r['complete'] for r in records)});dump(out/'archetype_results.json',{'groups':sorted({(r['family'],r['archetype']) for r in records})});dump(out/'difficulty_results.json',{'groups':sorted({(r['family'],r['difficulty']) for r in records})});dump(out/'mcnemar_results.json',{'role_tests':analysis.get('mcnemar_role_tests',{}),'H1a':analysis.get('H1a_one_sided_mcnemar')});dump(out/'seed_and_fingerprint_diagnostics.json',{'records':[{'prompt_id':r['prompt_id'],'requested_seed':r['requested_seed'],'returned_seed':r['returned_seed'],'seed_matches':r['seed_matches'],'system_fingerprint':r['system_fingerprint'],'service_tier':r['service_tier']} for r in records]});dump(out/'usage_and_latency.json',{'records':[{'ordinal':r['ordinal'],'usage':r['usage'],'latency':r['latency']} for r in records]});dump(out/'execution_environment.json',{'python':sys.version,'platform':platform.platform(),'versions':versions,'authorization_value_recorded':False});classification='transport_failure' if transport else ('experiment_complete' if len(records)==432 and any(r['http_success'] for r in records) else 'runtime_failure');dump(out/'confirmatory_summary.json',{'classification':classification,'requests_attempted':len(records),'scientific_inference':None,'replication_not_executed':'openai/gpt-oss-120b'});return 0 if classification=='experiment_complete' else 1
+ except Exception as e:dump(out/'confirmatory_summary.json',{'classification':'runtime_failure','error':str(e),'scientific_inference':None});return 1
+def main():
+ p=argparse.ArgumentParser();p.add_argument('--output-dir',type=Path,required=True);return execute(p.parse_args().output_dir)
+if __name__=='__main__':raise SystemExit(main())
