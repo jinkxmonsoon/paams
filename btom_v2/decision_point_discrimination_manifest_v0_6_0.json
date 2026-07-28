@@ -1,0 +1,447 @@
+{
+  "experiment_version": "btom-v2-decision-point-discrimination-0.6.0",
+  "status": "prospectively_frozen_scenario_discrimination",
+  "parent_provenance": {
+    "run_id": 30372084567,
+    "artifact_digest": "9f02d098b654fb152980f757766d9cea6bc74753ddd08cfa9f0abc7239d0eb06",
+    "commit": "57a5cf51d14424412330e68c2bb4129379b92dd0",
+    "result": "behaviorally_non_discriminative_saturated"
+  },
+  "immutable_parent_sha256": {
+    "btom_v2/decision_point_minimal_role_control_manifest_v0_4_2.json": "73786ac184545ffaec749fcda195c68ceb17404ff890a5849b989f3b068c6318",
+    "btom_v2/decision_point_minimal_role_control_prompting_v0_4_2.py": "0557df5c97efcf2bf4176f7c6ca36ea2202f18735bc1e6eed44807034894ec68",
+    "btom_v2/decision_point_minimal_role_tokenizer_manifest_v0_4_3.json": "462667c39d2bc5d13eee4ddc840cb1bb1ec897a689394950e9acaac4b8424516",
+    "btom_v2/run_decision_point_minimal_role_tokenizer_v0_4_3.py": "8475df517e2329bf3d3198adcd6b843433e43b13cb7267eb28328bb2d6857821",
+    "btom_v2/decision_point_minimal_role_behavioral_micro_pilot_manifest_v0_5_1.json": "6a9359031e7660d65aff45f88c513e1196d299c61a2d1a2e75e15a1f94c024a6",
+    "btom_v2/run_decision_point_minimal_role_behavioral_micro_pilot_v0_5_1.py": "ef79e88a78c508cbb1f5741a9de5f917a36b7c25fc33962f3512400452cd8d8b",
+    "btom_v2/decision_point_scenarios.py": "e7a936cca701356dc2f9a5c8ab9621b5e593af932b854afe4c9a146acf1994f5",
+    "btom_v2/action_parser.py": "475838167ff7a47edaaa50861bed9fba5c5a025d08338fa5fa82d6a7e19ce3c4",
+    "btom_v2/budget.py": "08878cff156f17215da672b6cfe0480da6e50c91c9764a602e60b3b375207fe6",
+    "btom_v2/real_llm_clients.py": "5beba1ada6ca7005c0a7e4f32e8edac9ad46c5473b8109b349f8e8c8e2e4e364"
+  },
+  "dependencies": {
+    "tiktoken": "0.13.0",
+    "openai-harmony": "0.0.8",
+    "pytest": "8.4.2"
+  },
+  "api_configuration": {
+    "model": "openai/gpt-oss-20b",
+    "transport": "groq_rest_fallback",
+    "temperature": 0,
+    "top_p": 1,
+    "max_completion_tokens": 1024,
+    "reasoning_effort": "low",
+    "include_reasoning": false,
+    "strict_json_schema": true,
+    "stream": false,
+    "tools_absent": true,
+    "seed_absent": true,
+    "retries": 0
+  },
+  "population": {
+    "families": 2,
+    "variants_per_family": 4,
+    "states_per_variant": 2,
+    "conditions_per_state": 3,
+    "total_prompts": 48,
+    "maximum_requests": 48,
+    "delay_seconds": 15
+  },
+  "selection_rule": {
+    "reference_only": true,
+    "H1_reference": "matched_decision_record",
+    "H2_reference": "self_belief_plus_message_record",
+    "family_passes_at_least": 3,
+    "variants_total": 4,
+    "treatment_outcomes_used": false,
+    "statistical_threshold": false
+  },
+  "frozen_request_order": [
+    {
+      "ordinal": 1,
+      "prompt_id": "H1V1:stale:reactive_no_representation",
+      "family": "H1",
+      "variant": "H1V1",
+      "state": "stale",
+      "condition": "reactive_no_representation"
+    },
+    {
+      "ordinal": 2,
+      "prompt_id": "H2V1:stale:reactive_no_representation",
+      "family": "H2",
+      "variant": "H2V1",
+      "state": "stale",
+      "condition": "reactive_no_representation"
+    },
+    {
+      "ordinal": 3,
+      "prompt_id": "H1V1:stale:matched_decision_record",
+      "family": "H1",
+      "variant": "H1V1",
+      "state": "stale",
+      "condition": "matched_decision_record"
+    },
+    {
+      "ordinal": 4,
+      "prompt_id": "H2V1:stale:self_belief_plus_message_record",
+      "family": "H2",
+      "variant": "H2V1",
+      "state": "stale",
+      "condition": "self_belief_plus_message_record"
+    },
+    {
+      "ordinal": 5,
+      "prompt_id": "H1V1:stale:explicit_self_belief",
+      "family": "H1",
+      "variant": "H1V1",
+      "state": "stale",
+      "condition": "explicit_self_belief"
+    },
+    {
+      "ordinal": 6,
+      "prompt_id": "H2V1:stale:self_belief_plus_partner_belief",
+      "family": "H2",
+      "variant": "H2V1",
+      "state": "stale",
+      "condition": "self_belief_plus_partner_belief"
+    },
+    {
+      "ordinal": 7,
+      "prompt_id": "H1V1:current:reactive_no_representation",
+      "family": "H1",
+      "variant": "H1V1",
+      "state": "current",
+      "condition": "reactive_no_representation"
+    },
+    {
+      "ordinal": 8,
+      "prompt_id": "H2V1:current:reactive_no_representation",
+      "family": "H2",
+      "variant": "H2V1",
+      "state": "current",
+      "condition": "reactive_no_representation"
+    },
+    {
+      "ordinal": 9,
+      "prompt_id": "H1V1:current:matched_decision_record",
+      "family": "H1",
+      "variant": "H1V1",
+      "state": "current",
+      "condition": "matched_decision_record"
+    },
+    {
+      "ordinal": 10,
+      "prompt_id": "H2V1:current:self_belief_plus_message_record",
+      "family": "H2",
+      "variant": "H2V1",
+      "state": "current",
+      "condition": "self_belief_plus_message_record"
+    },
+    {
+      "ordinal": 11,
+      "prompt_id": "H1V1:current:explicit_self_belief",
+      "family": "H1",
+      "variant": "H1V1",
+      "state": "current",
+      "condition": "explicit_self_belief"
+    },
+    {
+      "ordinal": 12,
+      "prompt_id": "H2V1:current:self_belief_plus_partner_belief",
+      "family": "H2",
+      "variant": "H2V1",
+      "state": "current",
+      "condition": "self_belief_plus_partner_belief"
+    },
+    {
+      "ordinal": 13,
+      "prompt_id": "H1V2:stale:reactive_no_representation",
+      "family": "H1",
+      "variant": "H1V2",
+      "state": "stale",
+      "condition": "reactive_no_representation"
+    },
+    {
+      "ordinal": 14,
+      "prompt_id": "H2V2:stale:reactive_no_representation",
+      "family": "H2",
+      "variant": "H2V2",
+      "state": "stale",
+      "condition": "reactive_no_representation"
+    },
+    {
+      "ordinal": 15,
+      "prompt_id": "H1V2:stale:matched_decision_record",
+      "family": "H1",
+      "variant": "H1V2",
+      "state": "stale",
+      "condition": "matched_decision_record"
+    },
+    {
+      "ordinal": 16,
+      "prompt_id": "H2V2:stale:self_belief_plus_message_record",
+      "family": "H2",
+      "variant": "H2V2",
+      "state": "stale",
+      "condition": "self_belief_plus_message_record"
+    },
+    {
+      "ordinal": 17,
+      "prompt_id": "H1V2:stale:explicit_self_belief",
+      "family": "H1",
+      "variant": "H1V2",
+      "state": "stale",
+      "condition": "explicit_self_belief"
+    },
+    {
+      "ordinal": 18,
+      "prompt_id": "H2V2:stale:self_belief_plus_partner_belief",
+      "family": "H2",
+      "variant": "H2V2",
+      "state": "stale",
+      "condition": "self_belief_plus_partner_belief"
+    },
+    {
+      "ordinal": 19,
+      "prompt_id": "H1V2:current:reactive_no_representation",
+      "family": "H1",
+      "variant": "H1V2",
+      "state": "current",
+      "condition": "reactive_no_representation"
+    },
+    {
+      "ordinal": 20,
+      "prompt_id": "H2V2:current:reactive_no_representation",
+      "family": "H2",
+      "variant": "H2V2",
+      "state": "current",
+      "condition": "reactive_no_representation"
+    },
+    {
+      "ordinal": 21,
+      "prompt_id": "H1V2:current:matched_decision_record",
+      "family": "H1",
+      "variant": "H1V2",
+      "state": "current",
+      "condition": "matched_decision_record"
+    },
+    {
+      "ordinal": 22,
+      "prompt_id": "H2V2:current:self_belief_plus_message_record",
+      "family": "H2",
+      "variant": "H2V2",
+      "state": "current",
+      "condition": "self_belief_plus_message_record"
+    },
+    {
+      "ordinal": 23,
+      "prompt_id": "H1V2:current:explicit_self_belief",
+      "family": "H1",
+      "variant": "H1V2",
+      "state": "current",
+      "condition": "explicit_self_belief"
+    },
+    {
+      "ordinal": 24,
+      "prompt_id": "H2V2:current:self_belief_plus_partner_belief",
+      "family": "H2",
+      "variant": "H2V2",
+      "state": "current",
+      "condition": "self_belief_plus_partner_belief"
+    },
+    {
+      "ordinal": 25,
+      "prompt_id": "H1V3:stale:reactive_no_representation",
+      "family": "H1",
+      "variant": "H1V3",
+      "state": "stale",
+      "condition": "reactive_no_representation"
+    },
+    {
+      "ordinal": 26,
+      "prompt_id": "H2V3:stale:reactive_no_representation",
+      "family": "H2",
+      "variant": "H2V3",
+      "state": "stale",
+      "condition": "reactive_no_representation"
+    },
+    {
+      "ordinal": 27,
+      "prompt_id": "H1V3:stale:matched_decision_record",
+      "family": "H1",
+      "variant": "H1V3",
+      "state": "stale",
+      "condition": "matched_decision_record"
+    },
+    {
+      "ordinal": 28,
+      "prompt_id": "H2V3:stale:self_belief_plus_message_record",
+      "family": "H2",
+      "variant": "H2V3",
+      "state": "stale",
+      "condition": "self_belief_plus_message_record"
+    },
+    {
+      "ordinal": 29,
+      "prompt_id": "H1V3:stale:explicit_self_belief",
+      "family": "H1",
+      "variant": "H1V3",
+      "state": "stale",
+      "condition": "explicit_self_belief"
+    },
+    {
+      "ordinal": 30,
+      "prompt_id": "H2V3:stale:self_belief_plus_partner_belief",
+      "family": "H2",
+      "variant": "H2V3",
+      "state": "stale",
+      "condition": "self_belief_plus_partner_belief"
+    },
+    {
+      "ordinal": 31,
+      "prompt_id": "H1V3:current:reactive_no_representation",
+      "family": "H1",
+      "variant": "H1V3",
+      "state": "current",
+      "condition": "reactive_no_representation"
+    },
+    {
+      "ordinal": 32,
+      "prompt_id": "H2V3:current:reactive_no_representation",
+      "family": "H2",
+      "variant": "H2V3",
+      "state": "current",
+      "condition": "reactive_no_representation"
+    },
+    {
+      "ordinal": 33,
+      "prompt_id": "H1V3:current:matched_decision_record",
+      "family": "H1",
+      "variant": "H1V3",
+      "state": "current",
+      "condition": "matched_decision_record"
+    },
+    {
+      "ordinal": 34,
+      "prompt_id": "H2V3:current:self_belief_plus_message_record",
+      "family": "H2",
+      "variant": "H2V3",
+      "state": "current",
+      "condition": "self_belief_plus_message_record"
+    },
+    {
+      "ordinal": 35,
+      "prompt_id": "H1V3:current:explicit_self_belief",
+      "family": "H1",
+      "variant": "H1V3",
+      "state": "current",
+      "condition": "explicit_self_belief"
+    },
+    {
+      "ordinal": 36,
+      "prompt_id": "H2V3:current:self_belief_plus_partner_belief",
+      "family": "H2",
+      "variant": "H2V3",
+      "state": "current",
+      "condition": "self_belief_plus_partner_belief"
+    },
+    {
+      "ordinal": 37,
+      "prompt_id": "H1V4:stale:reactive_no_representation",
+      "family": "H1",
+      "variant": "H1V4",
+      "state": "stale",
+      "condition": "reactive_no_representation"
+    },
+    {
+      "ordinal": 38,
+      "prompt_id": "H2V4:stale:reactive_no_representation",
+      "family": "H2",
+      "variant": "H2V4",
+      "state": "stale",
+      "condition": "reactive_no_representation"
+    },
+    {
+      "ordinal": 39,
+      "prompt_id": "H1V4:stale:matched_decision_record",
+      "family": "H1",
+      "variant": "H1V4",
+      "state": "stale",
+      "condition": "matched_decision_record"
+    },
+    {
+      "ordinal": 40,
+      "prompt_id": "H2V4:stale:self_belief_plus_message_record",
+      "family": "H2",
+      "variant": "H2V4",
+      "state": "stale",
+      "condition": "self_belief_plus_message_record"
+    },
+    {
+      "ordinal": 41,
+      "prompt_id": "H1V4:stale:explicit_self_belief",
+      "family": "H1",
+      "variant": "H1V4",
+      "state": "stale",
+      "condition": "explicit_self_belief"
+    },
+    {
+      "ordinal": 42,
+      "prompt_id": "H2V4:stale:self_belief_plus_partner_belief",
+      "family": "H2",
+      "variant": "H2V4",
+      "state": "stale",
+      "condition": "self_belief_plus_partner_belief"
+    },
+    {
+      "ordinal": 43,
+      "prompt_id": "H1V4:current:reactive_no_representation",
+      "family": "H1",
+      "variant": "H1V4",
+      "state": "current",
+      "condition": "reactive_no_representation"
+    },
+    {
+      "ordinal": 44,
+      "prompt_id": "H2V4:current:reactive_no_representation",
+      "family": "H2",
+      "variant": "H2V4",
+      "state": "current",
+      "condition": "reactive_no_representation"
+    },
+    {
+      "ordinal": 45,
+      "prompt_id": "H1V4:current:matched_decision_record",
+      "family": "H1",
+      "variant": "H1V4",
+      "state": "current",
+      "condition": "matched_decision_record"
+    },
+    {
+      "ordinal": 46,
+      "prompt_id": "H2V4:current:self_belief_plus_message_record",
+      "family": "H2",
+      "variant": "H2V4",
+      "state": "current",
+      "condition": "self_belief_plus_message_record"
+    },
+    {
+      "ordinal": 47,
+      "prompt_id": "H1V4:current:explicit_self_belief",
+      "family": "H1",
+      "variant": "H1V4",
+      "state": "current",
+      "condition": "explicit_self_belief"
+    },
+    {
+      "ordinal": 48,
+      "prompt_id": "H2V4:current:self_belief_plus_partner_belief",
+      "family": "H2",
+      "variant": "H2V4",
+      "state": "current",
+      "condition": "self_belief_plus_partner_belief"
+    }
+  ],
+  "scientific_inference": null,
+  "hypotheses_tested": false
+}
