@@ -28,13 +28,13 @@
     "top_p": 1,
     "max_completion_tokens": 1024,
     "reasoning_effort": "low",
-    "reasoning_format": "hidden",
     "response_format": "json_schema",
     "stream": false,
     "tools_absent": true,
     "seed_absent": true,
     "max_tokens_absent": true,
-    "retries": 0
+    "retries": 0,
+    "include_reasoning": false
   },
   "execution_budget": {
     "DP5": 6,
@@ -91,5 +91,13 @@
   "fallback_counted_as_behavior": false,
   "reasoning_text_is_behavioral_evidence": false,
   "statistical_inference": false,
-  "scientific_inference": null
+  "scientific_inference": null,
+  "interface_amendment": {
+    "reason": "Removed reasoning_format because it is unsupported for GPT-OSS models on Groq and replaced it with include_reasoning=false.",
+    "prompt_content_changed": false,
+    "scenario_content_changed": false,
+    "behavioral_scoring_changed": false,
+    "primary_pairs_changed": false,
+    "json_schema_changed": false
+  }
 }
