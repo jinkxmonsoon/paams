@@ -6,7 +6,7 @@ permissions:
   contents: read
 jobs:
   confirmatory:
-    if: github.event.head_commit.message == 'Run held-out confirmatory role-framing experiment [experiment-v1.0.0]'
+    if: github.event.head_commit.message == 'Correct confirmatory order and analysis [experiment-v1.0.0]'
     runs-on: ubuntu-latest
     timeout-minutes: 180
     steps:

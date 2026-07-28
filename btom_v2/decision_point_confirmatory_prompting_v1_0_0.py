@@ -18,16 +18,31 @@ def render(s,condition):
   block='' if condition==H2_CONDITIONS[0] else f'\n\nPARTNER-CONTEXT REPRESENTATION\nobserver="A"\nrelated_agent="heldout partner"\nproposition="heldout_partner_assignment"\nrepresented_value="{expected}"\nrepresentation_role="{"record" if condition==H2_CONDITIONS[1] else "belief"}"\nevidence_ref="heldout_message"'
  text=common+block+'\n\nReturn one legal JSON action.'
  return Prompt(f'{s.variant_id}:{s.state}:{condition}',s.family,s.variant_id,s.archetype,s.difficulty,s.state,condition,text,s.valid_actions,seed_for(s))
+ORDER_PATTERNS={
+ 'A':('reactive','record','belief'),
+ 'B':('reactive','belief','record'),
+ 'C':('record','belief','reactive'),
+ 'D':('belief','record','reactive'),
+}
 def request_order():
- out=[]
+ out=[]; triplet_ordinal=0
  for inst in range(1,7):
   for ai in range(1,7):
-   for state_index,state in enumerate(STATES):
+   for state in STATES:
     for family,conditions in (('H1',H1_CONDITIONS),('H2',H2_CONDITIONS)):
-     s=BY_KEY[(family,f'{family}C{ai:02d}{inst:02d}',state)]; ref,belief=conditions[1],conditions[2]
-     roles=(ref,belief) if (ai+inst+state_index)%2==0 else (belief,ref); ordered=(conditions[0],)+roles if (ai+inst+state_index)%2==0 else roles+(conditions[0],)
-     out.extend(render(s,c) for c in ordered)
+     s=BY_KEY[(family,f'{family}C{ai:02d}{inst:02d}',state)]; mapping={'reactive':conditions[0],'record':conditions[1],'belief':conditions[2]}; pattern=tuple(ORDER_PATTERNS.values())[triplet_ordinal%4]
+     out.extend(render(s,mapping[role]) for role in pattern); triplet_ordinal+=1
  return tuple(out)
+def canonical_prompt_digest(prompts=None):
+ prompts=request_order() if prompts is None else prompts
+ return hashlib.sha256(''.join(sorted(p.prompt_id+'\n'+p.prompt for p in prompts)).encode()).hexdigest()
+def order_audit(prompts=None):
+ prompts=request_order() if prompts is None else prompts; patterns={tuple(v):k for k,v in ORDER_PATTERNS.items()}; counts={k:0 for k in ORDER_PATTERNS}; positions={'record':{1:0,2:0,3:0},'belief':{1:0,2:0,3:0}}; reactive={'before':0,'after':0}; role_first={'record':0,'belief':0}
+ for i in range(0,len(prompts),3):
+  triplet=prompts[i:i+3]; family=triplet[0].family; conditions=H1_CONDITIONS if family=='H1' else H2_CONDITIONS; roles=tuple('reactive' if p.condition==conditions[0] else ('record' if p.condition==conditions[1] else 'belief') for p in triplet); counts[patterns[roles]]+=1
+  for role in ('record','belief'): positions[role][roles.index(role)+1]+=1
+  reactive['before' if roles[0]=='reactive' else 'after']+=1; role_first[roles[1] if roles[0]=='reactive' else roles[0]]+=1
+ return {'pattern_counts':counts,'position_counts':positions,'reactive_placement':reactive,'role_first':role_first,'role_pairs_adjacent':all(abs(tuple(p.condition for p in prompts[i:i+3]).index((H1_CONDITIONS if prompts[i].family=='H1' else H2_CONDITIONS)[1])-tuple(p.condition for p in prompts[i:i+3]).index((H1_CONDITIONS if prompts[i].family=='H1' else H2_CONDITIONS)[2]))==1 for i in range(0,len(prompts),3))}
 def audit_bank(development_prompts,development_entities):
  prompts=request_order(); texts={p.prompt for p in prompts}; entities={x for s in SCENARIOS for x in (s.entity_a,s.entity_b)}; by={(p.family,p.variant_id,p.state,p.condition):p for p in prompts}; pairs=[]
  for family,conditions in (('H1',H1_CONDITIONS),('H2',H2_CONDITIONS)):
