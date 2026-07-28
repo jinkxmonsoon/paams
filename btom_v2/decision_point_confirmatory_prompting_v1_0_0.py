@@ -24,25 +24,29 @@ ORDER_PATTERNS={
  'C':('record','belief','reactive'),
  'D':('belief','record','reactive'),
 }
+ORDER_OFFSETS={('H1','stale'):0,('H1','current'):1,('H2','stale'):2,('H2','current'):3}
 def request_order():
- out=[]; triplet_ordinal=0
+ out=[]
  for inst in range(1,7):
   for ai in range(1,7):
+   variant_ordinal=(ai-1)*6+(inst-1)
    for state in STATES:
     for family,conditions in (('H1',H1_CONDITIONS),('H2',H2_CONDITIONS)):
-     s=BY_KEY[(family,f'{family}C{ai:02d}{inst:02d}',state)]; mapping={'reactive':conditions[0],'record':conditions[1],'belief':conditions[2]}; pattern=tuple(ORDER_PATTERNS.values())[triplet_ordinal%4]
-     out.extend(render(s,mapping[role]) for role in pattern); triplet_ordinal+=1
+     s=BY_KEY[(family,f'{family}C{ai:02d}{inst:02d}',state)]; mapping={'reactive':conditions[0],'record':conditions[1],'belief':conditions[2]}; pattern=tuple(ORDER_PATTERNS.values())[(variant_ordinal+ORDER_OFFSETS[(family,state)])%4]
+     out.extend(render(s,mapping[role]) for role in pattern)
  return tuple(out)
 def canonical_prompt_digest(prompts=None):
  prompts=request_order() if prompts is None else prompts
  return hashlib.sha256(''.join(sorted(p.prompt_id+'\n'+p.prompt for p in prompts)).encode()).hexdigest()
 def order_audit(prompts=None):
- prompts=request_order() if prompts is None else prompts; patterns={tuple(v):k for k,v in ORDER_PATTERNS.items()}; counts={k:0 for k in ORDER_PATTERNS}; positions={'record':{1:0,2:0,3:0},'belief':{1:0,2:0,3:0}}; reactive={'before':0,'after':0}; role_first={'record':0,'belief':0}
+ prompts=request_order() if prompts is None else prompts; patterns={tuple(v):k for k,v in ORDER_PATTERNS.items()}; global_counts={k:0 for k in ORDER_PATTERNS}; strata={}; difficulty_strata={}
  for i in range(0,len(prompts),3):
-  triplet=prompts[i:i+3]; family=triplet[0].family; conditions=H1_CONDITIONS if family=='H1' else H2_CONDITIONS; roles=tuple('reactive' if p.condition==conditions[0] else ('record' if p.condition==conditions[1] else 'belief') for p in triplet); counts[patterns[roles]]+=1
-  for role in ('record','belief'): positions[role][roles.index(role)+1]+=1
-  reactive['before' if roles[0]=='reactive' else 'after']+=1; role_first[roles[1] if roles[0]=='reactive' else roles[0]]+=1
- return {'pattern_counts':counts,'position_counts':positions,'reactive_placement':reactive,'role_first':role_first,'role_pairs_adjacent':all(abs(tuple(p.condition for p in prompts[i:i+3]).index((H1_CONDITIONS if prompts[i].family=='H1' else H2_CONDITIONS)[1])-tuple(p.condition for p in prompts[i:i+3]).index((H1_CONDITIONS if prompts[i].family=='H1' else H2_CONDITIONS)[2]))==1 for i in range(0,len(prompts),3))}
+  triplet=prompts[i:i+3]; family,state,difficulty=triplet[0].family,triplet[0].state,triplet[0].difficulty;conditions=H1_CONDITIONS if family=='H1' else H2_CONDITIONS;roles=tuple('reactive' if p.condition==conditions[0] else ('record' if p.condition==conditions[1] else 'belief') for p in triplet);pattern=patterns[roles];global_counts[pattern]+=1
+  key=f'{family}:{state}';row=strata.setdefault(key,{'pattern_counts':{k:0 for k in ORDER_PATTERNS},'position_counts':{'record':{1:0,2:0,3:0},'belief':{1:0,2:0,3:0}},'reactive_placement':{'before':0,'after':0},'role_first':{'record':0,'belief':0}});row['pattern_counts'][pattern]+=1
+  for role in ('record','belief'):row['position_counts'][role][roles.index(role)+1]+=1
+  row['reactive_placement']['before' if roles[0]=='reactive' else 'after']+=1;row['role_first'][roles[1] if roles[0]=='reactive' else roles[0]]+=1
+  dkey=f'{family}:{state}:{difficulty}';difficulty_strata.setdefault(dkey,{k:0 for k in ORDER_PATTERNS})[pattern]+=1
+ return {'pattern_counts':global_counts,'family_state_strata':strata,'family_state_difficulty_pattern_counts':difficulty_strata,'role_pairs_adjacent':all(abs(tuple(p.condition for p in prompts[i:i+3]).index((H1_CONDITIONS if prompts[i].family=='H1' else H2_CONDITIONS)[1])-tuple(p.condition for p in prompts[i:i+3]).index((H1_CONDITIONS if prompts[i].family=='H1' else H2_CONDITIONS)[2]))==1 for i in range(0,len(prompts),3))}
 def audit_bank(development_prompts,development_entities):
  prompts=request_order(); texts={p.prompt for p in prompts}; entities={x for s in SCENARIOS for x in (s.entity_a,s.entity_b)}; by={(p.family,p.variant_id,p.state,p.condition):p for p in prompts}; pairs=[]
  for family,conditions in (('H1',H1_CONDITIONS),('H2',H2_CONDITIONS)):

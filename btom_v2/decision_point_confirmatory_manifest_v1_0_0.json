@@ -94,13 +94,13 @@
     },
     {
       "ordinal": 4,
-      "prompt_id": "H2C0101:stale:reactive_no_representation",
+      "prompt_id": "H2C0101:stale:self_belief_plus_message_record",
       "family": "H2",
       "variant_id": "H2C0101",
       "archetype": "resource_location",
       "difficulty": "direct",
       "state": "stale",
-      "condition": "reactive_no_representation",
+      "condition": "self_belief_plus_message_record",
       "seed": 1104908401
     },
     {
@@ -116,24 +116,24 @@
     },
     {
       "ordinal": 6,
-      "prompt_id": "H2C0101:stale:self_belief_plus_message_record",
+      "prompt_id": "H2C0101:stale:reactive_no_representation",
       "family": "H2",
       "variant_id": "H2C0101",
       "archetype": "resource_location",
       "difficulty": "direct",
       "state": "stale",
-      "condition": "self_belief_plus_message_record",
+      "condition": "reactive_no_representation",
       "seed": 1104908401
     },
     {
       "ordinal": 7,
-      "prompt_id": "H1C0101:current:matched_decision_record",
+      "prompt_id": "H1C0101:current:reactive_no_representation",
       "family": "H1",
       "variant_id": "H1C0101",
       "archetype": "route_destination",
       "difficulty": "direct",
       "state": "current",
-      "condition": "matched_decision_record",
+      "condition": "reactive_no_representation",
       "seed": 2212363734
     },
     {
@@ -149,13 +149,13 @@
     },
     {
       "ordinal": 9,
-      "prompt_id": "H1C0101:current:reactive_no_representation",
+      "prompt_id": "H1C0101:current:matched_decision_record",
       "family": "H1",
       "variant_id": "H1C0101",
       "archetype": "route_destination",
       "difficulty": "direct",
       "state": "current",
-      "condition": "reactive_no_representation",
+      "condition": "matched_decision_record",
       "seed": 2212363734
     },
     {
@@ -193,17 +193,6 @@
     },
     {
       "ordinal": 13,
-      "prompt_id": "H1C0201:stale:reactive_no_representation",
-      "family": "H1",
-      "variant_id": "H1C0201",
-      "archetype": "conveyor_storage",
-      "difficulty": "direct",
-      "state": "stale",
-      "condition": "reactive_no_representation",
-      "seed": 2374654120
-    },
-    {
-      "ordinal": 14,
       "prompt_id": "H1C0201:stale:matched_decision_record",
       "family": "H1",
       "variant_id": "H1C0201",
@@ -214,7 +203,7 @@
       "seed": 2374654120
     },
     {
-      "ordinal": 15,
+      "ordinal": 14,
       "prompt_id": "H1C0201:stale:explicit_self_belief",
       "family": "H1",
       "variant_id": "H1C0201",
@@ -222,6 +211,17 @@
       "difficulty": "direct",
       "state": "stale",
       "condition": "explicit_self_belief",
+      "seed": 2374654120
+    },
+    {
+      "ordinal": 15,
+      "prompt_id": "H1C0201:stale:reactive_no_representation",
+      "family": "H1",
+      "variant_id": "H1C0201",
+      "archetype": "conveyor_storage",
+      "difficulty": "direct",
+      "state": "stale",
+      "condition": "reactive_no_representation",
       "seed": 2374654120
     },
     {
@@ -237,17 +237,6 @@
     },
     {
       "ordinal": 17,
-      "prompt_id": "H2C0201:stale:self_belief_plus_partner_belief",
-      "family": "H2",
-      "variant_id": "H2C0201",
-      "archetype": "tool_placement",
-      "difficulty": "direct",
-      "state": "stale",
-      "condition": "self_belief_plus_partner_belief",
-      "seed": 2292433756
-    },
-    {
-      "ordinal": 18,
       "prompt_id": "H2C0201:stale:self_belief_plus_message_record",
       "family": "H2",
       "variant_id": "H2C0201",
@@ -258,18 +247,18 @@
       "seed": 2292433756
     },
     {
-      "ordinal": 19,
-      "prompt_id": "H1C0201:current:matched_decision_record",
-      "family": "H1",
-      "variant_id": "H1C0201",
-      "archetype": "conveyor_storage",
+      "ordinal": 18,
+      "prompt_id": "H2C0201:stale:self_belief_plus_partner_belief",
+      "family": "H2",
+      "variant_id": "H2C0201",
+      "archetype": "tool_placement",
       "difficulty": "direct",
-      "state": "current",
-      "condition": "matched_decision_record",
-      "seed": 80637703
+      "state": "stale",
+      "condition": "self_belief_plus_partner_belief",
+      "seed": 2292433756
     },
     {
-      "ordinal": 20,
+      "ordinal": 19,
       "prompt_id": "H1C0201:current:explicit_self_belief",
       "family": "H1",
       "variant_id": "H1C0201",
@@ -277,6 +266,17 @@
       "difficulty": "direct",
       "state": "current",
       "condition": "explicit_self_belief",
+      "seed": 80637703
+    },
+    {
+      "ordinal": 20,
+      "prompt_id": "H1C0201:current:matched_decision_record",
+      "family": "H1",
+      "variant_id": "H1C0201",
+      "archetype": "conveyor_storage",
+      "difficulty": "direct",
+      "state": "current",
+      "condition": "matched_decision_record",
       "seed": 80637703
     },
     {
@@ -292,6 +292,17 @@
     },
     {
       "ordinal": 22,
+      "prompt_id": "H2C0201:current:reactive_no_representation",
+      "family": "H2",
+      "variant_id": "H2C0201",
+      "archetype": "tool_placement",
+      "difficulty": "direct",
+      "state": "current",
+      "condition": "reactive_no_representation",
+      "seed": 876435985
+    },
+    {
+      "ordinal": 23,
       "prompt_id": "H2C0201:current:self_belief_plus_partner_belief",
       "family": "H2",
       "variant_id": "H2C0201",
@@ -302,7 +313,7 @@
       "seed": 876435985
     },
     {
-      "ordinal": 23,
+      "ordinal": 24,
       "prompt_id": "H2C0201:current:self_belief_plus_message_record",
       "family": "H2",
       "variant_id": "H2C0201",
@@ -310,17 +321,6 @@
       "difficulty": "direct",
       "state": "current",
       "condition": "self_belief_plus_message_record",
-      "seed": 876435985
-    },
-    {
-      "ordinal": 24,
-      "prompt_id": "H2C0201:current:reactive_no_representation",
-      "family": "H2",
-      "variant_id": "H2C0201",
-      "archetype": "tool_placement",
-      "difficulty": "direct",
-      "state": "current",
-      "condition": "reactive_no_representation",
       "seed": 876435985
     },
     {
@@ -358,13 +358,13 @@
     },
     {
       "ordinal": 28,
-      "prompt_id": "H2C0301:stale:reactive_no_representation",
+      "prompt_id": "H2C0301:stale:self_belief_plus_message_record",
       "family": "H2",
       "variant_id": "H2C0301",
       "archetype": "rendezvous_destination",
       "difficulty": "direct",
       "state": "stale",
-      "condition": "reactive_no_representation",
+      "condition": "self_belief_plus_message_record",
       "seed": 1063346294
     },
     {
@@ -380,24 +380,24 @@
     },
     {
       "ordinal": 30,
-      "prompt_id": "H2C0301:stale:self_belief_plus_message_record",
+      "prompt_id": "H2C0301:stale:reactive_no_representation",
       "family": "H2",
       "variant_id": "H2C0301",
       "archetype": "rendezvous_destination",
       "difficulty": "direct",
       "state": "stale",
-      "condition": "self_belief_plus_message_record",
+      "condition": "reactive_no_representation",
       "seed": 1063346294
     },
     {
       "ordinal": 31,
-      "prompt_id": "H1C0301:current:matched_decision_record",
+      "prompt_id": "H1C0301:current:reactive_no_representation",
       "family": "H1",
       "variant_id": "H1C0301",
       "archetype": "tunnel_inspection",
       "difficulty": "direct",
       "state": "current",
-      "condition": "matched_decision_record",
+      "condition": "reactive_no_representation",
       "seed": 3051032670
     },
     {
@@ -413,13 +413,13 @@
     },
     {
       "ordinal": 33,
-      "prompt_id": "H1C0301:current:reactive_no_representation",
+      "prompt_id": "H1C0301:current:matched_decision_record",
       "family": "H1",
       "variant_id": "H1C0301",
       "archetype": "tunnel_inspection",
       "difficulty": "direct",
       "state": "current",
-      "condition": "reactive_no_representation",
+      "condition": "matched_decision_record",
       "seed": 3051032670
     },
     {
@@ -457,17 +457,6 @@
     },
     {
       "ordinal": 37,
-      "prompt_id": "H1C0401:stale:reactive_no_representation",
-      "family": "H1",
-      "variant_id": "H1C0401",
-      "archetype": "channel_charging",
-      "difficulty": "direct",
-      "state": "stale",
-      "condition": "reactive_no_representation",
-      "seed": 3974992976
-    },
-    {
-      "ordinal": 38,
       "prompt_id": "H1C0401:stale:matched_decision_record",
       "family": "H1",
       "variant_id": "H1C0401",
@@ -478,7 +467,7 @@
       "seed": 3974992976
     },
     {
-      "ordinal": 39,
+      "ordinal": 38,
       "prompt_id": "H1C0401:stale:explicit_self_belief",
       "family": "H1",
       "variant_id": "H1C0401",
@@ -486,6 +475,17 @@
       "difficulty": "direct",
       "state": "stale",
       "condition": "explicit_self_belief",
+      "seed": 3974992976
+    },
+    {
+      "ordinal": 39,
+      "prompt_id": "H1C0401:stale:reactive_no_representation",
+      "family": "H1",
+      "variant_id": "H1C0401",
+      "archetype": "channel_charging",
+      "difficulty": "direct",
+      "state": "stale",
+      "condition": "reactive_no_representation",
       "seed": 3974992976
     },
     {
@@ -501,17 +501,6 @@
     },
     {
       "ordinal": 41,
-      "prompt_id": "H2C0401:stale:self_belief_plus_partner_belief",
-      "family": "H2",
-      "variant_id": "H2C0401",
-      "archetype": "delivery_destination",
-      "difficulty": "direct",
-      "state": "stale",
-      "condition": "self_belief_plus_partner_belief",
-      "seed": 1917669924
-    },
-    {
-      "ordinal": 42,
       "prompt_id": "H2C0401:stale:self_belief_plus_message_record",
       "family": "H2",
       "variant_id": "H2C0401",
@@ -522,18 +511,18 @@
       "seed": 1917669924
     },
     {
-      "ordinal": 43,
-      "prompt_id": "H1C0401:current:matched_decision_record",
-      "family": "H1",
-      "variant_id": "H1C0401",
-      "archetype": "channel_charging",
+      "ordinal": 42,
+      "prompt_id": "H2C0401:stale:self_belief_plus_partner_belief",
+      "family": "H2",
+      "variant_id": "H2C0401",
+      "archetype": "delivery_destination",
       "difficulty": "direct",
-      "state": "current",
-      "condition": "matched_decision_record",
-      "seed": 1211427246
+      "state": "stale",
+      "condition": "self_belief_plus_partner_belief",
+      "seed": 1917669924
     },
     {
-      "ordinal": 44,
+      "ordinal": 43,
       "prompt_id": "H1C0401:current:explicit_self_belief",
       "family": "H1",
       "variant_id": "H1C0401",
@@ -541,6 +530,17 @@
       "difficulty": "direct",
       "state": "current",
       "condition": "explicit_self_belief",
+      "seed": 1211427246
+    },
+    {
+      "ordinal": 44,
+      "prompt_id": "H1C0401:current:matched_decision_record",
+      "family": "H1",
+      "variant_id": "H1C0401",
+      "archetype": "channel_charging",
+      "difficulty": "direct",
+      "state": "current",
+      "condition": "matched_decision_record",
       "seed": 1211427246
     },
     {
@@ -556,6 +556,17 @@
     },
     {
       "ordinal": 46,
+      "prompt_id": "H2C0401:current:reactive_no_representation",
+      "family": "H2",
+      "variant_id": "H2C0401",
+      "archetype": "delivery_destination",
+      "difficulty": "direct",
+      "state": "current",
+      "condition": "reactive_no_representation",
+      "seed": 3211007980
+    },
+    {
+      "ordinal": 47,
       "prompt_id": "H2C0401:current:self_belief_plus_partner_belief",
       "family": "H2",
       "variant_id": "H2C0401",
@@ -566,7 +577,7 @@
       "seed": 3211007980
     },
     {
-      "ordinal": 47,
+      "ordinal": 48,
       "prompt_id": "H2C0401:current:self_belief_plus_message_record",
       "family": "H2",
       "variant_id": "H2C0401",
@@ -574,17 +585,6 @@
       "difficulty": "direct",
       "state": "current",
       "condition": "self_belief_plus_message_record",
-      "seed": 3211007980
-    },
-    {
-      "ordinal": 48,
-      "prompt_id": "H2C0401:current:reactive_no_representation",
-      "family": "H2",
-      "variant_id": "H2C0401",
-      "archetype": "delivery_destination",
-      "difficulty": "direct",
-      "state": "current",
-      "condition": "reactive_no_representation",
       "seed": 3211007980
     },
     {
@@ -622,13 +622,13 @@
     },
     {
       "ordinal": 52,
-      "prompt_id": "H2C0501:stale:reactive_no_representation",
+      "prompt_id": "H2C0501:stale:self_belief_plus_message_record",
       "family": "H2",
       "variant_id": "H2C0501",
       "archetype": "hazard_assignment",
       "difficulty": "direct",
       "state": "stale",
-      "condition": "reactive_no_representation",
+      "condition": "self_belief_plus_message_record",
       "seed": 3789981220
     },
     {
@@ -644,24 +644,24 @@
     },
     {
       "ordinal": 54,
-      "prompt_id": "H2C0501:stale:self_belief_plus_message_record",
+      "prompt_id": "H2C0501:stale:reactive_no_representation",
       "family": "H2",
       "variant_id": "H2C0501",
       "archetype": "hazard_assignment",
       "difficulty": "direct",
       "state": "stale",
-      "condition": "self_belief_plus_message_record",
+      "condition": "reactive_no_representation",
       "seed": 3789981220
     },
     {
       "ordinal": 55,
-      "prompt_id": "H1C0501:current:matched_decision_record",
+      "prompt_id": "H1C0501:current:reactive_no_representation",
       "family": "H1",
       "variant_id": "H1C0501",
       "archetype": "corridor_rescue",
       "difficulty": "direct",
       "state": "current",
-      "condition": "matched_decision_record",
+      "condition": "reactive_no_representation",
       "seed": 3005061245
     },
     {
@@ -677,13 +677,13 @@
     },
     {
       "ordinal": 57,
-      "prompt_id": "H1C0501:current:reactive_no_representation",
+      "prompt_id": "H1C0501:current:matched_decision_record",
       "family": "H1",
       "variant_id": "H1C0501",
       "archetype": "corridor_rescue",
       "difficulty": "direct",
       "state": "current",
-      "condition": "reactive_no_representation",
+      "condition": "matched_decision_record",
       "seed": 3005061245
     },
     {
@@ -721,17 +721,6 @@
     },
     {
       "ordinal": 61,
-      "prompt_id": "H1C0601:stale:reactive_no_representation",
-      "family": "H1",
-      "variant_id": "H1C0601",
-      "archetype": "lane_delivery",
-      "difficulty": "direct",
-      "state": "stale",
-      "condition": "reactive_no_representation",
-      "seed": 972916688
-    },
-    {
-      "ordinal": 62,
       "prompt_id": "H1C0601:stale:matched_decision_record",
       "family": "H1",
       "variant_id": "H1C0601",
@@ -742,7 +731,7 @@
       "seed": 972916688
     },
     {
-      "ordinal": 63,
+      "ordinal": 62,
       "prompt_id": "H1C0601:stale:explicit_self_belief",
       "family": "H1",
       "variant_id": "H1C0601",
@@ -750,6 +739,17 @@
       "difficulty": "direct",
       "state": "stale",
       "condition": "explicit_self_belief",
+      "seed": 972916688
+    },
+    {
+      "ordinal": 63,
+      "prompt_id": "H1C0601:stale:reactive_no_representation",
+      "family": "H1",
+      "variant_id": "H1C0601",
+      "archetype": "lane_delivery",
+      "difficulty": "direct",
+      "state": "stale",
+      "condition": "reactive_no_representation",
       "seed": 972916688
     },
     {
@@ -765,17 +765,6 @@
     },
     {
       "ordinal": 65,
-      "prompt_id": "H2C0601:stale:self_belief_plus_partner_belief",
-      "family": "H2",
-      "variant_id": "H2C0601",
-      "archetype": "maintenance_target",
-      "difficulty": "direct",
-      "state": "stale",
-      "condition": "self_belief_plus_partner_belief",
-      "seed": 4160221602
-    },
-    {
-      "ordinal": 66,
       "prompt_id": "H2C0601:stale:self_belief_plus_message_record",
       "family": "H2",
       "variant_id": "H2C0601",
@@ -786,18 +775,18 @@
       "seed": 4160221602
     },
     {
-      "ordinal": 67,
-      "prompt_id": "H1C0601:current:matched_decision_record",
-      "family": "H1",
-      "variant_id": "H1C0601",
-      "archetype": "lane_delivery",
+      "ordinal": 66,
+      "prompt_id": "H2C0601:stale:self_belief_plus_partner_belief",
+      "family": "H2",
+      "variant_id": "H2C0601",
+      "archetype": "maintenance_target",
       "difficulty": "direct",
-      "state": "current",
-      "condition": "matched_decision_record",
-      "seed": 3105021074
+      "state": "stale",
+      "condition": "self_belief_plus_partner_belief",
+      "seed": 4160221602
     },
     {
-      "ordinal": 68,
+      "ordinal": 67,
       "prompt_id": "H1C0601:current:explicit_self_belief",
       "family": "H1",
       "variant_id": "H1C0601",
@@ -805,6 +794,17 @@
       "difficulty": "direct",
       "state": "current",
       "condition": "explicit_self_belief",
+      "seed": 3105021074
+    },
+    {
+      "ordinal": 68,
+      "prompt_id": "H1C0601:current:matched_decision_record",
+      "family": "H1",
+      "variant_id": "H1C0601",
+      "archetype": "lane_delivery",
+      "difficulty": "direct",
+      "state": "current",
+      "condition": "matched_decision_record",
       "seed": 3105021074
     },
     {
@@ -820,6 +820,17 @@
     },
     {
       "ordinal": 70,
+      "prompt_id": "H2C0601:current:reactive_no_representation",
+      "family": "H2",
+      "variant_id": "H2C0601",
+      "archetype": "maintenance_target",
+      "difficulty": "direct",
+      "state": "current",
+      "condition": "reactive_no_representation",
+      "seed": 1532240540
+    },
+    {
+      "ordinal": 71,
       "prompt_id": "H2C0601:current:self_belief_plus_partner_belief",
       "family": "H2",
       "variant_id": "H2C0601",
@@ -830,7 +841,7 @@
       "seed": 1532240540
     },
     {
-      "ordinal": 71,
+      "ordinal": 72,
       "prompt_id": "H2C0601:current:self_belief_plus_message_record",
       "family": "H2",
       "variant_id": "H2C0601",
@@ -838,17 +849,6 @@
       "difficulty": "direct",
       "state": "current",
       "condition": "self_belief_plus_message_record",
-      "seed": 1532240540
-    },
-    {
-      "ordinal": 72,
-      "prompt_id": "H2C0601:current:reactive_no_representation",
-      "family": "H2",
-      "variant_id": "H2C0601",
-      "archetype": "maintenance_target",
-      "difficulty": "direct",
-      "state": "current",
-      "condition": "reactive_no_representation",
       "seed": 1532240540
     },
     {
@@ -864,17 +864,6 @@
     },
     {
       "ordinal": 74,
-      "prompt_id": "H1C0102:stale:matched_decision_record",
-      "family": "H1",
-      "variant_id": "H1C0102",
-      "archetype": "route_destination",
-      "difficulty": "direct",
-      "state": "stale",
-      "condition": "matched_decision_record",
-      "seed": 260044711
-    },
-    {
-      "ordinal": 75,
       "prompt_id": "H1C0102:stale:explicit_self_belief",
       "family": "H1",
       "variant_id": "H1C0102",
@@ -885,18 +874,18 @@
       "seed": 260044711
     },
     {
-      "ordinal": 76,
-      "prompt_id": "H2C0102:stale:reactive_no_representation",
-      "family": "H2",
-      "variant_id": "H2C0102",
-      "archetype": "resource_location",
+      "ordinal": 75,
+      "prompt_id": "H1C0102:stale:matched_decision_record",
+      "family": "H1",
+      "variant_id": "H1C0102",
+      "archetype": "route_destination",
       "difficulty": "direct",
       "state": "stale",
-      "condition": "reactive_no_representation",
-      "seed": 405152682
+      "condition": "matched_decision_record",
+      "seed": 260044711
     },
     {
-      "ordinal": 77,
+      "ordinal": 76,
       "prompt_id": "H2C0102:stale:self_belief_plus_partner_belief",
       "family": "H2",
       "variant_id": "H2C0102",
@@ -907,7 +896,7 @@
       "seed": 405152682
     },
     {
-      "ordinal": 78,
+      "ordinal": 77,
       "prompt_id": "H2C0102:stale:self_belief_plus_message_record",
       "family": "H2",
       "variant_id": "H2C0102",
@@ -915,6 +904,17 @@
       "difficulty": "direct",
       "state": "stale",
       "condition": "self_belief_plus_message_record",
+      "seed": 405152682
+    },
+    {
+      "ordinal": 78,
+      "prompt_id": "H2C0102:stale:reactive_no_representation",
+      "family": "H2",
+      "variant_id": "H2C0102",
+      "archetype": "resource_location",
+      "difficulty": "direct",
+      "state": "stale",
+      "condition": "reactive_no_representation",
       "seed": 405152682
     },
     {
@@ -952,13 +952,13 @@
     },
     {
       "ordinal": 82,
-      "prompt_id": "H2C0102:current:self_belief_plus_partner_belief",
+      "prompt_id": "H2C0102:current:reactive_no_representation",
       "family": "H2",
       "variant_id": "H2C0102",
       "archetype": "resource_location",
       "difficulty": "direct",
       "state": "current",
-      "condition": "self_belief_plus_partner_belief",
+      "condition": "reactive_no_representation",
       "seed": 1018350359
     },
     {
@@ -974,24 +974,24 @@
     },
     {
       "ordinal": 84,
-      "prompt_id": "H2C0102:current:reactive_no_representation",
+      "prompt_id": "H2C0102:current:self_belief_plus_partner_belief",
       "family": "H2",
       "variant_id": "H2C0102",
       "archetype": "resource_location",
       "difficulty": "direct",
       "state": "current",
-      "condition": "reactive_no_representation",
+      "condition": "self_belief_plus_partner_belief",
       "seed": 1018350359
     },
     {
       "ordinal": 85,
-      "prompt_id": "H1C0202:stale:reactive_no_representation",
+      "prompt_id": "H1C0202:stale:explicit_self_belief",
       "family": "H1",
       "variant_id": "H1C0202",
       "archetype": "conveyor_storage",
       "difficulty": "direct",
       "state": "stale",
-      "condition": "reactive_no_representation",
+      "condition": "explicit_self_belief",
       "seed": 3871428452
     },
     {
@@ -1007,13 +1007,13 @@
     },
     {
       "ordinal": 87,
-      "prompt_id": "H1C0202:stale:explicit_self_belief",
+      "prompt_id": "H1C0202:stale:reactive_no_representation",
       "family": "H1",
       "variant_id": "H1C0202",
       "archetype": "conveyor_storage",
       "difficulty": "direct",
       "state": "stale",
-      "condition": "explicit_self_belief",
+      "condition": "reactive_no_representation",
       "seed": 3871428452
     },
     {
@@ -1051,28 +1051,6 @@
     },
     {
       "ordinal": 91,
-      "prompt_id": "H1C0202:current:matched_decision_record",
-      "family": "H1",
-      "variant_id": "H1C0202",
-      "archetype": "conveyor_storage",
-      "difficulty": "direct",
-      "state": "current",
-      "condition": "matched_decision_record",
-      "seed": 1737042331
-    },
-    {
-      "ordinal": 92,
-      "prompt_id": "H1C0202:current:explicit_self_belief",
-      "family": "H1",
-      "variant_id": "H1C0202",
-      "archetype": "conveyor_storage",
-      "difficulty": "direct",
-      "state": "current",
-      "condition": "explicit_self_belief",
-      "seed": 1737042331
-    },
-    {
-      "ordinal": 93,
       "prompt_id": "H1C0202:current:reactive_no_representation",
       "family": "H1",
       "variant_id": "H1C0202",
@@ -1083,18 +1061,29 @@
       "seed": 1737042331
     },
     {
-      "ordinal": 94,
-      "prompt_id": "H2C0202:current:self_belief_plus_partner_belief",
-      "family": "H2",
-      "variant_id": "H2C0202",
-      "archetype": "tool_placement",
+      "ordinal": 92,
+      "prompt_id": "H1C0202:current:matched_decision_record",
+      "family": "H1",
+      "variant_id": "H1C0202",
+      "archetype": "conveyor_storage",
       "difficulty": "direct",
       "state": "current",
-      "condition": "self_belief_plus_partner_belief",
-      "seed": 2718161348
+      "condition": "matched_decision_record",
+      "seed": 1737042331
     },
     {
-      "ordinal": 95,
+      "ordinal": 93,
+      "prompt_id": "H1C0202:current:explicit_self_belief",
+      "family": "H1",
+      "variant_id": "H1C0202",
+      "archetype": "conveyor_storage",
+      "difficulty": "direct",
+      "state": "current",
+      "condition": "explicit_self_belief",
+      "seed": 1737042331
+    },
+    {
+      "ordinal": 94,
       "prompt_id": "H2C0202:current:self_belief_plus_message_record",
       "family": "H2",
       "variant_id": "H2C0202",
@@ -1102,6 +1091,17 @@
       "difficulty": "direct",
       "state": "current",
       "condition": "self_belief_plus_message_record",
+      "seed": 2718161348
+    },
+    {
+      "ordinal": 95,
+      "prompt_id": "H2C0202:current:self_belief_plus_partner_belief",
+      "family": "H2",
+      "variant_id": "H2C0202",
+      "archetype": "tool_placement",
+      "difficulty": "direct",
+      "state": "current",
+      "condition": "self_belief_plus_partner_belief",
       "seed": 2718161348
     },
     {
@@ -1128,17 +1128,6 @@
     },
     {
       "ordinal": 98,
-      "prompt_id": "H1C0302:stale:matched_decision_record",
-      "family": "H1",
-      "variant_id": "H1C0302",
-      "archetype": "tunnel_inspection",
-      "difficulty": "direct",
-      "state": "stale",
-      "condition": "matched_decision_record",
-      "seed": 3678146492
-    },
-    {
-      "ordinal": 99,
       "prompt_id": "H1C0302:stale:explicit_self_belief",
       "family": "H1",
       "variant_id": "H1C0302",
@@ -1149,18 +1138,18 @@
       "seed": 3678146492
     },
     {
-      "ordinal": 100,
-      "prompt_id": "H2C0302:stale:reactive_no_representation",
-      "family": "H2",
-      "variant_id": "H2C0302",
-      "archetype": "rendezvous_destination",
+      "ordinal": 99,
+      "prompt_id": "H1C0302:stale:matched_decision_record",
+      "family": "H1",
+      "variant_id": "H1C0302",
+      "archetype": "tunnel_inspection",
       "difficulty": "direct",
       "state": "stale",
-      "condition": "reactive_no_representation",
-      "seed": 2167783074
+      "condition": "matched_decision_record",
+      "seed": 3678146492
     },
     {
-      "ordinal": 101,
+      "ordinal": 100,
       "prompt_id": "H2C0302:stale:self_belief_plus_partner_belief",
       "family": "H2",
       "variant_id": "H2C0302",
@@ -1171,7 +1160,7 @@
       "seed": 2167783074
     },
     {
-      "ordinal": 102,
+      "ordinal": 101,
       "prompt_id": "H2C0302:stale:self_belief_plus_message_record",
       "family": "H2",
       "variant_id": "H2C0302",
@@ -1179,6 +1168,17 @@
       "difficulty": "direct",
       "state": "stale",
       "condition": "self_belief_plus_message_record",
+      "seed": 2167783074
+    },
+    {
+      "ordinal": 102,
+      "prompt_id": "H2C0302:stale:reactive_no_representation",
+      "family": "H2",
+      "variant_id": "H2C0302",
+      "archetype": "rendezvous_destination",
+      "difficulty": "direct",
+      "state": "stale",
+      "condition": "reactive_no_representation",
       "seed": 2167783074
     },
     {
@@ -1216,13 +1216,13 @@
     },
     {
       "ordinal": 106,
-      "prompt_id": "H2C0302:current:self_belief_plus_partner_belief",
+      "prompt_id": "H2C0302:current:reactive_no_representation",
       "family": "H2",
       "variant_id": "H2C0302",
       "archetype": "rendezvous_destination",
       "difficulty": "direct",
       "state": "current",
-      "condition": "self_belief_plus_partner_belief",
+      "condition": "reactive_no_representation",
       "seed": 1728620186
     },
     {
@@ -1238,24 +1238,24 @@
     },
     {
       "ordinal": 108,
-      "prompt_id": "H2C0302:current:reactive_no_representation",
+      "prompt_id": "H2C0302:current:self_belief_plus_partner_belief",
       "family": "H2",
       "variant_id": "H2C0302",
       "archetype": "rendezvous_destination",
       "difficulty": "direct",
       "state": "current",
-      "condition": "reactive_no_representation",
+      "condition": "self_belief_plus_partner_belief",
       "seed": 1728620186
     },
     {
       "ordinal": 109,
-      "prompt_id": "H1C0402:stale:reactive_no_representation",
+      "prompt_id": "H1C0402:stale:explicit_self_belief",
       "family": "H1",
       "variant_id": "H1C0402",
       "archetype": "channel_charging",
       "difficulty": "direct",
       "state": "stale",
-      "condition": "reactive_no_representation",
+      "condition": "explicit_self_belief",
       "seed": 3369763263
     },
     {
@@ -1271,13 +1271,13 @@
     },
     {
       "ordinal": 111,
-      "prompt_id": "H1C0402:stale:explicit_self_belief",
+      "prompt_id": "H1C0402:stale:reactive_no_representation",
       "family": "H1",
       "variant_id": "H1C0402",
       "archetype": "channel_charging",
       "difficulty": "direct",
       "state": "stale",
-      "condition": "explicit_self_belief",
+      "condition": "reactive_no_representation",
       "seed": 3369763263
     },
     {
@@ -1315,28 +1315,6 @@
     },
     {
       "ordinal": 115,
-      "prompt_id": "H1C0402:current:matched_decision_record",
-      "family": "H1",
-      "variant_id": "H1C0402",
-      "archetype": "channel_charging",
-      "difficulty": "direct",
-      "state": "current",
-      "condition": "matched_decision_record",
-      "seed": 338989001
-    },
-    {
-      "ordinal": 116,
-      "prompt_id": "H1C0402:current:explicit_self_belief",
-      "family": "H1",
-      "variant_id": "H1C0402",
-      "archetype": "channel_charging",
-      "difficulty": "direct",
-      "state": "current",
-      "condition": "explicit_self_belief",
-      "seed": 338989001
-    },
-    {
-      "ordinal": 117,
       "prompt_id": "H1C0402:current:reactive_no_representation",
       "family": "H1",
       "variant_id": "H1C0402",
@@ -1347,18 +1325,29 @@
       "seed": 338989001
     },
     {
-      "ordinal": 118,
-      "prompt_id": "H2C0402:current:self_belief_plus_partner_belief",
-      "family": "H2",
-      "variant_id": "H2C0402",
-      "archetype": "delivery_destination",
+      "ordinal": 116,
+      "prompt_id": "H1C0402:current:matched_decision_record",
+      "family": "H1",
+      "variant_id": "H1C0402",
+      "archetype": "channel_charging",
       "difficulty": "direct",
       "state": "current",
-      "condition": "self_belief_plus_partner_belief",
-      "seed": 906671702
+      "condition": "matched_decision_record",
+      "seed": 338989001
     },
     {
-      "ordinal": 119,
+      "ordinal": 117,
+      "prompt_id": "H1C0402:current:explicit_self_belief",
+      "family": "H1",
+      "variant_id": "H1C0402",
+      "archetype": "channel_charging",
+      "difficulty": "direct",
+      "state": "current",
+      "condition": "explicit_self_belief",
+      "seed": 338989001
+    },
+    {
+      "ordinal": 118,
       "prompt_id": "H2C0402:current:self_belief_plus_message_record",
       "family": "H2",
       "variant_id": "H2C0402",
@@ -1366,6 +1355,17 @@
       "difficulty": "direct",
       "state": "current",
       "condition": "self_belief_plus_message_record",
+      "seed": 906671702
+    },
+    {
+      "ordinal": 119,
+      "prompt_id": "H2C0402:current:self_belief_plus_partner_belief",
+      "family": "H2",
+      "variant_id": "H2C0402",
+      "archetype": "delivery_destination",
+      "difficulty": "direct",
+      "state": "current",
+      "condition": "self_belief_plus_partner_belief",
       "seed": 906671702
     },
     {
@@ -1392,17 +1392,6 @@
     },
     {
       "ordinal": 122,
-      "prompt_id": "H1C0502:stale:matched_decision_record",
-      "family": "H1",
-      "variant_id": "H1C0502",
-      "archetype": "corridor_rescue",
-      "difficulty": "direct",
-      "state": "stale",
-      "condition": "matched_decision_record",
-      "seed": 2831728015
-    },
-    {
-      "ordinal": 123,
       "prompt_id": "H1C0502:stale:explicit_self_belief",
       "family": "H1",
       "variant_id": "H1C0502",
@@ -1413,18 +1402,18 @@
       "seed": 2831728015
     },
     {
-      "ordinal": 124,
-      "prompt_id": "H2C0502:stale:reactive_no_representation",
-      "family": "H2",
-      "variant_id": "H2C0502",
-      "archetype": "hazard_assignment",
+      "ordinal": 123,
+      "prompt_id": "H1C0502:stale:matched_decision_record",
+      "family": "H1",
+      "variant_id": "H1C0502",
+      "archetype": "corridor_rescue",
       "difficulty": "direct",
       "state": "stale",
-      "condition": "reactive_no_representation",
-      "seed": 3809862190
+      "condition": "matched_decision_record",
+      "seed": 2831728015
     },
     {
-      "ordinal": 125,
+      "ordinal": 124,
       "prompt_id": "H2C0502:stale:self_belief_plus_partner_belief",
       "family": "H2",
       "variant_id": "H2C0502",
@@ -1435,7 +1424,7 @@
       "seed": 3809862190
     },
     {
-      "ordinal": 126,
+      "ordinal": 125,
       "prompt_id": "H2C0502:stale:self_belief_plus_message_record",
       "family": "H2",
       "variant_id": "H2C0502",
@@ -1443,6 +1432,17 @@
       "difficulty": "direct",
       "state": "stale",
       "condition": "self_belief_plus_message_record",
+      "seed": 3809862190
+    },
+    {
+      "ordinal": 126,
+      "prompt_id": "H2C0502:stale:reactive_no_representation",
+      "family": "H2",
+      "variant_id": "H2C0502",
+      "archetype": "hazard_assignment",
+      "difficulty": "direct",
+      "state": "stale",
+      "condition": "reactive_no_representation",
       "seed": 3809862190
     },
     {
@@ -1480,13 +1480,13 @@
     },
     {
       "ordinal": 130,
-      "prompt_id": "H2C0502:current:self_belief_plus_partner_belief",
+      "prompt_id": "H2C0502:current:reactive_no_representation",
       "family": "H2",
       "variant_id": "H2C0502",
       "archetype": "hazard_assignment",
       "difficulty": "direct",
       "state": "current",
-      "condition": "self_belief_plus_partner_belief",
+      "condition": "reactive_no_representation",
       "seed": 2093378158
     },
     {
@@ -1502,24 +1502,24 @@
     },
     {
       "ordinal": 132,
-      "prompt_id": "H2C0502:current:reactive_no_representation",
+      "prompt_id": "H2C0502:current:self_belief_plus_partner_belief",
       "family": "H2",
       "variant_id": "H2C0502",
       "archetype": "hazard_assignment",
       "difficulty": "direct",
       "state": "current",
-      "condition": "reactive_no_representation",
+      "condition": "self_belief_plus_partner_belief",
       "seed": 2093378158
     },
     {
       "ordinal": 133,
-      "prompt_id": "H1C0602:stale:reactive_no_representation",
+      "prompt_id": "H1C0602:stale:explicit_self_belief",
       "family": "H1",
       "variant_id": "H1C0602",
       "archetype": "lane_delivery",
       "difficulty": "direct",
       "state": "stale",
-      "condition": "reactive_no_representation",
+      "condition": "explicit_self_belief",
       "seed": 1247562513
     },
     {
@@ -1535,13 +1535,13 @@
     },
     {
       "ordinal": 135,
-      "prompt_id": "H1C0602:stale:explicit_self_belief",
+      "prompt_id": "H1C0602:stale:reactive_no_representation",
       "family": "H1",
       "variant_id": "H1C0602",
       "archetype": "lane_delivery",
       "difficulty": "direct",
       "state": "stale",
-      "condition": "explicit_self_belief",
+      "condition": "reactive_no_representation",
       "seed": 1247562513
     },
     {
@@ -1579,28 +1579,6 @@
     },
     {
       "ordinal": 139,
-      "prompt_id": "H1C0602:current:matched_decision_record",
-      "family": "H1",
-      "variant_id": "H1C0602",
-      "archetype": "lane_delivery",
-      "difficulty": "direct",
-      "state": "current",
-      "condition": "matched_decision_record",
-      "seed": 2845299031
-    },
-    {
-      "ordinal": 140,
-      "prompt_id": "H1C0602:current:explicit_self_belief",
-      "family": "H1",
-      "variant_id": "H1C0602",
-      "archetype": "lane_delivery",
-      "difficulty": "direct",
-      "state": "current",
-      "condition": "explicit_self_belief",
-      "seed": 2845299031
-    },
-    {
-      "ordinal": 141,
       "prompt_id": "H1C0602:current:reactive_no_representation",
       "family": "H1",
       "variant_id": "H1C0602",
@@ -1611,18 +1589,29 @@
       "seed": 2845299031
     },
     {
-      "ordinal": 142,
-      "prompt_id": "H2C0602:current:self_belief_plus_partner_belief",
-      "family": "H2",
-      "variant_id": "H2C0602",
-      "archetype": "maintenance_target",
+      "ordinal": 140,
+      "prompt_id": "H1C0602:current:matched_decision_record",
+      "family": "H1",
+      "variant_id": "H1C0602",
+      "archetype": "lane_delivery",
       "difficulty": "direct",
       "state": "current",
-      "condition": "self_belief_plus_partner_belief",
-      "seed": 3312093147
+      "condition": "matched_decision_record",
+      "seed": 2845299031
     },
     {
-      "ordinal": 143,
+      "ordinal": 141,
+      "prompt_id": "H1C0602:current:explicit_self_belief",
+      "family": "H1",
+      "variant_id": "H1C0602",
+      "archetype": "lane_delivery",
+      "difficulty": "direct",
+      "state": "current",
+      "condition": "explicit_self_belief",
+      "seed": 2845299031
+    },
+    {
+      "ordinal": 142,
       "prompt_id": "H2C0602:current:self_belief_plus_message_record",
       "family": "H2",
       "variant_id": "H2C0602",
@@ -1630,6 +1619,17 @@
       "difficulty": "direct",
       "state": "current",
       "condition": "self_belief_plus_message_record",
+      "seed": 3312093147
+    },
+    {
+      "ordinal": 143,
+      "prompt_id": "H2C0602:current:self_belief_plus_partner_belief",
+      "family": "H2",
+      "variant_id": "H2C0602",
+      "archetype": "maintenance_target",
+      "difficulty": "direct",
+      "state": "current",
+      "condition": "self_belief_plus_partner_belief",
       "seed": 3312093147
     },
     {
@@ -1645,17 +1645,6 @@
     },
     {
       "ordinal": 145,
-      "prompt_id": "H1C0103:stale:reactive_no_representation",
-      "family": "H1",
-      "variant_id": "H1C0103",
-      "archetype": "route_destination",
-      "difficulty": "irrelevant_distractor",
-      "state": "stale",
-      "condition": "reactive_no_representation",
-      "seed": 690464228
-    },
-    {
-      "ordinal": 146,
       "prompt_id": "H1C0103:stale:matched_decision_record",
       "family": "H1",
       "variant_id": "H1C0103",
@@ -1666,7 +1655,7 @@
       "seed": 690464228
     },
     {
-      "ordinal": 147,
+      "ordinal": 146,
       "prompt_id": "H1C0103:stale:explicit_self_belief",
       "family": "H1",
       "variant_id": "H1C0103",
@@ -1674,6 +1663,17 @@
       "difficulty": "irrelevant_distractor",
       "state": "stale",
       "condition": "explicit_self_belief",
+      "seed": 690464228
+    },
+    {
+      "ordinal": 147,
+      "prompt_id": "H1C0103:stale:reactive_no_representation",
+      "family": "H1",
+      "variant_id": "H1C0103",
+      "archetype": "route_destination",
+      "difficulty": "irrelevant_distractor",
+      "state": "stale",
+      "condition": "reactive_no_representation",
       "seed": 690464228
     },
     {
@@ -1689,17 +1689,6 @@
     },
     {
       "ordinal": 149,
-      "prompt_id": "H2C0103:stale:self_belief_plus_partner_belief",
-      "family": "H2",
-      "variant_id": "H2C0103",
-      "archetype": "resource_location",
-      "difficulty": "irrelevant_distractor",
-      "state": "stale",
-      "condition": "self_belief_plus_partner_belief",
-      "seed": 3164244862
-    },
-    {
-      "ordinal": 150,
       "prompt_id": "H2C0103:stale:self_belief_plus_message_record",
       "family": "H2",
       "variant_id": "H2C0103",
@@ -1710,18 +1699,18 @@
       "seed": 3164244862
     },
     {
-      "ordinal": 151,
-      "prompt_id": "H1C0103:current:matched_decision_record",
-      "family": "H1",
-      "variant_id": "H1C0103",
-      "archetype": "route_destination",
+      "ordinal": 150,
+      "prompt_id": "H2C0103:stale:self_belief_plus_partner_belief",
+      "family": "H2",
+      "variant_id": "H2C0103",
+      "archetype": "resource_location",
       "difficulty": "irrelevant_distractor",
-      "state": "current",
-      "condition": "matched_decision_record",
-      "seed": 1187105363
+      "state": "stale",
+      "condition": "self_belief_plus_partner_belief",
+      "seed": 3164244862
     },
     {
-      "ordinal": 152,
+      "ordinal": 151,
       "prompt_id": "H1C0103:current:explicit_self_belief",
       "family": "H1",
       "variant_id": "H1C0103",
@@ -1729,6 +1718,17 @@
       "difficulty": "irrelevant_distractor",
       "state": "current",
       "condition": "explicit_self_belief",
+      "seed": 1187105363
+    },
+    {
+      "ordinal": 152,
+      "prompt_id": "H1C0103:current:matched_decision_record",
+      "family": "H1",
+      "variant_id": "H1C0103",
+      "archetype": "route_destination",
+      "difficulty": "irrelevant_distractor",
+      "state": "current",
+      "condition": "matched_decision_record",
       "seed": 1187105363
     },
     {
@@ -1744,6 +1744,17 @@
     },
     {
       "ordinal": 154,
+      "prompt_id": "H2C0103:current:reactive_no_representation",
+      "family": "H2",
+      "variant_id": "H2C0103",
+      "archetype": "resource_location",
+      "difficulty": "irrelevant_distractor",
+      "state": "current",
+      "condition": "reactive_no_representation",
+      "seed": 3165994811
+    },
+    {
+      "ordinal": 155,
       "prompt_id": "H2C0103:current:self_belief_plus_partner_belief",
       "family": "H2",
       "variant_id": "H2C0103",
@@ -1754,7 +1765,7 @@
       "seed": 3165994811
     },
     {
-      "ordinal": 155,
+      "ordinal": 156,
       "prompt_id": "H2C0103:current:self_belief_plus_message_record",
       "family": "H2",
       "variant_id": "H2C0103",
@@ -1762,17 +1773,6 @@
       "difficulty": "irrelevant_distractor",
       "state": "current",
       "condition": "self_belief_plus_message_record",
-      "seed": 3165994811
-    },
-    {
-      "ordinal": 156,
-      "prompt_id": "H2C0103:current:reactive_no_representation",
-      "family": "H2",
-      "variant_id": "H2C0103",
-      "archetype": "resource_location",
-      "difficulty": "irrelevant_distractor",
-      "state": "current",
-      "condition": "reactive_no_representation",
       "seed": 3165994811
     },
     {
@@ -1810,13 +1810,13 @@
     },
     {
       "ordinal": 160,
-      "prompt_id": "H2C0203:stale:reactive_no_representation",
+      "prompt_id": "H2C0203:stale:self_belief_plus_message_record",
       "family": "H2",
       "variant_id": "H2C0203",
       "archetype": "tool_placement",
       "difficulty": "irrelevant_distractor",
       "state": "stale",
-      "condition": "reactive_no_representation",
+      "condition": "self_belief_plus_message_record",
       "seed": 2966156705
     },
     {
@@ -1832,24 +1832,24 @@
     },
     {
       "ordinal": 162,
-      "prompt_id": "H2C0203:stale:self_belief_plus_message_record",
+      "prompt_id": "H2C0203:stale:reactive_no_representation",
       "family": "H2",
       "variant_id": "H2C0203",
       "archetype": "tool_placement",
       "difficulty": "irrelevant_distractor",
       "state": "stale",
-      "condition": "self_belief_plus_message_record",
+      "condition": "reactive_no_representation",
       "seed": 2966156705
     },
     {
       "ordinal": 163,
-      "prompt_id": "H1C0203:current:matched_decision_record",
+      "prompt_id": "H1C0203:current:reactive_no_representation",
       "family": "H1",
       "variant_id": "H1C0203",
       "archetype": "conveyor_storage",
       "difficulty": "irrelevant_distractor",
       "state": "current",
-      "condition": "matched_decision_record",
+      "condition": "reactive_no_representation",
       "seed": 1930709634
     },
     {
@@ -1865,13 +1865,13 @@
     },
     {
       "ordinal": 165,
-      "prompt_id": "H1C0203:current:reactive_no_representation",
+      "prompt_id": "H1C0203:current:matched_decision_record",
       "family": "H1",
       "variant_id": "H1C0203",
       "archetype": "conveyor_storage",
       "difficulty": "irrelevant_distractor",
       "state": "current",
-      "condition": "reactive_no_representation",
+      "condition": "matched_decision_record",
       "seed": 1930709634
     },
     {
@@ -1909,17 +1909,6 @@
     },
     {
       "ordinal": 169,
-      "prompt_id": "H1C0303:stale:reactive_no_representation",
-      "family": "H1",
-      "variant_id": "H1C0303",
-      "archetype": "tunnel_inspection",
-      "difficulty": "irrelevant_distractor",
-      "state": "stale",
-      "condition": "reactive_no_representation",
-      "seed": 3292397926
-    },
-    {
-      "ordinal": 170,
       "prompt_id": "H1C0303:stale:matched_decision_record",
       "family": "H1",
       "variant_id": "H1C0303",
@@ -1930,7 +1919,7 @@
       "seed": 3292397926
     },
     {
-      "ordinal": 171,
+      "ordinal": 170,
       "prompt_id": "H1C0303:stale:explicit_self_belief",
       "family": "H1",
       "variant_id": "H1C0303",
@@ -1938,6 +1927,17 @@
       "difficulty": "irrelevant_distractor",
       "state": "stale",
       "condition": "explicit_self_belief",
+      "seed": 3292397926
+    },
+    {
+      "ordinal": 171,
+      "prompt_id": "H1C0303:stale:reactive_no_representation",
+      "family": "H1",
+      "variant_id": "H1C0303",
+      "archetype": "tunnel_inspection",
+      "difficulty": "irrelevant_distractor",
+      "state": "stale",
+      "condition": "reactive_no_representation",
       "seed": 3292397926
     },
     {
@@ -1953,17 +1953,6 @@
     },
     {
       "ordinal": 173,
-      "prompt_id": "H2C0303:stale:self_belief_plus_partner_belief",
-      "family": "H2",
-      "variant_id": "H2C0303",
-      "archetype": "rendezvous_destination",
-      "difficulty": "irrelevant_distractor",
-      "state": "stale",
-      "condition": "self_belief_plus_partner_belief",
-      "seed": 322718481
-    },
-    {
-      "ordinal": 174,
       "prompt_id": "H2C0303:stale:self_belief_plus_message_record",
       "family": "H2",
       "variant_id": "H2C0303",
@@ -1974,18 +1963,18 @@
       "seed": 322718481
     },
     {
-      "ordinal": 175,
-      "prompt_id": "H1C0303:current:matched_decision_record",
-      "family": "H1",
-      "variant_id": "H1C0303",
-      "archetype": "tunnel_inspection",
+      "ordinal": 174,
+      "prompt_id": "H2C0303:stale:self_belief_plus_partner_belief",
+      "family": "H2",
+      "variant_id": "H2C0303",
+      "archetype": "rendezvous_destination",
       "difficulty": "irrelevant_distractor",
-      "state": "current",
-      "condition": "matched_decision_record",
-      "seed": 3077909508
+      "state": "stale",
+      "condition": "self_belief_plus_partner_belief",
+      "seed": 322718481
     },
     {
-      "ordinal": 176,
+      "ordinal": 175,
       "prompt_id": "H1C0303:current:explicit_self_belief",
       "family": "H1",
       "variant_id": "H1C0303",
@@ -1993,6 +1982,17 @@
       "difficulty": "irrelevant_distractor",
       "state": "current",
       "condition": "explicit_self_belief",
+      "seed": 3077909508
+    },
+    {
+      "ordinal": 176,
+      "prompt_id": "H1C0303:current:matched_decision_record",
+      "family": "H1",
+      "variant_id": "H1C0303",
+      "archetype": "tunnel_inspection",
+      "difficulty": "irrelevant_distractor",
+      "state": "current",
+      "condition": "matched_decision_record",
       "seed": 3077909508
     },
     {
@@ -2008,6 +2008,17 @@
     },
     {
       "ordinal": 178,
+      "prompt_id": "H2C0303:current:reactive_no_representation",
+      "family": "H2",
+      "variant_id": "H2C0303",
+      "archetype": "rendezvous_destination",
+      "difficulty": "irrelevant_distractor",
+      "state": "current",
+      "condition": "reactive_no_representation",
+      "seed": 2747975539
+    },
+    {
+      "ordinal": 179,
       "prompt_id": "H2C0303:current:self_belief_plus_partner_belief",
       "family": "H2",
       "variant_id": "H2C0303",
@@ -2018,7 +2029,7 @@
       "seed": 2747975539
     },
     {
-      "ordinal": 179,
+      "ordinal": 180,
       "prompt_id": "H2C0303:current:self_belief_plus_message_record",
       "family": "H2",
       "variant_id": "H2C0303",
@@ -2026,17 +2037,6 @@
       "difficulty": "irrelevant_distractor",
       "state": "current",
       "condition": "self_belief_plus_message_record",
-      "seed": 2747975539
-    },
-    {
-      "ordinal": 180,
-      "prompt_id": "H2C0303:current:reactive_no_representation",
-      "family": "H2",
-      "variant_id": "H2C0303",
-      "archetype": "rendezvous_destination",
-      "difficulty": "irrelevant_distractor",
-      "state": "current",
-      "condition": "reactive_no_representation",
       "seed": 2747975539
     },
     {
@@ -2074,13 +2074,13 @@
     },
     {
       "ordinal": 184,
-      "prompt_id": "H2C0403:stale:reactive_no_representation",
+      "prompt_id": "H2C0403:stale:self_belief_plus_message_record",
       "family": "H2",
       "variant_id": "H2C0403",
       "archetype": "delivery_destination",
       "difficulty": "irrelevant_distractor",
       "state": "stale",
-      "condition": "reactive_no_representation",
+      "condition": "self_belief_plus_message_record",
       "seed": 1124706515
     },
     {
@@ -2096,24 +2096,24 @@
     },
     {
       "ordinal": 186,
-      "prompt_id": "H2C0403:stale:self_belief_plus_message_record",
+      "prompt_id": "H2C0403:stale:reactive_no_representation",
       "family": "H2",
       "variant_id": "H2C0403",
       "archetype": "delivery_destination",
       "difficulty": "irrelevant_distractor",
       "state": "stale",
-      "condition": "self_belief_plus_message_record",
+      "condition": "reactive_no_representation",
       "seed": 1124706515
     },
     {
       "ordinal": 187,
-      "prompt_id": "H1C0403:current:matched_decision_record",
+      "prompt_id": "H1C0403:current:reactive_no_representation",
       "family": "H1",
       "variant_id": "H1C0403",
       "archetype": "channel_charging",
       "difficulty": "irrelevant_distractor",
       "state": "current",
-      "condition": "matched_decision_record",
+      "condition": "reactive_no_representation",
       "seed": 4006295627
     },
     {
@@ -2129,13 +2129,13 @@
     },
     {
       "ordinal": 189,
-      "prompt_id": "H1C0403:current:reactive_no_representation",
+      "prompt_id": "H1C0403:current:matched_decision_record",
       "family": "H1",
       "variant_id": "H1C0403",
       "archetype": "channel_charging",
       "difficulty": "irrelevant_distractor",
       "state": "current",
-      "condition": "reactive_no_representation",
+      "condition": "matched_decision_record",
       "seed": 4006295627
     },
     {
@@ -2173,17 +2173,6 @@
     },
     {
       "ordinal": 193,
-      "prompt_id": "H1C0503:stale:reactive_no_representation",
-      "family": "H1",
-      "variant_id": "H1C0503",
-      "archetype": "corridor_rescue",
-      "difficulty": "irrelevant_distractor",
-      "state": "stale",
-      "condition": "reactive_no_representation",
-      "seed": 1126491048
-    },
-    {
-      "ordinal": 194,
       "prompt_id": "H1C0503:stale:matched_decision_record",
       "family": "H1",
       "variant_id": "H1C0503",
@@ -2194,7 +2183,7 @@
       "seed": 1126491048
     },
     {
-      "ordinal": 195,
+      "ordinal": 194,
       "prompt_id": "H1C0503:stale:explicit_self_belief",
       "family": "H1",
       "variant_id": "H1C0503",
@@ -2202,6 +2191,17 @@
       "difficulty": "irrelevant_distractor",
       "state": "stale",
       "condition": "explicit_self_belief",
+      "seed": 1126491048
+    },
+    {
+      "ordinal": 195,
+      "prompt_id": "H1C0503:stale:reactive_no_representation",
+      "family": "H1",
+      "variant_id": "H1C0503",
+      "archetype": "corridor_rescue",
+      "difficulty": "irrelevant_distractor",
+      "state": "stale",
+      "condition": "reactive_no_representation",
       "seed": 1126491048
     },
     {
@@ -2217,17 +2217,6 @@
     },
     {
       "ordinal": 197,
-      "prompt_id": "H2C0503:stale:self_belief_plus_partner_belief",
-      "family": "H2",
-      "variant_id": "H2C0503",
-      "archetype": "hazard_assignment",
-      "difficulty": "irrelevant_distractor",
-      "state": "stale",
-      "condition": "self_belief_plus_partner_belief",
-      "seed": 600747300
-    },
-    {
-      "ordinal": 198,
       "prompt_id": "H2C0503:stale:self_belief_plus_message_record",
       "family": "H2",
       "variant_id": "H2C0503",
@@ -2238,18 +2227,18 @@
       "seed": 600747300
     },
     {
-      "ordinal": 199,
-      "prompt_id": "H1C0503:current:matched_decision_record",
-      "family": "H1",
-      "variant_id": "H1C0503",
-      "archetype": "corridor_rescue",
+      "ordinal": 198,
+      "prompt_id": "H2C0503:stale:self_belief_plus_partner_belief",
+      "family": "H2",
+      "variant_id": "H2C0503",
+      "archetype": "hazard_assignment",
       "difficulty": "irrelevant_distractor",
-      "state": "current",
-      "condition": "matched_decision_record",
-      "seed": 1299862981
+      "state": "stale",
+      "condition": "self_belief_plus_partner_belief",
+      "seed": 600747300
     },
     {
-      "ordinal": 200,
+      "ordinal": 199,
       "prompt_id": "H1C0503:current:explicit_self_belief",
       "family": "H1",
       "variant_id": "H1C0503",
@@ -2257,6 +2246,17 @@
       "difficulty": "irrelevant_distractor",
       "state": "current",
       "condition": "explicit_self_belief",
+      "seed": 1299862981
+    },
+    {
+      "ordinal": 200,
+      "prompt_id": "H1C0503:current:matched_decision_record",
+      "family": "H1",
+      "variant_id": "H1C0503",
+      "archetype": "corridor_rescue",
+      "difficulty": "irrelevant_distractor",
+      "state": "current",
+      "condition": "matched_decision_record",
       "seed": 1299862981
     },
     {
@@ -2272,6 +2272,17 @@
     },
     {
       "ordinal": 202,
+      "prompt_id": "H2C0503:current:reactive_no_representation",
+      "family": "H2",
+      "variant_id": "H2C0503",
+      "archetype": "hazard_assignment",
+      "difficulty": "irrelevant_distractor",
+      "state": "current",
+      "condition": "reactive_no_representation",
+      "seed": 4266770995
+    },
+    {
+      "ordinal": 203,
       "prompt_id": "H2C0503:current:self_belief_plus_partner_belief",
       "family": "H2",
       "variant_id": "H2C0503",
@@ -2282,7 +2293,7 @@
       "seed": 4266770995
     },
     {
-      "ordinal": 203,
+      "ordinal": 204,
       "prompt_id": "H2C0503:current:self_belief_plus_message_record",
       "family": "H2",
       "variant_id": "H2C0503",
@@ -2290,17 +2301,6 @@
       "difficulty": "irrelevant_distractor",
       "state": "current",
       "condition": "self_belief_plus_message_record",
-      "seed": 4266770995
-    },
-    {
-      "ordinal": 204,
-      "prompt_id": "H2C0503:current:reactive_no_representation",
-      "family": "H2",
-      "variant_id": "H2C0503",
-      "archetype": "hazard_assignment",
-      "difficulty": "irrelevant_distractor",
-      "state": "current",
-      "condition": "reactive_no_representation",
       "seed": 4266770995
     },
     {
@@ -2338,13 +2338,13 @@
     },
     {
       "ordinal": 208,
-      "prompt_id": "H2C0603:stale:reactive_no_representation",
+      "prompt_id": "H2C0603:stale:self_belief_plus_message_record",
       "family": "H2",
       "variant_id": "H2C0603",
       "archetype": "maintenance_target",
       "difficulty": "irrelevant_distractor",
       "state": "stale",
-      "condition": "reactive_no_representation",
+      "condition": "self_belief_plus_message_record",
       "seed": 2938304227
     },
     {
@@ -2360,24 +2360,24 @@
     },
     {
       "ordinal": 210,
-      "prompt_id": "H2C0603:stale:self_belief_plus_message_record",
+      "prompt_id": "H2C0603:stale:reactive_no_representation",
       "family": "H2",
       "variant_id": "H2C0603",
       "archetype": "maintenance_target",
       "difficulty": "irrelevant_distractor",
       "state": "stale",
-      "condition": "self_belief_plus_message_record",
+      "condition": "reactive_no_representation",
       "seed": 2938304227
     },
     {
       "ordinal": 211,
-      "prompt_id": "H1C0603:current:matched_decision_record",
+      "prompt_id": "H1C0603:current:reactive_no_representation",
       "family": "H1",
       "variant_id": "H1C0603",
       "archetype": "lane_delivery",
       "difficulty": "irrelevant_distractor",
       "state": "current",
-      "condition": "matched_decision_record",
+      "condition": "reactive_no_representation",
       "seed": 1729340620
     },
     {
@@ -2393,13 +2393,13 @@
     },
     {
       "ordinal": 213,
-      "prompt_id": "H1C0603:current:reactive_no_representation",
+      "prompt_id": "H1C0603:current:matched_decision_record",
       "family": "H1",
       "variant_id": "H1C0603",
       "archetype": "lane_delivery",
       "difficulty": "irrelevant_distractor",
       "state": "current",
-      "condition": "reactive_no_representation",
+      "condition": "matched_decision_record",
       "seed": 1729340620
     },
     {
@@ -2437,13 +2437,13 @@
     },
     {
       "ordinal": 217,
-      "prompt_id": "H1C0104:stale:reactive_no_representation",
+      "prompt_id": "H1C0104:stale:explicit_self_belief",
       "family": "H1",
       "variant_id": "H1C0104",
       "archetype": "route_destination",
       "difficulty": "irrelevant_distractor",
       "state": "stale",
-      "condition": "reactive_no_representation",
+      "condition": "explicit_self_belief",
       "seed": 3351966198
     },
     {
@@ -2459,13 +2459,13 @@
     },
     {
       "ordinal": 219,
-      "prompt_id": "H1C0104:stale:explicit_self_belief",
+      "prompt_id": "H1C0104:stale:reactive_no_representation",
       "family": "H1",
       "variant_id": "H1C0104",
       "archetype": "route_destination",
       "difficulty": "irrelevant_distractor",
       "state": "stale",
-      "condition": "explicit_self_belief",
+      "condition": "reactive_no_representation",
       "seed": 3351966198
     },
     {
@@ -2503,28 +2503,6 @@
     },
     {
       "ordinal": 223,
-      "prompt_id": "H1C0104:current:matched_decision_record",
-      "family": "H1",
-      "variant_id": "H1C0104",
-      "archetype": "route_destination",
-      "difficulty": "irrelevant_distractor",
-      "state": "current",
-      "condition": "matched_decision_record",
-      "seed": 186873364
-    },
-    {
-      "ordinal": 224,
-      "prompt_id": "H1C0104:current:explicit_self_belief",
-      "family": "H1",
-      "variant_id": "H1C0104",
-      "archetype": "route_destination",
-      "difficulty": "irrelevant_distractor",
-      "state": "current",
-      "condition": "explicit_self_belief",
-      "seed": 186873364
-    },
-    {
-      "ordinal": 225,
       "prompt_id": "H1C0104:current:reactive_no_representation",
       "family": "H1",
       "variant_id": "H1C0104",
@@ -2535,18 +2513,29 @@
       "seed": 186873364
     },
     {
-      "ordinal": 226,
-      "prompt_id": "H2C0104:current:self_belief_plus_partner_belief",
-      "family": "H2",
-      "variant_id": "H2C0104",
-      "archetype": "resource_location",
+      "ordinal": 224,
+      "prompt_id": "H1C0104:current:matched_decision_record",
+      "family": "H1",
+      "variant_id": "H1C0104",
+      "archetype": "route_destination",
       "difficulty": "irrelevant_distractor",
       "state": "current",
-      "condition": "self_belief_plus_partner_belief",
-      "seed": 3113490067
+      "condition": "matched_decision_record",
+      "seed": 186873364
     },
     {
-      "ordinal": 227,
+      "ordinal": 225,
+      "prompt_id": "H1C0104:current:explicit_self_belief",
+      "family": "H1",
+      "variant_id": "H1C0104",
+      "archetype": "route_destination",
+      "difficulty": "irrelevant_distractor",
+      "state": "current",
+      "condition": "explicit_self_belief",
+      "seed": 186873364
+    },
+    {
+      "ordinal": 226,
       "prompt_id": "H2C0104:current:self_belief_plus_message_record",
       "family": "H2",
       "variant_id": "H2C0104",
@@ -2554,6 +2543,17 @@
       "difficulty": "irrelevant_distractor",
       "state": "current",
       "condition": "self_belief_plus_message_record",
+      "seed": 3113490067
+    },
+    {
+      "ordinal": 227,
+      "prompt_id": "H2C0104:current:self_belief_plus_partner_belief",
+      "family": "H2",
+      "variant_id": "H2C0104",
+      "archetype": "resource_location",
+      "difficulty": "irrelevant_distractor",
+      "state": "current",
+      "condition": "self_belief_plus_partner_belief",
       "seed": 3113490067
     },
     {
@@ -2580,17 +2580,6 @@
     },
     {
       "ordinal": 230,
-      "prompt_id": "H1C0204:stale:matched_decision_record",
-      "family": "H1",
-      "variant_id": "H1C0204",
-      "archetype": "conveyor_storage",
-      "difficulty": "irrelevant_distractor",
-      "state": "stale",
-      "condition": "matched_decision_record",
-      "seed": 3645939045
-    },
-    {
-      "ordinal": 231,
       "prompt_id": "H1C0204:stale:explicit_self_belief",
       "family": "H1",
       "variant_id": "H1C0204",
@@ -2601,18 +2590,18 @@
       "seed": 3645939045
     },
     {
-      "ordinal": 232,
-      "prompt_id": "H2C0204:stale:reactive_no_representation",
-      "family": "H2",
-      "variant_id": "H2C0204",
-      "archetype": "tool_placement",
+      "ordinal": 231,
+      "prompt_id": "H1C0204:stale:matched_decision_record",
+      "family": "H1",
+      "variant_id": "H1C0204",
+      "archetype": "conveyor_storage",
       "difficulty": "irrelevant_distractor",
       "state": "stale",
-      "condition": "reactive_no_representation",
-      "seed": 1019160327
+      "condition": "matched_decision_record",
+      "seed": 3645939045
     },
     {
-      "ordinal": 233,
+      "ordinal": 232,
       "prompt_id": "H2C0204:stale:self_belief_plus_partner_belief",
       "family": "H2",
       "variant_id": "H2C0204",
@@ -2623,7 +2612,7 @@
       "seed": 1019160327
     },
     {
-      "ordinal": 234,
+      "ordinal": 233,
       "prompt_id": "H2C0204:stale:self_belief_plus_message_record",
       "family": "H2",
       "variant_id": "H2C0204",
@@ -2631,6 +2620,17 @@
       "difficulty": "irrelevant_distractor",
       "state": "stale",
       "condition": "self_belief_plus_message_record",
+      "seed": 1019160327
+    },
+    {
+      "ordinal": 234,
+      "prompt_id": "H2C0204:stale:reactive_no_representation",
+      "family": "H2",
+      "variant_id": "H2C0204",
+      "archetype": "tool_placement",
+      "difficulty": "irrelevant_distractor",
+      "state": "stale",
+      "condition": "reactive_no_representation",
       "seed": 1019160327
     },
     {
@@ -2668,13 +2668,13 @@
     },
     {
       "ordinal": 238,
-      "prompt_id": "H2C0204:current:self_belief_plus_partner_belief",
+      "prompt_id": "H2C0204:current:reactive_no_representation",
       "family": "H2",
       "variant_id": "H2C0204",
       "archetype": "tool_placement",
       "difficulty": "irrelevant_distractor",
       "state": "current",
-      "condition": "self_belief_plus_partner_belief",
+      "condition": "reactive_no_representation",
       "seed": 3129394825
     },
     {
@@ -2690,24 +2690,24 @@
     },
     {
       "ordinal": 240,
-      "prompt_id": "H2C0204:current:reactive_no_representation",
+      "prompt_id": "H2C0204:current:self_belief_plus_partner_belief",
       "family": "H2",
       "variant_id": "H2C0204",
       "archetype": "tool_placement",
       "difficulty": "irrelevant_distractor",
       "state": "current",
-      "condition": "reactive_no_representation",
+      "condition": "self_belief_plus_partner_belief",
       "seed": 3129394825
     },
     {
       "ordinal": 241,
-      "prompt_id": "H1C0304:stale:reactive_no_representation",
+      "prompt_id": "H1C0304:stale:explicit_self_belief",
       "family": "H1",
       "variant_id": "H1C0304",
       "archetype": "tunnel_inspection",
       "difficulty": "irrelevant_distractor",
       "state": "stale",
-      "condition": "reactive_no_representation",
+      "condition": "explicit_self_belief",
       "seed": 1521411109
     },
     {
@@ -2723,13 +2723,13 @@
     },
     {
       "ordinal": 243,
-      "prompt_id": "H1C0304:stale:explicit_self_belief",
+      "prompt_id": "H1C0304:stale:reactive_no_representation",
       "family": "H1",
       "variant_id": "H1C0304",
       "archetype": "tunnel_inspection",
       "difficulty": "irrelevant_distractor",
       "state": "stale",
-      "condition": "explicit_self_belief",
+      "condition": "reactive_no_representation",
       "seed": 1521411109
     },
     {
@@ -2767,28 +2767,6 @@
     },
     {
       "ordinal": 247,
-      "prompt_id": "H1C0304:current:matched_decision_record",
-      "family": "H1",
-      "variant_id": "H1C0304",
-      "archetype": "tunnel_inspection",
-      "difficulty": "irrelevant_distractor",
-      "state": "current",
-      "condition": "matched_decision_record",
-      "seed": 2370523315
-    },
-    {
-      "ordinal": 248,
-      "prompt_id": "H1C0304:current:explicit_self_belief",
-      "family": "H1",
-      "variant_id": "H1C0304",
-      "archetype": "tunnel_inspection",
-      "difficulty": "irrelevant_distractor",
-      "state": "current",
-      "condition": "explicit_self_belief",
-      "seed": 2370523315
-    },
-    {
-      "ordinal": 249,
       "prompt_id": "H1C0304:current:reactive_no_representation",
       "family": "H1",
       "variant_id": "H1C0304",
@@ -2799,18 +2777,29 @@
       "seed": 2370523315
     },
     {
-      "ordinal": 250,
-      "prompt_id": "H2C0304:current:self_belief_plus_partner_belief",
-      "family": "H2",
-      "variant_id": "H2C0304",
-      "archetype": "rendezvous_destination",
+      "ordinal": 248,
+      "prompt_id": "H1C0304:current:matched_decision_record",
+      "family": "H1",
+      "variant_id": "H1C0304",
+      "archetype": "tunnel_inspection",
       "difficulty": "irrelevant_distractor",
       "state": "current",
-      "condition": "self_belief_plus_partner_belief",
-      "seed": 875197166
+      "condition": "matched_decision_record",
+      "seed": 2370523315
     },
     {
-      "ordinal": 251,
+      "ordinal": 249,
+      "prompt_id": "H1C0304:current:explicit_self_belief",
+      "family": "H1",
+      "variant_id": "H1C0304",
+      "archetype": "tunnel_inspection",
+      "difficulty": "irrelevant_distractor",
+      "state": "current",
+      "condition": "explicit_self_belief",
+      "seed": 2370523315
+    },
+    {
+      "ordinal": 250,
       "prompt_id": "H2C0304:current:self_belief_plus_message_record",
       "family": "H2",
       "variant_id": "H2C0304",
@@ -2818,6 +2807,17 @@
       "difficulty": "irrelevant_distractor",
       "state": "current",
       "condition": "self_belief_plus_message_record",
+      "seed": 875197166
+    },
+    {
+      "ordinal": 251,
+      "prompt_id": "H2C0304:current:self_belief_plus_partner_belief",
+      "family": "H2",
+      "variant_id": "H2C0304",
+      "archetype": "rendezvous_destination",
+      "difficulty": "irrelevant_distractor",
+      "state": "current",
+      "condition": "self_belief_plus_partner_belief",
       "seed": 875197166
     },
     {
@@ -2844,17 +2844,6 @@
     },
     {
       "ordinal": 254,
-      "prompt_id": "H1C0404:stale:matched_decision_record",
-      "family": "H1",
-      "variant_id": "H1C0404",
-      "archetype": "channel_charging",
-      "difficulty": "irrelevant_distractor",
-      "state": "stale",
-      "condition": "matched_decision_record",
-      "seed": 3576765184
-    },
-    {
-      "ordinal": 255,
       "prompt_id": "H1C0404:stale:explicit_self_belief",
       "family": "H1",
       "variant_id": "H1C0404",
@@ -2865,18 +2854,18 @@
       "seed": 3576765184
     },
     {
-      "ordinal": 256,
-      "prompt_id": "H2C0404:stale:reactive_no_representation",
-      "family": "H2",
-      "variant_id": "H2C0404",
-      "archetype": "delivery_destination",
+      "ordinal": 255,
+      "prompt_id": "H1C0404:stale:matched_decision_record",
+      "family": "H1",
+      "variant_id": "H1C0404",
+      "archetype": "channel_charging",
       "difficulty": "irrelevant_distractor",
       "state": "stale",
-      "condition": "reactive_no_representation",
-      "seed": 832016717
+      "condition": "matched_decision_record",
+      "seed": 3576765184
     },
     {
-      "ordinal": 257,
+      "ordinal": 256,
       "prompt_id": "H2C0404:stale:self_belief_plus_partner_belief",
       "family": "H2",
       "variant_id": "H2C0404",
@@ -2887,7 +2876,7 @@
       "seed": 832016717
     },
     {
-      "ordinal": 258,
+      "ordinal": 257,
       "prompt_id": "H2C0404:stale:self_belief_plus_message_record",
       "family": "H2",
       "variant_id": "H2C0404",
@@ -2895,6 +2884,17 @@
       "difficulty": "irrelevant_distractor",
       "state": "stale",
       "condition": "self_belief_plus_message_record",
+      "seed": 832016717
+    },
+    {
+      "ordinal": 258,
+      "prompt_id": "H2C0404:stale:reactive_no_representation",
+      "family": "H2",
+      "variant_id": "H2C0404",
+      "archetype": "delivery_destination",
+      "difficulty": "irrelevant_distractor",
+      "state": "stale",
+      "condition": "reactive_no_representation",
       "seed": 832016717
     },
     {
@@ -2932,13 +2932,13 @@
     },
     {
       "ordinal": 262,
-      "prompt_id": "H2C0404:current:self_belief_plus_partner_belief",
+      "prompt_id": "H2C0404:current:reactive_no_representation",
       "family": "H2",
       "variant_id": "H2C0404",
       "archetype": "delivery_destination",
       "difficulty": "irrelevant_distractor",
       "state": "current",
-      "condition": "self_belief_plus_partner_belief",
+      "condition": "reactive_no_representation",
       "seed": 1259313903
     },
     {
@@ -2954,24 +2954,24 @@
     },
     {
       "ordinal": 264,
-      "prompt_id": "H2C0404:current:reactive_no_representation",
+      "prompt_id": "H2C0404:current:self_belief_plus_partner_belief",
       "family": "H2",
       "variant_id": "H2C0404",
       "archetype": "delivery_destination",
       "difficulty": "irrelevant_distractor",
       "state": "current",
-      "condition": "reactive_no_representation",
+      "condition": "self_belief_plus_partner_belief",
       "seed": 1259313903
     },
     {
       "ordinal": 265,
-      "prompt_id": "H1C0504:stale:reactive_no_representation",
+      "prompt_id": "H1C0504:stale:explicit_self_belief",
       "family": "H1",
       "variant_id": "H1C0504",
       "archetype": "corridor_rescue",
       "difficulty": "irrelevant_distractor",
       "state": "stale",
-      "condition": "reactive_no_representation",
+      "condition": "explicit_self_belief",
       "seed": 3480493116
     },
     {
@@ -2987,13 +2987,13 @@
     },
     {
       "ordinal": 267,
-      "prompt_id": "H1C0504:stale:explicit_self_belief",
+      "prompt_id": "H1C0504:stale:reactive_no_representation",
       "family": "H1",
       "variant_id": "H1C0504",
       "archetype": "corridor_rescue",
       "difficulty": "irrelevant_distractor",
       "state": "stale",
-      "condition": "explicit_self_belief",
+      "condition": "reactive_no_representation",
       "seed": 3480493116
     },
     {
@@ -3031,28 +3031,6 @@
     },
     {
       "ordinal": 271,
-      "prompt_id": "H1C0504:current:matched_decision_record",
-      "family": "H1",
-      "variant_id": "H1C0504",
-      "archetype": "corridor_rescue",
-      "difficulty": "irrelevant_distractor",
-      "state": "current",
-      "condition": "matched_decision_record",
-      "seed": 2366758556
-    },
-    {
-      "ordinal": 272,
-      "prompt_id": "H1C0504:current:explicit_self_belief",
-      "family": "H1",
-      "variant_id": "H1C0504",
-      "archetype": "corridor_rescue",
-      "difficulty": "irrelevant_distractor",
-      "state": "current",
-      "condition": "explicit_self_belief",
-      "seed": 2366758556
-    },
-    {
-      "ordinal": 273,
       "prompt_id": "H1C0504:current:reactive_no_representation",
       "family": "H1",
       "variant_id": "H1C0504",
@@ -3063,18 +3041,29 @@
       "seed": 2366758556
     },
     {
-      "ordinal": 274,
-      "prompt_id": "H2C0504:current:self_belief_plus_partner_belief",
-      "family": "H2",
-      "variant_id": "H2C0504",
-      "archetype": "hazard_assignment",
+      "ordinal": 272,
+      "prompt_id": "H1C0504:current:matched_decision_record",
+      "family": "H1",
+      "variant_id": "H1C0504",
+      "archetype": "corridor_rescue",
       "difficulty": "irrelevant_distractor",
       "state": "current",
-      "condition": "self_belief_plus_partner_belief",
-      "seed": 3898698248
+      "condition": "matched_decision_record",
+      "seed": 2366758556
     },
     {
-      "ordinal": 275,
+      "ordinal": 273,
+      "prompt_id": "H1C0504:current:explicit_self_belief",
+      "family": "H1",
+      "variant_id": "H1C0504",
+      "archetype": "corridor_rescue",
+      "difficulty": "irrelevant_distractor",
+      "state": "current",
+      "condition": "explicit_self_belief",
+      "seed": 2366758556
+    },
+    {
+      "ordinal": 274,
       "prompt_id": "H2C0504:current:self_belief_plus_message_record",
       "family": "H2",
       "variant_id": "H2C0504",
@@ -3082,6 +3071,17 @@
       "difficulty": "irrelevant_distractor",
       "state": "current",
       "condition": "self_belief_plus_message_record",
+      "seed": 3898698248
+    },
+    {
+      "ordinal": 275,
+      "prompt_id": "H2C0504:current:self_belief_plus_partner_belief",
+      "family": "H2",
+      "variant_id": "H2C0504",
+      "archetype": "hazard_assignment",
+      "difficulty": "irrelevant_distractor",
+      "state": "current",
+      "condition": "self_belief_plus_partner_belief",
       "seed": 3898698248
     },
     {
@@ -3108,17 +3108,6 @@
     },
     {
       "ordinal": 278,
-      "prompt_id": "H1C0604:stale:matched_decision_record",
-      "family": "H1",
-      "variant_id": "H1C0604",
-      "archetype": "lane_delivery",
-      "difficulty": "irrelevant_distractor",
-      "state": "stale",
-      "condition": "matched_decision_record",
-      "seed": 3084424019
-    },
-    {
-      "ordinal": 279,
       "prompt_id": "H1C0604:stale:explicit_self_belief",
       "family": "H1",
       "variant_id": "H1C0604",
@@ -3129,18 +3118,18 @@
       "seed": 3084424019
     },
     {
-      "ordinal": 280,
-      "prompt_id": "H2C0604:stale:reactive_no_representation",
-      "family": "H2",
-      "variant_id": "H2C0604",
-      "archetype": "maintenance_target",
+      "ordinal": 279,
+      "prompt_id": "H1C0604:stale:matched_decision_record",
+      "family": "H1",
+      "variant_id": "H1C0604",
+      "archetype": "lane_delivery",
       "difficulty": "irrelevant_distractor",
       "state": "stale",
-      "condition": "reactive_no_representation",
-      "seed": 3598758807
+      "condition": "matched_decision_record",
+      "seed": 3084424019
     },
     {
-      "ordinal": 281,
+      "ordinal": 280,
       "prompt_id": "H2C0604:stale:self_belief_plus_partner_belief",
       "family": "H2",
       "variant_id": "H2C0604",
@@ -3151,7 +3140,7 @@
       "seed": 3598758807
     },
     {
-      "ordinal": 282,
+      "ordinal": 281,
       "prompt_id": "H2C0604:stale:self_belief_plus_message_record",
       "family": "H2",
       "variant_id": "H2C0604",
@@ -3159,6 +3148,17 @@
       "difficulty": "irrelevant_distractor",
       "state": "stale",
       "condition": "self_belief_plus_message_record",
+      "seed": 3598758807
+    },
+    {
+      "ordinal": 282,
+      "prompt_id": "H2C0604:stale:reactive_no_representation",
+      "family": "H2",
+      "variant_id": "H2C0604",
+      "archetype": "maintenance_target",
+      "difficulty": "irrelevant_distractor",
+      "state": "stale",
+      "condition": "reactive_no_representation",
       "seed": 3598758807
     },
     {
@@ -3196,13 +3196,13 @@
     },
     {
       "ordinal": 286,
-      "prompt_id": "H2C0604:current:self_belief_plus_partner_belief",
+      "prompt_id": "H2C0604:current:reactive_no_representation",
       "family": "H2",
       "variant_id": "H2C0604",
       "archetype": "maintenance_target",
       "difficulty": "irrelevant_distractor",
       "state": "current",
-      "condition": "self_belief_plus_partner_belief",
+      "condition": "reactive_no_representation",
       "seed": 2742510339
     },
     {
@@ -3218,13 +3218,13 @@
     },
     {
       "ordinal": 288,
-      "prompt_id": "H2C0604:current:reactive_no_representation",
+      "prompt_id": "H2C0604:current:self_belief_plus_partner_belief",
       "family": "H2",
       "variant_id": "H2C0604",
       "archetype": "maintenance_target",
       "difficulty": "irrelevant_distractor",
       "state": "current",
-      "condition": "reactive_no_representation",
+      "condition": "self_belief_plus_partner_belief",
       "seed": 2742510339
     },
     {
@@ -3262,13 +3262,13 @@
     },
     {
       "ordinal": 292,
-      "prompt_id": "H2C0105:stale:reactive_no_representation",
+      "prompt_id": "H2C0105:stale:self_belief_plus_message_record",
       "family": "H2",
       "variant_id": "H2C0105",
       "archetype": "resource_location",
       "difficulty": "compositional",
       "state": "stale",
-      "condition": "reactive_no_representation",
+      "condition": "self_belief_plus_message_record",
       "seed": 3041773310
     },
     {
@@ -3284,24 +3284,24 @@
     },
     {
       "ordinal": 294,
-      "prompt_id": "H2C0105:stale:self_belief_plus_message_record",
+      "prompt_id": "H2C0105:stale:reactive_no_representation",
       "family": "H2",
       "variant_id": "H2C0105",
       "archetype": "resource_location",
       "difficulty": "compositional",
       "state": "stale",
-      "condition": "self_belief_plus_message_record",
+      "condition": "reactive_no_representation",
       "seed": 3041773310
     },
     {
       "ordinal": 295,
-      "prompt_id": "H1C0105:current:matched_decision_record",
+      "prompt_id": "H1C0105:current:reactive_no_representation",
       "family": "H1",
       "variant_id": "H1C0105",
       "archetype": "route_destination",
       "difficulty": "compositional",
       "state": "current",
-      "condition": "matched_decision_record",
+      "condition": "reactive_no_representation",
       "seed": 2175777073
     },
     {
@@ -3317,13 +3317,13 @@
     },
     {
       "ordinal": 297,
-      "prompt_id": "H1C0105:current:reactive_no_representation",
+      "prompt_id": "H1C0105:current:matched_decision_record",
       "family": "H1",
       "variant_id": "H1C0105",
       "archetype": "route_destination",
       "difficulty": "compositional",
       "state": "current",
-      "condition": "reactive_no_representation",
+      "condition": "matched_decision_record",
       "seed": 2175777073
     },
     {
@@ -3361,17 +3361,6 @@
     },
     {
       "ordinal": 301,
-      "prompt_id": "H1C0205:stale:reactive_no_representation",
-      "family": "H1",
-      "variant_id": "H1C0205",
-      "archetype": "conveyor_storage",
-      "difficulty": "compositional",
-      "state": "stale",
-      "condition": "reactive_no_representation",
-      "seed": 45886361
-    },
-    {
-      "ordinal": 302,
       "prompt_id": "H1C0205:stale:matched_decision_record",
       "family": "H1",
       "variant_id": "H1C0205",
@@ -3382,7 +3371,7 @@
       "seed": 45886361
     },
     {
-      "ordinal": 303,
+      "ordinal": 302,
       "prompt_id": "H1C0205:stale:explicit_self_belief",
       "family": "H1",
       "variant_id": "H1C0205",
@@ -3390,6 +3379,17 @@
       "difficulty": "compositional",
       "state": "stale",
       "condition": "explicit_self_belief",
+      "seed": 45886361
+    },
+    {
+      "ordinal": 303,
+      "prompt_id": "H1C0205:stale:reactive_no_representation",
+      "family": "H1",
+      "variant_id": "H1C0205",
+      "archetype": "conveyor_storage",
+      "difficulty": "compositional",
+      "state": "stale",
+      "condition": "reactive_no_representation",
       "seed": 45886361
     },
     {
@@ -3405,17 +3405,6 @@
     },
     {
       "ordinal": 305,
-      "prompt_id": "H2C0205:stale:self_belief_plus_partner_belief",
-      "family": "H2",
-      "variant_id": "H2C0205",
-      "archetype": "tool_placement",
-      "difficulty": "compositional",
-      "state": "stale",
-      "condition": "self_belief_plus_partner_belief",
-      "seed": 12856578
-    },
-    {
-      "ordinal": 306,
       "prompt_id": "H2C0205:stale:self_belief_plus_message_record",
       "family": "H2",
       "variant_id": "H2C0205",
@@ -3426,18 +3415,18 @@
       "seed": 12856578
     },
     {
-      "ordinal": 307,
-      "prompt_id": "H1C0205:current:matched_decision_record",
-      "family": "H1",
-      "variant_id": "H1C0205",
-      "archetype": "conveyor_storage",
+      "ordinal": 306,
+      "prompt_id": "H2C0205:stale:self_belief_plus_partner_belief",
+      "family": "H2",
+      "variant_id": "H2C0205",
+      "archetype": "tool_placement",
       "difficulty": "compositional",
-      "state": "current",
-      "condition": "matched_decision_record",
-      "seed": 2963833069
+      "state": "stale",
+      "condition": "self_belief_plus_partner_belief",
+      "seed": 12856578
     },
     {
-      "ordinal": 308,
+      "ordinal": 307,
       "prompt_id": "H1C0205:current:explicit_self_belief",
       "family": "H1",
       "variant_id": "H1C0205",
@@ -3445,6 +3434,17 @@
       "difficulty": "compositional",
       "state": "current",
       "condition": "explicit_self_belief",
+      "seed": 2963833069
+    },
+    {
+      "ordinal": 308,
+      "prompt_id": "H1C0205:current:matched_decision_record",
+      "family": "H1",
+      "variant_id": "H1C0205",
+      "archetype": "conveyor_storage",
+      "difficulty": "compositional",
+      "state": "current",
+      "condition": "matched_decision_record",
       "seed": 2963833069
     },
     {
@@ -3460,6 +3460,17 @@
     },
     {
       "ordinal": 310,
+      "prompt_id": "H2C0205:current:reactive_no_representation",
+      "family": "H2",
+      "variant_id": "H2C0205",
+      "archetype": "tool_placement",
+      "difficulty": "compositional",
+      "state": "current",
+      "condition": "reactive_no_representation",
+      "seed": 1947795181
+    },
+    {
+      "ordinal": 311,
       "prompt_id": "H2C0205:current:self_belief_plus_partner_belief",
       "family": "H2",
       "variant_id": "H2C0205",
@@ -3470,7 +3481,7 @@
       "seed": 1947795181
     },
     {
-      "ordinal": 311,
+      "ordinal": 312,
       "prompt_id": "H2C0205:current:self_belief_plus_message_record",
       "family": "H2",
       "variant_id": "H2C0205",
@@ -3478,17 +3489,6 @@
       "difficulty": "compositional",
       "state": "current",
       "condition": "self_belief_plus_message_record",
-      "seed": 1947795181
-    },
-    {
-      "ordinal": 312,
-      "prompt_id": "H2C0205:current:reactive_no_representation",
-      "family": "H2",
-      "variant_id": "H2C0205",
-      "archetype": "tool_placement",
-      "difficulty": "compositional",
-      "state": "current",
-      "condition": "reactive_no_representation",
       "seed": 1947795181
     },
     {
@@ -3526,13 +3526,13 @@
     },
     {
       "ordinal": 316,
-      "prompt_id": "H2C0305:stale:reactive_no_representation",
+      "prompt_id": "H2C0305:stale:self_belief_plus_message_record",
       "family": "H2",
       "variant_id": "H2C0305",
       "archetype": "rendezvous_destination",
       "difficulty": "compositional",
       "state": "stale",
-      "condition": "reactive_no_representation",
+      "condition": "self_belief_plus_message_record",
       "seed": 3040297511
     },
     {
@@ -3548,24 +3548,24 @@
     },
     {
       "ordinal": 318,
-      "prompt_id": "H2C0305:stale:self_belief_plus_message_record",
+      "prompt_id": "H2C0305:stale:reactive_no_representation",
       "family": "H2",
       "variant_id": "H2C0305",
       "archetype": "rendezvous_destination",
       "difficulty": "compositional",
       "state": "stale",
-      "condition": "self_belief_plus_message_record",
+      "condition": "reactive_no_representation",
       "seed": 3040297511
     },
     {
       "ordinal": 319,
-      "prompt_id": "H1C0305:current:matched_decision_record",
+      "prompt_id": "H1C0305:current:reactive_no_representation",
       "family": "H1",
       "variant_id": "H1C0305",
       "archetype": "tunnel_inspection",
       "difficulty": "compositional",
       "state": "current",
-      "condition": "matched_decision_record",
+      "condition": "reactive_no_representation",
       "seed": 4155692673
     },
     {
@@ -3581,13 +3581,13 @@
     },
     {
       "ordinal": 321,
-      "prompt_id": "H1C0305:current:reactive_no_representation",
+      "prompt_id": "H1C0305:current:matched_decision_record",
       "family": "H1",
       "variant_id": "H1C0305",
       "archetype": "tunnel_inspection",
       "difficulty": "compositional",
       "state": "current",
-      "condition": "reactive_no_representation",
+      "condition": "matched_decision_record",
       "seed": 4155692673
     },
     {
@@ -3625,17 +3625,6 @@
     },
     {
       "ordinal": 325,
-      "prompt_id": "H1C0405:stale:reactive_no_representation",
-      "family": "H1",
-      "variant_id": "H1C0405",
-      "archetype": "channel_charging",
-      "difficulty": "compositional",
-      "state": "stale",
-      "condition": "reactive_no_representation",
-      "seed": 1330530054
-    },
-    {
-      "ordinal": 326,
       "prompt_id": "H1C0405:stale:matched_decision_record",
       "family": "H1",
       "variant_id": "H1C0405",
@@ -3646,7 +3635,7 @@
       "seed": 1330530054
     },
     {
-      "ordinal": 327,
+      "ordinal": 326,
       "prompt_id": "H1C0405:stale:explicit_self_belief",
       "family": "H1",
       "variant_id": "H1C0405",
@@ -3654,6 +3643,17 @@
       "difficulty": "compositional",
       "state": "stale",
       "condition": "explicit_self_belief",
+      "seed": 1330530054
+    },
+    {
+      "ordinal": 327,
+      "prompt_id": "H1C0405:stale:reactive_no_representation",
+      "family": "H1",
+      "variant_id": "H1C0405",
+      "archetype": "channel_charging",
+      "difficulty": "compositional",
+      "state": "stale",
+      "condition": "reactive_no_representation",
       "seed": 1330530054
     },
     {
@@ -3669,17 +3669,6 @@
     },
     {
       "ordinal": 329,
-      "prompt_id": "H2C0405:stale:self_belief_plus_partner_belief",
-      "family": "H2",
-      "variant_id": "H2C0405",
-      "archetype": "delivery_destination",
-      "difficulty": "compositional",
-      "state": "stale",
-      "condition": "self_belief_plus_partner_belief",
-      "seed": 991585765
-    },
-    {
-      "ordinal": 330,
       "prompt_id": "H2C0405:stale:self_belief_plus_message_record",
       "family": "H2",
       "variant_id": "H2C0405",
@@ -3690,18 +3679,18 @@
       "seed": 991585765
     },
     {
-      "ordinal": 331,
-      "prompt_id": "H1C0405:current:matched_decision_record",
-      "family": "H1",
-      "variant_id": "H1C0405",
-      "archetype": "channel_charging",
+      "ordinal": 330,
+      "prompt_id": "H2C0405:stale:self_belief_plus_partner_belief",
+      "family": "H2",
+      "variant_id": "H2C0405",
+      "archetype": "delivery_destination",
       "difficulty": "compositional",
-      "state": "current",
-      "condition": "matched_decision_record",
-      "seed": 2634322356
+      "state": "stale",
+      "condition": "self_belief_plus_partner_belief",
+      "seed": 991585765
     },
     {
-      "ordinal": 332,
+      "ordinal": 331,
       "prompt_id": "H1C0405:current:explicit_self_belief",
       "family": "H1",
       "variant_id": "H1C0405",
@@ -3709,6 +3698,17 @@
       "difficulty": "compositional",
       "state": "current",
       "condition": "explicit_self_belief",
+      "seed": 2634322356
+    },
+    {
+      "ordinal": 332,
+      "prompt_id": "H1C0405:current:matched_decision_record",
+      "family": "H1",
+      "variant_id": "H1C0405",
+      "archetype": "channel_charging",
+      "difficulty": "compositional",
+      "state": "current",
+      "condition": "matched_decision_record",
       "seed": 2634322356
     },
     {
@@ -3724,6 +3724,17 @@
     },
     {
       "ordinal": 334,
+      "prompt_id": "H2C0405:current:reactive_no_representation",
+      "family": "H2",
+      "variant_id": "H2C0405",
+      "archetype": "delivery_destination",
+      "difficulty": "compositional",
+      "state": "current",
+      "condition": "reactive_no_representation",
+      "seed": 4172558301
+    },
+    {
+      "ordinal": 335,
       "prompt_id": "H2C0405:current:self_belief_plus_partner_belief",
       "family": "H2",
       "variant_id": "H2C0405",
@@ -3734,7 +3745,7 @@
       "seed": 4172558301
     },
     {
-      "ordinal": 335,
+      "ordinal": 336,
       "prompt_id": "H2C0405:current:self_belief_plus_message_record",
       "family": "H2",
       "variant_id": "H2C0405",
@@ -3742,17 +3753,6 @@
       "difficulty": "compositional",
       "state": "current",
       "condition": "self_belief_plus_message_record",
-      "seed": 4172558301
-    },
-    {
-      "ordinal": 336,
-      "prompt_id": "H2C0405:current:reactive_no_representation",
-      "family": "H2",
-      "variant_id": "H2C0405",
-      "archetype": "delivery_destination",
-      "difficulty": "compositional",
-      "state": "current",
-      "condition": "reactive_no_representation",
       "seed": 4172558301
     },
     {
@@ -3790,13 +3790,13 @@
     },
     {
       "ordinal": 340,
-      "prompt_id": "H2C0505:stale:reactive_no_representation",
+      "prompt_id": "H2C0505:stale:self_belief_plus_message_record",
       "family": "H2",
       "variant_id": "H2C0505",
       "archetype": "hazard_assignment",
       "difficulty": "compositional",
       "state": "stale",
-      "condition": "reactive_no_representation",
+      "condition": "self_belief_plus_message_record",
       "seed": 1416080042
     },
     {
@@ -3812,24 +3812,24 @@
     },
     {
       "ordinal": 342,
-      "prompt_id": "H2C0505:stale:self_belief_plus_message_record",
+      "prompt_id": "H2C0505:stale:reactive_no_representation",
       "family": "H2",
       "variant_id": "H2C0505",
       "archetype": "hazard_assignment",
       "difficulty": "compositional",
       "state": "stale",
-      "condition": "self_belief_plus_message_record",
+      "condition": "reactive_no_representation",
       "seed": 1416080042
     },
     {
       "ordinal": 343,
-      "prompt_id": "H1C0505:current:matched_decision_record",
+      "prompt_id": "H1C0505:current:reactive_no_representation",
       "family": "H1",
       "variant_id": "H1C0505",
       "archetype": "corridor_rescue",
       "difficulty": "compositional",
       "state": "current",
-      "condition": "matched_decision_record",
+      "condition": "reactive_no_representation",
       "seed": 2172145451
     },
     {
@@ -3845,13 +3845,13 @@
     },
     {
       "ordinal": 345,
-      "prompt_id": "H1C0505:current:reactive_no_representation",
+      "prompt_id": "H1C0505:current:matched_decision_record",
       "family": "H1",
       "variant_id": "H1C0505",
       "archetype": "corridor_rescue",
       "difficulty": "compositional",
       "state": "current",
-      "condition": "reactive_no_representation",
+      "condition": "matched_decision_record",
       "seed": 2172145451
     },
     {
@@ -3889,17 +3889,6 @@
     },
     {
       "ordinal": 349,
-      "prompt_id": "H1C0605:stale:reactive_no_representation",
-      "family": "H1",
-      "variant_id": "H1C0605",
-      "archetype": "lane_delivery",
-      "difficulty": "compositional",
-      "state": "stale",
-      "condition": "reactive_no_representation",
-      "seed": 1312445973
-    },
-    {
-      "ordinal": 350,
       "prompt_id": "H1C0605:stale:matched_decision_record",
       "family": "H1",
       "variant_id": "H1C0605",
@@ -3910,7 +3899,7 @@
       "seed": 1312445973
     },
     {
-      "ordinal": 351,
+      "ordinal": 350,
       "prompt_id": "H1C0605:stale:explicit_self_belief",
       "family": "H1",
       "variant_id": "H1C0605",
@@ -3918,6 +3907,17 @@
       "difficulty": "compositional",
       "state": "stale",
       "condition": "explicit_self_belief",
+      "seed": 1312445973
+    },
+    {
+      "ordinal": 351,
+      "prompt_id": "H1C0605:stale:reactive_no_representation",
+      "family": "H1",
+      "variant_id": "H1C0605",
+      "archetype": "lane_delivery",
+      "difficulty": "compositional",
+      "state": "stale",
+      "condition": "reactive_no_representation",
       "seed": 1312445973
     },
     {
@@ -3933,17 +3933,6 @@
     },
     {
       "ordinal": 353,
-      "prompt_id": "H2C0605:stale:self_belief_plus_partner_belief",
-      "family": "H2",
-      "variant_id": "H2C0605",
-      "archetype": "maintenance_target",
-      "difficulty": "compositional",
-      "state": "stale",
-      "condition": "self_belief_plus_partner_belief",
-      "seed": 2770834733
-    },
-    {
-      "ordinal": 354,
       "prompt_id": "H2C0605:stale:self_belief_plus_message_record",
       "family": "H2",
       "variant_id": "H2C0605",
@@ -3954,18 +3943,18 @@
       "seed": 2770834733
     },
     {
-      "ordinal": 355,
-      "prompt_id": "H1C0605:current:matched_decision_record",
-      "family": "H1",
-      "variant_id": "H1C0605",
-      "archetype": "lane_delivery",
+      "ordinal": 354,
+      "prompt_id": "H2C0605:stale:self_belief_plus_partner_belief",
+      "family": "H2",
+      "variant_id": "H2C0605",
+      "archetype": "maintenance_target",
       "difficulty": "compositional",
-      "state": "current",
-      "condition": "matched_decision_record",
-      "seed": 3275484279
+      "state": "stale",
+      "condition": "self_belief_plus_partner_belief",
+      "seed": 2770834733
     },
     {
-      "ordinal": 356,
+      "ordinal": 355,
       "prompt_id": "H1C0605:current:explicit_self_belief",
       "family": "H1",
       "variant_id": "H1C0605",
@@ -3973,6 +3962,17 @@
       "difficulty": "compositional",
       "state": "current",
       "condition": "explicit_self_belief",
+      "seed": 3275484279
+    },
+    {
+      "ordinal": 356,
+      "prompt_id": "H1C0605:current:matched_decision_record",
+      "family": "H1",
+      "variant_id": "H1C0605",
+      "archetype": "lane_delivery",
+      "difficulty": "compositional",
+      "state": "current",
+      "condition": "matched_decision_record",
       "seed": 3275484279
     },
     {
@@ -3988,6 +3988,17 @@
     },
     {
       "ordinal": 358,
+      "prompt_id": "H2C0605:current:reactive_no_representation",
+      "family": "H2",
+      "variant_id": "H2C0605",
+      "archetype": "maintenance_target",
+      "difficulty": "compositional",
+      "state": "current",
+      "condition": "reactive_no_representation",
+      "seed": 430513776
+    },
+    {
+      "ordinal": 359,
       "prompt_id": "H2C0605:current:self_belief_plus_partner_belief",
       "family": "H2",
       "variant_id": "H2C0605",
@@ -3998,7 +4009,7 @@
       "seed": 430513776
     },
     {
-      "ordinal": 359,
+      "ordinal": 360,
       "prompt_id": "H2C0605:current:self_belief_plus_message_record",
       "family": "H2",
       "variant_id": "H2C0605",
@@ -4006,17 +4017,6 @@
       "difficulty": "compositional",
       "state": "current",
       "condition": "self_belief_plus_message_record",
-      "seed": 430513776
-    },
-    {
-      "ordinal": 360,
-      "prompt_id": "H2C0605:current:reactive_no_representation",
-      "family": "H2",
-      "variant_id": "H2C0605",
-      "archetype": "maintenance_target",
-      "difficulty": "compositional",
-      "state": "current",
-      "condition": "reactive_no_representation",
       "seed": 430513776
     },
     {
@@ -4032,17 +4032,6 @@
     },
     {
       "ordinal": 362,
-      "prompt_id": "H1C0106:stale:matched_decision_record",
-      "family": "H1",
-      "variant_id": "H1C0106",
-      "archetype": "route_destination",
-      "difficulty": "compositional",
-      "state": "stale",
-      "condition": "matched_decision_record",
-      "seed": 141957229
-    },
-    {
-      "ordinal": 363,
       "prompt_id": "H1C0106:stale:explicit_self_belief",
       "family": "H1",
       "variant_id": "H1C0106",
@@ -4053,18 +4042,18 @@
       "seed": 141957229
     },
     {
-      "ordinal": 364,
-      "prompt_id": "H2C0106:stale:reactive_no_representation",
-      "family": "H2",
-      "variant_id": "H2C0106",
-      "archetype": "resource_location",
+      "ordinal": 363,
+      "prompt_id": "H1C0106:stale:matched_decision_record",
+      "family": "H1",
+      "variant_id": "H1C0106",
+      "archetype": "route_destination",
       "difficulty": "compositional",
       "state": "stale",
-      "condition": "reactive_no_representation",
-      "seed": 2081880186
+      "condition": "matched_decision_record",
+      "seed": 141957229
     },
     {
-      "ordinal": 365,
+      "ordinal": 364,
       "prompt_id": "H2C0106:stale:self_belief_plus_partner_belief",
       "family": "H2",
       "variant_id": "H2C0106",
@@ -4075,7 +4064,7 @@
       "seed": 2081880186
     },
     {
-      "ordinal": 366,
+      "ordinal": 365,
       "prompt_id": "H2C0106:stale:self_belief_plus_message_record",
       "family": "H2",
       "variant_id": "H2C0106",
@@ -4083,6 +4072,17 @@
       "difficulty": "compositional",
       "state": "stale",
       "condition": "self_belief_plus_message_record",
+      "seed": 2081880186
+    },
+    {
+      "ordinal": 366,
+      "prompt_id": "H2C0106:stale:reactive_no_representation",
+      "family": "H2",
+      "variant_id": "H2C0106",
+      "archetype": "resource_location",
+      "difficulty": "compositional",
+      "state": "stale",
+      "condition": "reactive_no_representation",
       "seed": 2081880186
     },
     {
@@ -4120,13 +4120,13 @@
     },
     {
       "ordinal": 370,
-      "prompt_id": "H2C0106:current:self_belief_plus_partner_belief",
+      "prompt_id": "H2C0106:current:reactive_no_representation",
       "family": "H2",
       "variant_id": "H2C0106",
       "archetype": "resource_location",
       "difficulty": "compositional",
       "state": "current",
-      "condition": "self_belief_plus_partner_belief",
+      "condition": "reactive_no_representation",
       "seed": 1435724654
     },
     {
@@ -4142,24 +4142,24 @@
     },
     {
       "ordinal": 372,
-      "prompt_id": "H2C0106:current:reactive_no_representation",
+      "prompt_id": "H2C0106:current:self_belief_plus_partner_belief",
       "family": "H2",
       "variant_id": "H2C0106",
       "archetype": "resource_location",
       "difficulty": "compositional",
       "state": "current",
-      "condition": "reactive_no_representation",
+      "condition": "self_belief_plus_partner_belief",
       "seed": 1435724654
     },
     {
       "ordinal": 373,
-      "prompt_id": "H1C0206:stale:reactive_no_representation",
+      "prompt_id": "H1C0206:stale:explicit_self_belief",
       "family": "H1",
       "variant_id": "H1C0206",
       "archetype": "conveyor_storage",
       "difficulty": "compositional",
       "state": "stale",
-      "condition": "reactive_no_representation",
+      "condition": "explicit_self_belief",
       "seed": 2266307400
     },
     {
@@ -4175,13 +4175,13 @@
     },
     {
       "ordinal": 375,
-      "prompt_id": "H1C0206:stale:explicit_self_belief",
+      "prompt_id": "H1C0206:stale:reactive_no_representation",
       "family": "H1",
       "variant_id": "H1C0206",
       "archetype": "conveyor_storage",
       "difficulty": "compositional",
       "state": "stale",
-      "condition": "explicit_self_belief",
+      "condition": "reactive_no_representation",
       "seed": 2266307400
     },
     {
@@ -4219,28 +4219,6 @@
     },
     {
       "ordinal": 379,
-      "prompt_id": "H1C0206:current:matched_decision_record",
-      "family": "H1",
-      "variant_id": "H1C0206",
-      "archetype": "conveyor_storage",
-      "difficulty": "compositional",
-      "state": "current",
-      "condition": "matched_decision_record",
-      "seed": 73116731
-    },
-    {
-      "ordinal": 380,
-      "prompt_id": "H1C0206:current:explicit_self_belief",
-      "family": "H1",
-      "variant_id": "H1C0206",
-      "archetype": "conveyor_storage",
-      "difficulty": "compositional",
-      "state": "current",
-      "condition": "explicit_self_belief",
-      "seed": 73116731
-    },
-    {
-      "ordinal": 381,
       "prompt_id": "H1C0206:current:reactive_no_representation",
       "family": "H1",
       "variant_id": "H1C0206",
@@ -4251,18 +4229,29 @@
       "seed": 73116731
     },
     {
-      "ordinal": 382,
-      "prompt_id": "H2C0206:current:self_belief_plus_partner_belief",
-      "family": "H2",
-      "variant_id": "H2C0206",
-      "archetype": "tool_placement",
+      "ordinal": 380,
+      "prompt_id": "H1C0206:current:matched_decision_record",
+      "family": "H1",
+      "variant_id": "H1C0206",
+      "archetype": "conveyor_storage",
       "difficulty": "compositional",
       "state": "current",
-      "condition": "self_belief_plus_partner_belief",
-      "seed": 23726902
+      "condition": "matched_decision_record",
+      "seed": 73116731
     },
     {
-      "ordinal": 383,
+      "ordinal": 381,
+      "prompt_id": "H1C0206:current:explicit_self_belief",
+      "family": "H1",
+      "variant_id": "H1C0206",
+      "archetype": "conveyor_storage",
+      "difficulty": "compositional",
+      "state": "current",
+      "condition": "explicit_self_belief",
+      "seed": 73116731
+    },
+    {
+      "ordinal": 382,
       "prompt_id": "H2C0206:current:self_belief_plus_message_record",
       "family": "H2",
       "variant_id": "H2C0206",
@@ -4270,6 +4259,17 @@
       "difficulty": "compositional",
       "state": "current",
       "condition": "self_belief_plus_message_record",
+      "seed": 23726902
+    },
+    {
+      "ordinal": 383,
+      "prompt_id": "H2C0206:current:self_belief_plus_partner_belief",
+      "family": "H2",
+      "variant_id": "H2C0206",
+      "archetype": "tool_placement",
+      "difficulty": "compositional",
+      "state": "current",
+      "condition": "self_belief_plus_partner_belief",
       "seed": 23726902
     },
     {
@@ -4296,17 +4296,6 @@
     },
     {
       "ordinal": 386,
-      "prompt_id": "H1C0306:stale:matched_decision_record",
-      "family": "H1",
-      "variant_id": "H1C0306",
-      "archetype": "tunnel_inspection",
-      "difficulty": "compositional",
-      "state": "stale",
-      "condition": "matched_decision_record",
-      "seed": 828320400
-    },
-    {
-      "ordinal": 387,
       "prompt_id": "H1C0306:stale:explicit_self_belief",
       "family": "H1",
       "variant_id": "H1C0306",
@@ -4317,18 +4306,18 @@
       "seed": 828320400
     },
     {
-      "ordinal": 388,
-      "prompt_id": "H2C0306:stale:reactive_no_representation",
-      "family": "H2",
-      "variant_id": "H2C0306",
-      "archetype": "rendezvous_destination",
+      "ordinal": 387,
+      "prompt_id": "H1C0306:stale:matched_decision_record",
+      "family": "H1",
+      "variant_id": "H1C0306",
+      "archetype": "tunnel_inspection",
       "difficulty": "compositional",
       "state": "stale",
-      "condition": "reactive_no_representation",
-      "seed": 1254897920
+      "condition": "matched_decision_record",
+      "seed": 828320400
     },
     {
-      "ordinal": 389,
+      "ordinal": 388,
       "prompt_id": "H2C0306:stale:self_belief_plus_partner_belief",
       "family": "H2",
       "variant_id": "H2C0306",
@@ -4339,7 +4328,7 @@
       "seed": 1254897920
     },
     {
-      "ordinal": 390,
+      "ordinal": 389,
       "prompt_id": "H2C0306:stale:self_belief_plus_message_record",
       "family": "H2",
       "variant_id": "H2C0306",
@@ -4347,6 +4336,17 @@
       "difficulty": "compositional",
       "state": "stale",
       "condition": "self_belief_plus_message_record",
+      "seed": 1254897920
+    },
+    {
+      "ordinal": 390,
+      "prompt_id": "H2C0306:stale:reactive_no_representation",
+      "family": "H2",
+      "variant_id": "H2C0306",
+      "archetype": "rendezvous_destination",
+      "difficulty": "compositional",
+      "state": "stale",
+      "condition": "reactive_no_representation",
       "seed": 1254897920
     },
     {
@@ -4384,13 +4384,13 @@
     },
     {
       "ordinal": 394,
-      "prompt_id": "H2C0306:current:self_belief_plus_partner_belief",
+      "prompt_id": "H2C0306:current:reactive_no_representation",
       "family": "H2",
       "variant_id": "H2C0306",
       "archetype": "rendezvous_destination",
       "difficulty": "compositional",
       "state": "current",
-      "condition": "self_belief_plus_partner_belief",
+      "condition": "reactive_no_representation",
       "seed": 1075214941
     },
     {
@@ -4406,24 +4406,24 @@
     },
     {
       "ordinal": 396,
-      "prompt_id": "H2C0306:current:reactive_no_representation",
+      "prompt_id": "H2C0306:current:self_belief_plus_partner_belief",
       "family": "H2",
       "variant_id": "H2C0306",
       "archetype": "rendezvous_destination",
       "difficulty": "compositional",
       "state": "current",
-      "condition": "reactive_no_representation",
+      "condition": "self_belief_plus_partner_belief",
       "seed": 1075214941
     },
     {
       "ordinal": 397,
-      "prompt_id": "H1C0406:stale:reactive_no_representation",
+      "prompt_id": "H1C0406:stale:explicit_self_belief",
       "family": "H1",
       "variant_id": "H1C0406",
       "archetype": "channel_charging",
       "difficulty": "compositional",
       "state": "stale",
-      "condition": "reactive_no_representation",
+      "condition": "explicit_self_belief",
       "seed": 2013146995
     },
     {
@@ -4439,13 +4439,13 @@
     },
     {
       "ordinal": 399,
-      "prompt_id": "H1C0406:stale:explicit_self_belief",
+      "prompt_id": "H1C0406:stale:reactive_no_representation",
       "family": "H1",
       "variant_id": "H1C0406",
       "archetype": "channel_charging",
       "difficulty": "compositional",
       "state": "stale",
-      "condition": "explicit_self_belief",
+      "condition": "reactive_no_representation",
       "seed": 2013146995
     },
     {
@@ -4483,28 +4483,6 @@
     },
     {
       "ordinal": 403,
-      "prompt_id": "H1C0406:current:matched_decision_record",
-      "family": "H1",
-      "variant_id": "H1C0406",
-      "archetype": "channel_charging",
-      "difficulty": "compositional",
-      "state": "current",
-      "condition": "matched_decision_record",
-      "seed": 2868825528
-    },
-    {
-      "ordinal": 404,
-      "prompt_id": "H1C0406:current:explicit_self_belief",
-      "family": "H1",
-      "variant_id": "H1C0406",
-      "archetype": "channel_charging",
-      "difficulty": "compositional",
-      "state": "current",
-      "condition": "explicit_self_belief",
-      "seed": 2868825528
-    },
-    {
-      "ordinal": 405,
       "prompt_id": "H1C0406:current:reactive_no_representation",
       "family": "H1",
       "variant_id": "H1C0406",
@@ -4515,18 +4493,29 @@
       "seed": 2868825528
     },
     {
-      "ordinal": 406,
-      "prompt_id": "H2C0406:current:self_belief_plus_partner_belief",
-      "family": "H2",
-      "variant_id": "H2C0406",
-      "archetype": "delivery_destination",
+      "ordinal": 404,
+      "prompt_id": "H1C0406:current:matched_decision_record",
+      "family": "H1",
+      "variant_id": "H1C0406",
+      "archetype": "channel_charging",
       "difficulty": "compositional",
       "state": "current",
-      "condition": "self_belief_plus_partner_belief",
-      "seed": 2387046103
+      "condition": "matched_decision_record",
+      "seed": 2868825528
     },
     {
-      "ordinal": 407,
+      "ordinal": 405,
+      "prompt_id": "H1C0406:current:explicit_self_belief",
+      "family": "H1",
+      "variant_id": "H1C0406",
+      "archetype": "channel_charging",
+      "difficulty": "compositional",
+      "state": "current",
+      "condition": "explicit_self_belief",
+      "seed": 2868825528
+    },
+    {
+      "ordinal": 406,
       "prompt_id": "H2C0406:current:self_belief_plus_message_record",
       "family": "H2",
       "variant_id": "H2C0406",
@@ -4534,6 +4523,17 @@
       "difficulty": "compositional",
       "state": "current",
       "condition": "self_belief_plus_message_record",
+      "seed": 2387046103
+    },
+    {
+      "ordinal": 407,
+      "prompt_id": "H2C0406:current:self_belief_plus_partner_belief",
+      "family": "H2",
+      "variant_id": "H2C0406",
+      "archetype": "delivery_destination",
+      "difficulty": "compositional",
+      "state": "current",
+      "condition": "self_belief_plus_partner_belief",
       "seed": 2387046103
     },
     {
@@ -4560,17 +4560,6 @@
     },
     {
       "ordinal": 410,
-      "prompt_id": "H1C0506:stale:matched_decision_record",
-      "family": "H1",
-      "variant_id": "H1C0506",
-      "archetype": "corridor_rescue",
-      "difficulty": "compositional",
-      "state": "stale",
-      "condition": "matched_decision_record",
-      "seed": 1071979689
-    },
-    {
-      "ordinal": 411,
       "prompt_id": "H1C0506:stale:explicit_self_belief",
       "family": "H1",
       "variant_id": "H1C0506",
@@ -4581,18 +4570,18 @@
       "seed": 1071979689
     },
     {
-      "ordinal": 412,
-      "prompt_id": "H2C0506:stale:reactive_no_representation",
-      "family": "H2",
-      "variant_id": "H2C0506",
-      "archetype": "hazard_assignment",
+      "ordinal": 411,
+      "prompt_id": "H1C0506:stale:matched_decision_record",
+      "family": "H1",
+      "variant_id": "H1C0506",
+      "archetype": "corridor_rescue",
       "difficulty": "compositional",
       "state": "stale",
-      "condition": "reactive_no_representation",
-      "seed": 2152762113
+      "condition": "matched_decision_record",
+      "seed": 1071979689
     },
     {
-      "ordinal": 413,
+      "ordinal": 412,
       "prompt_id": "H2C0506:stale:self_belief_plus_partner_belief",
       "family": "H2",
       "variant_id": "H2C0506",
@@ -4603,7 +4592,7 @@
       "seed": 2152762113
     },
     {
-      "ordinal": 414,
+      "ordinal": 413,
       "prompt_id": "H2C0506:stale:self_belief_plus_message_record",
       "family": "H2",
       "variant_id": "H2C0506",
@@ -4611,6 +4600,17 @@
       "difficulty": "compositional",
       "state": "stale",
       "condition": "self_belief_plus_message_record",
+      "seed": 2152762113
+    },
+    {
+      "ordinal": 414,
+      "prompt_id": "H2C0506:stale:reactive_no_representation",
+      "family": "H2",
+      "variant_id": "H2C0506",
+      "archetype": "hazard_assignment",
+      "difficulty": "compositional",
+      "state": "stale",
+      "condition": "reactive_no_representation",
       "seed": 2152762113
     },
     {
@@ -4648,13 +4648,13 @@
     },
     {
       "ordinal": 418,
-      "prompt_id": "H2C0506:current:self_belief_plus_partner_belief",
+      "prompt_id": "H2C0506:current:reactive_no_representation",
       "family": "H2",
       "variant_id": "H2C0506",
       "archetype": "hazard_assignment",
       "difficulty": "compositional",
       "state": "current",
-      "condition": "self_belief_plus_partner_belief",
+      "condition": "reactive_no_representation",
       "seed": 345403762
     },
     {
@@ -4670,24 +4670,24 @@
     },
     {
       "ordinal": 420,
-      "prompt_id": "H2C0506:current:reactive_no_representation",
+      "prompt_id": "H2C0506:current:self_belief_plus_partner_belief",
       "family": "H2",
       "variant_id": "H2C0506",
       "archetype": "hazard_assignment",
       "difficulty": "compositional",
       "state": "current",
-      "condition": "reactive_no_representation",
+      "condition": "self_belief_plus_partner_belief",
       "seed": 345403762
     },
     {
       "ordinal": 421,
-      "prompt_id": "H1C0606:stale:reactive_no_representation",
+      "prompt_id": "H1C0606:stale:explicit_self_belief",
       "family": "H1",
       "variant_id": "H1C0606",
       "archetype": "lane_delivery",
       "difficulty": "compositional",
       "state": "stale",
-      "condition": "reactive_no_representation",
+      "condition": "explicit_self_belief",
       "seed": 481141174
     },
     {
@@ -4703,13 +4703,13 @@
     },
     {
       "ordinal": 423,
-      "prompt_id": "H1C0606:stale:explicit_self_belief",
+      "prompt_id": "H1C0606:stale:reactive_no_representation",
       "family": "H1",
       "variant_id": "H1C0606",
       "archetype": "lane_delivery",
       "difficulty": "compositional",
       "state": "stale",
-      "condition": "explicit_self_belief",
+      "condition": "reactive_no_representation",
       "seed": 481141174
     },
     {
@@ -4747,28 +4747,6 @@
     },
     {
       "ordinal": 427,
-      "prompt_id": "H1C0606:current:matched_decision_record",
-      "family": "H1",
-      "variant_id": "H1C0606",
-      "archetype": "lane_delivery",
-      "difficulty": "compositional",
-      "state": "current",
-      "condition": "matched_decision_record",
-      "seed": 526808923
-    },
-    {
-      "ordinal": 428,
-      "prompt_id": "H1C0606:current:explicit_self_belief",
-      "family": "H1",
-      "variant_id": "H1C0606",
-      "archetype": "lane_delivery",
-      "difficulty": "compositional",
-      "state": "current",
-      "condition": "explicit_self_belief",
-      "seed": 526808923
-    },
-    {
-      "ordinal": 429,
       "prompt_id": "H1C0606:current:reactive_no_representation",
       "family": "H1",
       "variant_id": "H1C0606",
@@ -4779,18 +4757,29 @@
       "seed": 526808923
     },
     {
-      "ordinal": 430,
-      "prompt_id": "H2C0606:current:self_belief_plus_partner_belief",
-      "family": "H2",
-      "variant_id": "H2C0606",
-      "archetype": "maintenance_target",
+      "ordinal": 428,
+      "prompt_id": "H1C0606:current:matched_decision_record",
+      "family": "H1",
+      "variant_id": "H1C0606",
+      "archetype": "lane_delivery",
       "difficulty": "compositional",
       "state": "current",
-      "condition": "self_belief_plus_partner_belief",
-      "seed": 940251798
+      "condition": "matched_decision_record",
+      "seed": 526808923
     },
     {
-      "ordinal": 431,
+      "ordinal": 429,
+      "prompt_id": "H1C0606:current:explicit_self_belief",
+      "family": "H1",
+      "variant_id": "H1C0606",
+      "archetype": "lane_delivery",
+      "difficulty": "compositional",
+      "state": "current",
+      "condition": "explicit_self_belief",
+      "seed": 526808923
+    },
+    {
+      "ordinal": 430,
       "prompt_id": "H2C0606:current:self_belief_plus_message_record",
       "family": "H2",
       "variant_id": "H2C0606",
@@ -4798,6 +4787,17 @@
       "difficulty": "compositional",
       "state": "current",
       "condition": "self_belief_plus_message_record",
+      "seed": 940251798
+    },
+    {
+      "ordinal": 431,
+      "prompt_id": "H2C0606:current:self_belief_plus_partner_belief",
+      "family": "H2",
+      "variant_id": "H2C0606",
+      "archetype": "maintenance_target",
+      "difficulty": "compositional",
+      "state": "current",
+      "condition": "self_belief_plus_partner_belief",
       "seed": 940251798
     },
     {
@@ -4849,25 +4849,193 @@
       "C": 36,
       "D": 36
     },
-    "position_counts": {
-      "record": {
-        "1": 36,
-        "2": 72,
-        "3": 36
+    "family_state_strata": {
+      "H1:stale": {
+        "pattern_counts": {
+          "A": 9,
+          "B": 9,
+          "C": 9,
+          "D": 9
+        },
+        "position_counts": {
+          "record": {
+            "1": 9,
+            "2": 18,
+            "3": 9
+          },
+          "belief": {
+            "1": 9,
+            "2": 18,
+            "3": 9
+          }
+        },
+        "reactive_placement": {
+          "before": 18,
+          "after": 18
+        },
+        "role_first": {
+          "record": 18,
+          "belief": 18
+        }
       },
-      "belief": {
-        "1": 36,
-        "2": 72,
-        "3": 36
+      "H2:stale": {
+        "pattern_counts": {
+          "A": 9,
+          "B": 9,
+          "C": 9,
+          "D": 9
+        },
+        "position_counts": {
+          "record": {
+            "1": 9,
+            "2": 18,
+            "3": 9
+          },
+          "belief": {
+            "1": 9,
+            "2": 18,
+            "3": 9
+          }
+        },
+        "reactive_placement": {
+          "before": 18,
+          "after": 18
+        },
+        "role_first": {
+          "record": 18,
+          "belief": 18
+        }
+      },
+      "H1:current": {
+        "pattern_counts": {
+          "A": 9,
+          "B": 9,
+          "C": 9,
+          "D": 9
+        },
+        "position_counts": {
+          "record": {
+            "1": 9,
+            "2": 18,
+            "3": 9
+          },
+          "belief": {
+            "1": 9,
+            "2": 18,
+            "3": 9
+          }
+        },
+        "reactive_placement": {
+          "before": 18,
+          "after": 18
+        },
+        "role_first": {
+          "record": 18,
+          "belief": 18
+        }
+      },
+      "H2:current": {
+        "pattern_counts": {
+          "A": 9,
+          "B": 9,
+          "C": 9,
+          "D": 9
+        },
+        "position_counts": {
+          "record": {
+            "1": 9,
+            "2": 18,
+            "3": 9
+          },
+          "belief": {
+            "1": 9,
+            "2": 18,
+            "3": 9
+          }
+        },
+        "reactive_placement": {
+          "before": 18,
+          "after": 18
+        },
+        "role_first": {
+          "record": 18,
+          "belief": 18
+        }
       }
     },
-    "reactive_placement": {
-      "before": 72,
-      "after": 72
-    },
-    "role_first": {
-      "record": 72,
-      "belief": 72
+    "family_state_difficulty_pattern_counts": {
+      "H1:stale:direct": {
+        "A": 3,
+        "B": 3,
+        "C": 3,
+        "D": 3
+      },
+      "H2:stale:direct": {
+        "A": 3,
+        "B": 3,
+        "C": 3,
+        "D": 3
+      },
+      "H1:current:direct": {
+        "A": 3,
+        "B": 3,
+        "C": 3,
+        "D": 3
+      },
+      "H2:current:direct": {
+        "A": 3,
+        "B": 3,
+        "C": 3,
+        "D": 3
+      },
+      "H1:stale:irrelevant_distractor": {
+        "A": 3,
+        "B": 3,
+        "C": 3,
+        "D": 3
+      },
+      "H2:stale:irrelevant_distractor": {
+        "A": 3,
+        "B": 3,
+        "C": 3,
+        "D": 3
+      },
+      "H1:current:irrelevant_distractor": {
+        "A": 3,
+        "B": 3,
+        "C": 3,
+        "D": 3
+      },
+      "H2:current:irrelevant_distractor": {
+        "A": 3,
+        "B": 3,
+        "C": 3,
+        "D": 3
+      },
+      "H1:stale:compositional": {
+        "A": 3,
+        "B": 3,
+        "C": 3,
+        "D": 3
+      },
+      "H2:stale:compositional": {
+        "A": 3,
+        "B": 3,
+        "C": 3,
+        "D": 3
+      },
+      "H1:current:compositional": {
+        "A": 3,
+        "B": 3,
+        "C": 3,
+        "D": 3
+      },
+      "H2:current:compositional": {
+        "A": 3,
+        "B": 3,
+        "C": 3,
+        "D": 3
+      }
     },
     "role_pairs_adjacent": true
   },
@@ -4875,5 +5043,22 @@
   "archetype_label_scope": "surface-domain templates",
   "difficulty_label_scope": "surface perturbation strata",
   "compositional_stratum_scope": "instructional mapping cue, not genuine multi-step compositional reasoning",
-  "current_commit_outputs_not_confirmatory": true
+  "pre_correction_commit_outputs_not_confirmatory": true,
+  "corrected_commit_intended_for_confirmatory_execution": true,
+  "residual_order_correction": {
+    "previous_flawed_head": "093d5e3df4564d0c41d3cd8e9fce3651626b948f",
+    "prompts_changed": false,
+    "scenarios_changed": false,
+    "seeds_changed": false,
+    "request_body_changed": false,
+    "analysis_estimands_changed": false,
+    "request_order_changed": true,
+    "telemetry_semantics_changed": true,
+    "offsets": {
+      "H1_stale": 0,
+      "H1_current": 1,
+      "H2_stale": 2,
+      "H2_current": 3
+    }
+  }
 }

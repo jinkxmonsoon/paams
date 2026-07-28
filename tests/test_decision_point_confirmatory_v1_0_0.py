@@ -14,10 +14,13 @@ def test_prompt_scenario_seed_freeze_and_population():
  assert len(prompts)==audit['prompt_count']==audit['unique_prompt_count']==432 and audit['prompt_overlap_count']==audit['entity_overlap_count']==0
  assert audit['variants_by_family']=={'H1':36,'H2':36} and all(audit['difficulty_counts'][f]=={'direct':12,'irrelevant_distractor':12,'compositional':12} for f in ('H1','H2'))
  assert MANIFEST['frozen_request_order']==[{'ordinal':i,'prompt_id':p.prompt_id,'family':p.family,'variant_id':p.variant_id,'archetype':p.archetype,'difficulty':p.difficulty,'state':p.state,'condition':p.condition,'seed':p.seed} for i,p in enumerate(prompts,1)]
-def test_four_pattern_and_position_balance():
+def test_four_pattern_and_stratified_balance():
  audit=order_audit();assert audit['pattern_counts']=={'A':36,'B':36,'C':36,'D':36}
- assert audit['position_counts']=={'record':{1:36,2:72,3:36},'belief':{1:36,2:72,3:36}}
- assert audit['reactive_placement']=={'before':72,'after':72} and audit['role_first']=={'record':72,'belief':72} and audit['role_pairs_adjacent']
+ for row in audit['family_state_strata'].values():
+  assert row['pattern_counts']=={'A':9,'B':9,'C':9,'D':9}
+  assert row['position_counts']=={'record':{1:9,2:18,3:9},'belief':{1:9,2:18,3:9}}
+  assert row['reactive_placement']=={'before':18,'after':18} and row['role_first']=={'record':18,'belief':18}
+ assert all(row=={'A':3,'B':3,'C':3,'D':3} for row in audit['family_state_difficulty_pattern_counts'].values()) and audit['role_pairs_adjacent']
  groups={}
  for p in request_order():groups.setdefault((p.family,p.variant_id,p.state),set()).add(p.seed)
  assert len(groups)==144 and all(len(v)==1 for v in groups.values()) and len({next(iter(v)) for v in groups.values()})==144
@@ -42,6 +45,15 @@ def test_fingerprint_schema_subgroups_budget_and_workflow():
  source=(ROOT/'btom_v2/run_decision_point_confirmatory_v1_0_0.py').read_text();assert all(k in source for k in required)
  assert 'descriptive_only' in (ROOT/'btom_v2/analyze_decision_point_confirmatory_v1_0_0.py').read_text() and 'no_subgroup_significance_testing' in (ROOT/'btom_v2/analyze_decision_point_confirmatory_v1_0_0.py').read_text()
  assert runner.MAX_REQUESTS==432 and runner.DELAY_SECONDS==20 and runner.RETRIES==0
- guard="github.event.head_commit.message == 'Correct confirmatory order and analysis [experiment-v1.0.0]'";assert guard in WORKFLOW
+ guard="github.event.head_commit.message == 'Remove residual confirmatory order confounding [experiment-v1.0.0]'";assert guard in WORKFLOW
  command='python -m btom_v2.run_decision_point_confirmatory_v1_0_0 --output-dir';assert WORKFLOW.count(command)==1 and WORKFLOW.index('python -m pytest -q')<WORKFLOW.index(command)
  assert WORKFLOW.count('GROQ_API_KEY')==2 and 'if: always()' in WORKFLOW and MANIFEST['replication_plan']['model']=='openai/gpt-oss-120b'
+
+def test_runtime_audit_before_client_and_manifest_order():
+ prompts=request_order();semantic=audit_bank([p.prompt for p in dev_order()],[x for s in DEV for x in (s.room_a,s.room_b,s.partner,s.resource) if x]);tokens=runner.token_audit(prompts,lambda x:list(x),lambda x:list(x));audit=runner.runtime_preclient_audit(MANIFEST,prompts,semantic,tokens)
+ assert audit['passed'] and audit['checks']['request_order_matches_manifest'] and audit['checks']['family_state_balance'] and audit['checks']['difficulty_pattern_balance']
+ source=(ROOT/'btom_v2/run_decision_point_confirmatory_v1_0_0.py').read_text();assert source.index('runtime_preclient_audit(m,prompts,audit,tokens)')<source.index('client=client_factory()')
+def test_fingerprint_missing_matching_different_and_variant_rule():
+ assert runner.concordance_status(None,None)=='missing' and runner.concordance_status('a',None)=='missing'
+ assert runner.concordance_status('a','a')=='matching' and runner.concordance_status('a','b')=='different'
+ source=(ROOT/'btom_v2/analyze_decision_point_confirmatory_v1_0_0.py').read_text();assert "['system_fingerprint'] is not None" in source and 'role_pair_fingerprint_concordant' in source
