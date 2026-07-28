@@ -28,5 +28,44 @@ def test_token_audit_shape_runner_and_workflow():
  source=(ROOT/'btom_v2/run_decision_point_discrimination_v0_6_0.py').read_text(); assert runner.MAX_REQUESTS==48 and runner.DELAY_SECONDS==15 and runner.RETRIES==0
  assert "x['finish_reason']=='stop'" in source and "choice.get('finish_reason') or 'none'" in source
  assert "'treatment_used_in_gate':False" in source and 'used_in_scenario_gate' in source
- assert "github.event.head_commit.message == 'Correct scenario discrimination inputs [experiment-v0.6.0]'" in WORKFLOW
+ assert "github.event.head_commit.message == 'Repair Groq transport fingerprint [experiment-v0.6.0]'" in WORKFLOW
  assert WORKFLOW.count('python -m btom_v2.run_decision_point_discrimination_v0_6_0 --output-dir')==1 and WORKFLOW.index('python -m pytest -q')<WORKFLOW.index('run_decision_point_discrimination_v0_6_0 --output-dir')
+def test_transport_headers_body_and_metadata():
+ prompt=frozen_order()[0]
+ assert runner.USER_AGENT=='Mozilla/5.0 (compatible; BToM-MAS/0.6.0; +https://github.com/jinkxmonsoon/paams)'
+ assert runner.REQUEST_HEADER_NAMES==('Accept','Authorization','Content-Type','User-Agent')
+ assert set(runner.body(prompt))=={'model','messages','temperature','top_p','max_completion_tokens','reasoning_effort','include_reasoning','response_format','stream'}
+ manifest=MANIFEST['transport_amendment']; assert manifest['request_body_changed'] is False and manifest['authorization_value_recorded'] is False
+ assert manifest['request_header_names']==['Accept','Authorization','Content-Type','User-Agent']
+def test_cloudflare_fail_fast_classification_and_interpretability():
+ assert runner.cloudflare_1010(403,'error code: 1010',0) is True
+ assert runner.cloudflare_1010(403,'error code: 1010',1) is False
+ one=[{'http_success':False}]
+ assert runner.execution_classification(one,True)=='transport_failure'
+ assert runner.execution_classification([{'http_success':True}]*48,False)=='experiment_complete'
+ assert runner.execution_classification([{'http_success':False}]*48,False)=='runtime_failure'
+ incomplete=[{'http_success':False,'http_status':403,'parse_success':False,'legal_action':False}]
+ d=runner.run_diagnostics(incomplete,[]); assert d['scientifically_interpretable'] is False and d['requests_attempted']==1
+ complete=[{'complete':True}]; d=runner.run_diagnostics(incomplete,complete); assert d['scientifically_interpretable'] is True
+def test_transport_workflow_guard_and_frozen_scientific_files():
+ assert "github.event.head_commit.message == 'Repair Groq transport fingerprint [experiment-v0.6.0]'" in WORKFLOW
+ assert WORKFLOW.count('python -m btom_v2.run_decision_point_discrimination_v0_6_0 --output-dir')==1
+ assert runner.MAX_REQUESTS==48 and runner.DELAY_SECONDS==15 and runner.RETRIES==0
+ source=(ROOT/'btom_v2/run_decision_point_discrimination_v0_6_0.py').read_text()
+ assert "'Accept':'application/json','User-Agent':USER_AGENT" in source
+ assert "transport_failure_reason':'cloudflare_1010_client_signature'" in source
+ assert 'authorization_value_recorded' in source
+def test_execute_stops_after_first_pre_inference_1010(monkeypatch,tmp_path):
+ class Blocked:
+  calls=0
+  def __init__(self): pass
+  def call(self,prompt):
+   self.calls+=1
+   return False,403,None,'error code: 1010',0.01
+ monkeypatch.setattr(runner,'load_tokenizers',lambda manifest:(lambda text:list(text),lambda text:list(text),manifest['dependencies']))
+ code=runner.execute(tmp_path/'out',sleep=lambda seconds:None,client_factory=Blocked)
+ summary=json.loads((tmp_path/'out'/'discrimination_summary.json').read_text())
+ records=(tmp_path/'out'/'call_records.jsonl').read_text().splitlines()
+ assert code==1 and summary['classification']=='transport_failure'
+ assert summary['transport_failure_reason']=='cloudflare_1010_client_signature'
+ assert summary['requests_attempted']==1 and len(records)==1

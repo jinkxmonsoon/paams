@@ -452,5 +452,27 @@
     "request_order_changed": false,
     "selection_rule_changed": false,
     "api_configuration_changed": false
+  },
+  "transport_amendment": {
+    "parent_run_id": 30384654514,
+    "parent_artifact_digest": "6ea19d364c48b52c64e0ce1fe1dd4de59f9fde20231009eacee6adfa88ed078c",
+    "http_403_count": 48,
+    "cloudflare_error_code": 1010,
+    "model_outputs": 0,
+    "prompts_changed": false,
+    "scenarios_changed": false,
+    "scoring_changed": false,
+    "selection_rule_changed": false,
+    "request_body_changed": false,
+    "request_headers_changed": true,
+    "user_agent": "Mozilla/5.0 (compatible; BToM-MAS/0.6.0; +https://github.com/jinkxmonsoon/paams)",
+    "request_header_names": [
+      "Accept",
+      "Authorization",
+      "Content-Type",
+      "User-Agent"
+    ],
+    "authorization_value_recorded": false,
+    "repair_stage": "pre_inference_operational"
   }
 }
