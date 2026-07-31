@@ -6,7 +6,7 @@ permissions:
   contents: read
 jobs:
   recovery:
-    if: github.event.head_commit.message == 'Run complete compositional recovery batch [experiment-v1.0.0]'
+    if: github.event.head_commit.message == 'Execute dual-account compositional recovery [experiment-v1.0.0]'
     runs-on: ubuntu-latest
     timeout-minutes: 120
     steps:
@@ -21,6 +21,7 @@ jobs:
       - name: Execute recovery batch once
         env:
           GROQ_API_KEY: ${{ secrets.GROQ_API_KEY }}
+          GROQ_API_KEY_SECONDARY: ${{ secrets.GROQ_API_KEY_SECONDARY }}
         run: python -m btom_v2.run_decision_point_confirmatory_recovery_v1_0_0 --output-dir artifact/recovery
       - uses: actions/upload-artifact@v4
         if: always()

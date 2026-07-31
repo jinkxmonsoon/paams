@@ -1,44 +1,54 @@
 import hashlib,json
 from pathlib import Path
+import pytest
 from btom_v2 import run_decision_point_confirmatory_recovery_v1_0_0 as recovery
 from btom_v2.decision_point_confirmatory_prompting_v1_0_0 import canonical_prompt_digest,request_order
 from btom_v2.run_decision_point_confirmatory_v1_0_0 import body
 ROOT=Path(__file__).resolve().parents[1]
-MANIFEST=json.loads((ROOT/'btom_v2/decision_point_confirmatory_recovery_manifest_v1_0_0.json').read_text())
-WORKFLOW=(ROOT/'.github/workflows/decision_point_confirmatory_recovery_v1_0_0.yml').read_text()
-def audit_with_character_tokens():
- full=request_order();selected=recovery.selected_prompts();tokens=recovery.token_pair_audit(selected,list,list);return recovery.preclient_audit(MANIFEST,full,selected,tokens),tokens
-def test_frozen_inputs_and_exact_population():
- full=request_order();selected=recovery.selected_prompts();assert canonical_prompt_digest(full)=='3a2ed20fc7128cdb057fa0b04b392957dc6c06669a760be781d88c5c1dfaa15b'
- assert hashlib.sha256((ROOT/'btom_v2/decision_point_confirmatory_scenarios_v1_0_0.py').read_bytes()).hexdigest()=='7b525abbb7e49db2114c3393678532d811a59e9c6ece6f5248eb583924e18867'
- assert len(selected)==144 and len({p.prompt_id for p in selected})==144 and {p.difficulty for p in selected}=={'compositional'}
- assert {f:len({p.variant_id for p in selected if p.family==f}) for f in ('H1','H2')}=={'H1':12,'H2':12}
- assert [p.prompt_id for p in selected]==[p.prompt_id for p in full if p.difficulty=='compositional']
- assert all(v['expected']==v['actual'] for v in recovery.immutable_hashes(MANIFEST).values())
-def test_manifest_identity_order_seed_and_body():
- full={p.prompt_id:p for p in request_order()};selected=recovery.selected_prompts();rows=MANIFEST['frozen_selected_order'];assert len(rows)==len(selected)
- for p,row in zip(selected,rows):
-  original=full[p.prompt_id];assert row['prompt_id']==p.prompt_id and row['seed']==p.seed==original.seed and p.prompt==original.prompt and p.valid_actions==original.valid_actions and row['prompt_sha256']==hashlib.sha256(p.prompt.encode()).hexdigest();assert body(p)==body(original)
- assert all(a['original_ordinal']<b['original_ordinal'] for a,b in zip(rows,rows[1:]))
-def test_triplets_patterns_positions_and_token_pairs():
- audit,tokens=audit_with_character_tokens();order=audit['order_audit'];assert audit['passed'];assert order['global_pattern_counts']=={'A':12,'B':12,'C':12,'D':12}
- assert len(order['triplets'])==48 and len({r['seed'] for r in order['triplets']})==48 and all(r['same_seed'] and r['role_pair_adjacent'] for r in order['triplets'])
- for row in order['family_state_strata'].values():
-  assert row['pattern_counts']=={'A':3,'B':3,'C':3,'D':3} and row['role_first']=={'record':6,'belief':6} and row['reactive_placement']=={'before':6,'after':6}
-  assert row['positions']=={'record':{1:3,2:6,3:3},'belief':{1:3,2:6,3:3}}
- assert tokens['pair_count']==48 and tokens['all_raw_parity'] and tokens['all_harmony_parity'] and tokens['all_content_matched']
-def test_audit_is_preclient_and_configuration_is_frozen():
- source=(ROOT/'btom_v2/run_decision_point_confirmatory_recovery_v1_0_0.py').read_text();assert source.index('preclient_audit(manifest,full,prompts,tokens,client_constructed=False)')<source.index('client=client_factory()')
- audit,_=audit_with_character_tokens();assert audit['checks']['client_not_constructed'] and audit['checks']['request_body_identity']
- assert recovery.MAX_REQUESTS==144 and recovery.DELAY_SECONDS==20 and recovery.RETRIES==0 and recovery.COLLECTION_BATCH=='compositional_recovery_1'
-def test_policy_workflow_and_no_scientific_inference(tmp_path,monkeypatch):
- policy=MANIFEST['recovery_policy'];assert policy['attempts_1_and_2_excluded'] and policy['previous_compositional_calls_discarded'] and not policy['cell_level_backfilling'] and not policy['cross_attempt_variant_assembly']
- class MockClient:
-  calls=0
-  def call(self,p):
-   MockClient.calls+=1;a,t=p.valid_actions[0];content=json.dumps({'action':a,'target':t,'message':'','reason':'mock'});return True,200,{'choices':[{'finish_reason':'stop','message':{'content':content}}],'x_groq':{'seed':p.seed},'system_fingerprint':'mock-fp','service_tier':'default','usage':{'prompt_tokens':1,'completion_tokens':1,'total_tokens':2}},None,0.01
- monkeypatch.setattr(recovery,'load_tokenizers',lambda manifest:(list,list,manifest['dependencies']));out=tmp_path/'recovery';assert recovery.execute(out,sleep=lambda _:None,client_factory=MockClient)==0;assert MockClient.calls==144
- summary=json.loads((out/'recovery_summary.json').read_text());assert summary['attempted_requests']==144 and summary['scientific_inference'] is None and summary['final_confirmatory_analysis_not_performed'] and summary['previous_compositional_observations_excluded']
- assert all(json.loads(line)['collection_batch']=='compositional_recovery_1' for line in (out/'recovery_call_records.jsonl').read_text().splitlines())
- command='python -m btom_v2.run_decision_point_confirmatory_recovery_v1_0_0 --output-dir';assert WORKFLOW.count(command)==1 and WORKFLOW.index('python -m pytest -q')<WORKFLOW.index(command)
- assert "github.event.head_commit.message == 'Run complete compositional recovery batch [experiment-v1.0.0]'" in WORKFLOW and 'if: always()' in WORKFLOW and 'retention-days: 30' in WORKFLOW and WORKFLOW.count('GROQ_API_KEY')==2
+MANIFEST=json.loads((ROOT/'btom_v2/decision_point_confirmatory_recovery_manifest_v1_0_0.json').read_text());WORKFLOW=(ROOT/'.github/workflows/decision_point_confirmatory_recovery_v1_0_0.yml').read_text();DUMMY={'GROQ_API_KEY':'dummy-primary-secret','GROQ_API_KEY_SECONDARY':'dummy-secondary-secret'}
+def patched_tokens(monkeypatch):monkeypatch.setattr(recovery,'load_tokenizers',lambda manifest:(list,list,manifest['dependencies']))
+def success_payload(p):
+ a,t=p.valid_actions[0];return {'choices':[{'finish_reason':'stop','message':{'content':json.dumps({'action':a,'target':t,'message':'','reason':'mock'})}}],'x_groq':{'seed':p.seed},'system_fingerprint':'mock','service_tier':'default','usage':{'prompt_tokens':1,'completion_tokens':1,'total_tokens':2}}
+class Factory:
+ def __init__(self,behavior=None):self.behavior=behavior or (lambda slot,p,n:(True,200,success_payload(p),None,.01));self.calls=[];self.constructed=[]
+ def __call__(self,slot,key,all_credentials):
+  self.constructed.append(slot);factory=self
+  class Client:
+   credential_slot=slot
+   def call(self,p):factory.calls.append((slot,p.prompt_id,body(p),p.seed));return factory.behavior(slot,p,len(factory.calls))
+  return Client()
+def audit():
+ prompts=recovery.selected_prompts();tokens=recovery.token_pair_audit(prompts,list,list);return recovery.preclient_audit(MANIFEST,request_order(),prompts,tokens)
+def test_frozen_population_assignment_and_scientific_inputs():
+ full=request_order();selected=recovery.selected_prompts();assert canonical_prompt_digest(full)=='3a2ed20fc7128cdb057fa0b04b392957dc6c06669a760be781d88c5c1dfaa15b';assert hashlib.sha256((ROOT/'btom_v2/decision_point_confirmatory_scenarios_v1_0_0.py').read_bytes()).hexdigest()=='7b525abbb7e49db2114c3393678532d811a59e9c6ece6f5248eb583924e18867';assert all(x['expected']==x['actual'] for x in recovery.immutable_hashes(MANIFEST).values())
+ assert len(selected)==144 and len({p.variant_id for p in selected})==24 and all(body(p)==body(next(x for x in full if x.prompt_id==p.prompt_id)) for p in selected)
+ assignment=recovery.variant_assignment(MANIFEST);assert set(assignment)=={p.variant_id for p in selected};assert list(assignment.values()).count('primary')==list(assignment.values()).count('secondary')==12
+ assert all(len({assignment[p.variant_id] for p in selected if p.variant_id==v})==1 and len([p for p in selected if p.variant_id==v])==6 for v in assignment)
+def test_balanced_account_audit():
+ result=audit();assert result['passed'];slots=result['credential_assignment_audit']['slots']
+ for row in slots.values():
+  assert row['variants']==12 and row['prompts']==72 and row['family_variants']=={'H1':6,'H2':6};assert set(row['family_archetype_variants'].values())=={1};assert row['patterns']=={'A':6,'B':6,'C':6,'D':6};assert row['family_patterns']=={'H1':{'A':3,'B':3,'C':3,'D':3},'H2':{'A':3,'B':3,'C':3,'D':3}};assert row['role_first']=={'record':12,'belief':12} and row['reactive_placement']=={'before':12,'after':12}
+def test_tpd_classifier_is_strict():
+ positives=[json.dumps({'error':{'message':'Tokens per day limit reached'}}),json.dumps({'error':{'message':'TPD quota exceeded'}}),json.dumps({'error':{'message':'daily token limit 100 used 90 requested 20'}})]
+ assert all(recovery.is_tpd_exhaustion(429,x) for x in positives)
+ negatives=['generic rate limit','RPM limit reached','RPD limit reached','TPM limit reached','ITPM limit','OTPM limit']
+ assert all(not recovery.is_tpd_exhaustion(429,x) for x in negatives);assert all(not recovery.is_tpd_exhaustion(code,positives[0]) for code in (400,401,403,404,498,500,None))
+@pytest.mark.parametrize('env,error',[( {'GROQ_API_KEY_SECONDARY':'s'},'missing_primary_credential'),({'GROQ_API_KEY':'p'},'missing_secondary_credential'),({'GROQ_API_KEY':'same','GROQ_API_KEY_SECONDARY':'same'},'credentials_not_distinct')])
+def test_bad_credentials_abort_before_clients(tmp_path,monkeypatch,env,error):
+ patched_tokens(monkeypatch);factory=Factory();out=tmp_path/error;assert recovery.execute(out,sleep=lambda _:None,client_factory=factory,environ=env)==1;assert factory.constructed==[];assert error in json.loads((out/'recovery_summary.json').read_text())['error']
+def test_complete_dual_execution_and_secret_redaction(tmp_path,monkeypatch):
+ patched_tokens(monkeypatch);factory=Factory();out=tmp_path/'complete';assert recovery.execute(out,sleep=lambda _:None,client_factory=factory,environ=DUMMY)==0;records=[json.loads(x) for x in (out/'recovery_call_records.jsonl').read_text().splitlines()];summary=json.loads((out/'recovery_summary.json').read_text());assert len(records)==len(factory.calls)==144 and len({r['prompt_id'] for r in records})==144;assert all(not r['credential_failover_used'] and r['assigned_credential_slot']==r['final_credential_slot'] for r in records);assert summary['ready_for_consolidation'] and summary['canonical_complete_calls']==144 and summary['scientific_inference'] is None
+ artifact=''.join(p.read_text(errors='replace') for p in out.iterdir() if p.is_file());assert all(secret not in artifact for secret in DUMMY.values())
+def test_tpd_replays_whole_variant_and_never_reuses_exhausted_slot(tmp_path,monkeypatch):
+ patched_tokens(monkeypatch)
+ def behavior(slot,p,n):
+  if slot=='primary' and n==2:return False,429,None,json.dumps({'error':{'message':'tokens per day limit reached'}}),.01
+  return True,200,success_payload(p),None,.01
+ factory=Factory(behavior);out=tmp_path/'failover';assert recovery.execute(out,sleep=lambda _:None,client_factory=factory,environ=DUMMY)==0;attempts=[json.loads(x) for x in (out/'transport_attempts.jsonl').read_text().splitlines()];discarded=[json.loads(x) for x in (out/'discarded_transport_attempts.jsonl').read_text().splitlines()];records=[json.loads(x) for x in (out/'recovery_call_records.jsonl').read_text().splitlines()];trigger=next(a['transport_attempt_ordinal'] for a in attempts if a['confirmed_tpd_exhaustion']);assert all(a['attempted_credential_slot']!='primary' for a in attempts if a['transport_attempt_ordinal']>trigger);assert len(records)==144 and len({r['prompt_id'] for r in records})==144 and all(r['final_credential_slot']=='secondary' for r in records if r['variant_id']=='H1C0105');assert len([r for r in records if r['variant_id']=='H1C0105'])==6
+ assert discarded and all(d['discard_reason']=='variant_replayed_after_tpd_exhaustion' for d in discarded);assert not ({d['canonical_prompt_id'] for d in discarded}&{r['prompt_id'] for r in records if r['final_credential_slot']=='primary'});assert all(call[2]==body(next(p for p in recovery.selected_prompts() if p.prompt_id==call[1])) and call[3]==next(p.seed for p in recovery.selected_prompts() if p.prompt_id==call[1]) for call in factory.calls);assert json.loads((out/'recovery_summary.json').read_text())['all_variants_credential_homogeneous']
+def test_dual_tpd_fails_fast(tmp_path,monkeypatch):
+ patched_tokens(monkeypatch)
+ def behavior(slot,p,n):return False,429,None,json.dumps({'error':{'message':'TPD tokens per day exhausted'}}),.01
+ factory=Factory(behavior);out=tmp_path/'dual';assert recovery.execute(out,sleep=lambda _:None,client_factory=factory,environ=DUMMY)==1;summary=json.loads((out/'recovery_summary.json').read_text());assert summary['dual_account_tpd_exhausted'] and not summary['ready_for_consolidation'] and summary['scientific_inference'] is None and len(factory.calls)==2
+def test_workflow_secret_scope_and_nontriggering_commit():
+ assert "github.event.head_commit.message == 'Execute dual-account compositional recovery [experiment-v1.0.0]'" in WORKFLOW;assert 'Prepare dual-account compositional recovery [experiment-v1.0.0]' not in WORKFLOW;command='python -m btom_v2.run_decision_point_confirmatory_recovery_v1_0_0 --output-dir';assert WORKFLOW.count(command)==1 and WORKFLOW.index('python -m pytest -q')<WORKFLOW.index(command);execution=WORKFLOW[WORKFLOW.index('- name: Execute recovery batch once'):WORKFLOW.index('- uses: actions/upload-artifact@v4')];assert 'GROQ_API_KEY: ${{ secrets.GROQ_API_KEY }}' in execution and 'GROQ_API_KEY_SECONDARY: ${{ secrets.GROQ_API_KEY_SECONDARY }}' in execution;assert 'GROQ_API_KEY' not in WORKFLOW[:WORKFLOW.index('- name: Execute recovery batch once')];assert 'if: always()' in WORKFLOW

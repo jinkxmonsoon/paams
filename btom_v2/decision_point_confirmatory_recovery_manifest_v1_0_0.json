@@ -20,7 +20,43 @@
     "head_sha": "5fb8d3f792248aee4d19169ba290bd86a475243e",
     "run_id": 30392171393
   },
-  "collection_batch": "compositional_recovery_1",
+  "collection_batch": "compositional_recovery_2_dual_account",
+  "credential_routing": {
+    "assignment_independent_of_prior_outputs": true,
+    "credential_slots": [
+      "primary",
+      "secondary"
+    ],
+    "credential_values_or_hashes_recorded": false,
+    "policy": "prospectively_frozen_variant_level_assignment",
+    "tpd_failover_only": true,
+    "variant_assignment": {
+      "H1C0105": "primary",
+      "H1C0106": "secondary",
+      "H1C0205": "primary",
+      "H1C0206": "secondary",
+      "H1C0305": "primary",
+      "H1C0306": "secondary",
+      "H1C0405": "primary",
+      "H1C0406": "secondary",
+      "H1C0505": "primary",
+      "H1C0506": "secondary",
+      "H1C0605": "primary",
+      "H1C0606": "secondary",
+      "H2C0105": "primary",
+      "H2C0106": "secondary",
+      "H2C0205": "primary",
+      "H2C0206": "secondary",
+      "H2C0305": "primary",
+      "H2C0306": "secondary",
+      "H2C0405": "primary",
+      "H2C0406": "secondary",
+      "H2C0505": "primary",
+      "H2C0506": "secondary",
+      "H2C0605": "primary",
+      "H2C0606": "secondary"
+    }
+  },
   "dependencies": {
     "openai-harmony": "0.0.8",
     "pytest": "8.4.2",
@@ -3364,6 +3400,8 @@
     "cross_attempt_variant_assembly": false,
     "difficulty_batch_confound_acknowledged": true,
     "direct_source": "attempt_3",
+    "first_recovery_run_excluded": true,
+    "first_recovery_run_id": 30581466480,
     "irrelevant_distractor_source": "attempt_3",
     "previous_compositional_calls_discarded": true,
     "recovery_selection_based_only_on_technical_missingness": true,
