@@ -18,6 +18,12 @@ def dump(path,value):path.write_text(json.dumps(value,indent=2,sort_keys=True)+'
 def jsonl(path,values):path.write_text(''.join(json.dumps(v,sort_keys=True)+'\n' for v in values))
 def selected_prompts():return tuple(p for p in request_order() if p.difficulty=='compositional')
 def variant_assignment(manifest):return manifest['credential_routing']['variant_assignment']
+def sanitize(message,credentials=()):
+ text=str(message or '')
+ for secret in credentials:
+  if secret:text=text.replace(secret,'[REDACTED]')
+ for marker in ('GROQ_API_KEY_SECONDARY','GROQ_API_KEY','Authorization','Bearer '):text=text.replace(marker,'[REDACTED]')
+ return text[:500]
 def load_credentials(environ=None):
  env=os.environ if environ is None else environ;primary=env.get('GROQ_API_KEY');secondary=env.get('GROQ_API_KEY_SECONDARY')
  if not primary:raise RuntimeError('missing_primary_credential')
@@ -28,10 +34,7 @@ class RoutedClient(Client):
  def __init__(self,credential_slot,credential,all_credentials):
   self.credential_slot=credential_slot;self.api_key=credential;self._all_credentials=tuple(all_credentials);self.model='openai/gpt-oss-20b';self.client=None;self.transport='groq_rest_fallback'
  def _sanitize(self,message):
-  text=str(message or '')
-  for secret in self._all_credentials:text=text.replace(secret,'[REDACTED]')
-  for marker in ('Authorization','Bearer ','GROQ_API_KEY_SECONDARY','GROQ_API_KEY'):text=text.replace(marker,'[REDACTED]')
-  return text[:500]
+  return sanitize(message,self._all_credentials)
 def default_client_factory(slot,credential,all_credentials):return RoutedClient(slot,credential,all_credentials)
 def is_tpd_exhaustion(http_status,error_body):
  if http_status!=429:return False
@@ -106,7 +109,7 @@ def parse_transport(p,ok,status,payload,error,latency,original_ordinal,assigned_
 def execute(out:Path,sleep=time.sleep,client_factory=default_client_factory,environ=None):
  out.mkdir(parents=True,exist_ok=False)
  for name in OUTPUTS:(out/name).write_text('' if name.endswith('.jsonl') else '{}\n')
- final_records={};attempts=[];discarded=[];exhausted=set();failover_variants=set();failover_trigger=None;dual_exhausted=False;transport_failure=False;clients_constructed=False
+ final_records={};attempts=[];discarded=[];exhausted=set();failover_variants=set();failover_trigger=None;dual_exhausted=False;transport_failure=False;clients_constructed=False;credentials={}
  try:
   manifest=json.loads(MANIFEST.read_text());dump(out/'recovery_manifest_snapshot.json',manifest);dump(out/'recovery_immutable_input_hashes.json',immutable_hashes(manifest));full=request_order();prompts=selected_prompts();raw,harmony,versions=load_tokenizers(manifest);tokens=token_pair_audit(prompts,raw,harmony);audit=preclient_audit(manifest,full,prompts,tokens,client_constructed=False);credentials=load_credentials(environ);audit['checks']['dual_credentials_present']=True;audit['checks']['credentials_distinct']=True;audit['passed']=all(audit['checks'].values());dump(out/'recovery_prompt_audit.json',audit);dump(out/'recovery_token_pair_audit.json',tokens)
   if not audit['passed']:raise RuntimeError('pre-client recovery audit failed')
@@ -114,12 +117,13 @@ def execute(out:Path,sleep=time.sleep,client_factory=default_client_factory,envi
   for p in prompts:by_variant[p.variant_id].append(p)
   jsonl(out/'recovery_selected_scenarios.jsonl',[r for r in bank_records() if r['variant_id'] in by_variant]);jsonl(out/'recovery_selected_prompts.jsonl',[{'prompt_id':p.prompt_id,'prompt':p.prompt,'prompt_sha256':hashlib.sha256(p.prompt.encode()).hexdigest(),'seed':p.seed,'valid_actions':p.valid_actions} for p in prompts]);dump(out/'recovery_request_order.json',audit['selected_manifest_rows'])
   def attempt(p,slot):
+   if slot in exhausted:raise RuntimeError(f'exhausted_credential_slot_reuse:{slot}')
    if attempts:sleep(DELAY_SECONDS)
    ok,status,payload,error,latency=clients[slot].call(p);tpd=is_tpd_exhaustion(status,error);attempt={'transport_attempt_ordinal':len(attempts)+1,'canonical_prompt_id':p.prompt_id,'original_full_bank_ordinal':original_ordinals[p.prompt_id],'variant_id':p.variant_id,'assigned_credential_slot':assignment[p.variant_id],'attempted_credential_slot':slot,'final_credential_slot':None,'http_status':status,'sanitized_error_classification':api_error_classification(status,error),'confirmed_tpd_exhaustion':tpd,'discarded':False,'discard_reason':None,'latency':latency,'usage':(payload or {}).get('usage')};attempts.append(attempt);record=parse_transport(p,ok,status,payload,error,latency,original_ordinals[p.prompt_id],assignment[p.variant_id],slot,slot!=assignment[p.variant_id]);return attempt,record
-  def discard_variant(variant):
+  def discard_variant(variant,reason='variant_replayed_after_tpd_exhaustion'):
    for prior in attempts:
     if prior['variant_id']==variant and not prior['discarded'] and prior['canonical_prompt_id'] in final_records:
-     prior['discarded']=True;prior['discard_reason']='variant_replayed_after_tpd_exhaustion';prior['final_credential_slot']=None;discarded.append(dict(prior))
+     prior['discarded']=True;prior['discard_reason']=reason;prior['final_credential_slot']=None;discarded.append(dict(prior))
    for p in by_variant[variant]:final_records.pop(p.prompt_id,None)
   def replay_variant(variant,slot):
    nonlocal dual_exhausted
@@ -127,7 +131,7 @@ def execute(out:Path,sleep=time.sleep,client_factory=default_client_factory,envi
    for rp in by_variant[variant]:
     transport,record=attempt(rp,slot)
     if transport['confirmed_tpd_exhaustion']:
-     transport['discarded']=True;transport['discard_reason']='dual_account_tpd_exhausted';discarded.append(dict(transport));exhausted.add(slot);dual_exhausted=True;return False
+     transport['discarded']=True;transport['discard_reason']='dual_account_tpd_exhausted';discarded.append(dict(transport));exhausted.add(slot);discard_variant(variant,'dual_account_tpd_exhausted');dual_exhausted=True;return False
     transport['final_credential_slot']=slot;final_records[rp.prompt_id]=record
    return True
   for p in prompts:
@@ -137,10 +141,13 @@ def execute(out:Path,sleep=time.sleep,client_factory=default_client_factory,envi
    if transport['http_status']==403 and transport['sanitized_error_classification']=='cloudflare_1010_client_signature' and not any(r['http_success'] for r in final_records.values()):transport['discarded']=True;transport['discard_reason']='pre_inference_cloudflare_1010';discarded.append(dict(transport));transport_failure=True;break
    if transport['confirmed_tpd_exhaustion']:
     if failover_trigger is None:failover_trigger=transport['transport_attempt_ordinal']
-    exhausted.add(slot);transport['discarded']=True;transport['discard_reason']='variant_replayed_after_tpd_exhaustion';discarded.append(dict(transport));affected={p.variant_id}|{r['variant_id'] for r in final_records.values() if r['final_credential_slot']==slot and len([x for x in final_records.values() if x['variant_id']==r['variant_id']])<6}
+    exhausted.add(slot);alternative=other_slot(slot)
+    if alternative in exhausted:
+     transport['discarded']=True;transport['discard_reason']='dual_account_tpd_exhausted';discarded.append(dict(transport));discard_variant(p.variant_id,'dual_account_tpd_exhausted');dual_exhausted=True;break
+    transport['discarded']=True;transport['discard_reason']='variant_replayed_after_tpd_exhaustion';discarded.append(dict(transport));affected={p.variant_id}|{r['variant_id'] for r in final_records.values() if r['final_credential_slot']==slot and len([x for x in final_records.values() if x['variant_id']==r['variant_id']])<6}
     for variant in sorted(affected,key=lambda v:min(original_ordinals[x.prompt_id] for x in by_variant[v])):
      discard_variant(variant)
-     if not replay_variant(variant,other_slot(slot)):break
+     if not replay_variant(variant,alternative):break
     continue
    transport['final_credential_slot']=slot;final_records[p.prompt_id]=record
   records=[final_records[p.prompt_id] for p in prompts if p.prompt_id in final_records]
@@ -149,7 +156,7 @@ def execute(out:Path,sleep=time.sleep,client_factory=default_client_factory,envi
   final_slots={v:{r['final_credential_slot'] for r in records if r['variant_id']==v} for v in by_variant};homogeneous=all(len(slots)==1 for slots in final_slots.values()) and len(final_slots)==24;variants_by_slot=Counter(next(iter(slots)) for slots in final_slots.values() if len(slots)==1);routing={'variants_by_final_credential_slot':dict(variants_by_slot),'all_variants_credential_homogeneous':homogeneous,'failover_variants':sorted(failover_variants),'exhausted_credential_slots':sorted(exhausted)};dump(out/'credential_routing_summary.json',routing);dump(out/'tpd_failover_diagnostics.json',{'failover_count':len(failover_variants),'failover_trigger_ordinal':failover_trigger,'exhausted_credential_slot':next(iter(exhausted),None) if len(exhausted)==1 else None,'dual_account_tpd_exhausted':dual_exhausted,'discarded_transport_attempt_count':len(discarded)})
   operational='dual_account_tpd_exhausted' if dual_exhausted else ('transport_failure' if transport_failure else ('recovery_batch_complete' if len(records)==MAX_REQUESTS else 'runtime_failure'));summary={'operational_classification':operational,'source_commit':manifest['source_commit'],'collection_batch':COLLECTION_BATCH,'canonical_prompt_count':len(records),'transport_attempt_count':len(attempts),'canonical_complete_calls':sum(r['complete'] for r in records),'variants_by_final_credential_slot':dict(variants_by_slot),'failover_count':len(failover_variants),'failover_trigger_ordinal':failover_trigger,'exhausted_credential_slot':next(iter(exhausted),None) if len(exhausted)==1 else None,'dual_account_tpd_exhausted':dual_exhausted,'all_variants_credential_homogeneous':homogeneous,'previous_compositional_observations_excluded':True,'ready_for_consolidation':len(records)==144 and sum(technical['complete_variants_by_family'].values())==24 and homogeneous and not dual_exhausted,'scientific_inference':None,'final_confirmatory_analysis_not_performed':True,'total_usage':total_usage};dump(out/'recovery_summary.json',summary);return 0 if operational=='recovery_batch_complete' else 1
  except Exception as exc:
-  dump(out/'recovery_summary.json',{'operational_classification':'runtime_failure','collection_batch':COLLECTION_BATCH,'canonical_prompt_count':len(final_records),'transport_attempt_count':len(attempts),'error':str(exc),'previous_compositional_observations_excluded':True,'ready_for_consolidation':False,'scientific_inference':None,'final_confirmatory_analysis_not_performed':True});return 1
+  dump(out/'recovery_summary.json',{'operational_classification':'runtime_failure','collection_batch':COLLECTION_BATCH,'canonical_prompt_count':len(final_records),'transport_attempt_count':len(attempts),'error':sanitize(exc,credentials.values()),'previous_compositional_observations_excluded':True,'ready_for_consolidation':False,'scientific_inference':None,'final_confirmatory_analysis_not_performed':True});return 1
 def main():
  parser=argparse.ArgumentParser();parser.add_argument('--output-dir',required=True,type=Path);return execute(parser.parse_args().output_dir)
 if __name__=='__main__':raise SystemExit(main())

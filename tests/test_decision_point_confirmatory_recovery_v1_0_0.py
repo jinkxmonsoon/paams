@@ -50,5 +50,30 @@ def test_dual_tpd_fails_fast(tmp_path,monkeypatch):
  patched_tokens(monkeypatch)
  def behavior(slot,p,n):return False,429,None,json.dumps({'error':{'message':'TPD tokens per day exhausted'}}),.01
  factory=Factory(behavior);out=tmp_path/'dual';assert recovery.execute(out,sleep=lambda _:None,client_factory=factory,environ=DUMMY)==1;summary=json.loads((out/'recovery_summary.json').read_text());assert summary['dual_account_tpd_exhausted'] and not summary['ready_for_consolidation'] and summary['scientific_inference'] is None and len(factory.calls)==2
+@pytest.mark.parametrize(('first_slot','first_tpd_count','second_slot','second_tpd_count','expected_attempts'),[('primary',2,'secondary',20,22),('secondary',1,'primary',81,82)])
+def test_delayed_second_tpd_is_terminal_and_isolates_variant(tmp_path,monkeypatch,first_slot,first_tpd_count,second_slot,second_tpd_count,expected_attempts):
+ patched_tokens(monkeypatch);slot_counts={'primary':0,'secondary':0};exhausted_seen=set()
+ def behavior(slot,p,n):
+  assert slot not in exhausted_seen;slot_counts[slot]+=1
+  if slot==first_slot and slot_counts[slot]==first_tpd_count:exhausted_seen.add(slot);return False,429,None,json.dumps({'error':{'message':'tokens per day limit reached'}}),.01
+  if slot==second_slot and slot_counts[slot]==second_tpd_count:exhausted_seen.add(slot);return False,429,None,json.dumps({'error':{'message':'TPD quota exhausted'}}),.01
+  return True,200,success_payload(p),None,.01
+ factory=Factory(behavior);out=tmp_path/f'{first_slot}-then-{second_slot}';assert recovery.execute(out,sleep=lambda _:None,client_factory=factory,environ=DUMMY)==1
+ attempts=[json.loads(x) for x in (out/'transport_attempts.jsonl').read_text().splitlines()];discarded=[json.loads(x) for x in (out/'discarded_transport_attempts.jsonl').read_text().splitlines()];records=[json.loads(x) for x in (out/'recovery_call_records.jsonl').read_text().splitlines()];behavioral=[json.loads(x) for x in (out/'recovery_behavioral_results.jsonl').read_text().splitlines()];summary=json.loads((out/'recovery_summary.json').read_text())
+ assert len(attempts)==len(factory.calls)==expected_attempts and [a['attempted_credential_slot'] for a in attempts]==[c[0] for c in factory.calls];assert attempts[-1]['attempted_credential_slot']==second_slot and attempts[-1]['confirmed_tpd_exhaustion'];assert all(a['attempted_credential_slot']!=first_slot for a in attempts[next(i for i,a in enumerate(attempts) if a['attempted_credential_slot']==first_slot and a['confirmed_tpd_exhaustion'])+1:])
+ interrupted=attempts[-1]['variant_id'];terminal_discards=[d for d in discarded if d['variant_id']==interrupted and d['discard_reason']=='dual_account_tpd_exhausted'];assert len(terminal_discards)>=2 and attempts[-1]['canonical_prompt_id'] in {d['canonical_prompt_id'] for d in terminal_discards};assert interrupted not in {r['variant_id'] for r in records} and interrupted not in {r['variant_id'] for r in behavioral}
+ complete_groups={v:[r for r in records if r['variant_id']==v] for v in {r['variant_id'] for r in records}};assert any(len(rows)==6 and all(r['complete'] for r in rows) for rows in complete_groups.values());assert summary['dual_account_tpd_exhausted'] and not summary['ready_for_consolidation'] and summary['scientific_inference'] is None
+def test_outer_exceptions_redact_both_credentials(tmp_path,monkeypatch):
+ patched_tokens(monkeypatch)
+ def assert_clean(out):
+  artifact=''.join(p.read_text(errors='replace') for p in out.iterdir() if p.is_file());assert all(secret not in artifact for secret in DUMMY.values());assert '[REDACTED]' in json.loads((out/'recovery_summary.json').read_text())['error']
+ def bad_factory(slot,key,all_credentials):raise RuntimeError(f"Authorization Bearer {DUMMY['GROQ_API_KEY']} GROQ_API_KEY_SECONDARY={DUMMY['GROQ_API_KEY_SECONDARY']}")
+ factory_out=tmp_path/'factory-error';assert recovery.execute(factory_out,sleep=lambda _:None,client_factory=bad_factory,environ=DUMMY)==1;assert_clean(factory_out)
+ class RaisingFactory(Factory):
+  def __call__(self,slot,key,all_credentials):
+   class Client:
+    def call(self,p):raise RuntimeError(f"GROQ_API_KEY={DUMMY['GROQ_API_KEY']} Bearer {DUMMY['GROQ_API_KEY_SECONDARY']}")
+   return Client()
+ runtime_out=tmp_path/'runtime-error';assert recovery.execute(runtime_out,sleep=lambda _:None,client_factory=RaisingFactory(),environ=DUMMY)==1;assert_clean(runtime_out)
 def test_workflow_secret_scope_and_nontriggering_commit():
  assert "github.event.head_commit.message == 'Execute dual-account compositional recovery [experiment-v1.0.0]'" in WORKFLOW;assert 'Prepare dual-account compositional recovery [experiment-v1.0.0]' not in WORKFLOW;command='python -m btom_v2.run_decision_point_confirmatory_recovery_v1_0_0 --output-dir';assert WORKFLOW.count(command)==1 and WORKFLOW.index('python -m pytest -q')<WORKFLOW.index(command);execution=WORKFLOW[WORKFLOW.index('- name: Execute recovery batch once'):WORKFLOW.index('- uses: actions/upload-artifact@v4')];assert 'GROQ_API_KEY: ${{ secrets.GROQ_API_KEY }}' in execution and 'GROQ_API_KEY_SECONDARY: ${{ secrets.GROQ_API_KEY_SECONDARY }}' in execution;assert 'GROQ_API_KEY' not in WORKFLOW[:WORKFLOW.index('- name: Execute recovery batch once')];assert 'if: always()' in WORKFLOW
