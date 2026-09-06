@@ -45,13 +45,26 @@ def test_bad_credentials_abort_before_clients(tmp_path,monkeypatch,env,error):
  patched_tokens(monkeypatch);factory=Factory();out=tmp_path/error;assert recovery.execute(out,sleep=lambda _:None,client_factory=factory,environ=env)==1;assert factory.constructed==[];assert error in json.loads((out/'confirmatory_full_dual_summary.json').read_text())['error']
 def test_complete_dual_execution_and_secret_redaction(tmp_path,monkeypatch):
  patched_tokens(monkeypatch);factory=Factory();out=tmp_path/'complete';assert recovery.execute(out,sleep=lambda _:None,client_factory=factory,environ=DUMMY)==0;records=[json.loads(x) for x in (out/'confirmatory_full_dual_call_records.jsonl').read_text().splitlines()];summary=json.loads((out/'confirmatory_full_dual_summary.json').read_text());assert len(records)==len(factory.calls)==432 and len({r['prompt_id'] for r in records})==432;assert all(not r['credential_failover_used'] and r['assigned_credential_slot']==r['final_credential_slot'] for r in records);assert summary['ready_for_final_analysis'] and summary['canonical_complete_calls']==432 and summary['scientific_inference'] is None
- artifact=''.join(p.read_text(errors='replace') for p in out.iterdir() if p.is_file());assert all(secret not in artifact for secret in DUMMY.values())
+ artifact=''.join(p.read_text(errors='replace') for p in out.iterdir() if p.is_file())
+ for secret in DUMMY.values():
+  assert secret not in artifact and secret[:12] not in artifact
+  assert hashlib.sha256(secret.encode()).hexdigest() not in artifact
  assert [c[1] for c in factory.calls]==[p.prompt_id for p in request_order()]
  assert [c[2] for c in factory.calls]==[body(p) for p in request_order()]
  assert [c[3] for c in factory.calls]==[p.seed for p in request_order()]
  assert (out/'confirmatory_full_dual_analysis.json').is_file()
  analysis=json.loads((out/'confirmatory_full_dual_analysis.json').read_text())
  assert analysis['inferential_unit']=='variant' and analysis['credential_slot_diagnostic']['descriptive_only']
+ assert summary['operational_classification']=='full_confirmatory_batch_complete'
+ assert summary['canonical_prompt_count']==summary['canonical_complete_calls']==432
+ assert summary['complete_variants_by_family']=={'H1':36,'H2':36}
+ assert summary['all_variants_credential_homogeneous'] and sum(summary['variants_by_final_credential_slot'].values())==72
+ assignment_path=out/'confirmatory_full_dual_assignment.json';assert assignment_path.stat().st_size>2
+ assignment=json.loads(assignment_path.read_text())
+ assert assignment['collection_batch']==recovery.COLLECTION_BATCH
+ assert assignment['variant_assignment']==MANIFEST['credential_routing']['variant_assignment']
+ assert assignment['audit']['passed'] and assignment['assignment_independent_of_prior_outputs'] is True
+ assert not (out/'dual_account_assignment.json').exists()
 def test_tpd_replays_whole_variant_and_never_reuses_exhausted_slot(tmp_path,monkeypatch):
  patched_tokens(monkeypatch)
  def behavior(slot,p,n):
@@ -65,21 +78,30 @@ def test_dual_tpd_fails_fast(tmp_path,monkeypatch):
  factory=Factory(behavior);out=tmp_path/'dual';assert recovery.execute(out,sleep=lambda _:None,client_factory=factory,environ=DUMMY)==1;summary=json.loads((out/'confirmatory_full_dual_summary.json').read_text());assert summary['dual_account_tpd_exhausted'] and not summary['ready_for_final_analysis'] and summary['scientific_inference'] is None and len(factory.calls)==2
  assert not (out/'confirmatory_full_dual_analysis.json').exists()
 
-@pytest.mark.parametrize('failure',[
- (False,429,None,'generic rate limit',.01),
- (False,429,None,'RPM requests per minute',.01),
- (False,500,None,'server error',.01),
- (True,200,{'choices':[{'finish_reason':'length','message':{'content':'{}'}}]},None,.01),
+@pytest.mark.parametrize(('label','failure'),[
+ ('generic-429',(False,429,None,'generic rate limit',.01)),
+ ('rpm',(False,429,None,'RPM requests per minute',.01)),
+ ('rpd',(False,429,None,'RPD requests per day',.01)),
+ ('tpm',(False,429,None,'TPM tokens per minute',.01)),
+ ('itpm',(False,429,None,'ITPM limit',.01)),
+ ('otpm',(False,429,None,'OTPM limit',.01)),
+ ('http-500',(False,500,None,'server error',.01)),
+ ('finish-reason',(True,200,{'choices':[{'finish_reason':'length','message':{'content':'{"action":"wait","target":"none"}'}}]},None,.01)),
+ ('parse',(True,200,{'choices':[{'finish_reason':'stop','message':{'content':'not json'}}]},None,.01)),
+ ('illegal-action',(True,200,{'choices':[{'finish_reason':'stop','message':{'content':'{"action":"forbidden","target":"forbidden","message":"","reason":"mock"}'}}]},None,.01)),
 ])
-def test_non_tpd_and_behavioral_failures_never_fail_over(tmp_path,monkeypatch,failure):
+def test_non_tpd_and_behavioral_failures_never_fail_over(tmp_path,monkeypatch,label,failure):
  patched_tokens(monkeypatch)
  def behavior(slot,p,n):return failure if n==1 else (True,200,success_payload(p),None,.01)
- factory=Factory(behavior);out=tmp_path/str(abs(hash(str(failure))))
- assert recovery.execute(out,sleep=lambda _:None,client_factory=factory,environ=DUMMY)==0
+ factory=Factory(behavior);out=tmp_path/label
+ assert recovery.execute(out,sleep=lambda _:None,client_factory=factory,environ=DUMMY)==1
  attempts=[json.loads(x) for x in (out/'confirmatory_full_dual_transport_attempts.jsonl').read_text().splitlines()]
  assert len(attempts)==432 and not any(a['confirmed_tpd_exhaustion'] for a in attempts)
- assert attempts[0]['attempted_credential_slot']==attempts[2]['attempted_credential_slot']=='primary'
- assert not json.loads((out/'confirmatory_full_dual_summary.json').read_text())['ready_for_final_analysis']
+ assert all(a['attempted_credential_slot']==a['assigned_credential_slot'] for a in attempts)
+ summary=json.loads((out/'confirmatory_full_dual_summary.json').read_text())
+ assert summary['exhausted_credential_slots']==[] and summary['failover_count']==0
+ assert not summary['ready_for_final_analysis'] and summary['scientific_inference'] is None
+ assert summary['operational_classification']=='full_confirmatory_batch_incomplete'
  assert not (out/'confirmatory_full_dual_analysis.json').exists()
 
 def test_assignment_and_inputs_exclude_all_prior_behavior():
@@ -104,7 +126,11 @@ def test_delayed_second_tpd_is_terminal_and_isolates_variant(tmp_path,monkeypatc
 def test_outer_exceptions_redact_both_credentials(tmp_path,monkeypatch):
  patched_tokens(monkeypatch)
  def assert_clean(out):
-  artifact=''.join(p.read_text(errors='replace') for p in out.iterdir() if p.is_file());assert all(secret not in artifact for secret in DUMMY.values());assert '[REDACTED]' in json.loads((out/'confirmatory_full_dual_summary.json').read_text())['error']
+  artifact=''.join(p.read_text(errors='replace') for p in out.iterdir() if p.is_file())
+  for secret in DUMMY.values():
+   assert secret not in artifact and secret[:12] not in artifact
+   assert hashlib.sha256(secret.encode()).hexdigest() not in artifact
+  assert '[REDACTED]' in json.loads((out/'confirmatory_full_dual_summary.json').read_text())['error']
  def bad_factory(slot,key,all_credentials):raise RuntimeError(f"Authorization Bearer {DUMMY['GROQ_API_KEY']} GROQ_API_KEY_SECONDARY={DUMMY['GROQ_API_KEY_SECONDARY']}")
  factory_out=tmp_path/'factory-error';assert recovery.execute(factory_out,sleep=lambda _:None,client_factory=bad_factory,environ=DUMMY)==1;assert_clean(factory_out)
  class RaisingFactory(Factory):
