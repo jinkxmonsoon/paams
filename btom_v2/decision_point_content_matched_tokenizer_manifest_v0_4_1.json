@@ -1,0 +1,105 @@
+{
+  "calibration_version": "btom-v2-decision-point-content-matched-tokenizer-0.4.1",
+  "status": "tokenizer_only_no_model_execution",
+  "technical_hypothesis": "T-CAL-2",
+  "parent_provenance": {
+    "content_matched_design": "btom-v2-decision-point-content-matched-control-0.4.0-mock-only",
+    "parent_remote_commit": "6859de40d1f6b9d8af2a7a033511f20fb1716a4d",
+    "previous_wording_selection_run_id": 30314244024,
+    "previous_artifact_digest": "a60522e420091acc164a122552dd88a86eedf604888afb8ed10710bf5bd3baff",
+    "previous_classification": "no_candidate"
+  },
+  "immutable_parent_sha256": {
+    "btom_v2/decision_point_content_matched_control_manifest_v0_4_0.json": "5a45397e0d420e188b86b2520bc3a701e4dd3e84c6aa4d6d2508b821937999b6",
+    "btom_v2/decision_point_content_matched_control_prompting_v0_4_0.py": "ab9c6b01308df15560db4be1a735bb5cef31a101942ff79431b38ce6b0733ccf",
+    "btom_v2/decision_point_content_matched_control_design_v0_4_0.md": "581d1e769c792365e8c89dff48093de9af788fc145365d7e6b984e8f66d62c27",
+    "tests/test_decision_point_content_matched_control_v0_4_0.py": "4cc27164df30ac9664807e564b65c57e32c6a3f01b24e64052a05c1c12172e5c",
+    "btom_v2/decision_point_natural_control_prompting_v0_3_0.py": "08df09f8e5d950f0fde422993133ca59e40362bcd06ba799446951a5701c1961",
+    "btom_v2/decision_point_scenarios.py": "e7a936cca701356dc2f9a5c8ab9621b5e593af932b854afe4c9a146acf1994f5"
+  },
+  "python_version": "3.11",
+  "dependencies": {
+    "tiktoken": "0.13.0",
+    "openai-harmony": "0.0.8",
+    "pytest": "8.4.2"
+  },
+  "tokenizer_layout": {
+    "raw_tokenizer": "o200k_harmony",
+    "harmony_encoding": "HARMONY_GPT_OSS",
+    "system_messages": 0,
+    "developer_messages": 0,
+    "user_messages": 1,
+    "assistant_generation_prefix": true
+  },
+  "prompt_population": {
+    "DP5": 6,
+    "DP7": 10,
+    "total": 16
+  },
+  "primary_contrasts": {
+    "H1": {
+      "formula": "explicit_self_belief minus matched_decision_record",
+      "cases": [
+        "DP5a",
+        "DP5b"
+      ]
+    },
+    "H2": {
+      "formula": "self_belief_plus_partner_belief minus self_belief_plus_message_record",
+      "cases": [
+        "DP7a",
+        "DP7b"
+      ]
+    }
+  },
+  "interaction_formulas": {
+    "H1": "(explicit_self_belief(DP5a) - explicit_self_belief(DP5b)) - (matched_decision_record(DP5a) - matched_decision_record(DP5b))",
+    "H2": "(self_belief_plus_partner_belief(DP7a) - self_belief_plus_partner_belief(DP7b)) - (self_belief_plus_message_record(DP7a) - self_belief_plus_message_record(DP7b))"
+  },
+  "exact_parity_criteria": [
+    "H1_DP5a_raw == 0",
+    "H1_DP5a_Harmony == 0",
+    "H1_DP5b_raw == 0",
+    "H1_DP5b_Harmony == 0",
+    "H2_DP7a_raw == 0",
+    "H2_DP7a_Harmony == 0",
+    "H2_DP7b_raw == 0",
+    "H2_DP7b_Harmony == 0",
+    "H1_interaction_raw == 0",
+    "H1_interaction_Harmony == 0",
+    "H2_interaction_raw == 0",
+    "H2_interaction_Harmony == 0",
+    "all_structural_audits_passed"
+  ],
+  "tolerance_threshold": null,
+  "classification_rules": {
+    "exact_primary_token_parity": {
+      "exit_code": 0,
+      "meaning": "completed; all twelve token criteria are zero and structural audits passed"
+    },
+    "nonzero_primary_token_difference": {
+      "exit_code": 0,
+      "meaning": "completed; at least one raw or Harmony criterion is nonzero"
+    },
+    "runtime_failure": {
+      "exit_code": 1,
+      "meaning": "measurement could not complete"
+    }
+  },
+  "block_only_harmony_warning": "Diagnostic only: block-only Harmony counts include their own Harmony conversation envelope and must not reconstruct complete-prompt counts.",
+  "wording_search_authorized": false,
+  "prompt_modification_authorized": false,
+  "candidate_generation_authorized": false,
+  "filler_authorized": false,
+  "padding_authorized": false,
+  "model_or_api_execution": false,
+  "real_execution_authorized": false,
+  "interpretation_constraint": "This tokenizer-only measurement does not test H1a, H1b, H2, Theory of Mind, coordination, autonomous planning or model cognition. Exact token parity does not establish semantic equivalence, cognitive neutrality or use of an internal belief mechanism.",
+  "parent_test_amendment": {
+    "file": "tests/test_decision_point_content_matched_control_v0_4_0.py",
+    "reason": "Scoped an obsolete repository-global no-workflow assertion to the v0.4.0 design workflow only.",
+    "scientific_inputs_changed": false,
+    "prompt_content_changed": false,
+    "scenario_content_changed": false
+  }
+}

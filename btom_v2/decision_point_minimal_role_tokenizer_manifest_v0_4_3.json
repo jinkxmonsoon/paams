@@ -1,0 +1,83 @@
+{
+  "calibration_version": "btom-v2-decision-point-minimal-role-tokenizer-0.4.3",
+  "status": "tokenizer_only_no_model_execution",
+  "technical_hypothesis": "T-CAL-3",
+  "parent_provenance": {
+    "minimal_role_design": "btom-v2-decision-point-minimal-role-control-0.4.2-mock-only",
+    "parent_remote_commit": "ae4178356ba862e8a42b959f3977eb618f4e3625",
+    "previous_tokenizer_run_id": 30324745794,
+    "previous_artifact_digest": "cd5db13efff3633b8f6ca338590af41f7cc39d6d4d4269d4376ebc27d5a42951",
+    "previous_classification": "nonzero_primary_token_difference"
+  },
+  "immutable_parent_sha256": {
+    "btom_v2/decision_point_minimal_role_control_manifest_v0_4_2.json": "73786ac184545ffaec749fcda195c68ceb17404ff890a5849b989f3b068c6318",
+    "btom_v2/decision_point_minimal_role_control_prompting_v0_4_2.py": "0557df5c97efcf2bf4176f7c6ca36ea2202f18735bc1e6eed44807034894ec68",
+    "btom_v2/decision_point_minimal_role_control_design_v0_4_2.md": "818c79a7f3148f542161e0e48cc8ee033f9560de147850f93039c57825910f4a",
+    "tests/test_decision_point_minimal_role_control_v0_4_2.py": "03dc6920f8516af04a05a0e92a18a61dc78bee02f41caca52d2730648521e477",
+    "btom_v2/decision_point_content_matched_control_manifest_v0_4_0.json": "5a45397e0d420e188b86b2520bc3a701e4dd3e84c6aa4d6d2508b821937999b6",
+    "btom_v2/decision_point_content_matched_control_prompting_v0_4_0.py": "ab9c6b01308df15560db4be1a735bb5cef31a101942ff79431b38ce6b0733ccf",
+    "btom_v2/decision_point_content_matched_control_design_v0_4_0.md": "581d1e769c792365e8c89dff48093de9af788fc145365d7e6b984e8f66d62c27",
+    "btom_v2/decision_point_natural_control_prompting_v0_3_0.py": "08df09f8e5d950f0fde422993133ca59e40362bcd06ba799446951a5701c1961",
+    "btom_v2/decision_point_scenarios.py": "e7a936cca701356dc2f9a5c8ab9621b5e593af932b854afe4c9a146acf1994f5"
+  },
+  "python_version": "3.11",
+  "dependencies": {
+    "tiktoken": "0.13.0",
+    "openai-harmony": "0.0.8",
+    "pytest": "8.4.2"
+  },
+  "tokenizer_layout": {
+    "raw_tokenizer": "o200k_harmony",
+    "harmony_encoding": "HARMONY_GPT_OSS",
+    "system_messages": 0,
+    "developer_messages": 0,
+    "user_messages": 1,
+    "assistant_generation_prefix": true
+  },
+  "prompt_population": {
+    "DP5": 6,
+    "DP7": 10,
+    "total": 16
+  },
+  "role_values": {
+    "reference": "record",
+    "treatment": "belief"
+  },
+  "contrasts": {
+    "H1": {
+      "treatment": "explicit_self_belief",
+      "reference": "matched_decision_record",
+      "cases": [
+        "DP5a_self_belief_false",
+        "DP5b_self_belief_current"
+      ],
+      "primary_formula": "treatment minus reference",
+      "interaction_formula": "[explicit_self_belief(DP5a)-explicit_self_belief(DP5b)]-[matched_decision_record(DP5a)-matched_decision_record(DP5b)]"
+    },
+    "H2": {
+      "treatment": "self_belief_plus_partner_belief",
+      "reference": "self_belief_plus_message_record",
+      "cases": [
+        "DP7a_partner_belief_stale",
+        "DP7b_partner_belief_current"
+      ],
+      "primary_formula": "treatment minus reference",
+      "interaction_formula": "[self_belief_plus_partner_belief(DP7a)-self_belief_plus_partner_belief(DP7b)]-[self_belief_plus_message_record(DP7a)-self_belief_plus_message_record(DP7b)]"
+    }
+  },
+  "acceptance_vector_length": 12,
+  "classification_exit_codes": {
+    "exact_primary_token_parity": 0,
+    "nonzero_primary_token_difference": 0,
+    "runtime_failure": 1
+  },
+  "tolerance_threshold": null,
+  "wording_search_authorized": false,
+  "prompt_modification_authorized": false,
+  "candidate_generation_authorized": false,
+  "filler_authorized": false,
+  "padding_authorized": false,
+  "model_or_api_execution": false,
+  "real_execution_authorized": false,
+  "interpretation_constraint": "This tokenizer-only measurement does not test H1a, H1b, H2, Theory of Mind, coordination, autonomous planning or model cognition. Exact token-count parity does not establish semantic equivalence, cognitive neutrality or use of an internal belief mechanism."
+}

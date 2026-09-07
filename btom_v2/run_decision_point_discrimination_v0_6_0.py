@@ -1,0 +1,93 @@
+"""Execute the prospectively frozen v0.6.0 discrimination experiment."""
+from __future__ import annotations
+import argparse,hashlib,importlib.metadata,json,os,platform,sys,time,urllib.error,urllib.request
+from collections import Counter
+from pathlib import Path
+from .action_parser import parse_action
+from .budget import BudgetTracker
+from .decision_point_discriminative_prompting_v0_6_0 import audit_prompts,frozen_order
+from .decision_point_discriminative_scenarios_v0_6_0 import SCENARIO_BY_KEY,classify
+from .real_llm_clients import GroqClient
+ROOT=Path(__file__).resolve().parents[1]; MANIFEST=Path(__file__).with_name('decision_point_discrimination_manifest_v0_6_0.json')
+MAX_REQUESTS=48; DELAY_SECONDS=15; RETRIES=0; MODEL='openai/gpt-oss-20b'
+USER_AGENT='Mozilla/5.0 (compatible; BToM-MAS/0.6.0; +https://github.com/jinkxmonsoon/paams)'
+REQUEST_HEADER_NAMES=('Accept','Authorization','Content-Type','User-Agent')
+OUTPUTS={'discrimination_summary.json','call_records.jsonl','raw_api_responses.jsonl','behavioral_results.jsonl','reference_gate_by_variant.json','family_discrimination_gates.json','treatment_exploratory_diagnostics.json','saturation_diagnostics.json','prompt_and_token_audit.json','immutable_input_hashes.json','execution_environment.json'}
+def dump(path,v): path.write_text(json.dumps(v,indent=2,sort_keys=True)+'\n')
+def jsonl(path,v): path.write_text(''.join(json.dumps(x,sort_keys=True)+'\n' for x in v))
+def verify(m):
+ r={p:{'expected':h,'actual':hashlib.sha256((ROOT/p).read_bytes()).hexdigest()} for p,h in m['immutable_parent_sha256'].items()}
+ if any(x['expected']!=x['actual'] for x in r.values()): raise RuntimeError('immutable input failure')
+ return r
+def schema(prompt):
+ actions=sorted({a for a,_ in prompt.valid_actions}); targets=sorted({t for _,t in prompt.valid_actions})
+ return {'type':'json_schema','json_schema':{'name':'scenario_action','strict':True,'schema':{'type':'object','properties':{'action':{'type':'string','enum':actions},'target':{'type':'string','enum':targets},'message':{'type':'string'},'reason':{'type':'string'}},'required':['action','target','message','reason'],'additionalProperties':False}}}
+def body(prompt): return {'model':MODEL,'messages':[{'role':'user','content':prompt.prompt}],'temperature':0,'top_p':1,'max_completion_tokens':1024,'reasoning_effort':'low','include_reasoning':False,'response_format':schema(prompt),'stream':False}
+def load_tokenizers(m):
+ import tiktoken
+ from openai_harmony import Conversation,HarmonyEncodingName,Message,Role,load_harmony_encoding
+ versions={x:importlib.metadata.version(x) for x in ('tiktoken','openai-harmony','pytest')}
+ if versions!=m['dependencies']: raise RuntimeError('dependency mismatch')
+ raw=tiktoken.get_encoding('o200k_harmony'); harmony=load_harmony_encoding(HarmonyEncodingName.HARMONY_GPT_OSS)
+ def enc(text): return list(harmony.render_conversation_for_completion(Conversation.from_messages([Message.from_role_and_content(Role.USER,text)]),Role.ASSISTANT))
+ return raw.encode,enc,versions
+class Client(GroqClient):
+ def __init__(self): super().__init__(MODEL); self.client=None; self.transport='groq_rest_fallback'
+ def call(self,prompt):
+  req=urllib.request.Request(self.endpoint,data=json.dumps(body(prompt)).encode(),headers={'Authorization':'Bearer '+self.api_key,'Content-Type':'application/json','Accept':'application/json','User-Agent':USER_AGENT},method='POST'); start=time.time()
+  try:
+   with urllib.request.urlopen(req,timeout=120) as r: return True,r.status,json.loads(r.read()),None,time.time()-start
+  except urllib.error.HTTPError as e: return False,e.code,None,self._sanitize(e.read().decode(errors='replace')),time.time()-start
+  except Exception as e: return False,None,None,self._sanitize(str(e)),time.time()-start
+def token_audit(prompts,raw,harmony):
+ records=[]; by={(p.family,p.variant,p.state,p.condition):p for p in prompts}
+ for family,ref,tr in (('H1','matched_decision_record','explicit_self_belief'),('H2','self_belief_plus_message_record','self_belief_plus_partner_belief')):
+  for variant in range(1,5):
+   for state in ('stale','current'):
+    a,b=by[(family,f'{family}V{variant}',state,ref)],by[(family,f'{family}V{variant}',state,tr)]
+    records.append({'family':family,'variant':variant,'state':state,'raw_parity':len(raw(a.prompt))==len(raw(b.prompt)),'harmony_parity':len(harmony(a.prompt))==len(harmony(b.prompt))})
+ structural=audit_prompts(); return {'structural':structural,'pair_token_audits':records,'all_token_parity':all(r['raw_parity'] and r['harmony_parity'] for r in records)}
+def gate(records):
+ by={(r['family'],r['variant'],r['epistemic_state'],r['condition']):r for r in records}; rows=[]
+ for family,reference in (('H1','matched_decision_record'),('H2','self_belief_plus_message_record')):
+  for i in range(1,5):
+   stale,current=by[(family,f'{family}V{i}','stale',reference)],by[(family,f'{family}V{i}','current',reference)]
+   complete=all(x['http_success'] and x['finish_reason']=='stop' and x['parse_success'] and x['legal_action'] for x in (stale,current))
+   passed=complete and ((stale['classification']=='representation_consistent_action' and current['classification']=='representation_consistent_action' and (stale['action'],stale['target'])!=(current['action'],current['target'])) if family=='H1' else (stale['classification']=='necessary_correction' and current['classification']=='appropriate_progress'))
+   rows.append({'family':family,'variant':i,'reference_condition':reference,'complete':complete,'passed':passed})
+ return rows
+def exploratory_pairs(records):
+ by={(r['family'],r['variant'],r['epistemic_state'],r['condition']):r for r in records}; rows=[]
+ for family,reference,treatment in (('H1','matched_decision_record','explicit_self_belief'),('H2','self_belief_plus_message_record','self_belief_plus_partner_belief')):
+  for i in range(1,5):
+   for state in ('stale','current'):
+    ref,tr=by[(family,f'{family}V{i}',state,reference)],by[(family,f'{family}V{i}',state,treatment)]; covered=all(x['http_success'] and x['finish_reason']=='stop' and x['parse_success'] and x['legal_action'] for x in (ref,tr))
+    rows.append({'family':family,'variant':i,'state':state,'reference_action':{'action':ref['action'],'target':ref['target']} if ref['legal_action'] else None,'treatment_action':{'action':tr['action'],'target':tr['target']} if tr['legal_action'] else None,'same_action':(ref['action'],ref['target'])==(tr['action'],tr['target']) if covered else None,'different_action':(ref['action'],ref['target'])!=(tr['action'],tr['target']) if covered else None,'reference_classification':ref['classification'],'treatment_classification':tr['classification'],'technical_coverage':covered,'used_in_scenario_gate':False})
+ return {'descriptive_only':True,'treatment_used_in_gate':False,'pairs':rows}
+def cloudflare_1010(status,error,http_success_count): return status==403 and '1010' in (error or '') and http_success_count==0
+def execution_classification(records,transport_failed=False):
+ successes=sum(r['http_success'] for r in records)
+ if transport_failed:return 'transport_failure'
+ if len(records)==MAX_REQUESTS and successes>0:return 'experiment_complete'
+ return 'runtime_failure'
+def run_diagnostics(records,gates):
+ return {'requests_attempted':len(records),'http_success_count':sum(r['http_success'] for r in records),'http_403_count':sum(r['http_status']==403 for r in records),'http_429_count':sum(r['http_status']==429 for r in records),'parse_success_count':sum(r['parse_success'] for r in records),'legal_action_count':sum(r['legal_action'] for r in records),'complete_reference_variants':sum(r['complete'] for r in gates),'scientifically_interpretable':any(r['complete'] for r in gates)}
+def execute(out:Path,sleep=time.sleep,client_factory=Client):
+ out.mkdir(parents=True,exist_ok=False)
+ for n in OUTPUTS: (out/n).write_text('' if n.endswith('.jsonl') else '{}\n')
+ try:
+  m=json.loads(MANIFEST.read_text()); dump(out/'immutable_input_hashes.json',verify(m)); prompts=frozen_order(); raw,harmony,versions=load_tokenizers(m); audit=token_audit(prompts,raw,harmony); dump(out/'prompt_and_token_audit.json',audit)
+  if len(prompts)!=48 or not audit['structural']['all_content_matched'] or not audit['all_token_parity'] or not audit['structural']['semantic_audit_passed']: raise RuntimeError('prompt audit failed')
+  client=client_factory(); records=[]; transport_failed=False
+  for ordinal,p in enumerate(prompts,1):
+   if ordinal>1:sleep(DELAY_SECONDS)
+   ok,status,payload,error,latency=client.call(p); choice=(payload.get('choices') or [{}])[0] if payload else {}; content=((choice.get('message') or {}).get('content')); parsed=parse_action(content,[{'action':a,'target':t} for a,t in p.valid_actions],BudgetTracker(),None) if ok and content else None; success=bool(parsed and parsed['parse_success']); scenario=SCENARIO_BY_KEY[(p.family,p.variant,p.state)]; legal=success and (parsed['action'],parsed['target']) in p.valid_actions
+   records.append({'ordinal':ordinal,'variant':p.variant,'family':p.family,'epistemic_state':p.state,'condition':p.condition,'complete_prompt':p.prompt,'prompt_sha256':hashlib.sha256(p.prompt.encode()).hexdigest(),'raw_token_count':len(raw(p.prompt)),'harmony_token_count':len(harmony(p.prompt)),'request_body':body(p),'raw_api_response':payload,'http_success':ok,'http_status':status,'finish_reason':choice.get('finish_reason') or 'none','parse_success':success,'parser_error_type':parsed['parser_error_type'] if parsed else None,'action':parsed['action'] if legal else None,'target':parsed['target'] if legal else None,'legal_action':legal,'classification':classify(scenario,parsed['action'],parsed['target']) if legal else None,'latency':latency,'usage':payload.get('usage') if payload else None,'rate_limit_error':status==429,'api_error':error,'fallback_counted_as_behavior':False})
+   if cloudflare_1010(status,error,sum(r['http_success'] for r in records)):
+    transport_failed=True; break
+  gates=gate(records) if len(records)==MAX_REQUESTS else []; family={f:{'reference_variants_passing':sum(r['passed'] for r in gates if r['family']==f),'passes':sum(r['passed'] for r in gates if r['family']==f)>=3,'threshold':'3/4','reference_only':True} for f in ('H1','H2')}; distributions=dict(Counter(f"{r['family']}:{r['condition']}:{r['action']}:{r['target']}" for r in records)); saturation={'action_distributions':distributions,'constant_action_cells':[k for k,v in distributions.items() if v>=2],'finish_reason_counts':dict(Counter(r['finish_reason'] for r in records))}; diagnostics=run_diagnostics(records,gates); classification_name=execution_classification(records,transport_failed)
+  jsonl(out/'call_records.jsonl',records); jsonl(out/'raw_api_responses.jsonl',[{'ordinal':r['ordinal'],'raw_api_response':r['raw_api_response']} for r in records]); jsonl(out/'behavioral_results.jsonl',[{k:r[k] for k in ('ordinal','family','variant','epistemic_state','condition','action','target','classification','legal_action','fallback_counted_as_behavior')} for r in records]); dump(out/'reference_gate_by_variant.json',gates); dump(out/'family_discrimination_gates.json',family); dump(out/'treatment_exploratory_diagnostics.json',exploratory_pairs(records) if len(records)==MAX_REQUESTS else {'descriptive_only':True,'treatment_used_in_gate':False,'pairs':[]}); dump(out/'saturation_diagnostics.json',saturation); dump(out/'execution_environment.json',{'python':sys.version,'platform':platform.platform(),'versions':versions,'user_agent':USER_AGENT,'request_header_names':list(REQUEST_HEADER_NAMES),'authorization_value_recorded':False}); dump(out/'discrimination_summary.json',{'classification':classification_name,**diagnostics,'transport_failure_reason':'cloudflare_1010_client_signature' if transport_failed else None,'family_gates':family,'scientific_inference':None}); return 0 if classification_name=='experiment_complete' else 1
+ except Exception as e: dump(out/'discrimination_summary.json',{'classification':'runtime_failure','error':str(e),'scientific_inference':None}); return 1
+def main():
+ p=argparse.ArgumentParser();p.add_argument('--output-dir',type=Path,required=True);return execute(p.parse_args().output_dir)
+if __name__=='__main__':raise SystemExit(main())

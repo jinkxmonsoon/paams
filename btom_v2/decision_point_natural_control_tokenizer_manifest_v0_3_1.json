@@ -1,0 +1,62 @@
+{
+  "calibration_version": "btom-v2-decision-point-natural-control-tokenizer-0.3.1",
+  "status": "tokenizer_only_no_model_execution",
+  "parent_protocol": "btom-v2-decision-point-natural-control-design-0.3.0-mock-only",
+  "parent_remote_commit": "6e4a00395bd7912bdbb27e9373526dd1c548599c",
+  "parent_placebo_run_id": 30068749379,
+  "parent_placebo_artifact_sha256": "fc03352ad8fadb3faf32e8fe52e238dfb065e6ffe17e906145aa4ecb5f17f390",
+  "immutable_parent_sha256": {
+    "btom_v2/decision_point_natural_control_manifest_v0_3_0.json": "c39b2997282561bdacffa4e6b55e8d26062901e67ce4596a658b569276375549",
+    "btom_v2/decision_point_natural_control_prompting_v0_3_0.py": "08df09f8e5d950f0fde422993133ca59e40362bcd06ba799446951a5701c1961",
+    "btom_v2/decision_point_natural_control_design_v0_3_0.md": "c4c3fbc1de8c4e13af89d56cc5077ab88edac95e7e1edec0f54391a88180d8e4",
+    "btom_v2/decision_point_prompting_v0_2_1.py": "a2a6140e4e7676187c589a7e10c61fc6ff1b96f5aa0ba90258d54bb265e8b80f",
+    "btom_v2/decision_point_prompt_protocol_v0_2_1.json": "9acec8dba50f0e33082cb8b0b238b8f4d27875b6ee4382fdee7c7e4ea806e8f7",
+    "btom_v2/decision_point_scenarios.py": "e7a936cca701356dc2f9a5c8ab9621b5e593af932b854afe4c9a146acf1994f5"
+  },
+  "provider": "Groq",
+  "model": "openai/gpt-oss-20b",
+  "python_version": "3.11",
+  "dependencies": {
+    "tiktoken": "0.13.0",
+    "openai-harmony": "0.0.8",
+    "pytest": "8.4.2"
+  },
+  "tokenizer_layout": {
+    "raw_tokenizer": "o200k_harmony",
+    "harmony_encoding": "HARMONY_GPT_OSS",
+    "system_messages": 0,
+    "developer_messages": 0,
+    "user_messages": 1,
+    "assistant_generation_prefix": true
+  },
+  "required_prompt_population": {"DP5": 6, "DP7": 10, "total": 16},
+  "primary_contrasts": {
+    "H1": {
+      "informative_condition": "explicit_first_order",
+      "reference_condition": "operational_metadata_reference",
+      "cases": ["DP5a_self_belief_false", "DP5b_self_belief_current"]
+    },
+    "H2": {
+      "informative_condition": "explicit_second_order",
+      "reference_condition": "first_order_plus_message_provenance",
+      "cases": ["DP7a_partner_belief_stale", "DP7b_partner_belief_current"]
+    }
+  },
+  "interaction_diagnostics": {
+    "H1": "(explicit DP5a - explicit DP5b) - (operational DP5a - operational DP5b)",
+    "H2": "(explicit-second DP7a - explicit-second DP7b) - (message-provenance DP7a - message-provenance DP7b)",
+    "measures": ["raw_tokens", "harmony_tokens", "characters", "utf8_bytes"]
+  },
+  "tolerance_threshold": null,
+  "prompt_search_authorized": false,
+  "prompt_optimization_authorized": false,
+  "padding_authorized": false,
+  "classification_rules": {
+    "exact_primary_token_parity": "Every primary raw and Harmony delta and both raw and Harmony interaction-token differentials are zero, with all structural audits passed.",
+    "nonzero_primary_token_difference": "The structural audit completed and at least one primary or interaction raw or Harmony token delta is nonzero.",
+    "runtime_failure": "An immutable-input, dependency, prompt-population, audit, rendering, or measurement failure prevented completion."
+  },
+  "primary_estimand_warning": "Main effects of explicit versus metadata conditions are not independently interpretable as pure epistemic effects. Future scientific inference must be based primarily on preregistered case-by-condition interactions.",
+  "real_execution_authorized": false,
+  "interpretation_constraint": "This tokenizer-only measurement does not test H1a, H1b, H2, Theory of Mind, coordination, autonomous planning, or model cognition."
+}

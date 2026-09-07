@@ -1,0 +1,116 @@
+{
+  "calibration_version": "btom-v2-decision-point-natural-wording-selection-0.3.3",
+  "status": "tokenizer_only_no_model_execution",
+  "technical_hypothesis": "T-CAL-1: at least one of the 1,296 frozen candidates satisfies every exact-parity criterion.",
+  "parent_provenance": {
+    "wording_bank": "btom-v2-decision-point-natural-wording-bank-0.3.2-mock-only",
+    "parent_remote_commit": "b648e29fe73dbb5357777eb5d033fd7dab7fcf61",
+    "tokenizer_measurement": "btom-v2-decision-point-natural-control-tokenizer-0.3.1",
+    "tokenizer_measurement_run_id": 30311773726,
+    "tokenizer_measurement_artifact_digest": "5210d8efb69d9dd74265bff6d80a6556ac66fe9bbe63ec8cd86c22db9d4aea2c",
+    "tokenizer_measurement_classification": "nonzero_primary_token_difference"
+  },
+  "immutable_parent_sha256": {
+    "btom_v2/decision_point_natural_wording_bank_manifest_v0_3_2.json": "b45ef198b4ab8ab003a47247301834a0321e77ed87f0ee1ce12da078dd825cc5",
+    "btom_v2/decision_point_natural_wording_bank_v0_3_2.py": "48f3d2a45a971eb5610e03ea3bac42c086d555783dda3762e1db597b45072373",
+    "btom_v2/decision_point_natural_wording_bank_design_v0_3_2.md": "d112ea743d9d413c64d575261f89915cf8a813f17d4ec262302821b2dc5516be",
+    "tests/test_decision_point_natural_wording_bank_v0_3_2.py": "3a66db3e6ea208bdcc0e3dfd7fc4ff37a2c4bd90fd3d777009934c11a05deb0d",
+    "btom_v2/decision_point_natural_control_prompting_v0_3_0.py": "08df09f8e5d950f0fde422993133ca59e40362bcd06ba799446951a5701c1961",
+    "btom_v2/decision_point_scenarios.py": "e7a936cca701356dc2f9a5c8ab9621b5e593af932b854afe4c9a146acf1994f5"
+  },
+  "python_version": "3.11",
+  "dependencies": {
+    "tiktoken": "0.13.0",
+    "openai-harmony": "0.0.8",
+    "pytest": "8.4.2"
+  },
+  "tokenizer_layout": {
+    "raw_tokenizer": "o200k_harmony",
+    "harmony_encoding": "HARMONY_GPT_OSS",
+    "system_messages": 0,
+    "developer_messages": 0,
+    "user_messages": 1,
+    "assistant_generation_prefix": true
+  },
+  "candidate_population": {
+    "required_candidates": 1296,
+    "required_unique_ids": 1296,
+    "prompts_per_candidate": 16,
+    "required_diagnostics": 1296,
+    "candidate_source": "direct import from amended v0.3.2 bank",
+    "candidate_generation_authorized": false,
+    "prompt_modification_authorized": false
+  },
+  "structural_audit_requirements": {
+    "candidate_sets_audited": 1296,
+    "prompts_audited": 20736,
+    "candidate_sets_failed": 0,
+    "failed_candidate_ids": [],
+    "section_order_frozen": true,
+    "field_names_frozen": true,
+    "field_order_frozen": true,
+    "field_counts_frozen": true,
+    "line_counts_frozen": true,
+    "permitted_replacement_boundary_passed": true,
+    "raw_messages_frozen": true,
+    "valid_actions_frozen": true,
+    "DP7_evidence_exactly_once": true,
+    "source_message_absent": true,
+    "hidden_scoring_condition_leaks": 0,
+    "filler_padding_arbitrary_code_absent": true
+  },
+  "primary_contrast_formulas": {
+    "H1_DP5a": "explicit_first_order(DP5a) - operational_metadata_reference(DP5a)",
+    "H1_DP5b": "explicit_first_order(DP5b) - operational_metadata_reference(DP5b)",
+    "H2_DP7a": "explicit_second_order(DP7a) - first_order_plus_message_provenance(DP7a)",
+    "H2_DP7b": "explicit_second_order(DP7b) - first_order_plus_message_provenance(DP7b)"
+  },
+  "interaction_formulas": {
+    "H1": "(explicit_first_order(DP5a) - explicit_first_order(DP5b)) - (operational_metadata_reference(DP5a) - operational_metadata_reference(DP5b))",
+    "H2": "(explicit_second_order(DP7a) - explicit_second_order(DP7b)) - (first_order_plus_message_provenance(DP7a) - first_order_plus_message_provenance(DP7b))"
+  },
+  "measurement_dimensions": [
+    "raw_token_count",
+    "Harmony_completion_input_token_count"
+  ],
+  "exact_parity_criteria": [
+    "H1_DP5a_raw == 0",
+    "H1_DP5a_Harmony == 0",
+    "H1_DP5b_raw == 0",
+    "H1_DP5b_Harmony == 0",
+    "H2_DP7a_raw == 0",
+    "H2_DP7a_Harmony == 0",
+    "H2_DP7b_raw == 0",
+    "H2_DP7b_Harmony == 0",
+    "H1_interaction_raw == 0",
+    "H1_interaction_Harmony == 0",
+    "H2_interaction_raw == 0",
+    "H2_interaction_Harmony == 0",
+    "all_16_structural_prompt_audits_passed"
+  ],
+  "tolerance_threshold": null,
+  "ranking": [
+    "lower total character count across the eight block instances participating in the four case-level primary contrasts",
+    "fewer changed candidate-level literal choices relative to v0.3.0: two location surfaces plus differing H1 and H2 metadata values",
+    "lexicographic canonical lowercase candidate specification JSON",
+    "candidate ID only as a final deterministic integrity tiebreaker"
+  ],
+  "classification_rules": {
+    "success": "Complete evaluation finds one or more exact-parity candidates; rank and designate exactly one rank-one candidate.",
+    "no_candidate": "All 1,296 candidates are evaluated with none satisfying every exact-parity criterion.",
+    "runtime_failure": "A hash, dependency, audit, rendering, candidate-count, or measurement failure prevents complete evaluation.",
+    "exit_codes": {
+      "success": 0,
+      "no_candidate": 0,
+      "runtime_failure": 1
+    }
+  },
+  "padding_authorized": false,
+  "filler_authorized": false,
+  "candidate_generation_authorized": false,
+  "prompt_modification_authorized": false,
+  "criterion_relaxation_authorized": false,
+  "model_or_api_execution": false,
+  "real_execution_authorized": false,
+  "interpretation_constraint": "This tokenizer-only selection does not test H1a, H1b, H2, Theory of Mind, coordination, autonomous planning, or model cognition. Exact token parity does not establish semantic equivalence or cognitive neutrality."
+}

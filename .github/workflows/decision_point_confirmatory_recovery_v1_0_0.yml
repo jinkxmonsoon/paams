@@ -1,0 +1,31 @@
+name: Confirmatory compositional recovery v1.0.0
+on:
+  push:
+    branches: [codex/execute-micro-pilot-on-current-branch-vsnbkd]
+permissions:
+  contents: read
+jobs:
+  recovery:
+    if: github.event.head_commit.message == 'Execute dual-account compositional recovery [experiment-v1.0.0]'
+    runs-on: ubuntu-latest
+    timeout-minutes: 120
+    steps:
+      - uses: actions/checkout@v4
+        with: {ref: '${{ github.sha }}'}
+      - uses: actions/setup-python@v5
+        with: {python-version: '3.11'}
+      - run: mkdir artifact && printf '{"status":"initialized"}\n' > artifact/workflow_status.json
+      - run: python -m pip install tiktoken==0.13.0 openai-harmony==0.0.8 pytest==8.4.2
+      - name: Complete pytest suite
+        run: set -o pipefail; PYTHONDONTWRITEBYTECODE=1 python -m pytest -q 2>&1 | tee artifact/pytest.log
+      - name: Execute recovery batch once
+        env:
+          GROQ_API_KEY: ${{ secrets.GROQ_API_KEY }}
+          GROQ_API_KEY_SECONDARY: ${{ secrets.GROQ_API_KEY_SECONDARY }}
+        run: python -m btom_v2.run_decision_point_confirmatory_recovery_v1_0_0 --output-dir artifact/recovery
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: decision-point-confirmatory-compositional-recovery-v1.0.0-${{ github.run_id }}
+          path: artifact
+          retention-days: 30

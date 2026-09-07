@@ -1,0 +1,143 @@
+import hashlib,json
+from pathlib import Path
+import pytest
+from btom_v2 import run_decision_point_confirmatory_full_dual_account_v1_0_0 as recovery
+from btom_v2.decision_point_confirmatory_prompting_v1_0_0 import canonical_prompt_digest,request_order
+from btom_v2.run_decision_point_confirmatory_v1_0_0 import body
+ROOT=Path(__file__).resolve().parents[1]
+MANIFEST=json.loads((ROOT/'btom_v2/decision_point_confirmatory_full_dual_account_manifest_v1_0_0.json').read_text());WORKFLOW=(ROOT/'.github/workflows/decision_point_confirmatory_full_dual_account_v1_0_0.yml').read_text();DUMMY={'GROQ_API_KEY':'dummy-primary-secret','GROQ_API_KEY_SECONDARY':'dummy-secondary-secret'}
+def patched_tokens(monkeypatch):monkeypatch.setattr(recovery,'load_tokenizers',lambda manifest:(list,list,manifest['dependencies']))
+def success_payload(p):
+ a,t=p.valid_actions[0];return {'choices':[{'finish_reason':'stop','message':{'content':json.dumps({'action':a,'target':t,'message':'','reason':'mock'})}}],'x_groq':{'seed':p.seed},'system_fingerprint':'mock','service_tier':'default','usage':{'prompt_tokens':1,'completion_tokens':1,'total_tokens':2}}
+class Factory:
+ def __init__(self,behavior=None):self.behavior=behavior or (lambda slot,p,n:(True,200,success_payload(p),None,.01));self.calls=[];self.constructed=[]
+ def __call__(self,slot,key,all_credentials):
+  self.constructed.append(slot);factory=self
+  class Client:
+   credential_slot=slot
+   def call(self,p):factory.calls.append((slot,p.prompt_id,body(p),p.seed));return factory.behavior(slot,p,len(factory.calls))
+  return Client()
+def audit():
+ prompts=recovery.selected_prompts();tokens=recovery.token_pair_audit(prompts,list,list);return recovery.preclient_audit(MANIFEST,request_order(),prompts,tokens)
+def test_frozen_population_assignment_and_scientific_inputs():
+ full=request_order();selected=recovery.selected_prompts();assert canonical_prompt_digest(full)=='3a2ed20fc7128cdb057fa0b04b392957dc6c06669a760be781d88c5c1dfaa15b';assert hashlib.sha256((ROOT/'btom_v2/decision_point_confirmatory_scenarios_v1_0_0.py').read_bytes()).hexdigest()=='7b525abbb7e49db2114c3393678532d811a59e9c6ece6f5248eb583924e18867';assert all(x['expected']==x['actual'] for x in recovery.immutable_hashes(MANIFEST).values())
+ assert len(selected)==432 and len({p.variant_id for p in selected})==72 and all(body(p)==body(next(x for x in full if x.prompt_id==p.prompt_id)) for p in selected)
+ assignment=recovery.variant_assignment(MANIFEST);assert set(assignment)=={p.variant_id for p in selected};assert list(assignment.values()).count('primary')==list(assignment.values()).count('secondary')==36
+ assert all(len({assignment[p.variant_id] for p in selected if p.variant_id==v})==1 and len([p for p in selected if p.variant_id==v])==6 for v in assignment)
+def test_balanced_account_audit():
+ result=audit();assert result['passed'];slots=result['credential_assignment_audit']['slots']
+ for row in slots.values():
+  assert row['variants']==36 and row['families']=={'H1':18,'H2':18}
+  assert row['difficulties']=={'direct':12,'irrelevant_distractor':12,'compositional':12}
+  for stratum in row['strata'].values():
+   assert stratum['variants']==6 and set(stratum['archetypes'].values())=={1}
+   assert stratum['order_patterns']=={'A':3,'B':3,'C':3,'D':3}
+   assert stratum['role_first']=={'record':6,'belief':6}
+   assert stratum['reactive_placement']=={'before':6,'after':6}
+   assert stratum['record_positions']==stratum['belief_positions']=={'1':3,'2':6,'3':3}
+def test_tpd_classifier_is_strict():
+ positives=[json.dumps({'error':{'message':'Tokens per day limit reached'}}),json.dumps({'error':{'message':'TPD quota exceeded'}}),json.dumps({'error':{'message':'daily token limit 100 used 90 requested 20'}})]
+ assert all(recovery.is_tpd_exhaustion(429,x) for x in positives)
+ negatives=['generic rate limit','RPM limit reached','RPD limit reached','TPM limit reached','ITPM limit','OTPM limit']
+ assert all(not recovery.is_tpd_exhaustion(429,x) for x in negatives);assert all(not recovery.is_tpd_exhaustion(code,positives[0]) for code in (400,401,403,404,498,500,None))
+@pytest.mark.parametrize('env,error',[( {'GROQ_API_KEY_SECONDARY':'s'},'missing_primary_credential'),({'GROQ_API_KEY':'p'},'missing_secondary_credential'),({'GROQ_API_KEY':'same','GROQ_API_KEY_SECONDARY':'same'},'credentials_not_distinct')])
+def test_bad_credentials_abort_before_clients(tmp_path,monkeypatch,env,error):
+ patched_tokens(monkeypatch);factory=Factory();out=tmp_path/error;assert recovery.execute(out,sleep=lambda _:None,client_factory=factory,environ=env)==1;assert factory.constructed==[];assert error in json.loads((out/'confirmatory_full_dual_summary.json').read_text())['error']
+def test_complete_dual_execution_and_secret_redaction(tmp_path,monkeypatch):
+ patched_tokens(monkeypatch);factory=Factory();out=tmp_path/'complete';assert recovery.execute(out,sleep=lambda _:None,client_factory=factory,environ=DUMMY)==0;records=[json.loads(x) for x in (out/'confirmatory_full_dual_call_records.jsonl').read_text().splitlines()];summary=json.loads((out/'confirmatory_full_dual_summary.json').read_text());assert len(records)==len(factory.calls)==432 and len({r['prompt_id'] for r in records})==432;assert all(not r['credential_failover_used'] and r['assigned_credential_slot']==r['final_credential_slot'] for r in records);assert summary['ready_for_final_analysis'] and summary['canonical_complete_calls']==432 and summary['scientific_inference'] is None
+ artifact=''.join(p.read_text(errors='replace') for p in out.iterdir() if p.is_file())
+ for secret in DUMMY.values():
+  assert secret not in artifact and secret[:12] not in artifact
+  assert hashlib.sha256(secret.encode()).hexdigest() not in artifact
+ assert [c[1] for c in factory.calls]==[p.prompt_id for p in request_order()]
+ assert [c[2] for c in factory.calls]==[body(p) for p in request_order()]
+ assert [c[3] for c in factory.calls]==[p.seed for p in request_order()]
+ assert (out/'confirmatory_full_dual_analysis.json').is_file()
+ analysis=json.loads((out/'confirmatory_full_dual_analysis.json').read_text())
+ assert analysis['inferential_unit']=='variant' and analysis['credential_slot_diagnostic']['descriptive_only']
+ assert summary['operational_classification']=='full_confirmatory_batch_complete'
+ assert summary['canonical_prompt_count']==summary['canonical_complete_calls']==432
+ assert summary['complete_variants_by_family']=={'H1':36,'H2':36}
+ assert summary['all_variants_credential_homogeneous'] and sum(summary['variants_by_final_credential_slot'].values())==72
+ assignment_path=out/'confirmatory_full_dual_assignment.json';assert assignment_path.stat().st_size>2
+ assignment=json.loads(assignment_path.read_text())
+ assert assignment['collection_batch']==recovery.COLLECTION_BATCH
+ assert assignment['variant_assignment']==MANIFEST['credential_routing']['variant_assignment']
+ assert assignment['audit']['passed'] and assignment['assignment_independent_of_prior_outputs'] is True
+ assert not (out/'dual_account_assignment.json').exists()
+def test_tpd_replays_whole_variant_and_never_reuses_exhausted_slot(tmp_path,monkeypatch):
+ patched_tokens(monkeypatch)
+ def behavior(slot,p,n):
+  if slot=='primary' and n==2:return False,429,None,json.dumps({'error':{'message':'tokens per day limit reached'}}),.01
+  return True,200,success_payload(p),None,.01
+ factory=Factory(behavior);out=tmp_path/'failover';assert recovery.execute(out,sleep=lambda _:None,client_factory=factory,environ=DUMMY)==0;attempts=[json.loads(x) for x in (out/'confirmatory_full_dual_transport_attempts.jsonl').read_text().splitlines()];discarded=[json.loads(x) for x in (out/'confirmatory_full_dual_discarded_transport_attempts.jsonl').read_text().splitlines()];records=[json.loads(x) for x in (out/'confirmatory_full_dual_call_records.jsonl').read_text().splitlines()];trigger=next(a['transport_attempt_ordinal'] for a in attempts if a['confirmed_tpd_exhaustion']);assert all(a['attempted_credential_slot']!='primary' for a in attempts if a['transport_attempt_ordinal']>trigger);assert len(records)==432 and len({r['prompt_id'] for r in records})==432 and all(r['final_credential_slot']=='secondary' for r in records if r['variant_id']=='H1C0101');assert len([r for r in records if r['variant_id']=='H1C0101'])==6
+ assert discarded and all(d['discard_reason']=='variant_replayed_after_tpd_exhaustion' for d in discarded);assert not ({d['canonical_prompt_id'] for d in discarded}&{r['prompt_id'] for r in records if r['final_credential_slot']=='primary'});assert all(call[2]==body(next(p for p in recovery.selected_prompts() if p.prompt_id==call[1])) and call[3]==next(p.seed for p in recovery.selected_prompts() if p.prompt_id==call[1]) for call in factory.calls);assert json.loads((out/'confirmatory_full_dual_summary.json').read_text())['all_variants_credential_homogeneous']
+def test_dual_tpd_fails_fast(tmp_path,monkeypatch):
+ patched_tokens(monkeypatch)
+ def behavior(slot,p,n):return False,429,None,json.dumps({'error':{'message':'TPD tokens per day exhausted'}}),.01
+ factory=Factory(behavior);out=tmp_path/'dual';assert recovery.execute(out,sleep=lambda _:None,client_factory=factory,environ=DUMMY)==1;summary=json.loads((out/'confirmatory_full_dual_summary.json').read_text());assert summary['dual_account_tpd_exhausted'] and not summary['ready_for_final_analysis'] and summary['scientific_inference'] is None and len(factory.calls)==2
+ assert not (out/'confirmatory_full_dual_analysis.json').exists()
+
+@pytest.mark.parametrize(('label','failure'),[
+ ('generic-429',(False,429,None,'generic rate limit',.01)),
+ ('rpm',(False,429,None,'RPM requests per minute',.01)),
+ ('rpd',(False,429,None,'RPD requests per day',.01)),
+ ('tpm',(False,429,None,'TPM tokens per minute',.01)),
+ ('itpm',(False,429,None,'ITPM limit',.01)),
+ ('otpm',(False,429,None,'OTPM limit',.01)),
+ ('http-500',(False,500,None,'server error',.01)),
+ ('finish-reason',(True,200,{'choices':[{'finish_reason':'length','message':{'content':'{"action":"wait","target":"none"}'}}]},None,.01)),
+ ('parse',(True,200,{'choices':[{'finish_reason':'stop','message':{'content':'not json'}}]},None,.01)),
+ ('illegal-action',(True,200,{'choices':[{'finish_reason':'stop','message':{'content':'{"action":"forbidden","target":"forbidden","message":"","reason":"mock"}'}}]},None,.01)),
+])
+def test_non_tpd_and_behavioral_failures_never_fail_over(tmp_path,monkeypatch,label,failure):
+ patched_tokens(monkeypatch)
+ def behavior(slot,p,n):return failure if n==1 else (True,200,success_payload(p),None,.01)
+ factory=Factory(behavior);out=tmp_path/label
+ assert recovery.execute(out,sleep=lambda _:None,client_factory=factory,environ=DUMMY)==1
+ attempts=[json.loads(x) for x in (out/'confirmatory_full_dual_transport_attempts.jsonl').read_text().splitlines()]
+ assert len(attempts)==432 and not any(a['confirmed_tpd_exhaustion'] for a in attempts)
+ assert all(a['attempted_credential_slot']==a['assigned_credential_slot'] for a in attempts)
+ summary=json.loads((out/'confirmatory_full_dual_summary.json').read_text())
+ assert summary['exhausted_credential_slots']==[] and summary['failover_count']==0
+ assert not summary['ready_for_final_analysis'] and summary['scientific_inference'] is None
+ assert summary['operational_classification']=='full_confirmatory_batch_incomplete'
+ assert not (out/'confirmatory_full_dual_analysis.json').exists()
+
+def test_assignment_and_inputs_exclude_all_prior_behavior():
+ routing=MANIFEST['credential_routing'];source=(ROOT/'btom_v2/run_decision_point_confirmatory_full_dual_account_v1_0_0.py').read_text()
+ assert routing['assignment_independent_of_prior_outputs']
+ assert set(routing['assignment_structural_inputs'])=={'family','difficulty','archetype','frozen_order_pattern_metadata','variant_id','frozen_ordinal'}
+ assert MANIFEST['exclusion_policy']['no_prior_response_may_be_imported_reused_selected_copied_backfilled_or_assembled']
+ assert 'artifact_id' not in source and 'run 30581466480' not in source and '34001864149' not in source
+@pytest.mark.parametrize(('first_slot','first_tpd_count','second_slot','second_tpd_count','expected_attempts'),[('primary',2,'secondary',20,22),('secondary',1,'primary',81,82)])
+def test_delayed_second_tpd_is_terminal_and_isolates_variant(tmp_path,monkeypatch,first_slot,first_tpd_count,second_slot,second_tpd_count,expected_attempts):
+ patched_tokens(monkeypatch);slot_counts={'primary':0,'secondary':0};exhausted_seen=set()
+ def behavior(slot,p,n):
+  assert slot not in exhausted_seen;slot_counts[slot]+=1
+  if slot==first_slot and slot_counts[slot]==first_tpd_count:exhausted_seen.add(slot);return False,429,None,json.dumps({'error':{'message':'tokens per day limit reached'}}),.01
+  if slot==second_slot and slot_counts[slot]==second_tpd_count:exhausted_seen.add(slot);return False,429,None,json.dumps({'error':{'message':'TPD quota exhausted'}}),.01
+  return True,200,success_payload(p),None,.01
+ factory=Factory(behavior);out=tmp_path/f'{first_slot}-then-{second_slot}';assert recovery.execute(out,sleep=lambda _:None,client_factory=factory,environ=DUMMY)==1
+ attempts=[json.loads(x) for x in (out/'confirmatory_full_dual_transport_attempts.jsonl').read_text().splitlines()];discarded=[json.loads(x) for x in (out/'confirmatory_full_dual_discarded_transport_attempts.jsonl').read_text().splitlines()];records=[json.loads(x) for x in (out/'confirmatory_full_dual_call_records.jsonl').read_text().splitlines()];behavioral=[json.loads(x) for x in (out/'confirmatory_full_dual_behavioral_results.jsonl').read_text().splitlines()];summary=json.loads((out/'confirmatory_full_dual_summary.json').read_text())
+ assert len(attempts)==len(factory.calls)==expected_attempts and [a['attempted_credential_slot'] for a in attempts]==[c[0] for c in factory.calls];assert attempts[-1]['attempted_credential_slot']==second_slot and attempts[-1]['confirmed_tpd_exhaustion'];assert all(a['attempted_credential_slot']!=first_slot for a in attempts[next(i for i,a in enumerate(attempts) if a['attempted_credential_slot']==first_slot and a['confirmed_tpd_exhaustion'])+1:])
+ interrupted=attempts[-1]['variant_id'];terminal_discards=[d for d in discarded if d['variant_id']==interrupted and d['discard_reason']=='dual_account_tpd_exhausted'];assert len(terminal_discards)>=2 and attempts[-1]['canonical_prompt_id'] in {d['canonical_prompt_id'] for d in terminal_discards};assert interrupted not in {r['variant_id'] for r in records} and interrupted not in {r['variant_id'] for r in behavioral}
+ complete_groups={v:[r for r in records if r['variant_id']==v] for v in {r['variant_id'] for r in records}};assert any(len(rows)==6 and all(r['complete'] for r in rows) for rows in complete_groups.values());assert summary['dual_account_tpd_exhausted'] and not summary['ready_for_final_analysis'] and summary['scientific_inference'] is None
+def test_outer_exceptions_redact_both_credentials(tmp_path,monkeypatch):
+ patched_tokens(monkeypatch)
+ def assert_clean(out):
+  artifact=''.join(p.read_text(errors='replace') for p in out.iterdir() if p.is_file())
+  for secret in DUMMY.values():
+   assert secret not in artifact and secret[:12] not in artifact
+   assert hashlib.sha256(secret.encode()).hexdigest() not in artifact
+  assert '[REDACTED]' in json.loads((out/'confirmatory_full_dual_summary.json').read_text())['error']
+ def bad_factory(slot,key,all_credentials):raise RuntimeError(f"Authorization Bearer {DUMMY['GROQ_API_KEY']} GROQ_API_KEY_SECONDARY={DUMMY['GROQ_API_KEY_SECONDARY']}")
+ factory_out=tmp_path/'factory-error';assert recovery.execute(factory_out,sleep=lambda _:None,client_factory=bad_factory,environ=DUMMY)==1;assert_clean(factory_out)
+ class RaisingFactory(Factory):
+  def __call__(self,slot,key,all_credentials):
+   class Client:
+    def call(self,p):raise RuntimeError(f"GROQ_API_KEY={DUMMY['GROQ_API_KEY']} Bearer {DUMMY['GROQ_API_KEY_SECONDARY']}")
+   return Client()
+ runtime_out=tmp_path/'runtime-error';assert recovery.execute(runtime_out,sleep=lambda _:None,client_factory=RaisingFactory(),environ=DUMMY)==1;assert_clean(runtime_out)
+def test_workflow_secret_scope_and_nontriggering_commit():
+ assert "github.event.head_commit.message == 'Execute fresh full dual-account confirmatory [experiment-v1.0.0]'" in WORKFLOW;assert 'Prepare fresh full dual-account confirmatory [experiment-v1.0.0]' not in WORKFLOW;command='python -m btom_v2.run_decision_point_confirmatory_full_dual_account_v1_0_0 --output-dir';assert WORKFLOW.count(command)==1 and WORKFLOW.index('python -m pytest -q')<WORKFLOW.index(command);execution=WORKFLOW[WORKFLOW.index('- name: Execute fresh full batch once'):WORKFLOW.index('- uses: actions/upload-artifact@v4')];assert 'GROQ_API_KEY: ${{ secrets.GROQ_API_KEY }}' in execution and 'GROQ_API_KEY_SECONDARY: ${{ secrets.GROQ_API_KEY_SECONDARY }}' in execution;assert 'GROQ_API_KEY' not in WORKFLOW[:WORKFLOW.index('- name: Execute fresh full batch once')];assert 'if: always()' in WORKFLOW

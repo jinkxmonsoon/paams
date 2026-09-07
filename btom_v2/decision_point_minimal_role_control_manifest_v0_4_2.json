@@ -1,0 +1,124 @@
+{
+  "protocol_version": "btom-v2-decision-point-minimal-role-control-0.4.2-mock-only",
+  "status": "mock_only_not_authorized_for_real_execution",
+  "parent_provenance": {
+    "content_matched_design": "btom-v2-decision-point-content-matched-control-0.4.0-mock-only",
+    "content_matched_tokenizer_measurement": "btom-v2-decision-point-content-matched-tokenizer-0.4.1",
+    "run_id": 30324745794,
+    "artifact_digest": "cd5db13efff3633b8f6ca338590af41f7cc39d6d4d4269d4376ebc27d5a42951",
+    "parent_remote_commit": "4f46ace7e3aaa2157c9f874234c95a3b9dd3094b"
+  },
+  "immutable_parent_sha256": {
+    "btom_v2/decision_point_content_matched_control_manifest_v0_4_0.json": "5a45397e0d420e188b86b2520bc3a701e4dd3e84c6aa4d6d2508b821937999b6",
+    "btom_v2/decision_point_content_matched_control_prompting_v0_4_0.py": "ab9c6b01308df15560db4be1a735bb5cef31a101942ff79431b38ce6b0733ccf",
+    "btom_v2/decision_point_content_matched_control_design_v0_4_0.md": "581d1e769c792365e8c89dff48093de9af788fc145365d7e6b984e8f66d62c27",
+    "btom_v2/decision_point_content_matched_tokenizer_manifest_v0_4_1.json": "21e943a0fb38aad17d2dd341dd62ad21b9d474ee6209042f4dc4f2d5c63d15f7",
+    "btom_v2/run_decision_point_content_matched_tokenizer_v0_4_1.py": "755b21d3b42aaa88f46deb991ca17bd473374051627839934fc709b5c1d17c93",
+    "btom_v2/decision_point_scenarios.py": "e7a936cca701356dc2f9a5c8ab9621b5e593af932b854afe4c9a146acf1994f5"
+  },
+  "T_CAL_2_result": {
+    "classification": "nonzero_primary_token_difference",
+    "H1_primary_raw_and_Harmony_deltas": {
+      "DP5a": 2,
+      "DP5b": 2
+    },
+    "H2_primary_raw_and_Harmony_deltas": {
+      "DP7a": 2,
+      "DP7b": 2
+    },
+    "H1_interaction_raw_and_Harmony": 0,
+    "H2_interaction_raw_and_Harmony": 0
+  },
+  "T_CAL_3": "Replacing context-redundant role labels with record/belief will permit exact raw and Harmony parity without altering the scientific content of the primary contrasts. This design constructs but does not test T-CAL-3.",
+  "conditions_by_family": {
+    "DP5": [
+      "reactive_no_representation",
+      "matched_decision_record",
+      "explicit_self_belief"
+    ],
+    "DP7": [
+      "reactive_no_representation",
+      "matched_decision_record",
+      "explicit_self_belief",
+      "self_belief_plus_message_record",
+      "self_belief_plus_partner_belief"
+    ]
+  },
+  "expected_prompt_counts": {
+    "DP5": 6,
+    "DP7": 10,
+    "total": 16
+  },
+  "role_normalization": {
+    "decision_record": "record",
+    "self_belief": "belief",
+    "message_record": "record",
+    "partner_belief": "belief"
+  },
+  "normalized_role_properties": {
+    "reference": "record",
+    "treatment": "belief",
+    "ASCII_characters_each": 6,
+    "whitespace_words_each": 1
+  },
+  "context_redundancy_rationale": {
+    "H1": [
+      "DECISION-STATE REPRESENTATION title",
+      "agent",
+      "proposition",
+      "represented_value"
+    ],
+    "H2": [
+      "PARTNER-CONTEXT REPRESENTATION title",
+      "observer",
+      "related_agent",
+      "proposition",
+      "evidence_ref"
+    ]
+  },
+  "primary_contrasts": {
+    "H1": {
+      "treatment": "explicit_self_belief",
+      "reference": "matched_decision_record",
+      "interaction": "DP5a versus DP5b"
+    },
+    "H2": {
+      "treatment": "self_belief_plus_partner_belief",
+      "reference": "self_belief_plus_message_record",
+      "interaction": "DP7a versus DP7b"
+    }
+  },
+  "audit_requirements": {
+    "only_representation_role_changes_from_v0.4.0": true,
+    "identical_section_order_titles_fields_and_counts": true,
+    "identical_proposition_represented_value_and_evidence_ref": true,
+    "identical_character_and_utf8_byte_counts": true,
+    "reference_role": "record",
+    "treatment_role": "belief",
+    "independent_H2_provenance_preserved": true,
+    "raw_evidence_occurrences": 1,
+    "common_sections_observations_actions_messages_output_frozen": true,
+    "hidden_scoring_condition_source_message_leaks": 0,
+    "legacy_markers": 0
+  },
+  "measurements": [
+    "character_count",
+    "utf8_byte_count",
+    "line_count",
+    "approximate_whitespace_token_count"
+  ],
+  "tokenizer_parity_claimed": false,
+  "tokenizer_execution_authorized": false,
+  "model_or_api_execution": false,
+  "real_execution_authorized": false,
+  "interpretation_constraint": "This mock-only minimal-role design does not test H1a, H1b, H2, Theory of Mind, coordination, autonomous planning or model cognition. Character equality does not establish token parity, semantic equivalence or cognitive neutrality.",
+  "test_infrastructure_amendment": {
+    "file": "tests/test_decision_point_minimal_role_control_v0_4_2.py",
+    "reason": "Scoped a repository-global no-workflow assertion to the v0.4.2 design workflow only.",
+    "scientific_inputs_changed": false,
+    "prompt_content_changed": false,
+    "scenario_content_changed": false,
+    "role_normalization_changed": false,
+    "primary_contrasts_changed": false
+  }
+}

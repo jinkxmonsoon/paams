@@ -1,0 +1,103 @@
+{
+  "pilot_version": "btom-v2-decision-point-minimal-role-behavioral-micro-pilot-0.5.1",
+  "status": "frozen_output_interface_repair",
+  "parent_provenance": {
+    "run_id": 30367683982,
+    "artifact_digest": "6a47fc0890d526bcafee10b82e3bd9f02086096c9a3453f270ba969755ec2a89",
+    "commit": "a6b1000ab66af5c55fd6cd917acf1fe6a763416c",
+    "result": "interface_failure_completion_budget_exhaustion"
+  },
+  "immutable_input_sha256": {
+    "btom_v2/decision_point_minimal_role_control_manifest_v0_4_2.json": "73786ac184545ffaec749fcda195c68ceb17404ff890a5849b989f3b068c6318",
+    "btom_v2/decision_point_minimal_role_control_prompting_v0_4_2.py": "0557df5c97efcf2bf4176f7c6ca36ea2202f18735bc1e6eed44807034894ec68",
+    "btom_v2/decision_point_minimal_role_control_design_v0_4_2.md": "818c79a7f3148f542161e0e48cc8ee033f9560de147850f93039c57825910f4a",
+    "tests/test_decision_point_minimal_role_control_v0_4_2.py": "03dc6920f8516af04a05a0e92a18a61dc78bee02f41caca52d2730648521e477",
+    "btom_v2/decision_point_minimal_role_tokenizer_manifest_v0_4_3.json": "462667c39d2bc5d13eee4ddc840cb1bb1ec897a689394950e9acaac4b8424516",
+    "btom_v2/run_decision_point_minimal_role_tokenizer_v0_4_3.py": "8475df517e2329bf3d3198adcd6b843433e43b13cb7267eb28328bb2d6857821",
+    "btom_v2/decision_point_minimal_role_behavioral_micro_pilot_manifest_v0_5_0.json": "f5bffaa2a0d7b9308e5d9ff52483a0dc3c12be911ed810459900c3f8f3ad1d07",
+    "btom_v2/run_decision_point_minimal_role_behavioral_micro_pilot_v0_5_0.py": "324b38091cc2cabe74c79576abd19ce337c03aead9423a14efee5b85efb31a21",
+    "btom_v2/decision_point_scenarios.py": "e7a936cca701356dc2f9a5c8ab9621b5e593af932b854afe4c9a146acf1994f5",
+    "btom_v2/action_parser.py": "475838167ff7a47edaaa50861bed9fba5c5a025d08338fa5fa82d6a7e19ce3c4",
+    "btom_v2/budget.py": "08878cff156f17215da672b6cfe0480da6e50c91c9764a602e60b3b375207fe6",
+    "btom_v2/real_llm_clients.py": "5beba1ada6ca7005c0a7e4f32e8edac9ad46c5473b8109b349f8e8c8e2e4e364"
+  },
+  "api_configuration": {
+    "model": "openai/gpt-oss-20b",
+    "transport": "groq_rest_fallback",
+    "temperature": 0,
+    "top_p": 1,
+    "max_completion_tokens": 1024,
+    "reasoning_effort": "low",
+    "response_format": "json_schema",
+    "stream": false,
+    "tools_absent": true,
+    "seed_absent": true,
+    "max_tokens_absent": true,
+    "retries": 0,
+    "include_reasoning": false
+  },
+  "execution_budget": {
+    "DP5": 6,
+    "DP7": 10,
+    "total": 16,
+    "maximum_requests": 16,
+    "requests_per_prompt": 1,
+    "sequential": true,
+    "delay_seconds": 1
+  },
+  "response_schema": {
+    "type": "object",
+    "required": [
+      "action",
+      "target",
+      "message",
+      "reason"
+    ],
+    "additionalProperties": false,
+    "strict": true,
+    "source": "frozen case valid_actions only"
+  },
+  "primary_pairs": [
+    {
+      "hypothesis": "H1",
+      "case_id": "DP5a_self_belief_false",
+      "reference": "matched_decision_record",
+      "treatment": "explicit_self_belief"
+    },
+    {
+      "hypothesis": "H1",
+      "case_id": "DP5b_self_belief_current",
+      "reference": "matched_decision_record",
+      "treatment": "explicit_self_belief"
+    },
+    {
+      "hypothesis": "H2",
+      "case_id": "DP7a_partner_belief_stale",
+      "reference": "self_belief_plus_message_record",
+      "treatment": "self_belief_plus_partner_belief"
+    },
+    {
+      "hypothesis": "H2",
+      "case_id": "DP7b_partner_belief_current",
+      "reference": "self_belief_plus_message_record",
+      "treatment": "self_belief_plus_partner_belief"
+    }
+  ],
+  "classification_exit_codes": {
+    "pilot_complete": 0,
+    "runtime_failure": 1
+  },
+  "behavioral_experiment_ready_gate": "all eight primary calls have HTTP success, nonempty visible content, non-exhausted finish reason, parse success, and legal action",
+  "fallback_counted_as_behavior": false,
+  "reasoning_text_is_behavioral_evidence": false,
+  "statistical_inference": false,
+  "scientific_inference": null,
+  "interface_amendment": {
+    "reason": "Removed reasoning_format because it is unsupported for GPT-OSS models on Groq and replaced it with include_reasoning=false.",
+    "prompt_content_changed": false,
+    "scenario_content_changed": false,
+    "behavioral_scoring_changed": false,
+    "primary_pairs_changed": false,
+    "json_schema_changed": false
+  }
+}

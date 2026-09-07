@@ -1,0 +1,83 @@
+{
+  "pilot_version": "btom-v2-decision-point-minimal-role-behavioral-micro-pilot-0.5.0",
+  "status": "frozen_behavioral_micro_pilot",
+  "parent_remote_commit": "06a8f7ef3a7d9ff036a84fa21339d6dfb0d0259f",
+  "tokenizer_provenance": {
+    "run_id": 30326678237,
+    "artifact_digest": "ac57aa246b7d7d6c65292ed6388a50376bf1f65f04019103aaa5933d811ad1b8",
+    "classification": "exact_primary_token_parity",
+    "all_twelve_diagnostics_zero": true
+  },
+  "immutable_input_sha256": {
+    "btom_v2/decision_point_minimal_role_control_manifest_v0_4_2.json": "73786ac184545ffaec749fcda195c68ceb17404ff890a5849b989f3b068c6318",
+    "btom_v2/decision_point_minimal_role_control_prompting_v0_4_2.py": "0557df5c97efcf2bf4176f7c6ca36ea2202f18735bc1e6eed44807034894ec68",
+    "btom_v2/decision_point_minimal_role_control_design_v0_4_2.md": "818c79a7f3148f542161e0e48cc8ee033f9560de147850f93039c57825910f4a",
+    "tests/test_decision_point_minimal_role_control_v0_4_2.py": "03dc6920f8516af04a05a0e92a18a61dc78bee02f41caca52d2730648521e477",
+    "btom_v2/decision_point_minimal_role_tokenizer_manifest_v0_4_3.json": "462667c39d2bc5d13eee4ddc840cb1bb1ec897a689394950e9acaac4b8424516",
+    "btom_v2/run_decision_point_minimal_role_tokenizer_v0_4_3.py": "8475df517e2329bf3d3198adcd6b843433e43b13cb7267eb28328bb2d6857821",
+    "btom_v2/decision_point_scenarios.py": "e7a936cca701356dc2f9a5c8ab9621b5e593af932b854afe4c9a146acf1994f5",
+    "btom_v2/action_parser.py": "475838167ff7a47edaaa50861bed9fba5c5a025d08338fa5fa82d6a7e19ce3c4",
+    "btom_v2/budget.py": "08878cff156f17215da672b6cfe0480da6e50c91c9764a602e60b3b375207fe6",
+    "btom_v2/real_llm_clients.py": "5beba1ada6ca7005c0a7e4f32e8edac9ad46c5473b8109b349f8e8c8e2e4e364"
+  },
+  "api_configuration": {
+    "model": "openai/gpt-oss-20b",
+    "transport": "groq_rest_fallback",
+    "temperature": 0,
+    "top_p": 1,
+    "max_tokens": 256,
+    "system_messages": 0,
+    "developer_messages": 0,
+    "user_messages": 1,
+    "tools": null,
+    "seed_parameter_absent": true,
+    "seed_controlled": false,
+    "retries": 0
+  },
+  "execution_budget": {
+    "DP5": 6,
+    "DP7": 10,
+    "total_attempts": 16,
+    "maximum_api_attempts": 16,
+    "attempts_per_prompt": 1,
+    "sequential": true,
+    "delay_seconds": 1,
+    "automatic_retries": 0
+  },
+  "classification_exit_codes": {
+    "pilot_complete": 0,
+    "runtime_failure": 1
+  },
+  "primary_pairs": [
+    {
+      "hypothesis": "H1",
+      "case_id": "DP5a_self_belief_false",
+      "reference": "matched_decision_record",
+      "treatment": "explicit_self_belief"
+    },
+    {
+      "hypothesis": "H1",
+      "case_id": "DP5b_self_belief_current",
+      "reference": "matched_decision_record",
+      "treatment": "explicit_self_belief"
+    },
+    {
+      "hypothesis": "H2",
+      "case_id": "DP7a_partner_belief_stale",
+      "reference": "self_belief_plus_message_record",
+      "treatment": "self_belief_plus_partner_belief"
+    },
+    {
+      "hypothesis": "H2",
+      "case_id": "DP7b_partner_belief_current",
+      "reference": "self_belief_plus_message_record",
+      "treatment": "self_belief_plus_partner_belief"
+    }
+  ],
+  "success_rate_threshold": null,
+  "statistical_inference": false,
+  "fallback_counted_as_behavior": false,
+  "interpretation_note": "DP5 does not provide an explicit model-visible mapping from represented room names to route targets. DP5 results are scenario-discrimination diagnostics and must not yet be interpreted as normative coordination performance.",
+  "scientific_inference": null,
+  "real_execution_authorized": true
+}

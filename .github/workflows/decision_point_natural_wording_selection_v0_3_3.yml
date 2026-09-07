@@ -1,0 +1,83 @@
+name: Decision-point natural-wording selection v0.3.3
+
+on:
+  push:
+    branches:
+      - codex/execute-micro-pilot-on-current-branch-vsnbkd
+
+permissions:
+  contents: read
+
+jobs:
+  select:
+    if: >-
+      github.event.head_commit.message ==
+          'Select exactly token-balanced natural wording [run-wording-selection-v0.3.3]'
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    steps:
+      - name: Check out exact triggering SHA
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.sha }}
+
+      - name: Set up Python 3.11
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Initialize artifact directory
+        run: |
+          mkdir -p natural-wording-selection-artifact
+          printf '{"workflow_status":"initialized","model_or_api_execution":false}\n' \
+            > natural-wording-selection-artifact/workflow_status.json
+
+      - name: Verify immutable inputs
+        run: |
+          cat > natural-wording-selection-artifact/immutable_hash_check.txt <<'EOF'
+          b45ef198b4ab8ab003a47247301834a0321e77ed87f0ee1ce12da078dd825cc5  btom_v2/decision_point_natural_wording_bank_manifest_v0_3_2.json
+          48f3d2a45a971eb5610e03ea3bac42c086d555783dda3762e1db597b45072373  btom_v2/decision_point_natural_wording_bank_v0_3_2.py
+          d112ea743d9d413c64d575261f89915cf8a813f17d4ec262302821b2dc5516be  btom_v2/decision_point_natural_wording_bank_design_v0_3_2.md
+          3a66db3e6ea208bdcc0e3dfd7fc4ff37a2c4bd90fd3d777009934c11a05deb0d  tests/test_decision_point_natural_wording_bank_v0_3_2.py
+          08df09f8e5d950f0fde422993133ca59e40362bcd06ba799446951a5701c1961  btom_v2/decision_point_natural_control_prompting_v0_3_0.py
+          e7a936cca701356dc2f9a5c8ab9621b5e593af932b854afe4c9a146acf1994f5  btom_v2/decision_point_scenarios.py
+          EOF
+          sha256sum --check natural-wording-selection-artifact/immutable_hash_check.txt
+
+      - name: Install frozen tokenizer dependencies
+        shell: bash
+        run: |
+          set -o pipefail
+          python -m pip install --retries 0 tiktoken==0.13.0 openai-harmony==0.0.8 \
+            2>&1 | tee natural-wording-selection-artifact/tokenizer_install.log
+          python -m pip show tiktoken openai-harmony \
+            > natural-wording-selection-artifact/tokenizer_resolved_versions.txt
+
+      - name: Install pinned test runner
+        shell: bash
+        run: |
+          set -o pipefail
+          python -m pip install --retries 0 pytest==8.4.2 \
+            2>&1 | tee natural-wording-selection-artifact/pytest_install.log
+          python -m pip show pytest \
+            > natural-wording-selection-artifact/pytest_resolved_version.txt
+
+      - name: Run complete test suite
+        shell: bash
+        run: |
+          set -o pipefail
+          python -m pytest -q 2>&1 | tee natural-wording-selection-artifact/pytest.log
+
+      - name: Run exhaustive tokenizer-only wording selection once
+        run: |
+          python -m btom_v2.run_decision_point_natural_wording_selection_v0_3_3 \
+            --output-dir natural-wording-selection-artifact/selection
+
+      - name: Upload tokenizer selection artifact
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: decision-point-natural-wording-selection-v0.3.3-${{ github.run_id }}
+          path: natural-wording-selection-artifact/
+          retention-days: 30
+          if-no-files-found: error

@@ -1,0 +1,125 @@
+{
+  "protocol_version": "btom-v2-decision-point-content-matched-control-0.4.0-mock-only",
+  "status": "mock_only_not_authorized_for_real_execution",
+  "parent_provenance": {
+    "natural_control_design": "btom-v2-decision-point-natural-control-design-0.3.0-mock-only",
+    "amended_wording_bank": "btom-v2-decision-point-natural-wording-bank-0.3.2-mock-only",
+    "wording_selection": "btom-v2-decision-point-natural-wording-selection-0.3.3",
+    "wording_selection_run_id": 30314244024,
+    "wording_selection_artifact_digest": "a60522e420091acc164a122552dd88a86eedf604888afb8ed10710bf5bd3baff",
+    "wording_selection_classification": "no_candidate",
+    "parent_remote_commit": "4fc14ed8cc44cfbe4a899fd0be58e8590745a86a"
+  },
+  "immutable_parent_sha256": {
+    "btom_v2/decision_point_natural_control_manifest_v0_3_0.json": "c39b2997282561bdacffa4e6b55e8d26062901e67ce4596a658b569276375549",
+    "btom_v2/decision_point_natural_control_prompting_v0_3_0.py": "08df09f8e5d950f0fde422993133ca59e40362bcd06ba799446951a5701c1961",
+    "btom_v2/decision_point_natural_control_design_v0_3_0.md": "c4c3fbc1de8c4e13af89d56cc5077ab88edac95e7e1edec0f54391a88180d8e4",
+    "btom_v2/decision_point_scenarios.py": "e7a936cca701356dc2f9a5c8ab9621b5e593af932b854afe4c9a146acf1994f5",
+    "btom_v2/decision_point_natural_wording_bank_manifest_v0_3_2.json": "b45ef198b4ab8ab003a47247301834a0321e77ed87f0ee1ce12da078dd825cc5",
+    "btom_v2/decision_point_natural_wording_selection_manifest_v0_3_3.json": "c046ef13da3e37e1266147d28512604cddff42c023a1e83af0086fb676d8011c"
+  },
+  "conditions_by_family": {
+    "DP5": [
+      "reactive_no_representation",
+      "matched_decision_record",
+      "explicit_self_belief"
+    ],
+    "DP7": [
+      "reactive_no_representation",
+      "matched_decision_record",
+      "explicit_self_belief",
+      "self_belief_plus_message_record",
+      "self_belief_plus_partner_belief"
+    ]
+  },
+  "expected_prompt_counts": {
+    "DP5": 6,
+    "DP7": 10,
+    "total": 16
+  },
+  "location_surfaces": {
+    "box_room": "box room",
+    "decoy_room": "decoy room"
+  },
+  "first_order_matched_block": {
+    "title": "DECISION-STATE REPRESENTATION",
+    "field_order": [
+      "agent",
+      "proposition",
+      "represented_value",
+      "representation_role"
+    ],
+    "proposition": "medical_kit_location",
+    "reference_role": "decision_record",
+    "treatment_role": "self_belief",
+    "value_source": "first_order_representation.medical_kit_location in both arms"
+  },
+  "second_order_matched_block": {
+    "title": "PARTNER-CONTEXT REPRESENTATION",
+    "field_order": [
+      "observer",
+      "related_agent",
+      "proposition",
+      "represented_value",
+      "representation_role",
+      "evidence_ref"
+    ],
+    "observer": "A",
+    "related_agent": "C",
+    "proposition": "expected_medical_kit_location_after_box_open",
+    "evidence_ref": "raw_message_1",
+    "reference_role": "message_record",
+    "reference_value_source": "parsed frozen raw_delivered_messages belief statement",
+    "treatment_role": "partner_belief",
+    "treatment_value_source": "second_order_representation.believed_value",
+    "independent_source_equality_required": true
+  },
+  "primary_contrasts": {
+    "H1": {
+      "treatment": "explicit_self_belief",
+      "reference": "matched_decision_record",
+      "interaction": "DP5a versus DP5b",
+      "estimand": "Incremental effect of epistemic framing over an otherwise identical explicit decision-state record."
+    },
+    "H2": {
+      "treatment": "self_belief_plus_partner_belief",
+      "reference": "self_belief_plus_message_record",
+      "interaction": "DP7a versus DP7b",
+      "estimand": "Incremental effect of attributing structured message content as the partner's belief."
+    }
+  },
+  "secondary_comparators": [
+    "reactive_no_representation",
+    "explicit_self_belief"
+  ],
+  "audit_requirements": {
+    "common_sections_byte_identical_to_v0.3.0": true,
+    "valid_actions_frozen": true,
+    "observations_frozen": true,
+    "raw_messages_frozen": true,
+    "DP7_raw_evidence_occurrences": 1,
+    "source_message_absent": true,
+    "hidden_state_leak_count": 0,
+    "scoring_label_leak_count": 0,
+    "condition_name_leak_count": 0,
+    "legacy_marker_count": 0,
+    "identical_primary_pair_section_titles": true,
+    "identical_primary_pair_field_names_and_order": true,
+    "identical_primary_pair_field_and_line_counts": true,
+    "identical_primary_pair_proposition_and_represented_value": true,
+    "primary_pair_differing_field_count": 1,
+    "only_differing_field": "representation_role",
+    "identical_primary_pair_section_order": true
+  },
+  "measurements": [
+    "character_count",
+    "utf8_byte_count",
+    "line_count",
+    "approximate_whitespace_token_count"
+  ],
+  "tokenizer_parity_claimed": false,
+  "tokenizer_execution_authorized": false,
+  "model_or_api_execution": false,
+  "real_execution_authorized": false,
+  "interpretation_constraint": "This mock-only content-matched control design does not test H1a, H1b, H2, Theory of Mind, coordination, autonomous planning, or model cognition. Content matching does not establish semantic equivalence or eliminate lexical-framing risk."
+}

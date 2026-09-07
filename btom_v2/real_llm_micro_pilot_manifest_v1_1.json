@@ -1,0 +1,56 @@
+{
+  "protocol_version": "btom-v2-functional-micro-pilot-1.1-rate-aware",
+  "parent_protocol": "btom-v2-functional-micro-pilot-1.0",
+  "parent_failed_run_id": 29891488868,
+  "frozen_before_real_execution": true,
+  "scenarios": [
+    "C5b_costly_false_belief",
+    "C7a_partner_belief_stale",
+    "C7b_partner_belief_current"
+  ],
+  "policies": [
+    "DeterministicBaseline",
+    "LLMReactiveReal",
+    "LLMBeliefStateReal",
+    "LLMBToMReal"
+  ],
+  "seeds": [0],
+  "model": "llama-3.1-8b-instant",
+  "temperature": 0,
+  "top_p": 1,
+  "max_tokens": 96,
+  "max_steps": 40,
+  "max_llm_calls_per_episode": 40,
+  "global_minimum_inter_api_call_seconds": 10.0,
+  "rate_limit_behavior": "abort_entire_run",
+  "retry_on_rate_limit": false,
+  "retry_on_other_api_failure": false,
+  "quota_scope": "organization",
+  "known_tpm_limit": 6000,
+  "execution_control_justification": "The v1.0 run saturated the organization-wide 6000 TPM limit. A global 10-second minimum between API-call starts is a conservative execution-only control; it does not change the scientific matrix, model, prompts, decoding, episode budgets, policies, scenarios, or metrics.",
+  "primary_functional_criteria": [
+    "all requested episodes execute without runner failure",
+    "direct model actions parse and reach env.step",
+    "C7 physical invariants hold throughout each episode",
+    "call audits expose the intended first-order and second-order prompt layers",
+    "API, parser, environment-invalid, and budget fallbacks remain distinguishable"
+  ],
+  "primary_behavioral_metrics": [
+    "target_decoy_branch_steps",
+    "necessary_correction_messages",
+    "missed_necessary_corrections",
+    "unnecessary_correction_messages",
+    "evidence_to_correction_send_steps",
+    "correction_delivery_latency",
+    "time_to_medical_kit_acquisition",
+    "time_to_rescue",
+    "task_success"
+  ],
+  "exclusion_criteria": [
+    "episode has an API failure that prevents the planned action opportunity",
+    "episode never reaches the correction opportunity because of parser or environment-invalid failures",
+    "world-state invariant failure",
+    "missing call-audit or episode-summary artifact"
+  ],
+  "interpretation_constraint": "This one-seed functional pilot cannot decide H1, H2, or H3 and cannot demonstrate Theory of Mind or autonomous planning."
+}

@@ -1,0 +1,36 @@
+name: Repair frozen behavioral output interface v0.5.1
+on:
+  push:
+    branches: [codex/execute-micro-pilot-on-current-branch-vsnbkd]
+permissions:
+  contents: read
+jobs:
+  repair:
+    if: github.event.head_commit.message == 'Correct GPT-OSS reasoning interface [run-behavioral-v0.5.1]'
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.sha }}
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Initialize artifact
+        run: mkdir artifact && printf '{"status":"initialized"}\n' > artifact/workflow_status.json
+      - name: Verify immutable inputs
+        run: python -c "import json; from btom_v2.run_decision_point_minimal_role_behavioral_micro_pilot_v0_5_1 import verify_immutable_inputs; verify_immutable_inputs(json.load(open('btom_v2/decision_point_minimal_role_behavioral_micro_pilot_manifest_v0_5_1.json')))"
+      - run: python -m pip install pytest==8.4.2
+      - name: Complete pytest suite
+        shell: bash
+        run: set -o pipefail; PYTHONDONTWRITEBYTECODE=1 python -m pytest -q 2>&1 | tee artifact/pytest.log
+      - name: Execute repair once
+        env:
+          GROQ_API_KEY: ${{ secrets.GROQ_API_KEY }}
+        run: python -m btom_v2.run_decision_point_minimal_role_behavioral_micro_pilot_v0_5_1 --output-dir artifact/pilot
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: decision-point-minimal-role-behavioral-micro-pilot-v0.5.1-${{ github.run_id }}
+          path: artifact
+          retention-days: 30

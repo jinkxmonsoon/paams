@@ -1,43 +1,101 @@
-import json,re
+import json
+import re
 
-def _json_candidates(text:str):
-    cands=[]
-    for m in re.finditer(r"```(?:json)?\s*(\{[\s\S]*?\})\s*```",text,re.I):
-        cands.append(m.group(1))
-    stack=[]; start=None
-    for i,ch in enumerate(text):
-        if ch=="{":
-            if not stack: start=i
-            stack.append(ch)
-        elif ch=="}" and stack:
+
+FALLBACK_ACTION = {"action": "move", "target": None, "message": "", "reason": "safe_fallback"}
+
+
+def _json_candidates(text: str):
+    candidates = []
+    for match in re.finditer(r"```(?:json)?\s*(\{[\s\S]*?\})\s*```", text, re.I):
+        candidates.append(match.group(1))
+    stack = []
+    start = None
+    for index, character in enumerate(text):
+        if character == "{":
+            if not stack:
+                start = index
+            stack.append(character)
+        elif character == "}" and stack:
             stack.pop()
             if not stack and start is not None:
-                cands.append(text[start:i+1]); start=None
-    if not cands: cands.append(text)
-    return cands
+                candidates.append(text[start:index + 1])
+                start = None
+    if not candidates:
+        candidates.append(text)
+    return candidates
 
-def parse_action(text,allowed_actions,budget):
-    t=(text or "").strip()
-    if not t:
-        budget.parse_failures+=1
-        return {"action":"wait","message":"","reason":"empty_response","parser_error_type":"empty_response"}
-    parsed_objs=[]
-    for c in _json_candidates(t):
+
+def _failure(budget, error_type):
+    budget.parse_failures += 1
+    return {
+        **FALLBACK_ACTION,
+        "reason": error_type,
+        "parser_error_type": error_type,
+        "parse_success": False,
+    }
+
+
+def parse_action(text, valid_actions, budget, fallback_target=None):
+    fallback = fallback_target
+    stripped = (text or "").strip()
+    if not stripped:
+        result = _failure(budget, "empty_response")
+        result["target"] = fallback
+        return result
+
+    parsed_objects = []
+    for candidate in _json_candidates(stripped):
         try:
-            parsed_objs.append(json.loads(c))
-        except Exception:
+            parsed_objects.append(json.loads(candidate))
+        except (TypeError, ValueError):
             continue
-    if not parsed_objs:
-        budget.parse_failures+=1
-        return {"action":"wait","message":"","reason":"invalid_json","parser_error_type":"invalid_json"}
-    obj=next((o for o in parsed_objs if isinstance(o,dict) and "action" in o),parsed_objs[0])
-    act=obj.get("action") if isinstance(obj,dict) else None
-    if not act:
-        budget.parse_failures+=1
-        if isinstance(obj,dict) and any(k in obj for k in ("variant","agent_id","current_observation","task_status")):
-            return {"action":"wait","message":"","reason":"missing_action","parser_error_type":"copied_context_no_action"}
-        return {"action":"wait","message":"","reason":"missing_action","parser_error_type":"missing_action"}
-    if act not in allowed_actions:
-        budget.parse_failures+=1
-        return {"action":"wait","message":"","reason":"unsupported_action","parser_error_type":"unsupported_action"}
-    return {"action":act,"message":obj.get("message","") if isinstance(obj,dict) else "","reason":obj.get("reason","") if isinstance(obj,dict) else "","parser_error_type":"none"}
+    if not parsed_objects:
+        result = _failure(budget, "invalid_json")
+        result["target"] = fallback
+        return result
+
+    obj = next((item for item in parsed_objects if isinstance(item, dict) and "action" in item), parsed_objects[0])
+    if not isinstance(obj, dict) or not obj.get("action"):
+        copied_fields = {"variant", "agent_id", "current_observation", "task_status"}
+        error_type = "copied_context_no_action" if isinstance(obj, dict) and copied_fields.intersection(obj) else "missing_action"
+        result = _failure(budget, error_type)
+        result["target"] = fallback
+        return result
+
+    action = obj["action"]
+    options = [option for option in valid_actions if option.get("action") == action]
+    if not options:
+        result = _failure(budget, "unsupported_action")
+        result["target"] = fallback
+        return result
+
+    target = obj.get("target")
+    target_required = action in {"move", "pickup", "send_message"}
+    if target_required and (target is None or target == ""):
+        result = _failure(budget, "missing_target")
+        result["target"] = fallback
+        return result
+    if action in {"open_box", "rescue"} and target is not None:
+        result = _failure(budget, "invalid_target")
+        result["target"] = fallback
+        return result
+    if not any(option.get("target") == target for option in options):
+        result = _failure(budget, "invalid_target")
+        result["target"] = fallback
+        return result
+
+    message = obj.get("message", "")
+    if not isinstance(message, str):
+        result = _failure(budget, "invalid_message")
+        result["target"] = fallback
+        return result
+
+    return {
+        "action": action,
+        "target": target,
+        "message": message,
+        "reason": str(obj.get("reason", ""))[:200],
+        "parser_error_type": "none",
+        "parse_success": True,
+    }
