@@ -1,0 +1,79 @@
+{
+  "alpha_two_sided": 0.05,
+  "assumed_sd": [
+    0.5,
+    0.75,
+    1.0,
+    1.25,
+    1.5,
+    2.0
+  ],
+  "balancing_cells": 18,
+  "calls_per_variant_per_model": 8,
+  "candidate_n": [
+    36,
+    54,
+    72,
+    90,
+    108,
+    126,
+    144,
+    180,
+    216
+  ],
+  "document_labels": [
+    "PRE-IMPLEMENTATION STATISTICAL DESIGN",
+    "NOT A CONFIRMATORY MANIFEST"
+  ],
+  "experiment": "journal_j1_causal_partner_belief",
+  "factor_levels": {
+    "framing": 2,
+    "irrelevant_mismatch": 2,
+    "relevant_mismatch": 2
+  },
+  "final_inferential_method_frozen": false,
+  "fixed_delay_20s_reference_only": true,
+  "formulas": {
+    "ci95_half_width": "z_0.975*assumed_sd/sqrt(N)",
+    "mde": "(z_(1-alpha/2)+z_power)*assumed_sd/sqrt(N)",
+    "negative_control": "Delta_irrelevant = mean_i({[C_i(B,0,1)+C_i(B,1,1)]/2-[C_i(B,0,0)+C_i(B,1,0)]/2}-{[C_i(R,0,1)+C_i(R,1,1)]/2-[C_i(R,0,0)+C_i(R,1,0)]/2})",
+    "primary": "Delta_role = mean_i({[C_i(B,1,0)+C_i(B,1,1)]/2-[C_i(B,0,0)+C_i(B,0,1)]/2}-{[C_i(R,1,0)+C_i(R,1,1)]/2-[C_i(R,0,0)+C_i(R,0,1)]/2})"
+  },
+  "inferential_unit": "variant",
+  "n_frozen": false,
+  "negative_control_estimand": "Delta_irrelevant",
+  "normal_quantiles": {
+    "z_0.80": 0.8416212335729143,
+    "z_0.90": 1.2815515655446004,
+    "z_0.975": 1.959963984540054
+  },
+  "planned_archetypes": [
+    "resource_location",
+    "tool_placement",
+    "rendezvous_destination",
+    "delivery_destination",
+    "hazard_assignment",
+    "maintenance_target"
+  ],
+  "planned_difficulty_strata": [
+    "direct",
+    "irrelevant_distractor",
+    "compositional"
+  ],
+  "planning_approximation_only": true,
+  "planning_effect_grid": [
+    0.1,
+    0.15,
+    0.2,
+    0.25,
+    0.3
+  ],
+  "primary_estimand": "Delta_role",
+  "soei_frozen": false,
+  "stage": "pre_implementation_power_precision_planning",
+  "target_power": [
+    0.8,
+    0.9
+  ],
+  "uses_prior_behavioral_outcomes": false
+}

@@ -1,0 +1,9 @@
+# Mandatory GPT-OSS 120B confirmatory replication v1.0.0
+
+This is the precommitted replication required by the frozen confirmatory protocol regardless of the completed 20B treatment result. It uses collection batch `full_confirmatory_120b_dual_account_replication` and independently analyzes the same 432 prompts and 72 variants with the unchanged frozen analyzer. No 20B behavioral response, action, target, classification, analysis result, or transport outcome is read or used to adapt selection, assignment, ordering, stopping, thresholds, or metrics.
+
+The 432-row order, prompt text, valid actions, seeds, scenario bank, 72-variant credential assignment, structural balance, sequential 20-second delay, zero behavioral retries, 120-second timeout, strict schema, parser, classification, final gate, fail-closed behavior, confirmed-TPD-only whole-variant failover, exhausted-slot suppression, and terminal second-TPD behavior are inherited from the byte-frozen audited 20B execution engine. Temperature 0, top-p 1, maximum completion tokens 1024, low reasoning effort, excluded reasoning, non-streaming behavior, and absence of tools are unchanged. The sole scientific API configuration change is `openai/gpt-oss-20b` to `openai/gpt-oss-120b`.
+
+The unchanged analyzer retains the variant inferential unit, alpha, SOEI, Clopper–Pearson, McNemar, Holm, H1a interpretation, fingerprint diagnostic, subgroup policy, and descriptive-only credential-slot diagnostic. No cross-model inferential test or outcome-derived replication threshold is introduced.
+
+Runtime provenance records the actual `GITHUB_SHA` when supplied, otherwise null, plus the precommitted parent provenance: run 34036092185, execution SHA `e290e07b1a60ea12befb7f6c76a2fc7f0997a132`, artifact 9992434005, and artifact ZIP SHA-256 `0d87972d686e7cbc54aca181bd390add0af5fee335afe927473d0894d10e332e`.
