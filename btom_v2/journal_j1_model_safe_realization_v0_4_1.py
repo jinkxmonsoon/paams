@@ -76,7 +76,7 @@ def realize(record: dict[str, Any]) -> dict[str, Any]:
     if record["namespace"] == "development":
         ordinal = json.loads(DEVELOPMENT_PATH.read_text())["scenarios"].index(record)
         causal_first = ordinal % 2 == 0
-        action_correction_first = ordinal % 2 == 0
+        action_correction_first = ordinal % 4 in (0, 3)
     static = []
     if record["difficulty"] == "irrelevant_distractor":
         static = [f"The {context} roster closes at midday."]

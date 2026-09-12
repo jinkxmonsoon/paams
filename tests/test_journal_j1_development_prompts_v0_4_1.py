@@ -73,10 +73,20 @@ def test_orders_are_balanced_and_fixed(built):
     _, developments, prompts = built
     assert Counter(row["model_visible"]["proposition_order"] for row in developments) == {"causal_first": 9, "noncausal_first": 9}
     assert Counter(row["model_visible"]["action_order"][0] for row in developments) == {"SEND_CORRECTION": 9, "CONTINUE_TASK": 9}
+    assert Counter(
+        (row["model_visible"]["proposition_order"], row["model_visible"]["action_order"][0])
+        for row in developments
+    ) == {
+        ("causal_first", "SEND_CORRECTION"): 5,
+        ("causal_first", "CONTINUE_TASK"): 4,
+        ("noncausal_first", "SEND_CORRECTION"): 4,
+        ("noncausal_first", "CONTINUE_TASK"): 5,
+    }
     for variant in {row["variant_id"] for row in prompts}:
         rows = [row for row in prompts if row["variant_id"] == variant]
         assert len({row["proposition_order"] for row in rows}) == 1
         assert len({tuple(row["action_order"]) for row in rows}) == 1
+        assert len({(row["proposition_order"], tuple(row["action_order"])) for row in rows}) == 1
 
 
 def test_structured_depth_and_every_edge_is_rendered(built):

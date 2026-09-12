@@ -1,13 +1,16 @@
 name: Journal J1 prompt validation v0.4.1
 
 on:
-  workflow_dispatch:
+  push:
 
 permissions:
   contents: read
 
 jobs:
   validate:
+    if: >-
+      github.event.head_commit.message ==
+      'Run Journal J1 prompt validation [journal-j1-v0.4.1]'
     runs-on: ubuntu-latest
     timeout-minutes: 30
     steps:
@@ -23,6 +26,13 @@ jobs:
         run: |
           mkdir -p journal-j1-validation-artifact/generated
           printf '{"model_api_execution":false,"behavioral_observations":0,"confirmatory_prompts_generated":false,"icaart_reopened":false,"pilot_ready":false}\n' > journal-j1-validation-artifact/workflow_status.json
+          printf '%s\n' "${GITHUB_SHA}" > journal-j1-validation-artifact/source_commit_sha.txt
+          sha256sum \
+            btom_v2/journal_j1_model_safe_realization_v0_4_1.py \
+            btom_v2/journal_j1_development_prompting_v0_4_1.py \
+            tests/test_journal_j1_development_prompts_v0_4_1.py \
+            .github/workflows/journal_j1_prompt_validation_v0_4_1.yml \
+            > journal-j1-validation-artifact/implementation_hashes.txt
       - name: Verify immutable inputs
         shell: bash
         run: |
