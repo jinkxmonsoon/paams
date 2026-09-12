@@ -1,0 +1,86 @@
+name: Journal J1 prompt validation v0.4.2
+
+on:
+  push:
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    if: >-
+      github.event.head_commit.message ==
+      'Run Journal J1 framing parity validation [journal-j1-v0.4.2]'
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - name: Check out exact triggering SHA
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.sha }}
+      - name: Set up Python 3.11
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Initialize artifact directory
+        run: |
+          mkdir -p journal-j1-v0.4.2-artifact/generated
+          printf '%s\n' "${GITHUB_SHA}" > journal-j1-v0.4.2-artifact/source_commit_sha.txt
+          printf '{"model_api_execution":false,"behavioral_observations":0,"confirmatory_prompts_generated":false,"icaart_reopened":false,"pilot_ready":false}\n' > journal-j1-v0.4.2-artifact/workflow_status.json
+          sha256sum \
+            btom_v2/journal_j1_development_prompting_v0_4_2.py \
+            tests/test_journal_j1_development_prompts_v0_4_2.py \
+            .github/workflows/journal_j1_prompt_validation_v0_4_2.yml \
+            > journal-j1-v0.4.2-artifact/implementation_hashes.txt
+      - name: Verify immutable inputs
+        run: |
+          cat > journal-j1-v0.4.2-artifact/immutable_input_hashes.txt <<'EOF'
+          64c3b7fad886471830e4dfcb7160254fb83d829725010f1896fcd96396cbb247  btom_v2/journal_j1_confirmatory_candidate_frame_v0_3_0.json
+          4df0dd30a98bd333d4538fa3aa31e4712253152a5a7c189aabb0f1d0034da81f  btom_v2/journal_j1_confirmatory_selection_v0_3_0.json
+          ecf40e43a6d992311344f385d7b9ff57ca6abb14ccc3d4e5c0257caa5bf21c9f  btom_v2/journal_j1_development_scenarios_v0_3_0.json
+          170ffbe618901b667d43567a2b42a8ad49fa96b5cb7f3bb723b55354e66af24e  btom_v2/journal_j1_candidate_realizations_v0_4_0.json
+          83bb47c38c431946524d6876c233ed4e9589ff47d9e2ea99dbc350a7a66b96fb  btom_v2/journal_j1_development_realizations_v0_4_0.json
+          bb4e33c2a47fdb2a47e10bab2b0e4932eb5c7c536b317fc5e3ebc41505349dd1  btom_v2/journal_j1_development_prompts_v0_4_0.json
+          EOF
+          sha256sum --check journal-j1-v0.4.2-artifact/immutable_input_hashes.txt
+      - name: Install frozen dependencies
+        id: dependencies
+        run: |
+          python -m pip install --retries 0 tiktoken==0.13.0 openai-harmony==0.0.8 pytest==8.4.2
+          python - <<'PY' > journal-j1-v0.4.2-artifact/dependency_versions.txt
+          import importlib.metadata
+          for package in ('tiktoken', 'openai-harmony', 'pytest'):
+              print(f'{package}=={importlib.metadata.version(package)}')
+          PY
+      - name: Persist complete tokenizer candidate diagnostics
+        id: candidate_audit
+        continue-on-error: true
+        run: |
+          python -m btom_v2.journal_j1_development_prompting_v0_4_2 \
+            --audit-only --output-dir journal-j1-v0.4.2-artifact
+      - name: Run v0.4.2 validation tests
+        id: tests
+        if: always() && steps.dependencies.outcome == 'success'
+        shell: bash
+        run: |
+          set -o pipefail
+          PYTHONDONTWRITEBYTECODE=1 python -m pytest -q \
+            tests/test_journal_j1_development_prompts_v0_4_2.py \
+            2>&1 | tee journal-j1-v0.4.2-artifact/pytest.log
+      - name: Generate final tokenizer-validated artifacts
+        if: steps.candidate_audit.outcome == 'success' && steps.tests.outcome == 'success'
+        run: |
+          python -m btom_v2.journal_j1_development_prompting_v0_4_2 \
+            --output-dir journal-j1-v0.4.2-artifact/generated
+          cp journal-j1-v0.4.2-artifact/generated/workflow_status.json journal-j1-v0.4.2-artifact/workflow_status.json
+      - name: Upload validation artifact
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: journal-j1-prompt-validation-v0.4.2-${{ github.run_id }}
+          path: journal-j1-v0.4.2-artifact/
+          retention-days: 30
+          if-no-files-found: error
+      - name: Enforce fail-closed candidate selection
+        if: always() && steps.candidate_audit.outcome != 'success'
+        run: exit 1

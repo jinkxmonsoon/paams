@@ -1,0 +1,1049 @@
+{
+  "scenarios": [
+    {
+      "archetype": "resource_location",
+      "difficulty": "direct",
+      "model_visible_invariant": {
+        "focal_name": "Maren Quill",
+        "focal_task": "Maren Quill is completing the retrieval log.",
+        "isolation_rules": [
+          "A message from Maren Quill reaches Tobin Rook only and is not relayed to Yvette Vale.",
+          "Tobin Rook cannot alter Yvette Vale's assignment during this episode.",
+          "The two assignments use different objects, targets, routes, and actions.",
+          "The episode ends after both immediate assignments execute."
+        ],
+        "operator_assignment": "At the same time, Yvette Vale independently executes a separate retrieval assignment involving Canister Auburn.",
+        "operator_name": "Yvette Vale",
+        "partner_assignment": "Tobin Rook immediately executes a retrieval assignment involving Canister Aster after this turn.",
+        "partner_name": "Tobin Rook",
+        "partner_proposition_first": true,
+        "q_relation": {
+          "entity": "Canister Aster",
+          "false_value": "Bay Aster South",
+          "intermediate": null,
+          "path_depth": 1,
+          "semantic_type": "location",
+          "true_value": "Bay Aster North",
+          "visible_edges": [
+            {
+              "relation": "is assigned to",
+              "source": "Canister Aster",
+              "target": "Bay Aster North"
+            }
+          ]
+        },
+        "r_relation": {
+          "entity": "Canister Auburn",
+          "false_value": "Bay Auburn West",
+          "intermediate": null,
+          "path_depth": 1,
+          "semantic_type": "location",
+          "true_value": "Bay Auburn East",
+          "visible_edges": [
+            {
+              "relation": "is assigned to",
+              "source": "Canister Auburn",
+              "target": "Bay Auburn East"
+            }
+          ]
+        },
+        "send_correction_first": true,
+        "static_context": []
+      },
+      "namespace": "record_holdout",
+      "semantic_signature_sha256": "f8ee758cee72b294dceedf7ef8e453b108191711af42a5326fa40a62d7964ae9",
+      "variant_id": "J1H-RL-DIR-01"
+    },
+    {
+      "archetype": "resource_location",
+      "difficulty": "irrelevant_distractor",
+      "model_visible_invariant": {
+        "focal_name": "Nadia Quill",
+        "focal_task": "Nadia Quill is completing the retrieval log.",
+        "isolation_rules": [
+          "A message from Nadia Quill reaches Ulric Rook only and is not relayed to Zelda Vale.",
+          "Ulric Rook cannot alter Zelda Vale's assignment during this episode.",
+          "The two assignments use different objects, targets, routes, and actions.",
+          "The episode ends after both immediate assignments execute."
+        ],
+        "operator_assignment": "At the same time, Zelda Vale independently executes a separate retrieval assignment involving Canister Beryl.",
+        "operator_name": "Zelda Vale",
+        "partner_assignment": "Ulric Rook immediately executes a retrieval assignment involving Canister Boreal after this turn.",
+        "partner_name": "Ulric Rook",
+        "partner_proposition_first": false,
+        "q_relation": {
+          "entity": "Canister Boreal",
+          "false_value": "Bay Boreal South",
+          "intermediate": null,
+          "path_depth": 1,
+          "semantic_type": "location",
+          "true_value": "Bay Boreal North",
+          "visible_edges": [
+            {
+              "relation": "is assigned to",
+              "source": "Canister Boreal",
+              "target": "Bay Boreal North"
+            }
+          ]
+        },
+        "r_relation": {
+          "entity": "Canister Beryl",
+          "false_value": "Bay Beryl West",
+          "intermediate": null,
+          "path_depth": 1,
+          "semantic_type": "location",
+          "true_value": "Bay Beryl East",
+          "visible_edges": [
+            {
+              "relation": "is assigned to",
+              "source": "Canister Beryl",
+              "target": "Bay Beryl East"
+            }
+          ]
+        },
+        "send_correction_first": false,
+        "static_context": [
+          "The retrieval roster closes at dusk."
+        ]
+      },
+      "namespace": "record_holdout",
+      "semantic_signature_sha256": "14fe7117d31e117d01af27db92cf4ea6047016d86328b4c6b088f1924c02adc8",
+      "variant_id": "J1H-RL-DIS-01"
+    },
+    {
+      "archetype": "resource_location",
+      "difficulty": "compositional",
+      "model_visible_invariant": {
+        "focal_name": "Oren Quill",
+        "focal_task": "Oren Quill is completing the retrieval log.",
+        "isolation_rules": [
+          "A message from Oren Quill reaches Vesper Rook only and is not relayed to Amabel Vale.",
+          "Vesper Rook cannot alter Amabel Vale's assignment during this episode.",
+          "The two assignments use different objects, targets, routes, and actions.",
+          "The episode ends after both immediate assignments execute."
+        ],
+        "operator_assignment": "At the same time, Amabel Vale independently executes a separate retrieval assignment involving Canister Cirrus.",
+        "operator_name": "Amabel Vale",
+        "partner_assignment": "Vesper Rook immediately executes a retrieval assignment involving Canister Cinnabar after this turn.",
+        "partner_name": "Vesper Rook",
+        "partner_proposition_first": true,
+        "q_relation": {
+          "entity": "Canister Cinnabar",
+          "false_value": "Bay Cinnabar South",
+          "intermediate": "Retrieval group Cinnabar",
+          "path_depth": 2,
+          "semantic_type": "location",
+          "true_value": "Bay Cinnabar North",
+          "visible_edges": [
+            {
+              "relation": "belongs to",
+              "source": "Canister Cinnabar",
+              "target": "Retrieval group Cinnabar"
+            },
+            {
+              "relation": "is assigned to",
+              "source": "Retrieval group Cinnabar",
+              "target": "Bay Cinnabar North"
+            }
+          ]
+        },
+        "r_relation": {
+          "entity": "Canister Cirrus",
+          "false_value": "Bay Cirrus West",
+          "intermediate": "Retrieval group Cirrus",
+          "path_depth": 2,
+          "semantic_type": "location",
+          "true_value": "Bay Cirrus East",
+          "visible_edges": [
+            {
+              "relation": "belongs to",
+              "source": "Canister Cirrus",
+              "target": "Retrieval group Cirrus"
+            },
+            {
+              "relation": "is assigned to",
+              "source": "Retrieval group Cirrus",
+              "target": "Bay Cirrus East"
+            }
+          ]
+        },
+        "send_correction_first": false,
+        "static_context": []
+      },
+      "namespace": "record_holdout",
+      "semantic_signature_sha256": "42a86e4e0f93e6c98caf87b37141bd3e795a7b3bc647785648f0357c821f9ef1",
+      "variant_id": "J1H-RL-COM-01"
+    },
+    {
+      "archetype": "tool_placement",
+      "difficulty": "direct",
+      "model_visible_invariant": {
+        "focal_name": "Petra Quill",
+        "focal_task": "Petra Quill is completing the assembly log.",
+        "isolation_rules": [
+          "A message from Petra Quill reaches Warren Rook only and is not relayed to Benton Vale.",
+          "Warren Rook cannot alter Benton Vale's assignment during this episode.",
+          "The two assignments use different objects, targets, routes, and actions.",
+          "The episode ends after both immediate assignments execute."
+        ],
+        "operator_assignment": "At the same time, Benton Vale independently executes a separate assembly assignment involving Instrument Dovetail.",
+        "operator_name": "Benton Vale",
+        "partner_assignment": "Warren Rook immediately executes a assembly assignment involving Instrument Driftwood after this turn.",
+        "partner_name": "Warren Rook",
+        "partner_proposition_first": false,
+        "q_relation": {
+          "entity": "Instrument Driftwood",
+          "false_value": "Depot Driftwood South",
+          "intermediate": null,
+          "path_depth": 1,
+          "semantic_type": "location",
+          "true_value": "Depot Driftwood North",
+          "visible_edges": [
+            {
+              "relation": "is assigned to",
+              "source": "Instrument Driftwood",
+              "target": "Depot Driftwood North"
+            }
+          ]
+        },
+        "r_relation": {
+          "entity": "Instrument Dovetail",
+          "false_value": "Depot Dovetail West",
+          "intermediate": null,
+          "path_depth": 1,
+          "semantic_type": "location",
+          "true_value": "Depot Dovetail East",
+          "visible_edges": [
+            {
+              "relation": "is assigned to",
+              "source": "Instrument Dovetail",
+              "target": "Depot Dovetail East"
+            }
+          ]
+        },
+        "send_correction_first": true,
+        "static_context": []
+      },
+      "namespace": "record_holdout",
+      "semantic_signature_sha256": "26e849af030177d64a444d7eb809854120943093910db789ab142dec2391a709",
+      "variant_id": "J1H-TP-DIR-01"
+    },
+    {
+      "archetype": "tool_placement",
+      "difficulty": "irrelevant_distractor",
+      "model_visible_invariant": {
+        "focal_name": "Ronan Quill",
+        "focal_task": "Ronan Quill is completing the assembly log.",
+        "isolation_rules": [
+          "A message from Ronan Quill reaches Xanthe Rook only and is not relayed to Cleo Vale.",
+          "Xanthe Rook cannot alter Cleo Vale's assignment during this episode.",
+          "The two assignments use different objects, targets, routes, and actions.",
+          "The episode ends after both immediate assignments execute."
+        ],
+        "operator_assignment": "At the same time, Cleo Vale independently executes a separate assembly assignment involving Instrument Estuary.",
+        "operator_name": "Cleo Vale",
+        "partner_assignment": "Xanthe Rook immediately executes a assembly assignment involving Instrument Evergreen after this turn.",
+        "partner_name": "Xanthe Rook",
+        "partner_proposition_first": true,
+        "q_relation": {
+          "entity": "Instrument Evergreen",
+          "false_value": "Depot Evergreen South",
+          "intermediate": null,
+          "path_depth": 1,
+          "semantic_type": "location",
+          "true_value": "Depot Evergreen North",
+          "visible_edges": [
+            {
+              "relation": "is assigned to",
+              "source": "Instrument Evergreen",
+              "target": "Depot Evergreen North"
+            }
+          ]
+        },
+        "r_relation": {
+          "entity": "Instrument Estuary",
+          "false_value": "Depot Estuary West",
+          "intermediate": null,
+          "path_depth": 1,
+          "semantic_type": "location",
+          "true_value": "Depot Estuary East",
+          "visible_edges": [
+            {
+              "relation": "is assigned to",
+              "source": "Instrument Estuary",
+              "target": "Depot Estuary East"
+            }
+          ]
+        },
+        "send_correction_first": true,
+        "static_context": [
+          "The assembly roster closes at dusk."
+        ]
+      },
+      "namespace": "record_holdout",
+      "semantic_signature_sha256": "8a9780c5ba84ba22643f250f66cd7e96cfa674b88e800c81a0a7ac4b30fa489c",
+      "variant_id": "J1H-TP-DIS-01"
+    },
+    {
+      "archetype": "tool_placement",
+      "difficulty": "compositional",
+      "model_visible_invariant": {
+        "focal_name": "Selene Quill",
+        "focal_task": "Selene Quill is completing the assembly log.",
+        "isolation_rules": [
+          "A message from Selene Quill reaches Yorick Rook only and is not relayed to Della Vale.",
+          "Yorick Rook cannot alter Della Vale's assignment during this episode.",
+          "The two assignments use different objects, targets, routes, and actions.",
+          "The episode ends after both immediate assignments execute."
+        ],
+        "operator_assignment": "At the same time, Della Vale independently executes a separate assembly assignment involving Instrument Firelight.",
+        "operator_name": "Della Vale",
+        "partner_assignment": "Yorick Rook immediately executes a assembly assignment involving Instrument Foxglove after this turn.",
+        "partner_name": "Yorick Rook",
+        "partner_proposition_first": false,
+        "q_relation": {
+          "entity": "Instrument Foxglove",
+          "false_value": "Depot Foxglove South",
+          "intermediate": "Assembly group Foxglove",
+          "path_depth": 2,
+          "semantic_type": "location",
+          "true_value": "Depot Foxglove North",
+          "visible_edges": [
+            {
+              "relation": "belongs to",
+              "source": "Instrument Foxglove",
+              "target": "Assembly group Foxglove"
+            },
+            {
+              "relation": "is assigned to",
+              "source": "Assembly group Foxglove",
+              "target": "Depot Foxglove North"
+            }
+          ]
+        },
+        "r_relation": {
+          "entity": "Instrument Firelight",
+          "false_value": "Depot Firelight West",
+          "intermediate": "Assembly group Firelight",
+          "path_depth": 2,
+          "semantic_type": "location",
+          "true_value": "Depot Firelight East",
+          "visible_edges": [
+            {
+              "relation": "belongs to",
+              "source": "Instrument Firelight",
+              "target": "Assembly group Firelight"
+            },
+            {
+              "relation": "is assigned to",
+              "source": "Assembly group Firelight",
+              "target": "Depot Firelight East"
+            }
+          ]
+        },
+        "send_correction_first": false,
+        "static_context": []
+      },
+      "namespace": "record_holdout",
+      "semantic_signature_sha256": "d6ea95eac9c6487964da84887819aae288642826150c723c40c375eeffc83308",
+      "variant_id": "J1H-TP-COM-01"
+    },
+    {
+      "archetype": "rendezvous_destination",
+      "difficulty": "direct",
+      "model_visible_invariant": {
+        "focal_name": "Theron Quill",
+        "focal_task": "Theron Quill is completing the rendezvous log.",
+        "isolation_rules": [
+          "A message from Theron Quill reaches Zinnia Rook only and is not relayed to Eamon Vale.",
+          "Zinnia Rook cannot alter Eamon Vale's assignment during this episode.",
+          "The two assignments use different objects, targets, routes, and actions.",
+          "The episode ends after both immediate assignments execute."
+        ],
+        "operator_assignment": "At the same time, Eamon Vale independently executes a separate rendezvous assignment involving Team Marker Glacier.",
+        "operator_name": "Eamon Vale",
+        "partner_assignment": "Zinnia Rook immediately executes a rendezvous assignment involving Team Marker Garnet after this turn.",
+        "partner_name": "Zinnia Rook",
+        "partner_proposition_first": true,
+        "q_relation": {
+          "entity": "Team Marker Garnet",
+          "false_value": "Gate Garnet South",
+          "intermediate": null,
+          "path_depth": 1,
+          "semantic_type": "destination",
+          "true_value": "Gate Garnet North",
+          "visible_edges": [
+            {
+              "relation": "is assigned to",
+              "source": "Team Marker Garnet",
+              "target": "Gate Garnet North"
+            }
+          ]
+        },
+        "r_relation": {
+          "entity": "Team Marker Glacier",
+          "false_value": "Gate Glacier West",
+          "intermediate": null,
+          "path_depth": 1,
+          "semantic_type": "destination",
+          "true_value": "Gate Glacier East",
+          "visible_edges": [
+            {
+              "relation": "is assigned to",
+              "source": "Team Marker Glacier",
+              "target": "Gate Glacier East"
+            }
+          ]
+        },
+        "send_correction_first": false,
+        "static_context": []
+      },
+      "namespace": "record_holdout",
+      "semantic_signature_sha256": "c7d12ffc4fc6f02ad96d7b0573be103ddc729fcdc837408fd7d17c68801f99c0",
+      "variant_id": "J1H-RD-DIR-01"
+    },
+    {
+      "archetype": "rendezvous_destination",
+      "difficulty": "irrelevant_distractor",
+      "model_visible_invariant": {
+        "focal_name": "Valora Quill",
+        "focal_task": "Valora Quill is completing the rendezvous log.",
+        "isolation_rules": [
+          "A message from Valora Quill reaches Arden Rook only and is not relayed to Faye Vale.",
+          "Arden Rook cannot alter Faye Vale's assignment during this episode.",
+          "The two assignments use different objects, targets, routes, and actions.",
+          "The episode ends after both immediate assignments execute."
+        ],
+        "operator_assignment": "At the same time, Faye Vale independently executes a separate rendezvous assignment involving Team Marker Highland.",
+        "operator_name": "Faye Vale",
+        "partner_assignment": "Arden Rook immediately executes a rendezvous assignment involving Team Marker Heather after this turn.",
+        "partner_name": "Arden Rook",
+        "partner_proposition_first": false,
+        "q_relation": {
+          "entity": "Team Marker Heather",
+          "false_value": "Gate Heather South",
+          "intermediate": null,
+          "path_depth": 1,
+          "semantic_type": "destination",
+          "true_value": "Gate Heather North",
+          "visible_edges": [
+            {
+              "relation": "is assigned to",
+              "source": "Team Marker Heather",
+              "target": "Gate Heather North"
+            }
+          ]
+        },
+        "r_relation": {
+          "entity": "Team Marker Highland",
+          "false_value": "Gate Highland West",
+          "intermediate": null,
+          "path_depth": 1,
+          "semantic_type": "destination",
+          "true_value": "Gate Highland East",
+          "visible_edges": [
+            {
+              "relation": "is assigned to",
+              "source": "Team Marker Highland",
+              "target": "Gate Highland East"
+            }
+          ]
+        },
+        "send_correction_first": true,
+        "static_context": [
+          "The rendezvous roster closes at dusk."
+        ]
+      },
+      "namespace": "record_holdout",
+      "semantic_signature_sha256": "60dab34e597dea5fbf07e1878498dbf8e4b366ceee1234e0fbe88a3e76684702",
+      "variant_id": "J1H-RD-DIS-01"
+    },
+    {
+      "archetype": "rendezvous_destination",
+      "difficulty": "compositional",
+      "model_visible_invariant": {
+        "focal_name": "Wilfred Quill",
+        "focal_task": "Wilfred Quill is completing the rendezvous log.",
+        "isolation_rules": [
+          "A message from Wilfred Quill reaches Briony Rook only and is not relayed to Galen Vale.",
+          "Briony Rook cannot alter Galen Vale's assignment during this episode.",
+          "The two assignments use different objects, targets, routes, and actions.",
+          "The episode ends after both immediate assignments execute."
+        ],
+        "operator_assignment": "At the same time, Galen Vale independently executes a separate rendezvous assignment involving Team Marker Inlet.",
+        "operator_name": "Galen Vale",
+        "partner_assignment": "Briony Rook immediately executes a rendezvous assignment involving Team Marker Ironwood after this turn.",
+        "partner_name": "Briony Rook",
+        "partner_proposition_first": true,
+        "q_relation": {
+          "entity": "Team Marker Ironwood",
+          "false_value": "Gate Ironwood South",
+          "intermediate": "Rendezvous group Ironwood",
+          "path_depth": 2,
+          "semantic_type": "destination",
+          "true_value": "Gate Ironwood North",
+          "visible_edges": [
+            {
+              "relation": "belongs to",
+              "source": "Team Marker Ironwood",
+              "target": "Rendezvous group Ironwood"
+            },
+            {
+              "relation": "is assigned to",
+              "source": "Rendezvous group Ironwood",
+              "target": "Gate Ironwood North"
+            }
+          ]
+        },
+        "r_relation": {
+          "entity": "Team Marker Inlet",
+          "false_value": "Gate Inlet West",
+          "intermediate": "Rendezvous group Inlet",
+          "path_depth": 2,
+          "semantic_type": "destination",
+          "true_value": "Gate Inlet East",
+          "visible_edges": [
+            {
+              "relation": "belongs to",
+              "source": "Team Marker Inlet",
+              "target": "Rendezvous group Inlet"
+            },
+            {
+              "relation": "is assigned to",
+              "source": "Rendezvous group Inlet",
+              "target": "Gate Inlet East"
+            }
+          ]
+        },
+        "send_correction_first": true,
+        "static_context": []
+      },
+      "namespace": "record_holdout",
+      "semantic_signature_sha256": "a9ae916e66beb3406b95a322fd7365b025d464231be18ab6eb7055710fddecc7",
+      "variant_id": "J1H-RD-COM-01"
+    },
+    {
+      "archetype": "delivery_destination",
+      "difficulty": "direct",
+      "model_visible_invariant": {
+        "focal_name": "Xiomara Quill",
+        "focal_task": "Xiomara Quill is completing the delivery log.",
+        "isolation_rules": [
+          "A message from Xiomara Quill reaches Corwin Rook only and is not relayed to Helena Vale.",
+          "Corwin Rook cannot alter Helena Vale's assignment during this episode.",
+          "The two assignments use different objects, targets, routes, and actions.",
+          "The episode ends after both immediate assignments execute."
+        ],
+        "operator_assignment": "At the same time, Helena Vale independently executes a separate delivery assignment involving Parcel Jetty.",
+        "operator_name": "Helena Vale",
+        "partner_assignment": "Corwin Rook immediately executes a delivery assignment involving Parcel Kingfisher after this turn.",
+        "partner_name": "Corwin Rook",
+        "partner_proposition_first": false,
+        "q_relation": {
+          "entity": "Parcel Kingfisher",
+          "false_value": "Dock Kingfisher South",
+          "intermediate": null,
+          "path_depth": 1,
+          "semantic_type": "destination",
+          "true_value": "Dock Kingfisher North",
+          "visible_edges": [
+            {
+              "relation": "is assigned to",
+              "source": "Parcel Kingfisher",
+              "target": "Dock Kingfisher North"
+            }
+          ]
+        },
+        "r_relation": {
+          "entity": "Parcel Jetty",
+          "false_value": "Dock Jetty West",
+          "intermediate": null,
+          "path_depth": 1,
+          "semantic_type": "destination",
+          "true_value": "Dock Jetty East",
+          "visible_edges": [
+            {
+              "relation": "is assigned to",
+              "source": "Parcel Jetty",
+              "target": "Dock Jetty East"
+            }
+          ]
+        },
+        "send_correction_first": false,
+        "static_context": []
+      },
+      "namespace": "record_holdout",
+      "semantic_signature_sha256": "202cd767b577be3f4272b313ad3b24a5ba3901885d36ff2538df317fb7d0bb97",
+      "variant_id": "J1H-DD-DIR-01"
+    },
+    {
+      "archetype": "delivery_destination",
+      "difficulty": "irrelevant_distractor",
+      "model_visible_invariant": {
+        "focal_name": "Yasmin Quill",
+        "focal_task": "Yasmin Quill is completing the delivery log.",
+        "isolation_rules": [
+          "A message from Yasmin Quill reaches Darius Rook only and is not relayed to Isolde Vale.",
+          "Darius Rook cannot alter Isolde Vale's assignment during this episode.",
+          "The two assignments use different objects, targets, routes, and actions.",
+          "The episode ends after both immediate assignments execute."
+        ],
+        "operator_assignment": "At the same time, Isolde Vale independently executes a separate delivery assignment involving Parcel Keystone.",
+        "operator_name": "Isolde Vale",
+        "partner_assignment": "Darius Rook immediately executes a delivery assignment involving Parcel Lodestar after this turn.",
+        "partner_name": "Darius Rook",
+        "partner_proposition_first": true,
+        "q_relation": {
+          "entity": "Parcel Lodestar",
+          "false_value": "Dock Lodestar South",
+          "intermediate": null,
+          "path_depth": 1,
+          "semantic_type": "destination",
+          "true_value": "Dock Lodestar North",
+          "visible_edges": [
+            {
+              "relation": "is assigned to",
+              "source": "Parcel Lodestar",
+              "target": "Dock Lodestar North"
+            }
+          ]
+        },
+        "r_relation": {
+          "entity": "Parcel Keystone",
+          "false_value": "Dock Keystone West",
+          "intermediate": null,
+          "path_depth": 1,
+          "semantic_type": "destination",
+          "true_value": "Dock Keystone East",
+          "visible_edges": [
+            {
+              "relation": "is assigned to",
+              "source": "Parcel Keystone",
+              "target": "Dock Keystone East"
+            }
+          ]
+        },
+        "send_correction_first": false,
+        "static_context": [
+          "The delivery roster closes at dusk."
+        ]
+      },
+      "namespace": "record_holdout",
+      "semantic_signature_sha256": "9ac59f6ed310507f29e6cfcaffb0093c80202113b10f2ec804d790d3a0ac30a5",
+      "variant_id": "J1H-DD-DIS-01"
+    },
+    {
+      "archetype": "delivery_destination",
+      "difficulty": "compositional",
+      "model_visible_invariant": {
+        "focal_name": "Zephyr Quill",
+        "focal_task": "Zephyr Quill is completing the delivery log.",
+        "isolation_rules": [
+          "A message from Zephyr Quill reaches Elowen Rook only and is not relayed to Jareth Vale.",
+          "Elowen Rook cannot alter Jareth Vale's assignment during this episode.",
+          "The two assignments use different objects, targets, routes, and actions.",
+          "The episode ends after both immediate assignments execute."
+        ],
+        "operator_assignment": "At the same time, Jareth Vale independently executes a separate delivery assignment involving Parcel Lowland.",
+        "operator_name": "Jareth Vale",
+        "partner_assignment": "Elowen Rook immediately executes a delivery assignment involving Parcel Moonstone after this turn.",
+        "partner_name": "Elowen Rook",
+        "partner_proposition_first": false,
+        "q_relation": {
+          "entity": "Parcel Moonstone",
+          "false_value": "Dock Moonstone South",
+          "intermediate": "Delivery group Moonstone",
+          "path_depth": 2,
+          "semantic_type": "destination",
+          "true_value": "Dock Moonstone North",
+          "visible_edges": [
+            {
+              "relation": "belongs to",
+              "source": "Parcel Moonstone",
+              "target": "Delivery group Moonstone"
+            },
+            {
+              "relation": "is assigned to",
+              "source": "Delivery group Moonstone",
+              "target": "Dock Moonstone North"
+            }
+          ]
+        },
+        "r_relation": {
+          "entity": "Parcel Lowland",
+          "false_value": "Dock Lowland West",
+          "intermediate": "Delivery group Lowland",
+          "path_depth": 2,
+          "semantic_type": "destination",
+          "true_value": "Dock Lowland East",
+          "visible_edges": [
+            {
+              "relation": "belongs to",
+              "source": "Parcel Lowland",
+              "target": "Delivery group Lowland"
+            },
+            {
+              "relation": "is assigned to",
+              "source": "Delivery group Lowland",
+              "target": "Dock Lowland East"
+            }
+          ]
+        },
+        "send_correction_first": true,
+        "static_context": []
+      },
+      "namespace": "record_holdout",
+      "semantic_signature_sha256": "525eb74a3a36bf0b9132de5db173cd43bda23adc2ef45343e34b975e474101fb",
+      "variant_id": "J1H-DD-COM-01"
+    },
+    {
+      "archetype": "hazard_assignment",
+      "difficulty": "direct",
+      "model_visible_invariant": {
+        "focal_name": "Althea Quill",
+        "focal_task": "Althea Quill is completing the inspection log.",
+        "isolation_rules": [
+          "A message from Althea Quill reaches Fintan Rook only and is not relayed to Kerensa Vale.",
+          "Fintan Rook cannot alter Kerensa Vale's assignment during this episode.",
+          "The two assignments use different objects, targets, routes, and actions.",
+          "The episode ends after both immediate assignments execute."
+        ],
+        "operator_assignment": "At the same time, Kerensa Vale independently executes a separate inspection assignment involving Survey Packet Monarch.",
+        "operator_name": "Kerensa Vale",
+        "partner_assignment": "Fintan Rook immediately executes a inspection assignment involving Survey Packet Northwind after this turn.",
+        "partner_name": "Fintan Rook",
+        "partner_proposition_first": true,
+        "q_relation": {
+          "entity": "Survey Packet Northwind",
+          "false_value": "Sector Northwind South",
+          "intermediate": null,
+          "path_depth": 1,
+          "semantic_type": "sector",
+          "true_value": "Sector Northwind North",
+          "visible_edges": [
+            {
+              "relation": "is assigned to",
+              "source": "Survey Packet Northwind",
+              "target": "Sector Northwind North"
+            }
+          ]
+        },
+        "r_relation": {
+          "entity": "Survey Packet Monarch",
+          "false_value": "Sector Monarch West",
+          "intermediate": null,
+          "path_depth": 1,
+          "semantic_type": "sector",
+          "true_value": "Sector Monarch East",
+          "visible_edges": [
+            {
+              "relation": "is assigned to",
+              "source": "Survey Packet Monarch",
+              "target": "Sector Monarch East"
+            }
+          ]
+        },
+        "send_correction_first": true,
+        "static_context": []
+      },
+      "namespace": "record_holdout",
+      "semantic_signature_sha256": "1ccd88d4b0b5404fc5ea83b1883c7355d20a1e593844c0b0b0996b06c059b206",
+      "variant_id": "J1H-HA-DIR-01"
+    },
+    {
+      "archetype": "hazard_assignment",
+      "difficulty": "irrelevant_distractor",
+      "model_visible_invariant": {
+        "focal_name": "Bastian Quill",
+        "focal_task": "Bastian Quill is completing the inspection log.",
+        "isolation_rules": [
+          "A message from Bastian Quill reaches Gwyneira Rook only and is not relayed to Lorcan Vale.",
+          "Gwyneira Rook cannot alter Lorcan Vale's assignment during this episode.",
+          "The two assignments use different objects, targets, routes, and actions.",
+          "The episode ends after both immediate assignments execute."
+        ],
+        "operator_assignment": "At the same time, Lorcan Vale independently executes a separate inspection assignment involving Survey Packet Nightingale.",
+        "operator_name": "Lorcan Vale",
+        "partner_assignment": "Gwyneira Rook immediately executes a inspection assignment involving Survey Packet Osprey after this turn.",
+        "partner_name": "Gwyneira Rook",
+        "partner_proposition_first": false,
+        "q_relation": {
+          "entity": "Survey Packet Osprey",
+          "false_value": "Sector Osprey South",
+          "intermediate": null,
+          "path_depth": 1,
+          "semantic_type": "sector",
+          "true_value": "Sector Osprey North",
+          "visible_edges": [
+            {
+              "relation": "is assigned to",
+              "source": "Survey Packet Osprey",
+              "target": "Sector Osprey North"
+            }
+          ]
+        },
+        "r_relation": {
+          "entity": "Survey Packet Nightingale",
+          "false_value": "Sector Nightingale West",
+          "intermediate": null,
+          "path_depth": 1,
+          "semantic_type": "sector",
+          "true_value": "Sector Nightingale East",
+          "visible_edges": [
+            {
+              "relation": "is assigned to",
+              "source": "Survey Packet Nightingale",
+              "target": "Sector Nightingale East"
+            }
+          ]
+        },
+        "send_correction_first": false,
+        "static_context": [
+          "The inspection roster closes at dusk."
+        ]
+      },
+      "namespace": "record_holdout",
+      "semantic_signature_sha256": "70ec379bd8427e97a0704b86e2c8b20ee3fba3b7e8043787369f024e5ee1daf3",
+      "variant_id": "J1H-HA-DIS-01"
+    },
+    {
+      "archetype": "hazard_assignment",
+      "difficulty": "compositional",
+      "model_visible_invariant": {
+        "focal_name": "Calista Quill",
+        "focal_task": "Calista Quill is completing the inspection log.",
+        "isolation_rules": [
+          "A message from Calista Quill reaches Hadley Rook only and is not relayed to Meliora Vale.",
+          "Hadley Rook cannot alter Meliora Vale's assignment during this episode.",
+          "The two assignments use different objects, targets, routes, and actions.",
+          "The episode ends after both immediate assignments execute."
+        ],
+        "operator_assignment": "At the same time, Meliora Vale independently executes a separate inspection assignment involving Survey Packet Overlook.",
+        "operator_name": "Meliora Vale",
+        "partner_assignment": "Hadley Rook immediately executes a inspection assignment involving Survey Packet Primrose after this turn.",
+        "partner_name": "Hadley Rook",
+        "partner_proposition_first": true,
+        "q_relation": {
+          "entity": "Survey Packet Primrose",
+          "false_value": "Sector Primrose South",
+          "intermediate": "Inspection group Primrose",
+          "path_depth": 2,
+          "semantic_type": "sector",
+          "true_value": "Sector Primrose North",
+          "visible_edges": [
+            {
+              "relation": "belongs to",
+              "source": "Survey Packet Primrose",
+              "target": "Inspection group Primrose"
+            },
+            {
+              "relation": "is assigned to",
+              "source": "Inspection group Primrose",
+              "target": "Sector Primrose North"
+            }
+          ]
+        },
+        "r_relation": {
+          "entity": "Survey Packet Overlook",
+          "false_value": "Sector Overlook West",
+          "intermediate": "Inspection group Overlook",
+          "path_depth": 2,
+          "semantic_type": "sector",
+          "true_value": "Sector Overlook East",
+          "visible_edges": [
+            {
+              "relation": "belongs to",
+              "source": "Survey Packet Overlook",
+              "target": "Inspection group Overlook"
+            },
+            {
+              "relation": "is assigned to",
+              "source": "Inspection group Overlook",
+              "target": "Sector Overlook East"
+            }
+          ]
+        },
+        "send_correction_first": false,
+        "static_context": []
+      },
+      "namespace": "record_holdout",
+      "semantic_signature_sha256": "fbed3c0db812aeb00dc1df763548963547527d7bb10653c71fac2432ebfd6532",
+      "variant_id": "J1H-HA-COM-01"
+    },
+    {
+      "archetype": "maintenance_target",
+      "difficulty": "direct",
+      "model_visible_invariant": {
+        "focal_name": "Dorian Quill",
+        "focal_task": "Dorian Quill is completing the maintenance log.",
+        "isolation_rules": [
+          "A message from Dorian Quill reaches Ianthe Rook only and is not relayed to Nevan Vale.",
+          "Ianthe Rook cannot alter Nevan Vale's assignment during this episode.",
+          "The two assignments use different objects, targets, routes, and actions.",
+          "The episode ends after both immediate assignments execute."
+        ],
+        "operator_assignment": "At the same time, Nevan Vale independently executes a separate maintenance assignment involving Service Ticket Palisade.",
+        "operator_name": "Nevan Vale",
+        "partner_assignment": "Ianthe Rook immediately executes a maintenance assignment involving Service Ticket Redwood after this turn.",
+        "partner_name": "Ianthe Rook",
+        "partner_proposition_first": false,
+        "q_relation": {
+          "entity": "Service Ticket Redwood",
+          "false_value": "Module Redwood South",
+          "intermediate": null,
+          "path_depth": 1,
+          "semantic_type": "component",
+          "true_value": "Module Redwood North",
+          "visible_edges": [
+            {
+              "relation": "is assigned to",
+              "source": "Service Ticket Redwood",
+              "target": "Module Redwood North"
+            }
+          ]
+        },
+        "r_relation": {
+          "entity": "Service Ticket Palisade",
+          "false_value": "Module Palisade West",
+          "intermediate": null,
+          "path_depth": 1,
+          "semantic_type": "component",
+          "true_value": "Module Palisade East",
+          "visible_edges": [
+            {
+              "relation": "is assigned to",
+              "source": "Service Ticket Palisade",
+              "target": "Module Palisade East"
+            }
+          ]
+        },
+        "send_correction_first": true,
+        "static_context": []
+      },
+      "namespace": "record_holdout",
+      "semantic_signature_sha256": "5e6538cce0a90fb3bc619d6ff992b52df67b1f5930d2204b3f21b859dfa5b3ca",
+      "variant_id": "J1H-MT-DIR-01"
+    },
+    {
+      "archetype": "maintenance_target",
+      "difficulty": "irrelevant_distractor",
+      "model_visible_invariant": {
+        "focal_name": "Evadne Quill",
+        "focal_task": "Evadne Quill is completing the maintenance log.",
+        "isolation_rules": [
+          "A message from Evadne Quill reaches Jago Rook only and is not relayed to Ottilie Vale.",
+          "Jago Rook cannot alter Ottilie Vale's assignment during this episode.",
+          "The two assignments use different objects, targets, routes, and actions.",
+          "The episode ends after both immediate assignments execute."
+        ],
+        "operator_assignment": "At the same time, Ottilie Vale independently executes a separate maintenance assignment involving Service Ticket Rivermark.",
+        "operator_name": "Ottilie Vale",
+        "partner_assignment": "Jago Rook immediately executes a maintenance assignment involving Service Ticket Seabrook after this turn.",
+        "partner_name": "Jago Rook",
+        "partner_proposition_first": true,
+        "q_relation": {
+          "entity": "Service Ticket Seabrook",
+          "false_value": "Module Seabrook South",
+          "intermediate": null,
+          "path_depth": 1,
+          "semantic_type": "component",
+          "true_value": "Module Seabrook North",
+          "visible_edges": [
+            {
+              "relation": "is assigned to",
+              "source": "Service Ticket Seabrook",
+              "target": "Module Seabrook North"
+            }
+          ]
+        },
+        "r_relation": {
+          "entity": "Service Ticket Rivermark",
+          "false_value": "Module Rivermark West",
+          "intermediate": null,
+          "path_depth": 1,
+          "semantic_type": "component",
+          "true_value": "Module Rivermark East",
+          "visible_edges": [
+            {
+              "relation": "is assigned to",
+              "source": "Service Ticket Rivermark",
+              "target": "Module Rivermark East"
+            }
+          ]
+        },
+        "send_correction_first": true,
+        "static_context": [
+          "The maintenance roster closes at dusk."
+        ]
+      },
+      "namespace": "record_holdout",
+      "semantic_signature_sha256": "ff90827260221227c111022a355e2d1cbf07f7f19c52ecae0959987e3d0b95db",
+      "variant_id": "J1H-MT-DIS-01"
+    },
+    {
+      "archetype": "maintenance_target",
+      "difficulty": "compositional",
+      "model_visible_invariant": {
+        "focal_name": "Faolan Quill",
+        "focal_task": "Faolan Quill is completing the maintenance log.",
+        "isolation_rules": [
+          "A message from Faolan Quill reaches Keturah Rook only and is not relayed to Peregrine Vale.",
+          "Keturah Rook cannot alter Peregrine Vale's assignment during this episode.",
+          "The two assignments use different objects, targets, routes, and actions.",
+          "The episode ends after both immediate assignments execute."
+        ],
+        "operator_assignment": "At the same time, Peregrine Vale independently executes a separate maintenance assignment involving Service Ticket Starling.",
+        "operator_name": "Peregrine Vale",
+        "partner_assignment": "Keturah Rook immediately executes a maintenance assignment involving Service Ticket Windward after this turn.",
+        "partner_name": "Keturah Rook",
+        "partner_proposition_first": false,
+        "q_relation": {
+          "entity": "Service Ticket Windward",
+          "false_value": "Module Windward South",
+          "intermediate": "Maintenance group Windward",
+          "path_depth": 2,
+          "semantic_type": "component",
+          "true_value": "Module Windward North",
+          "visible_edges": [
+            {
+              "relation": "belongs to",
+              "source": "Service Ticket Windward",
+              "target": "Maintenance group Windward"
+            },
+            {
+              "relation": "is assigned to",
+              "source": "Maintenance group Windward",
+              "target": "Module Windward North"
+            }
+          ]
+        },
+        "r_relation": {
+          "entity": "Service Ticket Starling",
+          "false_value": "Module Starling West",
+          "intermediate": "Maintenance group Starling",
+          "path_depth": 2,
+          "semantic_type": "component",
+          "true_value": "Module Starling East",
+          "visible_edges": [
+            {
+              "relation": "belongs to",
+              "source": "Service Ticket Starling",
+              "target": "Maintenance group Starling"
+            },
+            {
+              "relation": "is assigned to",
+              "source": "Maintenance group Starling",
+              "target": "Module Starling East"
+            }
+          ]
+        },
+        "send_correction_first": false,
+        "static_context": []
+      },
+      "namespace": "record_holdout",
+      "semantic_signature_sha256": "fd1e84ef986972641f1618a372d4ff7d28c87b401617960b2f8ee2ff35c7a42c",
+      "variant_id": "J1H-MT-COM-01"
+    }
+  ],
+  "variant_count": 18
+}

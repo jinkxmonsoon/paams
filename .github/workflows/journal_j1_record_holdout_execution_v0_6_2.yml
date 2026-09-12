@@ -1,0 +1,64 @@
+name: Journal J1 GPT-OSS-20B record-only held-out causal-control validation v0.6.2
+on:
+  push:
+permissions:
+  contents: read
+jobs:
+  execute:
+    if: github.event.head_commit.message == 'Retry Journal J1 record-only held-out causal-control validation [journal-j1-v0.6.2b]'
+    runs-on: ubuntu-latest
+    timeout-minutes: 90
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.sha }}
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Initialize artifact
+        run: |
+          mkdir -p artifact/validation
+          printf '%s\n' "$GITHUB_SHA" > artifact/source_commit_sha.txt
+          printf '{"requested_calls":72,"attempted_calls":0,"complete_calls":0,"technical_pass":false,"behavioral_observations":0,"confirmatory_prompts_generated":false,"icaart_reopened":false}\n' > artifact/workflow_status.json
+          sha256sum btom_v2/run_journal_j1_record_holdout_v0_6_2.py btom_v2/journal_j1_record_holdout_execution_manifest_v0_6_2.json tests/test_journal_j1_record_holdout_execution_v0_6_2.py .github/workflows/journal_j1_record_holdout_execution_v0_6_2.yml > artifact/implementation_hashes.txt
+      - name: Install frozen dependencies
+        run: |
+          python -m pip install --retries 0 tiktoken==0.13.0 openai-harmony==0.0.8 pytest==8.4.2
+          python - <<'PY' > artifact/dependency_versions.txt
+          import importlib.metadata as m
+          for p in ('tiktoken','openai-harmony','pytest'): print(f'{p}=={m.version(p)}')
+          PY
+      - name: Regenerate and validate v0.6.1
+        run: |
+          python -m btom_v2.journal_j1_record_holdout_prompting_v0_6_1 --output-dir artifact/validation --harmony-validate
+          cat > /tmp/hashes <<'EOF'
+          1cd07afe85d59ffd8a04959c0bf94a1ffcc8c813348cfd7060a960e4989ad046  journal_j1_record_holdout_prompts_v0_6_1.json
+          7b7a68dfae83ccbda7b494e4796c22f7a652095cbb2db74a9c94c5499f8d56d7  journal_j1_record_holdout_manifest_v0_6_1.json
+          26e6463b33c5d698e0bce44d27cb9fcb8bc23108c341a7b83257f35ac7cc8d13  journal_j1_record_holdout_audit_v0_6_1.json
+          5990d9db0883c7d5f2a24bb07597e3781fdaa9ca49fedd35316e2ac63cb83c30  journal_j1_record_holdout_audit_v0_6_1.csv
+          9a0b1ee658da4392bb9831477fee3dfa11974aa7eff0dc1a36994cb9b61c04f1  journal_j1_record_holdout_harmony_prompt_audit_v0_6_1.json
+          57095358a9dc58acb1b4857758410918e9e2c8b3b01b02f53a927515073eca7f  journal_j1_record_holdout_harmony_prompt_audit_v0_6_1.csv
+          8e28fdc9d7ec1b0e594d053ee94c601f7ed8874f5cb5b0d442d2c99437e63a47  journal_j1_record_holdout_harmony_variant_audit_v0_6_1.json
+          c582007e8ab13d7c2fde72491db17178cbb4521d4cadc0308b1956151026f11d  journal_j1_record_holdout_harmony_variant_audit_v0_6_1.csv
+          EOF
+          (cd artifact/validation && sha256sum --check /tmp/hashes)
+      - name: Run applicable full test suite
+        shell: bash
+        run: |
+          set -o pipefail
+          PYTHONDONTWRITEBYTECODE=1 python -m pytest -q --deselect tests/test_journal_j1_development_prompts_v0_4_1.py::test_actions_tokenizer_generation 2>&1 | tee artifact/pytest.log
+      - name: Execute frozen holdout
+        env:
+          GROQ_API_KEY: ${{ secrets.GROQ_API_KEY }}
+        run: python -m btom_v2.run_journal_j1_record_holdout_v0_6_2 --validation-dir artifact/validation --output-dir artifact/execution
+      - name: Copy status
+        if: always()
+        run: cp artifact/execution/workflow_status.json artifact/workflow_status.json 2>/dev/null || true
+      - name: Upload artifact
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: journal-j1-record-holdout-v0.6.2-${{ github.run_id }}
+          path: artifact/
+          retention-days: 30
+          if-no-files-found: error
