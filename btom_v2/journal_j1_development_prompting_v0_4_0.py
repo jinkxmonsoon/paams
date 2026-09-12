@@ -1,0 +1,54 @@
+"""Render and audit development-only Journal J1 prompts; no model or network access."""
+import argparse,csv,hashlib,json,re
+from collections import Counter,defaultdict
+from pathlib import Path
+from .journal_j1_model_safe_realization_v0_4_0 import ROOT,TEMPLATES,canonical,load_structural_inputs,realize_candidates,realize_development
+SELECTION=ROOT/'btom_v2/journal_j1_confirmatory_selection_v0_3_0.json';OUTPUTS=('journal_j1_candidate_realizations_v0_4_0.json','journal_j1_development_realizations_v0_4_0.json','journal_j1_development_prompts_v0_4_0.json','journal_j1_prompt_audit_v0_4_0.json','journal_j1_prompt_audit_v0_4_0.csv')
+ACTIONS=('SEND_CORRECTION','CONTINUE_TASK');FRAMING={'R':'CURRENT PARTNER RECORD:','B':'CURRENT PARTNER BELIEF:'};PLACEHOLDER='CURRENT PARTNER FRAME:'
+def digest(v):return hashlib.sha256(canonical(v)).hexdigest()
+def normalize_prompt(text):
+ for phrase in FRAMING.values():text=text.replace(phrase,PLACEHOLDER)
+ return text
+def offline_gpt_oss_token_count(text):return len(re.findall(r"[A-Za-z]+(?:_[A-Za-z]+)*|\d+|[^\w\s]",text))
+def visible_strings(realization):
+ v=realization['model_visible'];return {v['focal_agent_name'],v['partner_name'],v['task_context'],v['task_label'],*v['values'],*v['static_context']}
+def action_order(variant_index):return ACTIONS if variant_index%2==0 else tuple(reversed(ACTIONS))
+def render(realization,cell,order):
+ v=realization['model_visible'];q=v['alternate_task_value'] if cell['M_R'] else v['true_task_value'];r=v['alternate_context_value'] if cell['M_I'] else v['true_context_value'];relations=(f"Task item category maps to {v['true_task_value']}. Context item category maps to {v['true_context_value']}." if realization['difficulty']=='compositional' else f"Task item is at {v['true_task_value']}. Context item is at {v['true_context_value']}.");static=(' '+'. '.join(v['static_context'])+'.' if v['static_context'] else '')
+ text=(f"You are {v['focal_agent_name']}, coordinating with {v['partner_name']} on a {v['task_label']}. {relations}{static}\nPartner's next task step uses the task item information.\n{FRAMING[cell['F']]} task item = {q}; context item = {r}\nAvailable actions in order: {order[0]}, {order[1]}\nReturn strict JSON only: {{\"action\":\"SEND_CORRECTION\"}} or {{\"action\":\"CONTINUE_TASK\"}}")
+ return text,q,r
+def prompt_order(variant_index):
+ base=[('R',0,0),('B',0,0),('R',1,0),('B',1,0),('R',0,1),('B',0,1),('R',1,1),('B',1,1)];shift=(variant_index%4)*2;return base[shift:]+base[:shift] if variant_index%2==0 else list(reversed(base[shift:]+base[:shift]))
+def build():
+ frame,development=load_structural_inputs();candidates=realize_candidates(frame['candidates']);develop=realize_development(development['scenarios']);structural_hash=frame['candidate_frame_sha256'];realized_hash=digest(candidates)
+ # Frozen selection is intentionally loaded only after every candidate realization exists and hashes.
+ selection=json.loads(SELECTION.read_text());selected=set(selection['selected_variant_ids']);by_cell=defaultdict(Counter)
+ for r in candidates:
+  if r['variant_id'] in selected:by_cell[f"{r['archetype']}|{r['difficulty']}"][str(r['template_family'])]+=1
+ prompts=[]
+ for vi,(realization,structure) in enumerate(zip(develop,development['scenarios'])):
+  order=action_order(vi)
+  for oi,(f,mr,mi) in enumerate(prompt_order(vi),1):
+   cell=next(c for c in structure['counterfactual_cells'] if (c['F'],c['M_R'],c['M_I'])==(f,mr,mi));text,q,r=render(realization,cell,order);prompts.append({'request_ordinal':len(prompts)+1,'prompt_id':f"{structure['variant_id']}:{f}:{mr}:{mi}",'variant_id':structure['variant_id'],'archetype':structure['archetype'],'difficulty':structure['difficulty'],'F':f,'M_R':mr,'M_I':mi,'gold_action_class':cell['gold_action_class'],'prompt_text':text,'valid_actions':list(ACTIONS),'action_order':list(order),'prompt_token_count':offline_gpt_oss_token_count(text),'normalized_prompt_sha256':hashlib.sha256(normalize_prompt(text).encode()).hexdigest(),'world_state_sha256':realization['world_state_sha256'],'realization_sha256':realization['realization_sha256'],'represented_values':[q,r]})
+ return frame,selection,candidates,develop,prompts,structural_hash,realized_hash,{k:dict(v) for k,v in by_cell.items()}
+def audit_all(frame,selection,candidates,develop,prompts,structural_hash,realized_hash,selected_templates):
+ internal=('j1','j1c','j1d','rl','tp','rd','dd','ha','mt','dir','dis','com','m_r','m_i','q_true','q_false','r_true','r_false','q_a','q_b','r_a','r_b');leak=lambda s:any(re.search(rf'(?<![a-z0-9]){re.escape(x)}(?![a-z0-9])',s.lower()) for x in internal);cand_values=set().union(*(visible_strings(r) for r in candidates));dev_values=set().union(*(visible_strings(r) for r in develop));groups=defaultdict(list)
+ for p in prompts:groups[(p['variant_id'],p['M_R'],p['M_I'])].append(p)
+ pairs=[]
+ for rows in groups.values():
+  a,b=sorted(rows,key=lambda x:x['F']);pairs.append({'content':a['represented_values']==b['represented_values'] and a['action_order']==b['action_order'] and a['world_state_sha256']==b['world_state_sha256'] and a['realization_sha256']==b['realization_sha256'],'hash':a['normalized_prompt_sha256']==b['normalized_prompt_sha256'],'token':a['prompt_token_count']==b['prompt_token_count'],'difference':a['prompt_token_count']-b['prompt_token_count']})
+ sigs=defaultdict(Counter)
+ for r in candidates:sigs[f"{r['archetype']}|{r['difficulty']}"][r['normalized_template_signature_sha256']]+=1
+ prohibited=('gold','relevant','irrelevant','selected','unselected','necessary_correction','unnecessary_correction','stale','m_r','m_i','q_true','q_false','r_true','r_false');visible='\n'.join(p['prompt_text'].lower() for p in prompts);orders={r['variant_id']:tuple(next(p['action_order'] for p in prompts if p['variant_id']==r['variant_id'])) for r in develop};order_counts=Counter('correction_first' if x[0]=='SEND_CORRECTION' else 'progress_first' for x in orders.values());difficulty=Counter(p['difficulty'] for p in prompts);framing=Counter(p['F'] for p in prompts);mr=Counter(str(p['M_R']) for p in prompts);mi=Counter(str(p['M_I']) for p in prompts)
+ audit={'structural_frame_sha256':structural_hash,'realized_frame_sha256':realized_hash,'candidate_realization_count':len(candidates),'development_realization_count':len(develop),'development_prompt_count':len(prompts),'candidate_model_visible_internal_id_leak_count':sum(leak(x) for x in cand_values),'development_model_visible_internal_id_leak_count':sum(leak(x) for x in dev_values),'candidate_development_visible_value_overlap':len(cand_values&dev_values),'normalized_template_signature_counts_by_cell':{k:dict(v) for k,v in sigs.items()},'selected_template_family_counts_by_cell':selected_templates,'development_action_order_counts':dict(order_counts),'rb_pair_count':len(pairs),'rb_content_match_count':sum(x['content'] for x in pairs),'rb_normalized_hash_match_count':sum(x['hash'] for x in pairs),'rb_exact_token_parity_count':sum(x['token'] for x in pairs),'rb_max_abs_token_difference':max(abs(x['difference']) for x in pairs),'difficulty_prompt_counts':dict(difficulty),'framing_prompt_counts':dict(framing),'mr_prompt_counts':dict(mr),'mi_prompt_counts':dict(mi),'mean_prompt_token_count_by_difficulty':{d:sum(p['prompt_token_count'] for p in prompts if p['difficulty']==d)/difficulty[d] for d in difficulty},'mean_prompt_token_count_by_framing':{f:sum(p['prompt_token_count'] for p in prompts if p['F']==f)/framing[f] for f in framing},'prohibited_visible_term_count':sum(visible.count(x) for x in prohibited),'truth_role_naming_leak_count':sum(any(x in value.lower() for x in ('true','false','q_a','q_b','r_a','r_b')) for value in cand_values|dev_values),'all_candidate_realizations_selection_blind':all('selected' not in r for r in candidates),'all_rb_content_matched':all(x['content'] and x['hash'] for x in pairs),'all_rb_exact_token_parity':all(x['token'] for x in pairs),'all_action_order_fixed_within_variant':all(len({tuple(p['action_order']) for p in prompts if p['variant_id']==v})==1 for v in orders),'all_development_action_order_balanced':order_counts=={'correction_first':9,'progress_first':9},'all_no_internal_id_leakage':not any(leak(x) for x in cand_values|dev_values),'all_no_truth_naming_leakage':not any(any(x in value.lower() for x in ('true','false','q_a','q_b','r_a','r_b')) for value in cand_values|dev_values)};audit['passed']=all((audit['candidate_realization_count']==360,audit['development_realization_count']==18,audit['development_prompt_count']==144,audit['candidate_development_visible_value_overlap']==0,all(len(v)==4 and set(v.values())=={5} for v in sigs.values()),audit['rb_pair_count']==audit['rb_content_match_count']==audit['rb_normalized_hash_match_count']==audit['rb_exact_token_parity_count']==72,audit['rb_max_abs_token_difference']==0,audit['prohibited_visible_term_count']==0,audit['all_candidate_realizations_selection_blind'],audit['all_rb_content_matched'],audit['all_rb_exact_token_parity'],audit['all_action_order_fixed_within_variant'],audit['all_development_action_order_balanced'],audit['all_no_internal_id_leakage'],audit['all_no_truth_naming_leakage']));return audit
+def generate(out=ROOT/'btom_v2'):
+ frame,selection,candidates,develop,prompts,structural_hash,realized_hash,selected_templates=build();audit=audit_all(frame,selection,candidates,develop,prompts,structural_hash,realized_hash,selected_templates)
+ if not audit['passed']:raise RuntimeError('model-safe realization or prompt audit failed')
+ candidate={'structural_frame_sha256':structural_hash,'realized_frame_sha256':realized_hash,'realized_before_selection_application':True,'behavioral_outcomes_used':False,'candidate_count':360,'microtemplate_family_count_per_cell':4,'microtemplate_instances_per_family_per_cell':5,'model_visible_internal_id_leak_count':0,'realizations':candidates};development={'development_count':18,'candidate_visible_value_overlap':0,'realizations':develop};prompt_artifact={'development_prompt_count':144,'development_variant_count':18,'prompts_per_variant':8,'strict_response_objects':[{'action':'SEND_CORRECTION'},{'action':'CONTINUE_TASK'}],'prompts':prompts};payloads=(candidate,development,prompt_artifact,audit)
+ for name,value in zip(OUTPUTS[:4],payloads):(out/name).write_text(json.dumps(value,indent=2,sort_keys=True)+'\n')
+ with (out/OUTPUTS[4]).open('w',newline='') as h:
+  fields=('metric','value');w=csv.DictWriter(h,fieldnames=fields,lineterminator='\n');w.writeheader()
+  for key in ('candidate_realization_count','development_realization_count','development_prompt_count','rb_pair_count','rb_exact_token_parity_count','rb_max_abs_token_difference','prohibited_visible_term_count','passed'):w.writerow({'metric':key,'value':audit[key]})
+def main():
+ p=argparse.ArgumentParser();p.add_argument('--output-dir',type=Path,default=ROOT/'btom_v2');generate(p.parse_args().output_dir)
+if __name__=='__main__':main()

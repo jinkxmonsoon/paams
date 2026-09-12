@@ -1,0 +1,116 @@
+{
+  "alpha": 0.05,
+  "attainable_values": {
+    "D_i": [
+      -2.0,
+      -1.5,
+      -1.0,
+      -0.5,
+      0.0,
+      0.5,
+      1.0,
+      1.5,
+      2.0
+    ],
+    "E_i": [
+      -2.0,
+      -1.5,
+      -1.0,
+      -0.5,
+      0.0,
+      0.5,
+      1.0,
+      1.5,
+      2.0
+    ],
+    "M_i": [
+      -1.0,
+      -0.75,
+      -0.5,
+      -0.25,
+      0.0,
+      0.25,
+      0.5,
+      0.75,
+      1.0
+    ],
+    "S_i": [
+      -2.0,
+      -1.0,
+      0.0,
+      1.0,
+      2.0
+    ]
+  },
+  "balance_cells": 18,
+  "bootstrap_interval": "percentile_2.5_97.5",
+  "bootstrap_replicates": 100000,
+  "bootstrap_resampling_unit": "variant",
+  "bootstrap_seed_derivation": "unsigned big-endian integer from first 8 bytes of SHA-256 digest",
+  "bootstrap_seed_integer": 18140943157235233773,
+  "bootstrap_seed_literal": "journal-j1-specificity-bootstrap-v0.2.0",
+  "bootstrap_strata": "18 archetype_x_difficulty_cells",
+  "bootstrap_variants_sampled_per_cell": 10,
+  "calls_per_model": 1440,
+  "calls_per_variant_per_model": 8,
+  "calls_two_models": 2880,
+  "communication_prior_estimand": "Delta_communication_prior",
+  "experiment": "journal_j1_causal_partner_belief",
+  "final_bank_or_prompts_implemented": false,
+  "holm_family_members": [
+    "20b_Delta_specificity",
+    "120b_Delta_specificity"
+  ],
+  "icaart_reopened": false,
+  "inferential_unit": "variant",
+  "j1_execution_performed": false,
+  "key_secondary_estimand": "Delta_role",
+  "minimum_development_variants": 18,
+  "model_primary_multiplicity": "holm_two_tests",
+  "models": [
+    "openai/gpt-oss-20b",
+    "openai/gpt-oss-120b"
+  ],
+  "n_variants_per_model": 180,
+  "negative_control_component": "Delta_irrelevant",
+  "normal_approximation_is_design_aid_only": true,
+  "planned_archetypes": [
+    "resource_location",
+    "tool_placement",
+    "rendezvous_destination",
+    "delivery_destination",
+    "hazard_assignment",
+    "maintenance_target"
+  ],
+  "planned_difficulties": [
+    "direct",
+    "irrelevant_distractor",
+    "compositional"
+  ],
+  "planning_reference_ci95_half_width": 0.1460870900960969,
+  "planning_reference_mde_90": 0.24160830400373037,
+  "planning_reference_power_for_soei": 0.9183620828255178,
+  "planning_reference_sd": 1.0,
+  "primary_estimand": "Delta_specificity",
+  "primary_soei": 0.25,
+  "primary_test": "exact_variant_sign_flip",
+  "primary_test_sidedness": "two_sided",
+  "sensitivity_effects": [
+    0.1,
+    0.15,
+    0.2,
+    0.25,
+    0.3
+  ],
+  "sensitivity_sd": [
+    0.5,
+    0.75,
+    1.0,
+    1.25,
+    1.5,
+    2.0
+  ],
+  "stage": "statistical_design_frozen_pre_implementation",
+  "uses_prior_behavioral_outcomes": false,
+  "variants_per_balance_cell": 10
+}

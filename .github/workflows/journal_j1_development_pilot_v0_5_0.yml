@@ -1,0 +1,92 @@
+name: Journal J1 GPT-OSS-20B development pilot v0.5.0
+
+on:
+  push:
+
+permissions:
+  contents: read
+
+jobs:
+  execute:
+    if: >-
+      github.event.head_commit.message ==
+      'Execute Journal J1 20B development pilot [journal-j1-v0.5.0]'
+    runs-on: ubuntu-latest
+    timeout-minutes: 90
+    env:
+      GROQ_API_KEY: ${{ secrets.GROQ_API_KEY }}
+    steps:
+      - name: Check out exact triggering SHA
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.sha }}
+      - name: Set up Python 3.11
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Initialize artifact
+        run: |
+          mkdir -p journal-j1-v0.5.0-artifact
+          printf '%s\n' "${GITHUB_SHA}" > journal-j1-v0.5.0-artifact/source_commit_sha.txt
+          printf '{"model":"openai/gpt-oss-20b","requested_calls":144,"attempted_calls":0,"complete_calls":0,"api_failures":0,"parse_failures":0,"behavioral_retries":0,"fallback_actions":0,"technical_pass":false,"scenario_discrimination_pass":false,"ready_for_confirmatory_rendering":false,"behavioral_observations":0,"confirmatory_prompts_generated":false,"icaart_reopened":false}\n' > journal-j1-v0.5.0-artifact/workflow_status.json
+          sha256sum \
+            btom_v2/journal_j1_development_pilot_manifest_v0_5_0.json \
+            btom_v2/run_journal_j1_development_pilot_v0_5_0.py \
+            tests/test_journal_j1_development_pilot_v0_5_0.py \
+            .github/workflows/journal_j1_development_pilot_v0_5_0.yml \
+            > journal-j1-v0.5.0-artifact/implementation_hashes.txt
+      - name: Verify immutable sources and install frozen dependencies
+        run: |
+          python -m pip install --retries 0 tiktoken==0.13.0 openai-harmony==0.0.8 pytest==8.4.2
+          python - <<'PY' > journal-j1-v0.5.0-artifact/dependency_versions.txt
+          import importlib.metadata
+          for package in ('tiktoken', 'openai-harmony', 'pytest'):
+              print(f'{package}=={importlib.metadata.version(package)}')
+          PY
+          python - <<'PY'
+          import hashlib, json
+          from pathlib import Path
+          expected = {
+              'btom_v2/journal_j1_confirmatory_candidate_frame_v0_3_0.json': '64c3b7fad886471830e4dfcb7160254fb83d829725010f1896fcd96396cbb247',
+              'btom_v2/journal_j1_confirmatory_selection_v0_3_0.json': '4df0dd30a98bd333d4538fa3aa31e4712253152a5a7c189aabb0f1d0034da81f',
+              'btom_v2/journal_j1_development_scenarios_v0_3_0.json': 'ecf40e43a6d992311344f385d7b9ff57ca6abb14ccc3d4e5c0257caa5bf21c9f',
+          }
+          rows = {name: {'expected': value, 'actual': hashlib.sha256(Path(name).read_bytes()).hexdigest()} for name, value in expected.items()}
+          Path('journal-j1-v0.5.0-artifact/immutable_input_hashes.json').write_text(json.dumps(rows, indent=2, sort_keys=True) + '\n')
+          if any(row['expected'] != row['actual'] for row in rows.values()):
+              raise SystemExit('immutable source mismatch')
+          PY
+      - name: Regenerate and verify v0.4.2 prompt freeze
+        run: |
+          mkdir -p /tmp/journal-j1-v0.4.2-freeze
+          python -m btom_v2.journal_j1_development_prompting_v0_4_2 --output-dir /tmp/journal-j1-v0.4.2-freeze
+          cat > /tmp/journal-j1-v0.4.2-freeze.sha256 <<'EOF'
+          44d5ee7a50db0b4a85c992329a5aa1cc742f3566dbf0d95bd1e7e3a6d1771664  /tmp/journal-j1-v0.4.2-freeze/journal_j1_candidate_realizations_v0_4_2.json
+          d45d3c49d063ded04210b9cdb4762bd5da16814a4792a2c5ba9767eb8b5da457  /tmp/journal-j1-v0.4.2-freeze/journal_j1_development_realizations_v0_4_2.json
+          5dfc758825588afcc2cab1e576e24e3160df5237ed9863f5b4cb1e2511e1ac19  /tmp/journal-j1-v0.4.2-freeze/journal_j1_development_prompts_v0_4_2.json
+          8b55111eebcb4ae618ea5f84389796269fd0d56082320ef48c4424fb9f64879f  /tmp/journal-j1-v0.4.2-freeze/journal_j1_prompt_audit_v0_4_2.json
+          9e9b7b5ef66fd1aa44d187c91246658092b25ec897caefb61493f8db26f20be8  /tmp/journal-j1-v0.4.2-freeze/journal_j1_prompt_audit_v0_4_2.csv
+          989eac08057322c89216a7aff3464e926315cffd79a2d54261b834a44de32167  /tmp/journal-j1-v0.4.2-freeze/tokenizer_candidate_table_v0_4_2.json
+          EOF
+          sha256sum --check /tmp/journal-j1-v0.4.2-freeze.sha256
+      - name: Run complete applicable test suite
+        shell: bash
+        run: |
+          set -o pipefail
+          PYTHONDONTWRITEBYTECODE=1 python -m pytest -q \
+            --deselect tests/test_journal_j1_development_prompts_v0_4_1.py::test_actions_tokenizer_generation \
+            2>&1 | tee journal-j1-v0.5.0-artifact/pytest.log
+      - name: Freeze manifest and execute exactly 144 development calls
+        run: |
+          python -m btom_v2.run_journal_j1_development_pilot_v0_5_0 \
+            --output-dir journal-j1-v0.5.0-artifact/execution \
+            --prompt-freeze-dir /tmp/journal-j1-v0.4.2-freeze
+          cp journal-j1-v0.5.0-artifact/execution/workflow_status.json journal-j1-v0.5.0-artifact/workflow_status.json
+      - name: Upload development-pilot artifact
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: journal-j1-development-pilot-v0.5.0-${{ github.run_id }}
+          path: journal-j1-v0.5.0-artifact/
+          retention-days: 30
+          if-no-files-found: error

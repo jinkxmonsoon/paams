@@ -1,0 +1,1661 @@
+{
+  "prompt_count": 72,
+  "prompts": [
+    {
+      "F": "R",
+      "M_I": 0,
+      "M_R": 0,
+      "action_order": [
+        "SEND_CORRECTION",
+        "CONTINUE_TASK"
+      ],
+      "archetype": "resource_location",
+      "difficulty": "direct",
+      "gold_action": "CONTINUE_TASK",
+      "prompt_id": "J1H-RL-DIR-01:R:0:0",
+      "prompt_sha256": "4761c485aa9a6cb3906b23e0787f87e4f6d826a47ba9db56a503885d7f07e050",
+      "prompt_text": "You are Maren Quill, coordinating with Tobin Rook and Yvette Vale.\nMaren Quill is completing the retrieval log.\nTobin Rook immediately executes a retrieval assignment involving Canister Aster after this turn.\nAt the same time, Yvette Vale independently executes a separate retrieval assignment involving Canister Auburn.\nA message from Maren Quill reaches Tobin Rook only and is not relayed to Yvette Vale.\nTobin Rook cannot alter Yvette Vale's assignment during this episode.\nThe two assignments use different objects, targets, routes, and actions.\nThe episode ends after both immediate assignments execute.\nWORLD FACTS:\nCanister Aster is assigned to Bay Aster North.\nCanister Auburn is assigned to Bay Auburn East.\nCurrent partner record:\nCanister Aster: Bay Aster North\nCanister Auburn: Bay Auburn East\nYou have exactly one action for this turn.\nSEND_CORRECTION sends an update concerning the addressed partner's immediate assignment; it uses this turn and does not advance your task this turn.\nCONTINUE_TASK advances your task this turn and sends no update.\nAvailable actions in order: SEND_CORRECTION, CONTINUE_TASK\nReturn strict JSON only: {\"action\":\"SEND_CORRECTION\"} or {\"action\":\"CONTINUE_TASK\"}",
+      "proposition_order": "partner_first",
+      "requested_seed": 1799447682,
+      "valid_actions": [
+        "SEND_CORRECTION",
+        "CONTINUE_TASK"
+      ],
+      "variant_id": "J1H-RL-DIR-01",
+      "world_state_sha256": "23ac201402278599dd554e5ee65d44ff91141353f0c21959bed0ab90318439c8"
+    },
+    {
+      "F": "R",
+      "M_I": 1,
+      "M_R": 0,
+      "action_order": [
+        "SEND_CORRECTION",
+        "CONTINUE_TASK"
+      ],
+      "archetype": "resource_location",
+      "difficulty": "direct",
+      "gold_action": "CONTINUE_TASK",
+      "prompt_id": "J1H-RL-DIR-01:R:0:1",
+      "prompt_sha256": "7b34faaf25a93cf61667d4a9a9e490c5bc4e0d2a929170dff9e0ecd9f6c48ab6",
+      "prompt_text": "You are Maren Quill, coordinating with Tobin Rook and Yvette Vale.\nMaren Quill is completing the retrieval log.\nTobin Rook immediately executes a retrieval assignment involving Canister Aster after this turn.\nAt the same time, Yvette Vale independently executes a separate retrieval assignment involving Canister Auburn.\nA message from Maren Quill reaches Tobin Rook only and is not relayed to Yvette Vale.\nTobin Rook cannot alter Yvette Vale's assignment during this episode.\nThe two assignments use different objects, targets, routes, and actions.\nThe episode ends after both immediate assignments execute.\nWORLD FACTS:\nCanister Aster is assigned to Bay Aster North.\nCanister Auburn is assigned to Bay Auburn East.\nCurrent partner record:\nCanister Aster: Bay Aster North\nCanister Auburn: Bay Auburn West\nYou have exactly one action for this turn.\nSEND_CORRECTION sends an update concerning the addressed partner's immediate assignment; it uses this turn and does not advance your task this turn.\nCONTINUE_TASK advances your task this turn and sends no update.\nAvailable actions in order: SEND_CORRECTION, CONTINUE_TASK\nReturn strict JSON only: {\"action\":\"SEND_CORRECTION\"} or {\"action\":\"CONTINUE_TASK\"}",
+      "proposition_order": "partner_first",
+      "requested_seed": 2119759712,
+      "valid_actions": [
+        "SEND_CORRECTION",
+        "CONTINUE_TASK"
+      ],
+      "variant_id": "J1H-RL-DIR-01",
+      "world_state_sha256": "23ac201402278599dd554e5ee65d44ff91141353f0c21959bed0ab90318439c8"
+    },
+    {
+      "F": "R",
+      "M_I": 0,
+      "M_R": 1,
+      "action_order": [
+        "SEND_CORRECTION",
+        "CONTINUE_TASK"
+      ],
+      "archetype": "resource_location",
+      "difficulty": "direct",
+      "gold_action": "SEND_CORRECTION",
+      "prompt_id": "J1H-RL-DIR-01:R:1:0",
+      "prompt_sha256": "d1f663db77292330b05cf4310dc755bb3942e827e922f395cb5fe936f7c94f62",
+      "prompt_text": "You are Maren Quill, coordinating with Tobin Rook and Yvette Vale.\nMaren Quill is completing the retrieval log.\nTobin Rook immediately executes a retrieval assignment involving Canister Aster after this turn.\nAt the same time, Yvette Vale independently executes a separate retrieval assignment involving Canister Auburn.\nA message from Maren Quill reaches Tobin Rook only and is not relayed to Yvette Vale.\nTobin Rook cannot alter Yvette Vale's assignment during this episode.\nThe two assignments use different objects, targets, routes, and actions.\nThe episode ends after both immediate assignments execute.\nWORLD FACTS:\nCanister Aster is assigned to Bay Aster North.\nCanister Auburn is assigned to Bay Auburn East.\nCurrent partner record:\nCanister Aster: Bay Aster South\nCanister Auburn: Bay Auburn East\nYou have exactly one action for this turn.\nSEND_CORRECTION sends an update concerning the addressed partner's immediate assignment; it uses this turn and does not advance your task this turn.\nCONTINUE_TASK advances your task this turn and sends no update.\nAvailable actions in order: SEND_CORRECTION, CONTINUE_TASK\nReturn strict JSON only: {\"action\":\"SEND_CORRECTION\"} or {\"action\":\"CONTINUE_TASK\"}",
+      "proposition_order": "partner_first",
+      "requested_seed": 974222570,
+      "valid_actions": [
+        "SEND_CORRECTION",
+        "CONTINUE_TASK"
+      ],
+      "variant_id": "J1H-RL-DIR-01",
+      "world_state_sha256": "23ac201402278599dd554e5ee65d44ff91141353f0c21959bed0ab90318439c8"
+    },
+    {
+      "F": "R",
+      "M_I": 1,
+      "M_R": 1,
+      "action_order": [
+        "SEND_CORRECTION",
+        "CONTINUE_TASK"
+      ],
+      "archetype": "resource_location",
+      "difficulty": "direct",
+      "gold_action": "SEND_CORRECTION",
+      "prompt_id": "J1H-RL-DIR-01:R:1:1",
+      "prompt_sha256": "ef421b70451d0d8f65b89dda48ea55f6dadba7e17f7e370cc1c7d5529e6671bb",
+      "prompt_text": "You are Maren Quill, coordinating with Tobin Rook and Yvette Vale.\nMaren Quill is completing the retrieval log.\nTobin Rook immediately executes a retrieval assignment involving Canister Aster after this turn.\nAt the same time, Yvette Vale independently executes a separate retrieval assignment involving Canister Auburn.\nA message from Maren Quill reaches Tobin Rook only and is not relayed to Yvette Vale.\nTobin Rook cannot alter Yvette Vale's assignment during this episode.\nThe two assignments use different objects, targets, routes, and actions.\nThe episode ends after both immediate assignments execute.\nWORLD FACTS:\nCanister Aster is assigned to Bay Aster North.\nCanister Auburn is assigned to Bay Auburn East.\nCurrent partner record:\nCanister Aster: Bay Aster South\nCanister Auburn: Bay Auburn West\nYou have exactly one action for this turn.\nSEND_CORRECTION sends an update concerning the addressed partner's immediate assignment; it uses this turn and does not advance your task this turn.\nCONTINUE_TASK advances your task this turn and sends no update.\nAvailable actions in order: SEND_CORRECTION, CONTINUE_TASK\nReturn strict JSON only: {\"action\":\"SEND_CORRECTION\"} or {\"action\":\"CONTINUE_TASK\"}",
+      "proposition_order": "partner_first",
+      "requested_seed": 99588336,
+      "valid_actions": [
+        "SEND_CORRECTION",
+        "CONTINUE_TASK"
+      ],
+      "variant_id": "J1H-RL-DIR-01",
+      "world_state_sha256": "23ac201402278599dd554e5ee65d44ff91141353f0c21959bed0ab90318439c8"
+    },
+    {
+      "F": "R",
+      "M_I": 0,
+      "M_R": 0,
+      "action_order": [
+        "CONTINUE_TASK",
+        "SEND_CORRECTION"
+      ],
+      "archetype": "resource_location",
+      "difficulty": "irrelevant_distractor",
+      "gold_action": "CONTINUE_TASK",
+      "prompt_id": "J1H-RL-DIS-01:R:0:0",
+      "prompt_sha256": "87f93b9866889ad3bad4eb238b2db4cca64a2e6a6c808e673a431ed69305b95f",
+      "prompt_text": "You are Nadia Quill, coordinating with Ulric Rook and Zelda Vale.\nNadia Quill is completing the retrieval log.\nUlric Rook immediately executes a retrieval assignment involving Canister Boreal after this turn.\nAt the same time, Zelda Vale independently executes a separate retrieval assignment involving Canister Beryl.\nA message from Nadia Quill reaches Ulric Rook only and is not relayed to Zelda Vale.\nUlric Rook cannot alter Zelda Vale's assignment during this episode.\nThe two assignments use different objects, targets, routes, and actions.\nThe episode ends after both immediate assignments execute.\nWORLD FACTS:\nCanister Beryl is assigned to Bay Beryl East.\nCanister Boreal is assigned to Bay Boreal North.\nThe retrieval roster closes at dusk.\nCurrent partner record:\nCanister Beryl: Bay Beryl East\nCanister Boreal: Bay Boreal North\nYou have exactly one action for this turn.\nSEND_CORRECTION sends an update concerning the addressed partner's immediate assignment; it uses this turn and does not advance your task this turn.\nCONTINUE_TASK advances your task this turn and sends no update.\nAvailable actions in order: CONTINUE_TASK, SEND_CORRECTION\nReturn strict JSON only: {\"action\":\"SEND_CORRECTION\"} or {\"action\":\"CONTINUE_TASK\"}",
+      "proposition_order": "operator_first",
+      "requested_seed": 199651540,
+      "valid_actions": [
+        "SEND_CORRECTION",
+        "CONTINUE_TASK"
+      ],
+      "variant_id": "J1H-RL-DIS-01",
+      "world_state_sha256": "082914a9f748e1691337e14fded4318d72a1ab7e173768322ef4557df3e8be48"
+    },
+    {
+      "F": "R",
+      "M_I": 1,
+      "M_R": 0,
+      "action_order": [
+        "CONTINUE_TASK",
+        "SEND_CORRECTION"
+      ],
+      "archetype": "resource_location",
+      "difficulty": "irrelevant_distractor",
+      "gold_action": "CONTINUE_TASK",
+      "prompt_id": "J1H-RL-DIS-01:R:0:1",
+      "prompt_sha256": "8a21888f3be9373dc3871bf0b29693297e1214a303246c6f5c38ba8fc8abdd80",
+      "prompt_text": "You are Nadia Quill, coordinating with Ulric Rook and Zelda Vale.\nNadia Quill is completing the retrieval log.\nUlric Rook immediately executes a retrieval assignment involving Canister Boreal after this turn.\nAt the same time, Zelda Vale independently executes a separate retrieval assignment involving Canister Beryl.\nA message from Nadia Quill reaches Ulric Rook only and is not relayed to Zelda Vale.\nUlric Rook cannot alter Zelda Vale's assignment during this episode.\nThe two assignments use different objects, targets, routes, and actions.\nThe episode ends after both immediate assignments execute.\nWORLD FACTS:\nCanister Beryl is assigned to Bay Beryl East.\nCanister Boreal is assigned to Bay Boreal North.\nThe retrieval roster closes at dusk.\nCurrent partner record:\nCanister Beryl: Bay Beryl West\nCanister Boreal: Bay Boreal North\nYou have exactly one action for this turn.\nSEND_CORRECTION sends an update concerning the addressed partner's immediate assignment; it uses this turn and does not advance your task this turn.\nCONTINUE_TASK advances your task this turn and sends no update.\nAvailable actions in order: CONTINUE_TASK, SEND_CORRECTION\nReturn strict JSON only: {\"action\":\"SEND_CORRECTION\"} or {\"action\":\"CONTINUE_TASK\"}",
+      "proposition_order": "operator_first",
+      "requested_seed": 596277388,
+      "valid_actions": [
+        "SEND_CORRECTION",
+        "CONTINUE_TASK"
+      ],
+      "variant_id": "J1H-RL-DIS-01",
+      "world_state_sha256": "082914a9f748e1691337e14fded4318d72a1ab7e173768322ef4557df3e8be48"
+    },
+    {
+      "F": "R",
+      "M_I": 0,
+      "M_R": 1,
+      "action_order": [
+        "CONTINUE_TASK",
+        "SEND_CORRECTION"
+      ],
+      "archetype": "resource_location",
+      "difficulty": "irrelevant_distractor",
+      "gold_action": "SEND_CORRECTION",
+      "prompt_id": "J1H-RL-DIS-01:R:1:0",
+      "prompt_sha256": "a9be17af4fb8270ae22a02a3371604825da3c2f8a38ac4c0d2f4b0cfd8b61a57",
+      "prompt_text": "You are Nadia Quill, coordinating with Ulric Rook and Zelda Vale.\nNadia Quill is completing the retrieval log.\nUlric Rook immediately executes a retrieval assignment involving Canister Boreal after this turn.\nAt the same time, Zelda Vale independently executes a separate retrieval assignment involving Canister Beryl.\nA message from Nadia Quill reaches Ulric Rook only and is not relayed to Zelda Vale.\nUlric Rook cannot alter Zelda Vale's assignment during this episode.\nThe two assignments use different objects, targets, routes, and actions.\nThe episode ends after both immediate assignments execute.\nWORLD FACTS:\nCanister Beryl is assigned to Bay Beryl East.\nCanister Boreal is assigned to Bay Boreal North.\nThe retrieval roster closes at dusk.\nCurrent partner record:\nCanister Beryl: Bay Beryl East\nCanister Boreal: Bay Boreal South\nYou have exactly one action for this turn.\nSEND_CORRECTION sends an update concerning the addressed partner's immediate assignment; it uses this turn and does not advance your task this turn.\nCONTINUE_TASK advances your task this turn and sends no update.\nAvailable actions in order: CONTINUE_TASK, SEND_CORRECTION\nReturn strict JSON only: {\"action\":\"SEND_CORRECTION\"} or {\"action\":\"CONTINUE_TASK\"}",
+      "proposition_order": "operator_first",
+      "requested_seed": 1573422660,
+      "valid_actions": [
+        "SEND_CORRECTION",
+        "CONTINUE_TASK"
+      ],
+      "variant_id": "J1H-RL-DIS-01",
+      "world_state_sha256": "082914a9f748e1691337e14fded4318d72a1ab7e173768322ef4557df3e8be48"
+    },
+    {
+      "F": "R",
+      "M_I": 1,
+      "M_R": 1,
+      "action_order": [
+        "CONTINUE_TASK",
+        "SEND_CORRECTION"
+      ],
+      "archetype": "resource_location",
+      "difficulty": "irrelevant_distractor",
+      "gold_action": "SEND_CORRECTION",
+      "prompt_id": "J1H-RL-DIS-01:R:1:1",
+      "prompt_sha256": "08aa28f708f673ae21924b75b346b7b4898c19d505cfedae48c810ed30f8d9ef",
+      "prompt_text": "You are Nadia Quill, coordinating with Ulric Rook and Zelda Vale.\nNadia Quill is completing the retrieval log.\nUlric Rook immediately executes a retrieval assignment involving Canister Boreal after this turn.\nAt the same time, Zelda Vale independently executes a separate retrieval assignment involving Canister Beryl.\nA message from Nadia Quill reaches Ulric Rook only and is not relayed to Zelda Vale.\nUlric Rook cannot alter Zelda Vale's assignment during this episode.\nThe two assignments use different objects, targets, routes, and actions.\nThe episode ends after both immediate assignments execute.\nWORLD FACTS:\nCanister Beryl is assigned to Bay Beryl East.\nCanister Boreal is assigned to Bay Boreal North.\nThe retrieval roster closes at dusk.\nCurrent partner record:\nCanister Beryl: Bay Beryl West\nCanister Boreal: Bay Boreal South\nYou have exactly one action for this turn.\nSEND_CORRECTION sends an update concerning the addressed partner's immediate assignment; it uses this turn and does not advance your task this turn.\nCONTINUE_TASK advances your task this turn and sends no update.\nAvailable actions in order: CONTINUE_TASK, SEND_CORRECTION\nReturn strict JSON only: {\"action\":\"SEND_CORRECTION\"} or {\"action\":\"CONTINUE_TASK\"}",
+      "proposition_order": "operator_first",
+      "requested_seed": 2116009087,
+      "valid_actions": [
+        "SEND_CORRECTION",
+        "CONTINUE_TASK"
+      ],
+      "variant_id": "J1H-RL-DIS-01",
+      "world_state_sha256": "082914a9f748e1691337e14fded4318d72a1ab7e173768322ef4557df3e8be48"
+    },
+    {
+      "F": "R",
+      "M_I": 0,
+      "M_R": 0,
+      "action_order": [
+        "CONTINUE_TASK",
+        "SEND_CORRECTION"
+      ],
+      "archetype": "resource_location",
+      "difficulty": "compositional",
+      "gold_action": "CONTINUE_TASK",
+      "prompt_id": "J1H-RL-COM-01:R:0:0",
+      "prompt_sha256": "cb76eb954b8c7529456b73638b8a0a51f29e4be7ab84d2c1bd5cf51df71dae04",
+      "prompt_text": "You are Oren Quill, coordinating with Vesper Rook and Amabel Vale.\nOren Quill is completing the retrieval log.\nVesper Rook immediately executes a retrieval assignment involving Canister Cinnabar after this turn.\nAt the same time, Amabel Vale independently executes a separate retrieval assignment involving Canister Cirrus.\nA message from Oren Quill reaches Vesper Rook only and is not relayed to Amabel Vale.\nVesper Rook cannot alter Amabel Vale's assignment during this episode.\nThe two assignments use different objects, targets, routes, and actions.\nThe episode ends after both immediate assignments execute.\nWORLD FACTS:\nCanister Cinnabar belongs to Retrieval group Cinnabar.\nRetrieval group Cinnabar is assigned to Bay Cinnabar North.\nCanister Cirrus belongs to Retrieval group Cirrus.\nRetrieval group Cirrus is assigned to Bay Cirrus East.\nCurrent partner record:\nCanister Cinnabar: Bay Cinnabar North\nCanister Cirrus: Bay Cirrus East\nYou have exactly one action for this turn.\nSEND_CORRECTION sends an update concerning the addressed partner's immediate assignment; it uses this turn and does not advance your task this turn.\nCONTINUE_TASK advances your task this turn and sends no update.\nAvailable actions in order: CONTINUE_TASK, SEND_CORRECTION\nReturn strict JSON only: {\"action\":\"SEND_CORRECTION\"} or {\"action\":\"CONTINUE_TASK\"}",
+      "proposition_order": "partner_first",
+      "requested_seed": 334463714,
+      "valid_actions": [
+        "SEND_CORRECTION",
+        "CONTINUE_TASK"
+      ],
+      "variant_id": "J1H-RL-COM-01",
+      "world_state_sha256": "d250c430052b75d3be8f50ac142084e0f8982d649f3395ca766044141ead06e4"
+    },
+    {
+      "F": "R",
+      "M_I": 1,
+      "M_R": 0,
+      "action_order": [
+        "CONTINUE_TASK",
+        "SEND_CORRECTION"
+      ],
+      "archetype": "resource_location",
+      "difficulty": "compositional",
+      "gold_action": "CONTINUE_TASK",
+      "prompt_id": "J1H-RL-COM-01:R:0:1",
+      "prompt_sha256": "9a4216e035ffc9c4015e4308becd6378bc9450097fecf38fea97ddd029c4f5b2",
+      "prompt_text": "You are Oren Quill, coordinating with Vesper Rook and Amabel Vale.\nOren Quill is completing the retrieval log.\nVesper Rook immediately executes a retrieval assignment involving Canister Cinnabar after this turn.\nAt the same time, Amabel Vale independently executes a separate retrieval assignment involving Canister Cirrus.\nA message from Oren Quill reaches Vesper Rook only and is not relayed to Amabel Vale.\nVesper Rook cannot alter Amabel Vale's assignment during this episode.\nThe two assignments use different objects, targets, routes, and actions.\nThe episode ends after both immediate assignments execute.\nWORLD FACTS:\nCanister Cinnabar belongs to Retrieval group Cinnabar.\nRetrieval group Cinnabar is assigned to Bay Cinnabar North.\nCanister Cirrus belongs to Retrieval group Cirrus.\nRetrieval group Cirrus is assigned to Bay Cirrus East.\nCurrent partner record:\nCanister Cinnabar: Bay Cinnabar North\nCanister Cirrus: Bay Cirrus West\nYou have exactly one action for this turn.\nSEND_CORRECTION sends an update concerning the addressed partner's immediate assignment; it uses this turn and does not advance your task this turn.\nCONTINUE_TASK advances your task this turn and sends no update.\nAvailable actions in order: CONTINUE_TASK, SEND_CORRECTION\nReturn strict JSON only: {\"action\":\"SEND_CORRECTION\"} or {\"action\":\"CONTINUE_TASK\"}",
+      "proposition_order": "partner_first",
+      "requested_seed": 1688855132,
+      "valid_actions": [
+        "SEND_CORRECTION",
+        "CONTINUE_TASK"
+      ],
+      "variant_id": "J1H-RL-COM-01",
+      "world_state_sha256": "d250c430052b75d3be8f50ac142084e0f8982d649f3395ca766044141ead06e4"
+    },
+    {
+      "F": "R",
+      "M_I": 0,
+      "M_R": 1,
+      "action_order": [
+        "CONTINUE_TASK",
+        "SEND_CORRECTION"
+      ],
+      "archetype": "resource_location",
+      "difficulty": "compositional",
+      "gold_action": "SEND_CORRECTION",
+      "prompt_id": "J1H-RL-COM-01:R:1:0",
+      "prompt_sha256": "dbf47b735fab0b25e0fa4f0709937adca1ba6faaecb20c59fe340118767321c8",
+      "prompt_text": "You are Oren Quill, coordinating with Vesper Rook and Amabel Vale.\nOren Quill is completing the retrieval log.\nVesper Rook immediately executes a retrieval assignment involving Canister Cinnabar after this turn.\nAt the same time, Amabel Vale independently executes a separate retrieval assignment involving Canister Cirrus.\nA message from Oren Quill reaches Vesper Rook only and is not relayed to Amabel Vale.\nVesper Rook cannot alter Amabel Vale's assignment during this episode.\nThe two assignments use different objects, targets, routes, and actions.\nThe episode ends after both immediate assignments execute.\nWORLD FACTS:\nCanister Cinnabar belongs to Retrieval group Cinnabar.\nRetrieval group Cinnabar is assigned to Bay Cinnabar North.\nCanister Cirrus belongs to Retrieval group Cirrus.\nRetrieval group Cirrus is assigned to Bay Cirrus East.\nCurrent partner record:\nCanister Cinnabar: Bay Cinnabar South\nCanister Cirrus: Bay Cirrus East\nYou have exactly one action for this turn.\nSEND_CORRECTION sends an update concerning the addressed partner's immediate assignment; it uses this turn and does not advance your task this turn.\nCONTINUE_TASK advances your task this turn and sends no update.\nAvailable actions in order: CONTINUE_TASK, SEND_CORRECTION\nReturn strict JSON only: {\"action\":\"SEND_CORRECTION\"} or {\"action\":\"CONTINUE_TASK\"}",
+      "proposition_order": "partner_first",
+      "requested_seed": 858026464,
+      "valid_actions": [
+        "SEND_CORRECTION",
+        "CONTINUE_TASK"
+      ],
+      "variant_id": "J1H-RL-COM-01",
+      "world_state_sha256": "d250c430052b75d3be8f50ac142084e0f8982d649f3395ca766044141ead06e4"
+    },
+    {
+      "F": "R",
+      "M_I": 1,
+      "M_R": 1,
+      "action_order": [
+        "CONTINUE_TASK",
+        "SEND_CORRECTION"
+      ],
+      "archetype": "resource_location",
+      "difficulty": "compositional",
+      "gold_action": "SEND_CORRECTION",
+      "prompt_id": "J1H-RL-COM-01:R:1:1",
+      "prompt_sha256": "c11155ca89e04f875c08b0c06e03001df813ba521e01bd77e20ff4c56062a35d",
+      "prompt_text": "You are Oren Quill, coordinating with Vesper Rook and Amabel Vale.\nOren Quill is completing the retrieval log.\nVesper Rook immediately executes a retrieval assignment involving Canister Cinnabar after this turn.\nAt the same time, Amabel Vale independently executes a separate retrieval assignment involving Canister Cirrus.\nA message from Oren Quill reaches Vesper Rook only and is not relayed to Amabel Vale.\nVesper Rook cannot alter Amabel Vale's assignment during this episode.\nThe two assignments use different objects, targets, routes, and actions.\nThe episode ends after both immediate assignments execute.\nWORLD FACTS:\nCanister Cinnabar belongs to Retrieval group Cinnabar.\nRetrieval group Cinnabar is assigned to Bay Cinnabar North.\nCanister Cirrus belongs to Retrieval group Cirrus.\nRetrieval group Cirrus is assigned to Bay Cirrus East.\nCurrent partner record:\nCanister Cinnabar: Bay Cinnabar South\nCanister Cirrus: Bay Cirrus West\nYou have exactly one action for this turn.\nSEND_CORRECTION sends an update concerning the addressed partner's immediate assignment; it uses this turn and does not advance your task this turn.\nCONTINUE_TASK advances your task this turn and sends no update.\nAvailable actions in order: CONTINUE_TASK, SEND_CORRECTION\nReturn strict JSON only: {\"action\":\"SEND_CORRECTION\"} or {\"action\":\"CONTINUE_TASK\"}",
+      "proposition_order": "partner_first",
+      "requested_seed": 1617200919,
+      "valid_actions": [
+        "SEND_CORRECTION",
+        "CONTINUE_TASK"
+      ],
+      "variant_id": "J1H-RL-COM-01",
+      "world_state_sha256": "d250c430052b75d3be8f50ac142084e0f8982d649f3395ca766044141ead06e4"
+    },
+    {
+      "F": "R",
+      "M_I": 0,
+      "M_R": 0,
+      "action_order": [
+        "SEND_CORRECTION",
+        "CONTINUE_TASK"
+      ],
+      "archetype": "tool_placement",
+      "difficulty": "direct",
+      "gold_action": "CONTINUE_TASK",
+      "prompt_id": "J1H-TP-DIR-01:R:0:0",
+      "prompt_sha256": "9b8732306f4fd559a05f03f09ba33425ccf48ecc7562cda758b5959c01939663",
+      "prompt_text": "You are Petra Quill, coordinating with Warren Rook and Benton Vale.\nPetra Quill is completing the assembly log.\nWarren Rook immediately executes a assembly assignment involving Instrument Driftwood after this turn.\nAt the same time, Benton Vale independently executes a separate assembly assignment involving Instrument Dovetail.\nA message from Petra Quill reaches Warren Rook only and is not relayed to Benton Vale.\nWarren Rook cannot alter Benton Vale's assignment during this episode.\nThe two assignments use different objects, targets, routes, and actions.\nThe episode ends after both immediate assignments execute.\nWORLD FACTS:\nInstrument Dovetail is assigned to Depot Dovetail East.\nInstrument Driftwood is assigned to Depot Driftwood North.\nCurrent partner record:\nInstrument Dovetail: Depot Dovetail East\nInstrument Driftwood: Depot Driftwood North\nYou have exactly one action for this turn.\nSEND_CORRECTION sends an update concerning the addressed partner's immediate assignment; it uses this turn and does not advance your task this turn.\nCONTINUE_TASK advances your task this turn and sends no update.\nAvailable actions in order: SEND_CORRECTION, CONTINUE_TASK\nReturn strict JSON only: {\"action\":\"SEND_CORRECTION\"} or {\"action\":\"CONTINUE_TASK\"}",
+      "proposition_order": "operator_first",
+      "requested_seed": 1070264439,
+      "valid_actions": [
+        "SEND_CORRECTION",
+        "CONTINUE_TASK"
+      ],
+      "variant_id": "J1H-TP-DIR-01",
+      "world_state_sha256": "8f200ad7b9c0cf54b517670d9c6709b13bdde5d631b7a1baaf6ef935a469e65b"
+    },
+    {
+      "F": "R",
+      "M_I": 1,
+      "M_R": 0,
+      "action_order": [
+        "SEND_CORRECTION",
+        "CONTINUE_TASK"
+      ],
+      "archetype": "tool_placement",
+      "difficulty": "direct",
+      "gold_action": "CONTINUE_TASK",
+      "prompt_id": "J1H-TP-DIR-01:R:0:1",
+      "prompt_sha256": "c67310c99164f4304744c093a9495e71e3d38e3368ba04a7ac3743a4f01615a6",
+      "prompt_text": "You are Petra Quill, coordinating with Warren Rook and Benton Vale.\nPetra Quill is completing the assembly log.\nWarren Rook immediately executes a assembly assignment involving Instrument Driftwood after this turn.\nAt the same time, Benton Vale independently executes a separate assembly assignment involving Instrument Dovetail.\nA message from Petra Quill reaches Warren Rook only and is not relayed to Benton Vale.\nWarren Rook cannot alter Benton Vale's assignment during this episode.\nThe two assignments use different objects, targets, routes, and actions.\nThe episode ends after both immediate assignments execute.\nWORLD FACTS:\nInstrument Dovetail is assigned to Depot Dovetail East.\nInstrument Driftwood is assigned to Depot Driftwood North.\nCurrent partner record:\nInstrument Dovetail: Depot Dovetail West\nInstrument Driftwood: Depot Driftwood North\nYou have exactly one action for this turn.\nSEND_CORRECTION sends an update concerning the addressed partner's immediate assignment; it uses this turn and does not advance your task this turn.\nCONTINUE_TASK advances your task this turn and sends no update.\nAvailable actions in order: SEND_CORRECTION, CONTINUE_TASK\nReturn strict JSON only: {\"action\":\"SEND_CORRECTION\"} or {\"action\":\"CONTINUE_TASK\"}",
+      "proposition_order": "operator_first",
+      "requested_seed": 835269306,
+      "valid_actions": [
+        "SEND_CORRECTION",
+        "CONTINUE_TASK"
+      ],
+      "variant_id": "J1H-TP-DIR-01",
+      "world_state_sha256": "8f200ad7b9c0cf54b517670d9c6709b13bdde5d631b7a1baaf6ef935a469e65b"
+    },
+    {
+      "F": "R",
+      "M_I": 0,
+      "M_R": 1,
+      "action_order": [
+        "SEND_CORRECTION",
+        "CONTINUE_TASK"
+      ],
+      "archetype": "tool_placement",
+      "difficulty": "direct",
+      "gold_action": "SEND_CORRECTION",
+      "prompt_id": "J1H-TP-DIR-01:R:1:0",
+      "prompt_sha256": "f9e672a3c27ddeed9f3eb5eb3c06a3db2f92064cdfa5d6b04b1cfeb1f41602bf",
+      "prompt_text": "You are Petra Quill, coordinating with Warren Rook and Benton Vale.\nPetra Quill is completing the assembly log.\nWarren Rook immediately executes a assembly assignment involving Instrument Driftwood after this turn.\nAt the same time, Benton Vale independently executes a separate assembly assignment involving Instrument Dovetail.\nA message from Petra Quill reaches Warren Rook only and is not relayed to Benton Vale.\nWarren Rook cannot alter Benton Vale's assignment during this episode.\nThe two assignments use different objects, targets, routes, and actions.\nThe episode ends after both immediate assignments execute.\nWORLD FACTS:\nInstrument Dovetail is assigned to Depot Dovetail East.\nInstrument Driftwood is assigned to Depot Driftwood North.\nCurrent partner record:\nInstrument Dovetail: Depot Dovetail East\nInstrument Driftwood: Depot Driftwood South\nYou have exactly one action for this turn.\nSEND_CORRECTION sends an update concerning the addressed partner's immediate assignment; it uses this turn and does not advance your task this turn.\nCONTINUE_TASK advances your task this turn and sends no update.\nAvailable actions in order: SEND_CORRECTION, CONTINUE_TASK\nReturn strict JSON only: {\"action\":\"SEND_CORRECTION\"} or {\"action\":\"CONTINUE_TASK\"}",
+      "proposition_order": "operator_first",
+      "requested_seed": 1978219936,
+      "valid_actions": [
+        "SEND_CORRECTION",
+        "CONTINUE_TASK"
+      ],
+      "variant_id": "J1H-TP-DIR-01",
+      "world_state_sha256": "8f200ad7b9c0cf54b517670d9c6709b13bdde5d631b7a1baaf6ef935a469e65b"
+    },
+    {
+      "F": "R",
+      "M_I": 1,
+      "M_R": 1,
+      "action_order": [
+        "SEND_CORRECTION",
+        "CONTINUE_TASK"
+      ],
+      "archetype": "tool_placement",
+      "difficulty": "direct",
+      "gold_action": "SEND_CORRECTION",
+      "prompt_id": "J1H-TP-DIR-01:R:1:1",
+      "prompt_sha256": "4eb78710879fd53db466743a532b2ba6e16499a05fd9716618bd1a420bf46a33",
+      "prompt_text": "You are Petra Quill, coordinating with Warren Rook and Benton Vale.\nPetra Quill is completing the assembly log.\nWarren Rook immediately executes a assembly assignment involving Instrument Driftwood after this turn.\nAt the same time, Benton Vale independently executes a separate assembly assignment involving Instrument Dovetail.\nA message from Petra Quill reaches Warren Rook only and is not relayed to Benton Vale.\nWarren Rook cannot alter Benton Vale's assignment during this episode.\nThe two assignments use different objects, targets, routes, and actions.\nThe episode ends after both immediate assignments execute.\nWORLD FACTS:\nInstrument Dovetail is assigned to Depot Dovetail East.\nInstrument Driftwood is assigned to Depot Driftwood North.\nCurrent partner record:\nInstrument Dovetail: Depot Dovetail West\nInstrument Driftwood: Depot Driftwood South\nYou have exactly one action for this turn.\nSEND_CORRECTION sends an update concerning the addressed partner's immediate assignment; it uses this turn and does not advance your task this turn.\nCONTINUE_TASK advances your task this turn and sends no update.\nAvailable actions in order: SEND_CORRECTION, CONTINUE_TASK\nReturn strict JSON only: {\"action\":\"SEND_CORRECTION\"} or {\"action\":\"CONTINUE_TASK\"}",
+      "proposition_order": "operator_first",
+      "requested_seed": 236983919,
+      "valid_actions": [
+        "SEND_CORRECTION",
+        "CONTINUE_TASK"
+      ],
+      "variant_id": "J1H-TP-DIR-01",
+      "world_state_sha256": "8f200ad7b9c0cf54b517670d9c6709b13bdde5d631b7a1baaf6ef935a469e65b"
+    },
+    {
+      "F": "R",
+      "M_I": 0,
+      "M_R": 0,
+      "action_order": [
+        "SEND_CORRECTION",
+        "CONTINUE_TASK"
+      ],
+      "archetype": "tool_placement",
+      "difficulty": "irrelevant_distractor",
+      "gold_action": "CONTINUE_TASK",
+      "prompt_id": "J1H-TP-DIS-01:R:0:0",
+      "prompt_sha256": "8be4b67b3cb1f870170371927f7aec1d71e75abd5eef43288110be35c32422ae",
+      "prompt_text": "You are Ronan Quill, coordinating with Xanthe Rook and Cleo Vale.\nRonan Quill is completing the assembly log.\nXanthe Rook immediately executes a assembly assignment involving Instrument Evergreen after this turn.\nAt the same time, Cleo Vale independently executes a separate assembly assignment involving Instrument Estuary.\nA message from Ronan Quill reaches Xanthe Rook only and is not relayed to Cleo Vale.\nXanthe Rook cannot alter Cleo Vale's assignment during this episode.\nThe two assignments use different objects, targets, routes, and actions.\nThe episode ends after both immediate assignments execute.\nWORLD FACTS:\nInstrument Evergreen is assigned to Depot Evergreen North.\nInstrument Estuary is assigned to Depot Estuary East.\nThe assembly roster closes at dusk.\nCurrent partner record:\nInstrument Evergreen: Depot Evergreen North\nInstrument Estuary: Depot Estuary East\nYou have exactly one action for this turn.\nSEND_CORRECTION sends an update concerning the addressed partner's immediate assignment; it uses this turn and does not advance your task this turn.\nCONTINUE_TASK advances your task this turn and sends no update.\nAvailable actions in order: SEND_CORRECTION, CONTINUE_TASK\nReturn strict JSON only: {\"action\":\"SEND_CORRECTION\"} or {\"action\":\"CONTINUE_TASK\"}",
+      "proposition_order": "partner_first",
+      "requested_seed": 599928449,
+      "valid_actions": [
+        "SEND_CORRECTION",
+        "CONTINUE_TASK"
+      ],
+      "variant_id": "J1H-TP-DIS-01",
+      "world_state_sha256": "d744b950f402a681c7d9492adf86b9fa19c65e99bdb3f12177ca9367b16fd1d3"
+    },
+    {
+      "F": "R",
+      "M_I": 1,
+      "M_R": 0,
+      "action_order": [
+        "SEND_CORRECTION",
+        "CONTINUE_TASK"
+      ],
+      "archetype": "tool_placement",
+      "difficulty": "irrelevant_distractor",
+      "gold_action": "CONTINUE_TASK",
+      "prompt_id": "J1H-TP-DIS-01:R:0:1",
+      "prompt_sha256": "6e45f4c6d2b1cb5b0c6faf52444c063449e996d453ddec4794a38873e284300a",
+      "prompt_text": "You are Ronan Quill, coordinating with Xanthe Rook and Cleo Vale.\nRonan Quill is completing the assembly log.\nXanthe Rook immediately executes a assembly assignment involving Instrument Evergreen after this turn.\nAt the same time, Cleo Vale independently executes a separate assembly assignment involving Instrument Estuary.\nA message from Ronan Quill reaches Xanthe Rook only and is not relayed to Cleo Vale.\nXanthe Rook cannot alter Cleo Vale's assignment during this episode.\nThe two assignments use different objects, targets, routes, and actions.\nThe episode ends after both immediate assignments execute.\nWORLD FACTS:\nInstrument Evergreen is assigned to Depot Evergreen North.\nInstrument Estuary is assigned to Depot Estuary East.\nThe assembly roster closes at dusk.\nCurrent partner record:\nInstrument Evergreen: Depot Evergreen North\nInstrument Estuary: Depot Estuary West\nYou have exactly one action for this turn.\nSEND_CORRECTION sends an update concerning the addressed partner's immediate assignment; it uses this turn and does not advance your task this turn.\nCONTINUE_TASK advances your task this turn and sends no update.\nAvailable actions in order: SEND_CORRECTION, CONTINUE_TASK\nReturn strict JSON only: {\"action\":\"SEND_CORRECTION\"} or {\"action\":\"CONTINUE_TASK\"}",
+      "proposition_order": "partner_first",
+      "requested_seed": 1089180669,
+      "valid_actions": [
+        "SEND_CORRECTION",
+        "CONTINUE_TASK"
+      ],
+      "variant_id": "J1H-TP-DIS-01",
+      "world_state_sha256": "d744b950f402a681c7d9492adf86b9fa19c65e99bdb3f12177ca9367b16fd1d3"
+    },
+    {
+      "F": "R",
+      "M_I": 0,
+      "M_R": 1,
+      "action_order": [
+        "SEND_CORRECTION",
+        "CONTINUE_TASK"
+      ],
+      "archetype": "tool_placement",
+      "difficulty": "irrelevant_distractor",
+      "gold_action": "SEND_CORRECTION",
+      "prompt_id": "J1H-TP-DIS-01:R:1:0",
+      "prompt_sha256": "2d14ab811bb6dfe3e3e9fb27a09fad45c07bb6808581e57a8cf2d796b9ccdafd",
+      "prompt_text": "You are Ronan Quill, coordinating with Xanthe Rook and Cleo Vale.\nRonan Quill is completing the assembly log.\nXanthe Rook immediately executes a assembly assignment involving Instrument Evergreen after this turn.\nAt the same time, Cleo Vale independently executes a separate assembly assignment involving Instrument Estuary.\nA message from Ronan Quill reaches Xanthe Rook only and is not relayed to Cleo Vale.\nXanthe Rook cannot alter Cleo Vale's assignment during this episode.\nThe two assignments use different objects, targets, routes, and actions.\nThe episode ends after both immediate assignments execute.\nWORLD FACTS:\nInstrument Evergreen is assigned to Depot Evergreen North.\nInstrument Estuary is assigned to Depot Estuary East.\nThe assembly roster closes at dusk.\nCurrent partner record:\nInstrument Evergreen: Depot Evergreen South\nInstrument Estuary: Depot Estuary East\nYou have exactly one action for this turn.\nSEND_CORRECTION sends an update concerning the addressed partner's immediate assignment; it uses this turn and does not advance your task this turn.\nCONTINUE_TASK advances your task this turn and sends no update.\nAvailable actions in order: SEND_CORRECTION, CONTINUE_TASK\nReturn strict JSON only: {\"action\":\"SEND_CORRECTION\"} or {\"action\":\"CONTINUE_TASK\"}",
+      "proposition_order": "partner_first",
+      "requested_seed": 961529331,
+      "valid_actions": [
+        "SEND_CORRECTION",
+        "CONTINUE_TASK"
+      ],
+      "variant_id": "J1H-TP-DIS-01",
+      "world_state_sha256": "d744b950f402a681c7d9492adf86b9fa19c65e99bdb3f12177ca9367b16fd1d3"
+    },
+    {
+      "F": "R",
+      "M_I": 1,
+      "M_R": 1,
+      "action_order": [
+        "SEND_CORRECTION",
+        "CONTINUE_TASK"
+      ],
+      "archetype": "tool_placement",
+      "difficulty": "irrelevant_distractor",
+      "gold_action": "SEND_CORRECTION",
+      "prompt_id": "J1H-TP-DIS-01:R:1:1",
+      "prompt_sha256": "2ade8e5f2d9b53bff363e37017abbff8a1eef82aeed3cb83fc8ca0c81e2dca6c",
+      "prompt_text": "You are Ronan Quill, coordinating with Xanthe Rook and Cleo Vale.\nRonan Quill is completing the assembly log.\nXanthe Rook immediately executes a assembly assignment involving Instrument Evergreen after this turn.\nAt the same time, Cleo Vale independently executes a separate assembly assignment involving Instrument Estuary.\nA message from Ronan Quill reaches Xanthe Rook only and is not relayed to Cleo Vale.\nXanthe Rook cannot alter Cleo Vale's assignment during this episode.\nThe two assignments use different objects, targets, routes, and actions.\nThe episode ends after both immediate assignments execute.\nWORLD FACTS:\nInstrument Evergreen is assigned to Depot Evergreen North.\nInstrument Estuary is assigned to Depot Estuary East.\nThe assembly roster closes at dusk.\nCurrent partner record:\nInstrument Evergreen: Depot Evergreen South\nInstrument Estuary: Depot Estuary West\nYou have exactly one action for this turn.\nSEND_CORRECTION sends an update concerning the addressed partner's immediate assignment; it uses this turn and does not advance your task this turn.\nCONTINUE_TASK advances your task this turn and sends no update.\nAvailable actions in order: SEND_CORRECTION, CONTINUE_TASK\nReturn strict JSON only: {\"action\":\"SEND_CORRECTION\"} or {\"action\":\"CONTINUE_TASK\"}",
+      "proposition_order": "partner_first",
+      "requested_seed": 1994967952,
+      "valid_actions": [
+        "SEND_CORRECTION",
+        "CONTINUE_TASK"
+      ],
+      "variant_id": "J1H-TP-DIS-01",
+      "world_state_sha256": "d744b950f402a681c7d9492adf86b9fa19c65e99bdb3f12177ca9367b16fd1d3"
+    },
+    {
+      "F": "R",
+      "M_I": 0,
+      "M_R": 0,
+      "action_order": [
+        "CONTINUE_TASK",
+        "SEND_CORRECTION"
+      ],
+      "archetype": "tool_placement",
+      "difficulty": "compositional",
+      "gold_action": "CONTINUE_TASK",
+      "prompt_id": "J1H-TP-COM-01:R:0:0",
+      "prompt_sha256": "e932724d6d6c7f841be64db5bdb94f472cc3256ca93085290a6723b1bf2ae3bd",
+      "prompt_text": "You are Selene Quill, coordinating with Yorick Rook and Della Vale.\nSelene Quill is completing the assembly log.\nYorick Rook immediately executes a assembly assignment involving Instrument Foxglove after this turn.\nAt the same time, Della Vale independently executes a separate assembly assignment involving Instrument Firelight.\nA message from Selene Quill reaches Yorick Rook only and is not relayed to Della Vale.\nYorick Rook cannot alter Della Vale's assignment during this episode.\nThe two assignments use different objects, targets, routes, and actions.\nThe episode ends after both immediate assignments execute.\nWORLD FACTS:\nInstrument Firelight belongs to Assembly group Firelight.\nAssembly group Firelight is assigned to Depot Firelight East.\nInstrument Foxglove belongs to Assembly group Foxglove.\nAssembly group Foxglove is assigned to Depot Foxglove North.\nCurrent partner record:\nInstrument Firelight: Depot Firelight East\nInstrument Foxglove: Depot Foxglove North\nYou have exactly one action for this turn.\nSEND_CORRECTION sends an update concerning the addressed partner's immediate assignment; it uses this turn and does not advance your task this turn.\nCONTINUE_TASK advances your task this turn and sends no update.\nAvailable actions in order: CONTINUE_TASK, SEND_CORRECTION\nReturn strict JSON only: {\"action\":\"SEND_CORRECTION\"} or {\"action\":\"CONTINUE_TASK\"}",
+      "proposition_order": "operator_first",
+      "requested_seed": 1769512630,
+      "valid_actions": [
+        "SEND_CORRECTION",
+        "CONTINUE_TASK"
+      ],
+      "variant_id": "J1H-TP-COM-01",
+      "world_state_sha256": "64254d970d92ab769406d42ae66716ab181b36299387bbbd232ea1d8f92a6d90"
+    },
+    {
+      "F": "R",
+      "M_I": 1,
+      "M_R": 0,
+      "action_order": [
+        "CONTINUE_TASK",
+        "SEND_CORRECTION"
+      ],
+      "archetype": "tool_placement",
+      "difficulty": "compositional",
+      "gold_action": "CONTINUE_TASK",
+      "prompt_id": "J1H-TP-COM-01:R:0:1",
+      "prompt_sha256": "7919d0ccbff8d0848f1791ca4f8bb095c05952543a5a7feac2c90e36a4cf557f",
+      "prompt_text": "You are Selene Quill, coordinating with Yorick Rook and Della Vale.\nSelene Quill is completing the assembly log.\nYorick Rook immediately executes a assembly assignment involving Instrument Foxglove after this turn.\nAt the same time, Della Vale independently executes a separate assembly assignment involving Instrument Firelight.\nA message from Selene Quill reaches Yorick Rook only and is not relayed to Della Vale.\nYorick Rook cannot alter Della Vale's assignment during this episode.\nThe two assignments use different objects, targets, routes, and actions.\nThe episode ends after both immediate assignments execute.\nWORLD FACTS:\nInstrument Firelight belongs to Assembly group Firelight.\nAssembly group Firelight is assigned to Depot Firelight East.\nInstrument Foxglove belongs to Assembly group Foxglove.\nAssembly group Foxglove is assigned to Depot Foxglove North.\nCurrent partner record:\nInstrument Firelight: Depot Firelight West\nInstrument Foxglove: Depot Foxglove North\nYou have exactly one action for this turn.\nSEND_CORRECTION sends an update concerning the addressed partner's immediate assignment; it uses this turn and does not advance your task this turn.\nCONTINUE_TASK advances your task this turn and sends no update.\nAvailable actions in order: CONTINUE_TASK, SEND_CORRECTION\nReturn strict JSON only: {\"action\":\"SEND_CORRECTION\"} or {\"action\":\"CONTINUE_TASK\"}",
+      "proposition_order": "operator_first",
+      "requested_seed": 203850949,
+      "valid_actions": [
+        "SEND_CORRECTION",
+        "CONTINUE_TASK"
+      ],
+      "variant_id": "J1H-TP-COM-01",
+      "world_state_sha256": "64254d970d92ab769406d42ae66716ab181b36299387bbbd232ea1d8f92a6d90"
+    },
+    {
+      "F": "R",
+      "M_I": 0,
+      "M_R": 1,
+      "action_order": [
+        "CONTINUE_TASK",
+        "SEND_CORRECTION"
+      ],
+      "archetype": "tool_placement",
+      "difficulty": "compositional",
+      "gold_action": "SEND_CORRECTION",
+      "prompt_id": "J1H-TP-COM-01:R:1:0",
+      "prompt_sha256": "8adb723cd045bf234c292504791490bef35b597bc6a37c30e6b2ad92212af9ca",
+      "prompt_text": "You are Selene Quill, coordinating with Yorick Rook and Della Vale.\nSelene Quill is completing the assembly log.\nYorick Rook immediately executes a assembly assignment involving Instrument Foxglove after this turn.\nAt the same time, Della Vale independently executes a separate assembly assignment involving Instrument Firelight.\nA message from Selene Quill reaches Yorick Rook only and is not relayed to Della Vale.\nYorick Rook cannot alter Della Vale's assignment during this episode.\nThe two assignments use different objects, targets, routes, and actions.\nThe episode ends after both immediate assignments execute.\nWORLD FACTS:\nInstrument Firelight belongs to Assembly group Firelight.\nAssembly group Firelight is assigned to Depot Firelight East.\nInstrument Foxglove belongs to Assembly group Foxglove.\nAssembly group Foxglove is assigned to Depot Foxglove North.\nCurrent partner record:\nInstrument Firelight: Depot Firelight East\nInstrument Foxglove: Depot Foxglove South\nYou have exactly one action for this turn.\nSEND_CORRECTION sends an update concerning the addressed partner's immediate assignment; it uses this turn and does not advance your task this turn.\nCONTINUE_TASK advances your task this turn and sends no update.\nAvailable actions in order: CONTINUE_TASK, SEND_CORRECTION\nReturn strict JSON only: {\"action\":\"SEND_CORRECTION\"} or {\"action\":\"CONTINUE_TASK\"}",
+      "proposition_order": "operator_first",
+      "requested_seed": 454778479,
+      "valid_actions": [
+        "SEND_CORRECTION",
+        "CONTINUE_TASK"
+      ],
+      "variant_id": "J1H-TP-COM-01",
+      "world_state_sha256": "64254d970d92ab769406d42ae66716ab181b36299387bbbd232ea1d8f92a6d90"
+    },
+    {
+      "F": "R",
+      "M_I": 1,
+      "M_R": 1,
+      "action_order": [
+        "CONTINUE_TASK",
+        "SEND_CORRECTION"
+      ],
+      "archetype": "tool_placement",
+      "difficulty": "compositional",
+      "gold_action": "SEND_CORRECTION",
+      "prompt_id": "J1H-TP-COM-01:R:1:1",
+      "prompt_sha256": "9e8b50cf65e259db5b752cff95a23302dc1ae3783607852390ae4190f056bdcf",
+      "prompt_text": "You are Selene Quill, coordinating with Yorick Rook and Della Vale.\nSelene Quill is completing the assembly log.\nYorick Rook immediately executes a assembly assignment involving Instrument Foxglove after this turn.\nAt the same time, Della Vale independently executes a separate assembly assignment involving Instrument Firelight.\nA message from Selene Quill reaches Yorick Rook only and is not relayed to Della Vale.\nYorick Rook cannot alter Della Vale's assignment during this episode.\nThe two assignments use different objects, targets, routes, and actions.\nThe episode ends after both immediate assignments execute.\nWORLD FACTS:\nInstrument Firelight belongs to Assembly group Firelight.\nAssembly group Firelight is assigned to Depot Firelight East.\nInstrument Foxglove belongs to Assembly group Foxglove.\nAssembly group Foxglove is assigned to Depot Foxglove North.\nCurrent partner record:\nInstrument Firelight: Depot Firelight West\nInstrument Foxglove: Depot Foxglove South\nYou have exactly one action for this turn.\nSEND_CORRECTION sends an update concerning the addressed partner's immediate assignment; it uses this turn and does not advance your task this turn.\nCONTINUE_TASK advances your task this turn and sends no update.\nAvailable actions in order: CONTINUE_TASK, SEND_CORRECTION\nReturn strict JSON only: {\"action\":\"SEND_CORRECTION\"} or {\"action\":\"CONTINUE_TASK\"}",
+      "proposition_order": "operator_first",
+      "requested_seed": 802954097,
+      "valid_actions": [
+        "SEND_CORRECTION",
+        "CONTINUE_TASK"
+      ],
+      "variant_id": "J1H-TP-COM-01",
+      "world_state_sha256": "64254d970d92ab769406d42ae66716ab181b36299387bbbd232ea1d8f92a6d90"
+    },
+    {
+      "F": "R",
+      "M_I": 0,
+      "M_R": 0,
+      "action_order": [
+        "CONTINUE_TASK",
+        "SEND_CORRECTION"
+      ],
+      "archetype": "rendezvous_destination",
+      "difficulty": "direct",
+      "gold_action": "CONTINUE_TASK",
+      "prompt_id": "J1H-RD-DIR-01:R:0:0",
+      "prompt_sha256": "7d2790f000876ffbe4e419d3ed678b03977b430ee413f1c63b7bb9fc3a806d83",
+      "prompt_text": "You are Theron Quill, coordinating with Zinnia Rook and Eamon Vale.\nTheron Quill is completing the rendezvous log.\nZinnia Rook immediately executes a rendezvous assignment involving Team Marker Garnet after this turn.\nAt the same time, Eamon Vale independently executes a separate rendezvous assignment involving Team Marker Glacier.\nA message from Theron Quill reaches Zinnia Rook only and is not relayed to Eamon Vale.\nZinnia Rook cannot alter Eamon Vale's assignment during this episode.\nThe two assignments use different objects, targets, routes, and actions.\nThe episode ends after both immediate assignments execute.\nWORLD FACTS:\nTeam Marker Garnet is assigned to Gate Garnet North.\nTeam Marker Glacier is assigned to Gate Glacier East.\nCurrent partner record:\nTeam Marker Garnet: Gate Garnet North\nTeam Marker Glacier: Gate Glacier East\nYou have exactly one action for this turn.\nSEND_CORRECTION sends an update concerning the addressed partner's immediate assignment; it uses this turn and does not advance your task this turn.\nCONTINUE_TASK advances your task this turn and sends no update.\nAvailable actions in order: CONTINUE_TASK, SEND_CORRECTION\nReturn strict JSON only: {\"action\":\"SEND_CORRECTION\"} or {\"action\":\"CONTINUE_TASK\"}",
+      "proposition_order": "partner_first",
+      "requested_seed": 1766979975,
+      "valid_actions": [
+        "SEND_CORRECTION",
+        "CONTINUE_TASK"
+      ],
+      "variant_id": "J1H-RD-DIR-01",
+      "world_state_sha256": "ccd6b2ad46a50fe535d13e05576b1a6580a01520de44153c652b8c9c2ab74155"
+    },
+    {
+      "F": "R",
+      "M_I": 1,
+      "M_R": 0,
+      "action_order": [
+        "CONTINUE_TASK",
+        "SEND_CORRECTION"
+      ],
+      "archetype": "rendezvous_destination",
+      "difficulty": "direct",
+      "gold_action": "CONTINUE_TASK",
+      "prompt_id": "J1H-RD-DIR-01:R:0:1",
+      "prompt_sha256": "4cfe434ada6f4f75a0769cf861d66f6f7e2851d8a776e9e3385dd2f7b7843f1a",
+      "prompt_text": "You are Theron Quill, coordinating with Zinnia Rook and Eamon Vale.\nTheron Quill is completing the rendezvous log.\nZinnia Rook immediately executes a rendezvous assignment involving Team Marker Garnet after this turn.\nAt the same time, Eamon Vale independently executes a separate rendezvous assignment involving Team Marker Glacier.\nA message from Theron Quill reaches Zinnia Rook only and is not relayed to Eamon Vale.\nZinnia Rook cannot alter Eamon Vale's assignment during this episode.\nThe two assignments use different objects, targets, routes, and actions.\nThe episode ends after both immediate assignments execute.\nWORLD FACTS:\nTeam Marker Garnet is assigned to Gate Garnet North.\nTeam Marker Glacier is assigned to Gate Glacier East.\nCurrent partner record:\nTeam Marker Garnet: Gate Garnet North\nTeam Marker Glacier: Gate Glacier West\nYou have exactly one action for this turn.\nSEND_CORRECTION sends an update concerning the addressed partner's immediate assignment; it uses this turn and does not advance your task this turn.\nCONTINUE_TASK advances your task this turn and sends no update.\nAvailable actions in order: CONTINUE_TASK, SEND_CORRECTION\nReturn strict JSON only: {\"action\":\"SEND_CORRECTION\"} or {\"action\":\"CONTINUE_TASK\"}",
+      "proposition_order": "partner_first",
+      "requested_seed": 1219770247,
+      "valid_actions": [
+        "SEND_CORRECTION",
+        "CONTINUE_TASK"
+      ],
+      "variant_id": "J1H-RD-DIR-01",
+      "world_state_sha256": "ccd6b2ad46a50fe535d13e05576b1a6580a01520de44153c652b8c9c2ab74155"
+    },
+    {
+      "F": "R",
+      "M_I": 0,
+      "M_R": 1,
+      "action_order": [
+        "CONTINUE_TASK",
+        "SEND_CORRECTION"
+      ],
+      "archetype": "rendezvous_destination",
+      "difficulty": "direct",
+      "gold_action": "SEND_CORRECTION",
+      "prompt_id": "J1H-RD-DIR-01:R:1:0",
+      "prompt_sha256": "995cb1f8afa4a0c1c1ab3cd8da14ae7199c860bba7cd270965b53661220315c8",
+      "prompt_text": "You are Theron Quill, coordinating with Zinnia Rook and Eamon Vale.\nTheron Quill is completing the rendezvous log.\nZinnia Rook immediately executes a rendezvous assignment involving Team Marker Garnet after this turn.\nAt the same time, Eamon Vale independently executes a separate rendezvous assignment involving Team Marker Glacier.\nA message from Theron Quill reaches Zinnia Rook only and is not relayed to Eamon Vale.\nZinnia Rook cannot alter Eamon Vale's assignment during this episode.\nThe two assignments use different objects, targets, routes, and actions.\nThe episode ends after both immediate assignments execute.\nWORLD FACTS:\nTeam Marker Garnet is assigned to Gate Garnet North.\nTeam Marker Glacier is assigned to Gate Glacier East.\nCurrent partner record:\nTeam Marker Garnet: Gate Garnet South\nTeam Marker Glacier: Gate Glacier East\nYou have exactly one action for this turn.\nSEND_CORRECTION sends an update concerning the addressed partner's immediate assignment; it uses this turn and does not advance your task this turn.\nCONTINUE_TASK advances your task this turn and sends no update.\nAvailable actions in order: CONTINUE_TASK, SEND_CORRECTION\nReturn strict JSON only: {\"action\":\"SEND_CORRECTION\"} or {\"action\":\"CONTINUE_TASK\"}",
+      "proposition_order": "partner_first",
+      "requested_seed": 1591753903,
+      "valid_actions": [
+        "SEND_CORRECTION",
+        "CONTINUE_TASK"
+      ],
+      "variant_id": "J1H-RD-DIR-01",
+      "world_state_sha256": "ccd6b2ad46a50fe535d13e05576b1a6580a01520de44153c652b8c9c2ab74155"
+    },
+    {
+      "F": "R",
+      "M_I": 1,
+      "M_R": 1,
+      "action_order": [
+        "CONTINUE_TASK",
+        "SEND_CORRECTION"
+      ],
+      "archetype": "rendezvous_destination",
+      "difficulty": "direct",
+      "gold_action": "SEND_CORRECTION",
+      "prompt_id": "J1H-RD-DIR-01:R:1:1",
+      "prompt_sha256": "b6a44a50d039f6970f55322a462b66801cad6cb5c7f1fe9f2cf96f860b73b1e1",
+      "prompt_text": "You are Theron Quill, coordinating with Zinnia Rook and Eamon Vale.\nTheron Quill is completing the rendezvous log.\nZinnia Rook immediately executes a rendezvous assignment involving Team Marker Garnet after this turn.\nAt the same time, Eamon Vale independently executes a separate rendezvous assignment involving Team Marker Glacier.\nA message from Theron Quill reaches Zinnia Rook only and is not relayed to Eamon Vale.\nZinnia Rook cannot alter Eamon Vale's assignment during this episode.\nThe two assignments use different objects, targets, routes, and actions.\nThe episode ends after both immediate assignments execute.\nWORLD FACTS:\nTeam Marker Garnet is assigned to Gate Garnet North.\nTeam Marker Glacier is assigned to Gate Glacier East.\nCurrent partner record:\nTeam Marker Garnet: Gate Garnet South\nTeam Marker Glacier: Gate Glacier West\nYou have exactly one action for this turn.\nSEND_CORRECTION sends an update concerning the addressed partner's immediate assignment; it uses this turn and does not advance your task this turn.\nCONTINUE_TASK advances your task this turn and sends no update.\nAvailable actions in order: CONTINUE_TASK, SEND_CORRECTION\nReturn strict JSON only: {\"action\":\"SEND_CORRECTION\"} or {\"action\":\"CONTINUE_TASK\"}",
+      "proposition_order": "partner_first",
+      "requested_seed": 231153113,
+      "valid_actions": [
+        "SEND_CORRECTION",
+        "CONTINUE_TASK"
+      ],
+      "variant_id": "J1H-RD-DIR-01",
+      "world_state_sha256": "ccd6b2ad46a50fe535d13e05576b1a6580a01520de44153c652b8c9c2ab74155"
+    },
+    {
+      "F": "R",
+      "M_I": 0,
+      "M_R": 0,
+      "action_order": [
+        "SEND_CORRECTION",
+        "CONTINUE_TASK"
+      ],
+      "archetype": "rendezvous_destination",
+      "difficulty": "irrelevant_distractor",
+      "gold_action": "CONTINUE_TASK",
+      "prompt_id": "J1H-RD-DIS-01:R:0:0",
+      "prompt_sha256": "3b792e231caaa695924627d8eb6757698e9d4093bfd0cc2ee52a19a79bfac52a",
+      "prompt_text": "You are Valora Quill, coordinating with Arden Rook and Faye Vale.\nValora Quill is completing the rendezvous log.\nArden Rook immediately executes a rendezvous assignment involving Team Marker Heather after this turn.\nAt the same time, Faye Vale independently executes a separate rendezvous assignment involving Team Marker Highland.\nA message from Valora Quill reaches Arden Rook only and is not relayed to Faye Vale.\nArden Rook cannot alter Faye Vale's assignment during this episode.\nThe two assignments use different objects, targets, routes, and actions.\nThe episode ends after both immediate assignments execute.\nWORLD FACTS:\nTeam Marker Highland is assigned to Gate Highland East.\nTeam Marker Heather is assigned to Gate Heather North.\nThe rendezvous roster closes at dusk.\nCurrent partner record:\nTeam Marker Highland: Gate Highland East\nTeam Marker Heather: Gate Heather North\nYou have exactly one action for this turn.\nSEND_CORRECTION sends an update concerning the addressed partner's immediate assignment; it uses this turn and does not advance your task this turn.\nCONTINUE_TASK advances your task this turn and sends no update.\nAvailable actions in order: SEND_CORRECTION, CONTINUE_TASK\nReturn strict JSON only: {\"action\":\"SEND_CORRECTION\"} or {\"action\":\"CONTINUE_TASK\"}",
+      "proposition_order": "operator_first",
+      "requested_seed": 1141550961,
+      "valid_actions": [
+        "SEND_CORRECTION",
+        "CONTINUE_TASK"
+      ],
+      "variant_id": "J1H-RD-DIS-01",
+      "world_state_sha256": "813bd0b149563cde26b3c5bee5d0e3bb6cd21a6ac6d7086c61d86f24ed3643ee"
+    },
+    {
+      "F": "R",
+      "M_I": 1,
+      "M_R": 0,
+      "action_order": [
+        "SEND_CORRECTION",
+        "CONTINUE_TASK"
+      ],
+      "archetype": "rendezvous_destination",
+      "difficulty": "irrelevant_distractor",
+      "gold_action": "CONTINUE_TASK",
+      "prompt_id": "J1H-RD-DIS-01:R:0:1",
+      "prompt_sha256": "693b9c64af73c2bf5a568428bf1a68c71b5efb08254ee388b12a24ed9699245f",
+      "prompt_text": "You are Valora Quill, coordinating with Arden Rook and Faye Vale.\nValora Quill is completing the rendezvous log.\nArden Rook immediately executes a rendezvous assignment involving Team Marker Heather after this turn.\nAt the same time, Faye Vale independently executes a separate rendezvous assignment involving Team Marker Highland.\nA message from Valora Quill reaches Arden Rook only and is not relayed to Faye Vale.\nArden Rook cannot alter Faye Vale's assignment during this episode.\nThe two assignments use different objects, targets, routes, and actions.\nThe episode ends after both immediate assignments execute.\nWORLD FACTS:\nTeam Marker Highland is assigned to Gate Highland East.\nTeam Marker Heather is assigned to Gate Heather North.\nThe rendezvous roster closes at dusk.\nCurrent partner record:\nTeam Marker Highland: Gate Highland West\nTeam Marker Heather: Gate Heather North\nYou have exactly one action for this turn.\nSEND_CORRECTION sends an update concerning the addressed partner's immediate assignment; it uses this turn and does not advance your task this turn.\nCONTINUE_TASK advances your task this turn and sends no update.\nAvailable actions in order: SEND_CORRECTION, CONTINUE_TASK\nReturn strict JSON only: {\"action\":\"SEND_CORRECTION\"} or {\"action\":\"CONTINUE_TASK\"}",
+      "proposition_order": "operator_first",
+      "requested_seed": 459191572,
+      "valid_actions": [
+        "SEND_CORRECTION",
+        "CONTINUE_TASK"
+      ],
+      "variant_id": "J1H-RD-DIS-01",
+      "world_state_sha256": "813bd0b149563cde26b3c5bee5d0e3bb6cd21a6ac6d7086c61d86f24ed3643ee"
+    },
+    {
+      "F": "R",
+      "M_I": 0,
+      "M_R": 1,
+      "action_order": [
+        "SEND_CORRECTION",
+        "CONTINUE_TASK"
+      ],
+      "archetype": "rendezvous_destination",
+      "difficulty": "irrelevant_distractor",
+      "gold_action": "SEND_CORRECTION",
+      "prompt_id": "J1H-RD-DIS-01:R:1:0",
+      "prompt_sha256": "06aefbf0d82789ae0f42cb8bea69d3599e21b36495253661dffd722703525103",
+      "prompt_text": "You are Valora Quill, coordinating with Arden Rook and Faye Vale.\nValora Quill is completing the rendezvous log.\nArden Rook immediately executes a rendezvous assignment involving Team Marker Heather after this turn.\nAt the same time, Faye Vale independently executes a separate rendezvous assignment involving Team Marker Highland.\nA message from Valora Quill reaches Arden Rook only and is not relayed to Faye Vale.\nArden Rook cannot alter Faye Vale's assignment during this episode.\nThe two assignments use different objects, targets, routes, and actions.\nThe episode ends after both immediate assignments execute.\nWORLD FACTS:\nTeam Marker Highland is assigned to Gate Highland East.\nTeam Marker Heather is assigned to Gate Heather North.\nThe rendezvous roster closes at dusk.\nCurrent partner record:\nTeam Marker Highland: Gate Highland East\nTeam Marker Heather: Gate Heather South\nYou have exactly one action for this turn.\nSEND_CORRECTION sends an update concerning the addressed partner's immediate assignment; it uses this turn and does not advance your task this turn.\nCONTINUE_TASK advances your task this turn and sends no update.\nAvailable actions in order: SEND_CORRECTION, CONTINUE_TASK\nReturn strict JSON only: {\"action\":\"SEND_CORRECTION\"} or {\"action\":\"CONTINUE_TASK\"}",
+      "proposition_order": "operator_first",
+      "requested_seed": 1125478190,
+      "valid_actions": [
+        "SEND_CORRECTION",
+        "CONTINUE_TASK"
+      ],
+      "variant_id": "J1H-RD-DIS-01",
+      "world_state_sha256": "813bd0b149563cde26b3c5bee5d0e3bb6cd21a6ac6d7086c61d86f24ed3643ee"
+    },
+    {
+      "F": "R",
+      "M_I": 1,
+      "M_R": 1,
+      "action_order": [
+        "SEND_CORRECTION",
+        "CONTINUE_TASK"
+      ],
+      "archetype": "rendezvous_destination",
+      "difficulty": "irrelevant_distractor",
+      "gold_action": "SEND_CORRECTION",
+      "prompt_id": "J1H-RD-DIS-01:R:1:1",
+      "prompt_sha256": "7160a82e44e8de1672f89ce50769e9f240ff222fb278f35959548d02910d752c",
+      "prompt_text": "You are Valora Quill, coordinating with Arden Rook and Faye Vale.\nValora Quill is completing the rendezvous log.\nArden Rook immediately executes a rendezvous assignment involving Team Marker Heather after this turn.\nAt the same time, Faye Vale independently executes a separate rendezvous assignment involving Team Marker Highland.\nA message from Valora Quill reaches Arden Rook only and is not relayed to Faye Vale.\nArden Rook cannot alter Faye Vale's assignment during this episode.\nThe two assignments use different objects, targets, routes, and actions.\nThe episode ends after both immediate assignments execute.\nWORLD FACTS:\nTeam Marker Highland is assigned to Gate Highland East.\nTeam Marker Heather is assigned to Gate Heather North.\nThe rendezvous roster closes at dusk.\nCurrent partner record:\nTeam Marker Highland: Gate Highland West\nTeam Marker Heather: Gate Heather South\nYou have exactly one action for this turn.\nSEND_CORRECTION sends an update concerning the addressed partner's immediate assignment; it uses this turn and does not advance your task this turn.\nCONTINUE_TASK advances your task this turn and sends no update.\nAvailable actions in order: SEND_CORRECTION, CONTINUE_TASK\nReturn strict JSON only: {\"action\":\"SEND_CORRECTION\"} or {\"action\":\"CONTINUE_TASK\"}",
+      "proposition_order": "operator_first",
+      "requested_seed": 2007518948,
+      "valid_actions": [
+        "SEND_CORRECTION",
+        "CONTINUE_TASK"
+      ],
+      "variant_id": "J1H-RD-DIS-01",
+      "world_state_sha256": "813bd0b149563cde26b3c5bee5d0e3bb6cd21a6ac6d7086c61d86f24ed3643ee"
+    },
+    {
+      "F": "R",
+      "M_I": 0,
+      "M_R": 0,
+      "action_order": [
+        "SEND_CORRECTION",
+        "CONTINUE_TASK"
+      ],
+      "archetype": "rendezvous_destination",
+      "difficulty": "compositional",
+      "gold_action": "CONTINUE_TASK",
+      "prompt_id": "J1H-RD-COM-01:R:0:0",
+      "prompt_sha256": "d4913b762a2685a1580b5bf0313f01a37bf71f7a255493d2223c830a61ed0a31",
+      "prompt_text": "You are Wilfred Quill, coordinating with Briony Rook and Galen Vale.\nWilfred Quill is completing the rendezvous log.\nBriony Rook immediately executes a rendezvous assignment involving Team Marker Ironwood after this turn.\nAt the same time, Galen Vale independently executes a separate rendezvous assignment involving Team Marker Inlet.\nA message from Wilfred Quill reaches Briony Rook only and is not relayed to Galen Vale.\nBriony Rook cannot alter Galen Vale's assignment during this episode.\nThe two assignments use different objects, targets, routes, and actions.\nThe episode ends after both immediate assignments execute.\nWORLD FACTS:\nTeam Marker Ironwood belongs to Rendezvous group Ironwood.\nRendezvous group Ironwood is assigned to Gate Ironwood North.\nTeam Marker Inlet belongs to Rendezvous group Inlet.\nRendezvous group Inlet is assigned to Gate Inlet East.\nCurrent partner record:\nTeam Marker Ironwood: Gate Ironwood North\nTeam Marker Inlet: Gate Inlet East\nYou have exactly one action for this turn.\nSEND_CORRECTION sends an update concerning the addressed partner's immediate assignment; it uses this turn and does not advance your task this turn.\nCONTINUE_TASK advances your task this turn and sends no update.\nAvailable actions in order: SEND_CORRECTION, CONTINUE_TASK\nReturn strict JSON only: {\"action\":\"SEND_CORRECTION\"} or {\"action\":\"CONTINUE_TASK\"}",
+      "proposition_order": "partner_first",
+      "requested_seed": 970989550,
+      "valid_actions": [
+        "SEND_CORRECTION",
+        "CONTINUE_TASK"
+      ],
+      "variant_id": "J1H-RD-COM-01",
+      "world_state_sha256": "8c118d748a00a07ad3a62d1da253c9809c3e48a1ea54405b6fcf5326b15ffff5"
+    },
+    {
+      "F": "R",
+      "M_I": 1,
+      "M_R": 0,
+      "action_order": [
+        "SEND_CORRECTION",
+        "CONTINUE_TASK"
+      ],
+      "archetype": "rendezvous_destination",
+      "difficulty": "compositional",
+      "gold_action": "CONTINUE_TASK",
+      "prompt_id": "J1H-RD-COM-01:R:0:1",
+      "prompt_sha256": "5069aaf1069aefa1b832357116cec1fd0b30509e2214f5d1115679c2d771041f",
+      "prompt_text": "You are Wilfred Quill, coordinating with Briony Rook and Galen Vale.\nWilfred Quill is completing the rendezvous log.\nBriony Rook immediately executes a rendezvous assignment involving Team Marker Ironwood after this turn.\nAt the same time, Galen Vale independently executes a separate rendezvous assignment involving Team Marker Inlet.\nA message from Wilfred Quill reaches Briony Rook only and is not relayed to Galen Vale.\nBriony Rook cannot alter Galen Vale's assignment during this episode.\nThe two assignments use different objects, targets, routes, and actions.\nThe episode ends after both immediate assignments execute.\nWORLD FACTS:\nTeam Marker Ironwood belongs to Rendezvous group Ironwood.\nRendezvous group Ironwood is assigned to Gate Ironwood North.\nTeam Marker Inlet belongs to Rendezvous group Inlet.\nRendezvous group Inlet is assigned to Gate Inlet East.\nCurrent partner record:\nTeam Marker Ironwood: Gate Ironwood North\nTeam Marker Inlet: Gate Inlet West\nYou have exactly one action for this turn.\nSEND_CORRECTION sends an update concerning the addressed partner's immediate assignment; it uses this turn and does not advance your task this turn.\nCONTINUE_TASK advances your task this turn and sends no update.\nAvailable actions in order: SEND_CORRECTION, CONTINUE_TASK\nReturn strict JSON only: {\"action\":\"SEND_CORRECTION\"} or {\"action\":\"CONTINUE_TASK\"}",
+      "proposition_order": "partner_first",
+      "requested_seed": 73701268,
+      "valid_actions": [
+        "SEND_CORRECTION",
+        "CONTINUE_TASK"
+      ],
+      "variant_id": "J1H-RD-COM-01",
+      "world_state_sha256": "8c118d748a00a07ad3a62d1da253c9809c3e48a1ea54405b6fcf5326b15ffff5"
+    },
+    {
+      "F": "R",
+      "M_I": 0,
+      "M_R": 1,
+      "action_order": [
+        "SEND_CORRECTION",
+        "CONTINUE_TASK"
+      ],
+      "archetype": "rendezvous_destination",
+      "difficulty": "compositional",
+      "gold_action": "SEND_CORRECTION",
+      "prompt_id": "J1H-RD-COM-01:R:1:0",
+      "prompt_sha256": "d42aabd6819e852d8cee9967f7f961b0c62df35bdcc3fbcd30bb9da293c28f6f",
+      "prompt_text": "You are Wilfred Quill, coordinating with Briony Rook and Galen Vale.\nWilfred Quill is completing the rendezvous log.\nBriony Rook immediately executes a rendezvous assignment involving Team Marker Ironwood after this turn.\nAt the same time, Galen Vale independently executes a separate rendezvous assignment involving Team Marker Inlet.\nA message from Wilfred Quill reaches Briony Rook only and is not relayed to Galen Vale.\nBriony Rook cannot alter Galen Vale's assignment during this episode.\nThe two assignments use different objects, targets, routes, and actions.\nThe episode ends after both immediate assignments execute.\nWORLD FACTS:\nTeam Marker Ironwood belongs to Rendezvous group Ironwood.\nRendezvous group Ironwood is assigned to Gate Ironwood North.\nTeam Marker Inlet belongs to Rendezvous group Inlet.\nRendezvous group Inlet is assigned to Gate Inlet East.\nCurrent partner record:\nTeam Marker Ironwood: Gate Ironwood South\nTeam Marker Inlet: Gate Inlet East\nYou have exactly one action for this turn.\nSEND_CORRECTION sends an update concerning the addressed partner's immediate assignment; it uses this turn and does not advance your task this turn.\nCONTINUE_TASK advances your task this turn and sends no update.\nAvailable actions in order: SEND_CORRECTION, CONTINUE_TASK\nReturn strict JSON only: {\"action\":\"SEND_CORRECTION\"} or {\"action\":\"CONTINUE_TASK\"}",
+      "proposition_order": "partner_first",
+      "requested_seed": 294053763,
+      "valid_actions": [
+        "SEND_CORRECTION",
+        "CONTINUE_TASK"
+      ],
+      "variant_id": "J1H-RD-COM-01",
+      "world_state_sha256": "8c118d748a00a07ad3a62d1da253c9809c3e48a1ea54405b6fcf5326b15ffff5"
+    },
+    {
+      "F": "R",
+      "M_I": 1,
+      "M_R": 1,
+      "action_order": [
+        "SEND_CORRECTION",
+        "CONTINUE_TASK"
+      ],
+      "archetype": "rendezvous_destination",
+      "difficulty": "compositional",
+      "gold_action": "SEND_CORRECTION",
+      "prompt_id": "J1H-RD-COM-01:R:1:1",
+      "prompt_sha256": "dcf98374e401e1164a6eaee208602e2f9a29ff3dd26e221f7f24ca982ce8c5f6",
+      "prompt_text": "You are Wilfred Quill, coordinating with Briony Rook and Galen Vale.\nWilfred Quill is completing the rendezvous log.\nBriony Rook immediately executes a rendezvous assignment involving Team Marker Ironwood after this turn.\nAt the same time, Galen Vale independently executes a separate rendezvous assignment involving Team Marker Inlet.\nA message from Wilfred Quill reaches Briony Rook only and is not relayed to Galen Vale.\nBriony Rook cannot alter Galen Vale's assignment during this episode.\nThe two assignments use different objects, targets, routes, and actions.\nThe episode ends after both immediate assignments execute.\nWORLD FACTS:\nTeam Marker Ironwood belongs to Rendezvous group Ironwood.\nRendezvous group Ironwood is assigned to Gate Ironwood North.\nTeam Marker Inlet belongs to Rendezvous group Inlet.\nRendezvous group Inlet is assigned to Gate Inlet East.\nCurrent partner record:\nTeam Marker Ironwood: Gate Ironwood South\nTeam Marker Inlet: Gate Inlet West\nYou have exactly one action for this turn.\nSEND_CORRECTION sends an update concerning the addressed partner's immediate assignment; it uses this turn and does not advance your task this turn.\nCONTINUE_TASK advances your task this turn and sends no update.\nAvailable actions in order: SEND_CORRECTION, CONTINUE_TASK\nReturn strict JSON only: {\"action\":\"SEND_CORRECTION\"} or {\"action\":\"CONTINUE_TASK\"}",
+      "proposition_order": "partner_first",
+      "requested_seed": 226362624,
+      "valid_actions": [
+        "SEND_CORRECTION",
+        "CONTINUE_TASK"
+      ],
+      "variant_id": "J1H-RD-COM-01",
+      "world_state_sha256": "8c118d748a00a07ad3a62d1da253c9809c3e48a1ea54405b6fcf5326b15ffff5"
+    },
+    {
+      "F": "R",
+      "M_I": 0,
+      "M_R": 0,
+      "action_order": [
+        "CONTINUE_TASK",
+        "SEND_CORRECTION"
+      ],
+      "archetype": "delivery_destination",
+      "difficulty": "direct",
+      "gold_action": "CONTINUE_TASK",
+      "prompt_id": "J1H-DD-DIR-01:R:0:0",
+      "prompt_sha256": "1621051a32626184e90b7746f044c1fc9f29f497c146347450a1be54d45f3ee0",
+      "prompt_text": "You are Xiomara Quill, coordinating with Corwin Rook and Helena Vale.\nXiomara Quill is completing the delivery log.\nCorwin Rook immediately executes a delivery assignment involving Parcel Kingfisher after this turn.\nAt the same time, Helena Vale independently executes a separate delivery assignment involving Parcel Jetty.\nA message from Xiomara Quill reaches Corwin Rook only and is not relayed to Helena Vale.\nCorwin Rook cannot alter Helena Vale's assignment during this episode.\nThe two assignments use different objects, targets, routes, and actions.\nThe episode ends after both immediate assignments execute.\nWORLD FACTS:\nParcel Jetty is assigned to Dock Jetty East.\nParcel Kingfisher is assigned to Dock Kingfisher North.\nCurrent partner record:\nParcel Jetty: Dock Jetty East\nParcel Kingfisher: Dock Kingfisher North\nYou have exactly one action for this turn.\nSEND_CORRECTION sends an update concerning the addressed partner's immediate assignment; it uses this turn and does not advance your task this turn.\nCONTINUE_TASK advances your task this turn and sends no update.\nAvailable actions in order: CONTINUE_TASK, SEND_CORRECTION\nReturn strict JSON only: {\"action\":\"SEND_CORRECTION\"} or {\"action\":\"CONTINUE_TASK\"}",
+      "proposition_order": "operator_first",
+      "requested_seed": 526374045,
+      "valid_actions": [
+        "SEND_CORRECTION",
+        "CONTINUE_TASK"
+      ],
+      "variant_id": "J1H-DD-DIR-01",
+      "world_state_sha256": "a3571a8b2323ea93f3b18ed366ce05a3b488400c43cdb914f5b63d1b2d9e91e2"
+    },
+    {
+      "F": "R",
+      "M_I": 1,
+      "M_R": 0,
+      "action_order": [
+        "CONTINUE_TASK",
+        "SEND_CORRECTION"
+      ],
+      "archetype": "delivery_destination",
+      "difficulty": "direct",
+      "gold_action": "CONTINUE_TASK",
+      "prompt_id": "J1H-DD-DIR-01:R:0:1",
+      "prompt_sha256": "39e45fb2f8e74047a20679343e82df708b2e95353851e03fd128d2d1567f4782",
+      "prompt_text": "You are Xiomara Quill, coordinating with Corwin Rook and Helena Vale.\nXiomara Quill is completing the delivery log.\nCorwin Rook immediately executes a delivery assignment involving Parcel Kingfisher after this turn.\nAt the same time, Helena Vale independently executes a separate delivery assignment involving Parcel Jetty.\nA message from Xiomara Quill reaches Corwin Rook only and is not relayed to Helena Vale.\nCorwin Rook cannot alter Helena Vale's assignment during this episode.\nThe two assignments use different objects, targets, routes, and actions.\nThe episode ends after both immediate assignments execute.\nWORLD FACTS:\nParcel Jetty is assigned to Dock Jetty East.\nParcel Kingfisher is assigned to Dock Kingfisher North.\nCurrent partner record:\nParcel Jetty: Dock Jetty West\nParcel Kingfisher: Dock Kingfisher North\nYou have exactly one action for this turn.\nSEND_CORRECTION sends an update concerning the addressed partner's immediate assignment; it uses this turn and does not advance your task this turn.\nCONTINUE_TASK advances your task this turn and sends no update.\nAvailable actions in order: CONTINUE_TASK, SEND_CORRECTION\nReturn strict JSON only: {\"action\":\"SEND_CORRECTION\"} or {\"action\":\"CONTINUE_TASK\"}",
+      "proposition_order": "operator_first",
+      "requested_seed": 1015061375,
+      "valid_actions": [
+        "SEND_CORRECTION",
+        "CONTINUE_TASK"
+      ],
+      "variant_id": "J1H-DD-DIR-01",
+      "world_state_sha256": "a3571a8b2323ea93f3b18ed366ce05a3b488400c43cdb914f5b63d1b2d9e91e2"
+    },
+    {
+      "F": "R",
+      "M_I": 0,
+      "M_R": 1,
+      "action_order": [
+        "CONTINUE_TASK",
+        "SEND_CORRECTION"
+      ],
+      "archetype": "delivery_destination",
+      "difficulty": "direct",
+      "gold_action": "SEND_CORRECTION",
+      "prompt_id": "J1H-DD-DIR-01:R:1:0",
+      "prompt_sha256": "d35f2ff238d42763850a309b1abad5bcb12803369b84b664cc2319257c3478f9",
+      "prompt_text": "You are Xiomara Quill, coordinating with Corwin Rook and Helena Vale.\nXiomara Quill is completing the delivery log.\nCorwin Rook immediately executes a delivery assignment involving Parcel Kingfisher after this turn.\nAt the same time, Helena Vale independently executes a separate delivery assignment involving Parcel Jetty.\nA message from Xiomara Quill reaches Corwin Rook only and is not relayed to Helena Vale.\nCorwin Rook cannot alter Helena Vale's assignment during this episode.\nThe two assignments use different objects, targets, routes, and actions.\nThe episode ends after both immediate assignments execute.\nWORLD FACTS:\nParcel Jetty is assigned to Dock Jetty East.\nParcel Kingfisher is assigned to Dock Kingfisher North.\nCurrent partner record:\nParcel Jetty: Dock Jetty East\nParcel Kingfisher: Dock Kingfisher South\nYou have exactly one action for this turn.\nSEND_CORRECTION sends an update concerning the addressed partner's immediate assignment; it uses this turn and does not advance your task this turn.\nCONTINUE_TASK advances your task this turn and sends no update.\nAvailable actions in order: CONTINUE_TASK, SEND_CORRECTION\nReturn strict JSON only: {\"action\":\"SEND_CORRECTION\"} or {\"action\":\"CONTINUE_TASK\"}",
+      "proposition_order": "operator_first",
+      "requested_seed": 302932548,
+      "valid_actions": [
+        "SEND_CORRECTION",
+        "CONTINUE_TASK"
+      ],
+      "variant_id": "J1H-DD-DIR-01",
+      "world_state_sha256": "a3571a8b2323ea93f3b18ed366ce05a3b488400c43cdb914f5b63d1b2d9e91e2"
+    },
+    {
+      "F": "R",
+      "M_I": 1,
+      "M_R": 1,
+      "action_order": [
+        "CONTINUE_TASK",
+        "SEND_CORRECTION"
+      ],
+      "archetype": "delivery_destination",
+      "difficulty": "direct",
+      "gold_action": "SEND_CORRECTION",
+      "prompt_id": "J1H-DD-DIR-01:R:1:1",
+      "prompt_sha256": "94d52c5f9c6531c54ac7c309e0c4d1ec17ecf68dfee166bdd4c00463f105a20e",
+      "prompt_text": "You are Xiomara Quill, coordinating with Corwin Rook and Helena Vale.\nXiomara Quill is completing the delivery log.\nCorwin Rook immediately executes a delivery assignment involving Parcel Kingfisher after this turn.\nAt the same time, Helena Vale independently executes a separate delivery assignment involving Parcel Jetty.\nA message from Xiomara Quill reaches Corwin Rook only and is not relayed to Helena Vale.\nCorwin Rook cannot alter Helena Vale's assignment during this episode.\nThe two assignments use different objects, targets, routes, and actions.\nThe episode ends after both immediate assignments execute.\nWORLD FACTS:\nParcel Jetty is assigned to Dock Jetty East.\nParcel Kingfisher is assigned to Dock Kingfisher North.\nCurrent partner record:\nParcel Jetty: Dock Jetty West\nParcel Kingfisher: Dock Kingfisher South\nYou have exactly one action for this turn.\nSEND_CORRECTION sends an update concerning the addressed partner's immediate assignment; it uses this turn and does not advance your task this turn.\nCONTINUE_TASK advances your task this turn and sends no update.\nAvailable actions in order: CONTINUE_TASK, SEND_CORRECTION\nReturn strict JSON only: {\"action\":\"SEND_CORRECTION\"} or {\"action\":\"CONTINUE_TASK\"}",
+      "proposition_order": "operator_first",
+      "requested_seed": 1222809267,
+      "valid_actions": [
+        "SEND_CORRECTION",
+        "CONTINUE_TASK"
+      ],
+      "variant_id": "J1H-DD-DIR-01",
+      "world_state_sha256": "a3571a8b2323ea93f3b18ed366ce05a3b488400c43cdb914f5b63d1b2d9e91e2"
+    },
+    {
+      "F": "R",
+      "M_I": 0,
+      "M_R": 0,
+      "action_order": [
+        "CONTINUE_TASK",
+        "SEND_CORRECTION"
+      ],
+      "archetype": "delivery_destination",
+      "difficulty": "irrelevant_distractor",
+      "gold_action": "CONTINUE_TASK",
+      "prompt_id": "J1H-DD-DIS-01:R:0:0",
+      "prompt_sha256": "4ca3194fb3f64e4ffb647994ef3e3df3e311d31dfa1892ce404eba6dda71f243",
+      "prompt_text": "You are Yasmin Quill, coordinating with Darius Rook and Isolde Vale.\nYasmin Quill is completing the delivery log.\nDarius Rook immediately executes a delivery assignment involving Parcel Lodestar after this turn.\nAt the same time, Isolde Vale independently executes a separate delivery assignment involving Parcel Keystone.\nA message from Yasmin Quill reaches Darius Rook only and is not relayed to Isolde Vale.\nDarius Rook cannot alter Isolde Vale's assignment during this episode.\nThe two assignments use different objects, targets, routes, and actions.\nThe episode ends after both immediate assignments execute.\nWORLD FACTS:\nParcel Lodestar is assigned to Dock Lodestar North.\nParcel Keystone is assigned to Dock Keystone East.\nThe delivery roster closes at dusk.\nCurrent partner record:\nParcel Lodestar: Dock Lodestar North\nParcel Keystone: Dock Keystone East\nYou have exactly one action for this turn.\nSEND_CORRECTION sends an update concerning the addressed partner's immediate assignment; it uses this turn and does not advance your task this turn.\nCONTINUE_TASK advances your task this turn and sends no update.\nAvailable actions in order: CONTINUE_TASK, SEND_CORRECTION\nReturn strict JSON only: {\"action\":\"SEND_CORRECTION\"} or {\"action\":\"CONTINUE_TASK\"}",
+      "proposition_order": "partner_first",
+      "requested_seed": 448486462,
+      "valid_actions": [
+        "SEND_CORRECTION",
+        "CONTINUE_TASK"
+      ],
+      "variant_id": "J1H-DD-DIS-01",
+      "world_state_sha256": "a93e105aec5066352b1f2d3a829f8f71045fec624d18936702df2c54c207fcf8"
+    },
+    {
+      "F": "R",
+      "M_I": 1,
+      "M_R": 0,
+      "action_order": [
+        "CONTINUE_TASK",
+        "SEND_CORRECTION"
+      ],
+      "archetype": "delivery_destination",
+      "difficulty": "irrelevant_distractor",
+      "gold_action": "CONTINUE_TASK",
+      "prompt_id": "J1H-DD-DIS-01:R:0:1",
+      "prompt_sha256": "5d1c9d6d7691ea49c2e904bc7298d439dbe54ebf96185b47cdd2c412f9530b55",
+      "prompt_text": "You are Yasmin Quill, coordinating with Darius Rook and Isolde Vale.\nYasmin Quill is completing the delivery log.\nDarius Rook immediately executes a delivery assignment involving Parcel Lodestar after this turn.\nAt the same time, Isolde Vale independently executes a separate delivery assignment involving Parcel Keystone.\nA message from Yasmin Quill reaches Darius Rook only and is not relayed to Isolde Vale.\nDarius Rook cannot alter Isolde Vale's assignment during this episode.\nThe two assignments use different objects, targets, routes, and actions.\nThe episode ends after both immediate assignments execute.\nWORLD FACTS:\nParcel Lodestar is assigned to Dock Lodestar North.\nParcel Keystone is assigned to Dock Keystone East.\nThe delivery roster closes at dusk.\nCurrent partner record:\nParcel Lodestar: Dock Lodestar North\nParcel Keystone: Dock Keystone West\nYou have exactly one action for this turn.\nSEND_CORRECTION sends an update concerning the addressed partner's immediate assignment; it uses this turn and does not advance your task this turn.\nCONTINUE_TASK advances your task this turn and sends no update.\nAvailable actions in order: CONTINUE_TASK, SEND_CORRECTION\nReturn strict JSON only: {\"action\":\"SEND_CORRECTION\"} or {\"action\":\"CONTINUE_TASK\"}",
+      "proposition_order": "partner_first",
+      "requested_seed": 435880257,
+      "valid_actions": [
+        "SEND_CORRECTION",
+        "CONTINUE_TASK"
+      ],
+      "variant_id": "J1H-DD-DIS-01",
+      "world_state_sha256": "a93e105aec5066352b1f2d3a829f8f71045fec624d18936702df2c54c207fcf8"
+    },
+    {
+      "F": "R",
+      "M_I": 0,
+      "M_R": 1,
+      "action_order": [
+        "CONTINUE_TASK",
+        "SEND_CORRECTION"
+      ],
+      "archetype": "delivery_destination",
+      "difficulty": "irrelevant_distractor",
+      "gold_action": "SEND_CORRECTION",
+      "prompt_id": "J1H-DD-DIS-01:R:1:0",
+      "prompt_sha256": "71c9b43e9bba368fe018f1c483d9c611470726c3b856973fef45c0dd87986f57",
+      "prompt_text": "You are Yasmin Quill, coordinating with Darius Rook and Isolde Vale.\nYasmin Quill is completing the delivery log.\nDarius Rook immediately executes a delivery assignment involving Parcel Lodestar after this turn.\nAt the same time, Isolde Vale independently executes a separate delivery assignment involving Parcel Keystone.\nA message from Yasmin Quill reaches Darius Rook only and is not relayed to Isolde Vale.\nDarius Rook cannot alter Isolde Vale's assignment during this episode.\nThe two assignments use different objects, targets, routes, and actions.\nThe episode ends after both immediate assignments execute.\nWORLD FACTS:\nParcel Lodestar is assigned to Dock Lodestar North.\nParcel Keystone is assigned to Dock Keystone East.\nThe delivery roster closes at dusk.\nCurrent partner record:\nParcel Lodestar: Dock Lodestar South\nParcel Keystone: Dock Keystone East\nYou have exactly one action for this turn.\nSEND_CORRECTION sends an update concerning the addressed partner's immediate assignment; it uses this turn and does not advance your task this turn.\nCONTINUE_TASK advances your task this turn and sends no update.\nAvailable actions in order: CONTINUE_TASK, SEND_CORRECTION\nReturn strict JSON only: {\"action\":\"SEND_CORRECTION\"} or {\"action\":\"CONTINUE_TASK\"}",
+      "proposition_order": "partner_first",
+      "requested_seed": 1770287033,
+      "valid_actions": [
+        "SEND_CORRECTION",
+        "CONTINUE_TASK"
+      ],
+      "variant_id": "J1H-DD-DIS-01",
+      "world_state_sha256": "a93e105aec5066352b1f2d3a829f8f71045fec624d18936702df2c54c207fcf8"
+    },
+    {
+      "F": "R",
+      "M_I": 1,
+      "M_R": 1,
+      "action_order": [
+        "CONTINUE_TASK",
+        "SEND_CORRECTION"
+      ],
+      "archetype": "delivery_destination",
+      "difficulty": "irrelevant_distractor",
+      "gold_action": "SEND_CORRECTION",
+      "prompt_id": "J1H-DD-DIS-01:R:1:1",
+      "prompt_sha256": "28f0ebda27b0761db1746a72bd11d124ff778a393692ebff5742af0467153a92",
+      "prompt_text": "You are Yasmin Quill, coordinating with Darius Rook and Isolde Vale.\nYasmin Quill is completing the delivery log.\nDarius Rook immediately executes a delivery assignment involving Parcel Lodestar after this turn.\nAt the same time, Isolde Vale independently executes a separate delivery assignment involving Parcel Keystone.\nA message from Yasmin Quill reaches Darius Rook only and is not relayed to Isolde Vale.\nDarius Rook cannot alter Isolde Vale's assignment during this episode.\nThe two assignments use different objects, targets, routes, and actions.\nThe episode ends after both immediate assignments execute.\nWORLD FACTS:\nParcel Lodestar is assigned to Dock Lodestar North.\nParcel Keystone is assigned to Dock Keystone East.\nThe delivery roster closes at dusk.\nCurrent partner record:\nParcel Lodestar: Dock Lodestar South\nParcel Keystone: Dock Keystone West\nYou have exactly one action for this turn.\nSEND_CORRECTION sends an update concerning the addressed partner's immediate assignment; it uses this turn and does not advance your task this turn.\nCONTINUE_TASK advances your task this turn and sends no update.\nAvailable actions in order: CONTINUE_TASK, SEND_CORRECTION\nReturn strict JSON only: {\"action\":\"SEND_CORRECTION\"} or {\"action\":\"CONTINUE_TASK\"}",
+      "proposition_order": "partner_first",
+      "requested_seed": 1704192907,
+      "valid_actions": [
+        "SEND_CORRECTION",
+        "CONTINUE_TASK"
+      ],
+      "variant_id": "J1H-DD-DIS-01",
+      "world_state_sha256": "a93e105aec5066352b1f2d3a829f8f71045fec624d18936702df2c54c207fcf8"
+    },
+    {
+      "F": "R",
+      "M_I": 0,
+      "M_R": 0,
+      "action_order": [
+        "SEND_CORRECTION",
+        "CONTINUE_TASK"
+      ],
+      "archetype": "delivery_destination",
+      "difficulty": "compositional",
+      "gold_action": "CONTINUE_TASK",
+      "prompt_id": "J1H-DD-COM-01:R:0:0",
+      "prompt_sha256": "71c1cbf3df6ec70de7b88958e968c1cfe3d7719daa7164e792dbd490ed7b9ff1",
+      "prompt_text": "You are Zephyr Quill, coordinating with Elowen Rook and Jareth Vale.\nZephyr Quill is completing the delivery log.\nElowen Rook immediately executes a delivery assignment involving Parcel Moonstone after this turn.\nAt the same time, Jareth Vale independently executes a separate delivery assignment involving Parcel Lowland.\nA message from Zephyr Quill reaches Elowen Rook only and is not relayed to Jareth Vale.\nElowen Rook cannot alter Jareth Vale's assignment during this episode.\nThe two assignments use different objects, targets, routes, and actions.\nThe episode ends after both immediate assignments execute.\nWORLD FACTS:\nParcel Lowland belongs to Delivery group Lowland.\nDelivery group Lowland is assigned to Dock Lowland East.\nParcel Moonstone belongs to Delivery group Moonstone.\nDelivery group Moonstone is assigned to Dock Moonstone North.\nCurrent partner record:\nParcel Lowland: Dock Lowland East\nParcel Moonstone: Dock Moonstone North\nYou have exactly one action for this turn.\nSEND_CORRECTION sends an update concerning the addressed partner's immediate assignment; it uses this turn and does not advance your task this turn.\nCONTINUE_TASK advances your task this turn and sends no update.\nAvailable actions in order: SEND_CORRECTION, CONTINUE_TASK\nReturn strict JSON only: {\"action\":\"SEND_CORRECTION\"} or {\"action\":\"CONTINUE_TASK\"}",
+      "proposition_order": "operator_first",
+      "requested_seed": 19222264,
+      "valid_actions": [
+        "SEND_CORRECTION",
+        "CONTINUE_TASK"
+      ],
+      "variant_id": "J1H-DD-COM-01",
+      "world_state_sha256": "d161b62069ef94d4897c96b598ca030bbc1af6aff5f5006ceb4ef6f824b0eeab"
+    },
+    {
+      "F": "R",
+      "M_I": 1,
+      "M_R": 0,
+      "action_order": [
+        "SEND_CORRECTION",
+        "CONTINUE_TASK"
+      ],
+      "archetype": "delivery_destination",
+      "difficulty": "compositional",
+      "gold_action": "CONTINUE_TASK",
+      "prompt_id": "J1H-DD-COM-01:R:0:1",
+      "prompt_sha256": "a6c317b7a7c0056c7e4641e66a5a1873080ac5c682a30cf8e3c44e16b1356d7d",
+      "prompt_text": "You are Zephyr Quill, coordinating with Elowen Rook and Jareth Vale.\nZephyr Quill is completing the delivery log.\nElowen Rook immediately executes a delivery assignment involving Parcel Moonstone after this turn.\nAt the same time, Jareth Vale independently executes a separate delivery assignment involving Parcel Lowland.\nA message from Zephyr Quill reaches Elowen Rook only and is not relayed to Jareth Vale.\nElowen Rook cannot alter Jareth Vale's assignment during this episode.\nThe two assignments use different objects, targets, routes, and actions.\nThe episode ends after both immediate assignments execute.\nWORLD FACTS:\nParcel Lowland belongs to Delivery group Lowland.\nDelivery group Lowland is assigned to Dock Lowland East.\nParcel Moonstone belongs to Delivery group Moonstone.\nDelivery group Moonstone is assigned to Dock Moonstone North.\nCurrent partner record:\nParcel Lowland: Dock Lowland West\nParcel Moonstone: Dock Moonstone North\nYou have exactly one action for this turn.\nSEND_CORRECTION sends an update concerning the addressed partner's immediate assignment; it uses this turn and does not advance your task this turn.\nCONTINUE_TASK advances your task this turn and sends no update.\nAvailable actions in order: SEND_CORRECTION, CONTINUE_TASK\nReturn strict JSON only: {\"action\":\"SEND_CORRECTION\"} or {\"action\":\"CONTINUE_TASK\"}",
+      "proposition_order": "operator_first",
+      "requested_seed": 1481052056,
+      "valid_actions": [
+        "SEND_CORRECTION",
+        "CONTINUE_TASK"
+      ],
+      "variant_id": "J1H-DD-COM-01",
+      "world_state_sha256": "d161b62069ef94d4897c96b598ca030bbc1af6aff5f5006ceb4ef6f824b0eeab"
+    },
+    {
+      "F": "R",
+      "M_I": 0,
+      "M_R": 1,
+      "action_order": [
+        "SEND_CORRECTION",
+        "CONTINUE_TASK"
+      ],
+      "archetype": "delivery_destination",
+      "difficulty": "compositional",
+      "gold_action": "SEND_CORRECTION",
+      "prompt_id": "J1H-DD-COM-01:R:1:0",
+      "prompt_sha256": "806986de0b2056f7bea3c3863854d8712dbf3ccb63df852e154736af5c3812fd",
+      "prompt_text": "You are Zephyr Quill, coordinating with Elowen Rook and Jareth Vale.\nZephyr Quill is completing the delivery log.\nElowen Rook immediately executes a delivery assignment involving Parcel Moonstone after this turn.\nAt the same time, Jareth Vale independently executes a separate delivery assignment involving Parcel Lowland.\nA message from Zephyr Quill reaches Elowen Rook only and is not relayed to Jareth Vale.\nElowen Rook cannot alter Jareth Vale's assignment during this episode.\nThe two assignments use different objects, targets, routes, and actions.\nThe episode ends after both immediate assignments execute.\nWORLD FACTS:\nParcel Lowland belongs to Delivery group Lowland.\nDelivery group Lowland is assigned to Dock Lowland East.\nParcel Moonstone belongs to Delivery group Moonstone.\nDelivery group Moonstone is assigned to Dock Moonstone North.\nCurrent partner record:\nParcel Lowland: Dock Lowland East\nParcel Moonstone: Dock Moonstone South\nYou have exactly one action for this turn.\nSEND_CORRECTION sends an update concerning the addressed partner's immediate assignment; it uses this turn and does not advance your task this turn.\nCONTINUE_TASK advances your task this turn and sends no update.\nAvailable actions in order: SEND_CORRECTION, CONTINUE_TASK\nReturn strict JSON only: {\"action\":\"SEND_CORRECTION\"} or {\"action\":\"CONTINUE_TASK\"}",
+      "proposition_order": "operator_first",
+      "requested_seed": 1388660952,
+      "valid_actions": [
+        "SEND_CORRECTION",
+        "CONTINUE_TASK"
+      ],
+      "variant_id": "J1H-DD-COM-01",
+      "world_state_sha256": "d161b62069ef94d4897c96b598ca030bbc1af6aff5f5006ceb4ef6f824b0eeab"
+    },
+    {
+      "F": "R",
+      "M_I": 1,
+      "M_R": 1,
+      "action_order": [
+        "SEND_CORRECTION",
+        "CONTINUE_TASK"
+      ],
+      "archetype": "delivery_destination",
+      "difficulty": "compositional",
+      "gold_action": "SEND_CORRECTION",
+      "prompt_id": "J1H-DD-COM-01:R:1:1",
+      "prompt_sha256": "70d251ac2d535964c706a35b10538549a8bf883ed727001efd2930c3ff95e063",
+      "prompt_text": "You are Zephyr Quill, coordinating with Elowen Rook and Jareth Vale.\nZephyr Quill is completing the delivery log.\nElowen Rook immediately executes a delivery assignment involving Parcel Moonstone after this turn.\nAt the same time, Jareth Vale independently executes a separate delivery assignment involving Parcel Lowland.\nA message from Zephyr Quill reaches Elowen Rook only and is not relayed to Jareth Vale.\nElowen Rook cannot alter Jareth Vale's assignment during this episode.\nThe two assignments use different objects, targets, routes, and actions.\nThe episode ends after both immediate assignments execute.\nWORLD FACTS:\nParcel Lowland belongs to Delivery group Lowland.\nDelivery group Lowland is assigned to Dock Lowland East.\nParcel Moonstone belongs to Delivery group Moonstone.\nDelivery group Moonstone is assigned to Dock Moonstone North.\nCurrent partner record:\nParcel Lowland: Dock Lowland West\nParcel Moonstone: Dock Moonstone South\nYou have exactly one action for this turn.\nSEND_CORRECTION sends an update concerning the addressed partner's immediate assignment; it uses this turn and does not advance your task this turn.\nCONTINUE_TASK advances your task this turn and sends no update.\nAvailable actions in order: SEND_CORRECTION, CONTINUE_TASK\nReturn strict JSON only: {\"action\":\"SEND_CORRECTION\"} or {\"action\":\"CONTINUE_TASK\"}",
+      "proposition_order": "operator_first",
+      "requested_seed": 1134809008,
+      "valid_actions": [
+        "SEND_CORRECTION",
+        "CONTINUE_TASK"
+      ],
+      "variant_id": "J1H-DD-COM-01",
+      "world_state_sha256": "d161b62069ef94d4897c96b598ca030bbc1af6aff5f5006ceb4ef6f824b0eeab"
+    },
+    {
+      "F": "R",
+      "M_I": 0,
+      "M_R": 0,
+      "action_order": [
+        "SEND_CORRECTION",
+        "CONTINUE_TASK"
+      ],
+      "archetype": "hazard_assignment",
+      "difficulty": "direct",
+      "gold_action": "CONTINUE_TASK",
+      "prompt_id": "J1H-HA-DIR-01:R:0:0",
+      "prompt_sha256": "3d2117112d89b6eae4ea0d13ebc34cdc2cf2d5627ea971af53248a81cc2345f7",
+      "prompt_text": "You are Althea Quill, coordinating with Fintan Rook and Kerensa Vale.\nAlthea Quill is completing the inspection log.\nFintan Rook immediately executes a inspection assignment involving Survey Packet Northwind after this turn.\nAt the same time, Kerensa Vale independently executes a separate inspection assignment involving Survey Packet Monarch.\nA message from Althea Quill reaches Fintan Rook only and is not relayed to Kerensa Vale.\nFintan Rook cannot alter Kerensa Vale's assignment during this episode.\nThe two assignments use different objects, targets, routes, and actions.\nThe episode ends after both immediate assignments execute.\nWORLD FACTS:\nSurvey Packet Northwind is assigned to Sector Northwind North.\nSurvey Packet Monarch is assigned to Sector Monarch East.\nCurrent partner record:\nSurvey Packet Northwind: Sector Northwind North\nSurvey Packet Monarch: Sector Monarch East\nYou have exactly one action for this turn.\nSEND_CORRECTION sends an update concerning the addressed partner's immediate assignment; it uses this turn and does not advance your task this turn.\nCONTINUE_TASK advances your task this turn and sends no update.\nAvailable actions in order: SEND_CORRECTION, CONTINUE_TASK\nReturn strict JSON only: {\"action\":\"SEND_CORRECTION\"} or {\"action\":\"CONTINUE_TASK\"}",
+      "proposition_order": "partner_first",
+      "requested_seed": 589949934,
+      "valid_actions": [
+        "SEND_CORRECTION",
+        "CONTINUE_TASK"
+      ],
+      "variant_id": "J1H-HA-DIR-01",
+      "world_state_sha256": "fdd77ec02d4e5bfb97e9f64abb64e0facca3939400614d9113bf5e1731732679"
+    },
+    {
+      "F": "R",
+      "M_I": 1,
+      "M_R": 0,
+      "action_order": [
+        "SEND_CORRECTION",
+        "CONTINUE_TASK"
+      ],
+      "archetype": "hazard_assignment",
+      "difficulty": "direct",
+      "gold_action": "CONTINUE_TASK",
+      "prompt_id": "J1H-HA-DIR-01:R:0:1",
+      "prompt_sha256": "bc988fed9265d230b151b9ef25297b23b936c4b6659526ccb0e9022af3fa30ae",
+      "prompt_text": "You are Althea Quill, coordinating with Fintan Rook and Kerensa Vale.\nAlthea Quill is completing the inspection log.\nFintan Rook immediately executes a inspection assignment involving Survey Packet Northwind after this turn.\nAt the same time, Kerensa Vale independently executes a separate inspection assignment involving Survey Packet Monarch.\nA message from Althea Quill reaches Fintan Rook only and is not relayed to Kerensa Vale.\nFintan Rook cannot alter Kerensa Vale's assignment during this episode.\nThe two assignments use different objects, targets, routes, and actions.\nThe episode ends after both immediate assignments execute.\nWORLD FACTS:\nSurvey Packet Northwind is assigned to Sector Northwind North.\nSurvey Packet Monarch is assigned to Sector Monarch East.\nCurrent partner record:\nSurvey Packet Northwind: Sector Northwind North\nSurvey Packet Monarch: Sector Monarch West\nYou have exactly one action for this turn.\nSEND_CORRECTION sends an update concerning the addressed partner's immediate assignment; it uses this turn and does not advance your task this turn.\nCONTINUE_TASK advances your task this turn and sends no update.\nAvailable actions in order: SEND_CORRECTION, CONTINUE_TASK\nReturn strict JSON only: {\"action\":\"SEND_CORRECTION\"} or {\"action\":\"CONTINUE_TASK\"}",
+      "proposition_order": "partner_first",
+      "requested_seed": 1117005312,
+      "valid_actions": [
+        "SEND_CORRECTION",
+        "CONTINUE_TASK"
+      ],
+      "variant_id": "J1H-HA-DIR-01",
+      "world_state_sha256": "fdd77ec02d4e5bfb97e9f64abb64e0facca3939400614d9113bf5e1731732679"
+    },
+    {
+      "F": "R",
+      "M_I": 0,
+      "M_R": 1,
+      "action_order": [
+        "SEND_CORRECTION",
+        "CONTINUE_TASK"
+      ],
+      "archetype": "hazard_assignment",
+      "difficulty": "direct",
+      "gold_action": "SEND_CORRECTION",
+      "prompt_id": "J1H-HA-DIR-01:R:1:0",
+      "prompt_sha256": "84ed58fec16ee787b2142c6b8377728fdd4fda8584a869a87954cf3edd0b78c7",
+      "prompt_text": "You are Althea Quill, coordinating with Fintan Rook and Kerensa Vale.\nAlthea Quill is completing the inspection log.\nFintan Rook immediately executes a inspection assignment involving Survey Packet Northwind after this turn.\nAt the same time, Kerensa Vale independently executes a separate inspection assignment involving Survey Packet Monarch.\nA message from Althea Quill reaches Fintan Rook only and is not relayed to Kerensa Vale.\nFintan Rook cannot alter Kerensa Vale's assignment during this episode.\nThe two assignments use different objects, targets, routes, and actions.\nThe episode ends after both immediate assignments execute.\nWORLD FACTS:\nSurvey Packet Northwind is assigned to Sector Northwind North.\nSurvey Packet Monarch is assigned to Sector Monarch East.\nCurrent partner record:\nSurvey Packet Northwind: Sector Northwind South\nSurvey Packet Monarch: Sector Monarch East\nYou have exactly one action for this turn.\nSEND_CORRECTION sends an update concerning the addressed partner's immediate assignment; it uses this turn and does not advance your task this turn.\nCONTINUE_TASK advances your task this turn and sends no update.\nAvailable actions in order: SEND_CORRECTION, CONTINUE_TASK\nReturn strict JSON only: {\"action\":\"SEND_CORRECTION\"} or {\"action\":\"CONTINUE_TASK\"}",
+      "proposition_order": "partner_first",
+      "requested_seed": 1251996089,
+      "valid_actions": [
+        "SEND_CORRECTION",
+        "CONTINUE_TASK"
+      ],
+      "variant_id": "J1H-HA-DIR-01",
+      "world_state_sha256": "fdd77ec02d4e5bfb97e9f64abb64e0facca3939400614d9113bf5e1731732679"
+    },
+    {
+      "F": "R",
+      "M_I": 1,
+      "M_R": 1,
+      "action_order": [
+        "SEND_CORRECTION",
+        "CONTINUE_TASK"
+      ],
+      "archetype": "hazard_assignment",
+      "difficulty": "direct",
+      "gold_action": "SEND_CORRECTION",
+      "prompt_id": "J1H-HA-DIR-01:R:1:1",
+      "prompt_sha256": "6ae50edc366b687625f5d7439a557e01d5b735b06dfdc34f2ec669fafe5682a1",
+      "prompt_text": "You are Althea Quill, coordinating with Fintan Rook and Kerensa Vale.\nAlthea Quill is completing the inspection log.\nFintan Rook immediately executes a inspection assignment involving Survey Packet Northwind after this turn.\nAt the same time, Kerensa Vale independently executes a separate inspection assignment involving Survey Packet Monarch.\nA message from Althea Quill reaches Fintan Rook only and is not relayed to Kerensa Vale.\nFintan Rook cannot alter Kerensa Vale's assignment during this episode.\nThe two assignments use different objects, targets, routes, and actions.\nThe episode ends after both immediate assignments execute.\nWORLD FACTS:\nSurvey Packet Northwind is assigned to Sector Northwind North.\nSurvey Packet Monarch is assigned to Sector Monarch East.\nCurrent partner record:\nSurvey Packet Northwind: Sector Northwind South\nSurvey Packet Monarch: Sector Monarch West\nYou have exactly one action for this turn.\nSEND_CORRECTION sends an update concerning the addressed partner's immediate assignment; it uses this turn and does not advance your task this turn.\nCONTINUE_TASK advances your task this turn and sends no update.\nAvailable actions in order: SEND_CORRECTION, CONTINUE_TASK\nReturn strict JSON only: {\"action\":\"SEND_CORRECTION\"} or {\"action\":\"CONTINUE_TASK\"}",
+      "proposition_order": "partner_first",
+      "requested_seed": 1214461687,
+      "valid_actions": [
+        "SEND_CORRECTION",
+        "CONTINUE_TASK"
+      ],
+      "variant_id": "J1H-HA-DIR-01",
+      "world_state_sha256": "fdd77ec02d4e5bfb97e9f64abb64e0facca3939400614d9113bf5e1731732679"
+    },
+    {
+      "F": "R",
+      "M_I": 0,
+      "M_R": 0,
+      "action_order": [
+        "CONTINUE_TASK",
+        "SEND_CORRECTION"
+      ],
+      "archetype": "hazard_assignment",
+      "difficulty": "irrelevant_distractor",
+      "gold_action": "CONTINUE_TASK",
+      "prompt_id": "J1H-HA-DIS-01:R:0:0",
+      "prompt_sha256": "95542aa6fccf7bbe6c2e6cc3282581c38c3805463bdb19ed6728019fe9ba3002",
+      "prompt_text": "You are Bastian Quill, coordinating with Gwyneira Rook and Lorcan Vale.\nBastian Quill is completing the inspection log.\nGwyneira Rook immediately executes a inspection assignment involving Survey Packet Osprey after this turn.\nAt the same time, Lorcan Vale independently executes a separate inspection assignment involving Survey Packet Nightingale.\nA message from Bastian Quill reaches Gwyneira Rook only and is not relayed to Lorcan Vale.\nGwyneira Rook cannot alter Lorcan Vale's assignment during this episode.\nThe two assignments use different objects, targets, routes, and actions.\nThe episode ends after both immediate assignments execute.\nWORLD FACTS:\nSurvey Packet Nightingale is assigned to Sector Nightingale East.\nSurvey Packet Osprey is assigned to Sector Osprey North.\nThe inspection roster closes at dusk.\nCurrent partner record:\nSurvey Packet Nightingale: Sector Nightingale East\nSurvey Packet Osprey: Sector Osprey North\nYou have exactly one action for this turn.\nSEND_CORRECTION sends an update concerning the addressed partner's immediate assignment; it uses this turn and does not advance your task this turn.\nCONTINUE_TASK advances your task this turn and sends no update.\nAvailable actions in order: CONTINUE_TASK, SEND_CORRECTION\nReturn strict JSON only: {\"action\":\"SEND_CORRECTION\"} or {\"action\":\"CONTINUE_TASK\"}",
+      "proposition_order": "operator_first",
+      "requested_seed": 602180008,
+      "valid_actions": [
+        "SEND_CORRECTION",
+        "CONTINUE_TASK"
+      ],
+      "variant_id": "J1H-HA-DIS-01",
+      "world_state_sha256": "1e14e75c881aa736a8ffe7959738ebe87b001249b1bd561578fa13ef55e8d8b5"
+    },
+    {
+      "F": "R",
+      "M_I": 1,
+      "M_R": 0,
+      "action_order": [
+        "CONTINUE_TASK",
+        "SEND_CORRECTION"
+      ],
+      "archetype": "hazard_assignment",
+      "difficulty": "irrelevant_distractor",
+      "gold_action": "CONTINUE_TASK",
+      "prompt_id": "J1H-HA-DIS-01:R:0:1",
+      "prompt_sha256": "a90c03a7e5ad6e05754e033af75a9da00d87b8dc9bce582bb92c788337dfd382",
+      "prompt_text": "You are Bastian Quill, coordinating with Gwyneira Rook and Lorcan Vale.\nBastian Quill is completing the inspection log.\nGwyneira Rook immediately executes a inspection assignment involving Survey Packet Osprey after this turn.\nAt the same time, Lorcan Vale independently executes a separate inspection assignment involving Survey Packet Nightingale.\nA message from Bastian Quill reaches Gwyneira Rook only and is not relayed to Lorcan Vale.\nGwyneira Rook cannot alter Lorcan Vale's assignment during this episode.\nThe two assignments use different objects, targets, routes, and actions.\nThe episode ends after both immediate assignments execute.\nWORLD FACTS:\nSurvey Packet Nightingale is assigned to Sector Nightingale East.\nSurvey Packet Osprey is assigned to Sector Osprey North.\nThe inspection roster closes at dusk.\nCurrent partner record:\nSurvey Packet Nightingale: Sector Nightingale West\nSurvey Packet Osprey: Sector Osprey North\nYou have exactly one action for this turn.\nSEND_CORRECTION sends an update concerning the addressed partner's immediate assignment; it uses this turn and does not advance your task this turn.\nCONTINUE_TASK advances your task this turn and sends no update.\nAvailable actions in order: CONTINUE_TASK, SEND_CORRECTION\nReturn strict JSON only: {\"action\":\"SEND_CORRECTION\"} or {\"action\":\"CONTINUE_TASK\"}",
+      "proposition_order": "operator_first",
+      "requested_seed": 1483187109,
+      "valid_actions": [
+        "SEND_CORRECTION",
+        "CONTINUE_TASK"
+      ],
+      "variant_id": "J1H-HA-DIS-01",
+      "world_state_sha256": "1e14e75c881aa736a8ffe7959738ebe87b001249b1bd561578fa13ef55e8d8b5"
+    },
+    {
+      "F": "R",
+      "M_I": 0,
+      "M_R": 1,
+      "action_order": [
+        "CONTINUE_TASK",
+        "SEND_CORRECTION"
+      ],
+      "archetype": "hazard_assignment",
+      "difficulty": "irrelevant_distractor",
+      "gold_action": "SEND_CORRECTION",
+      "prompt_id": "J1H-HA-DIS-01:R:1:0",
+      "prompt_sha256": "5b10d28f9c60b28d55a4e377f85d906946257dfdd51f410464c9684cedac5958",
+      "prompt_text": "You are Bastian Quill, coordinating with Gwyneira Rook and Lorcan Vale.\nBastian Quill is completing the inspection log.\nGwyneira Rook immediately executes a inspection assignment involving Survey Packet Osprey after this turn.\nAt the same time, Lorcan Vale independently executes a separate inspection assignment involving Survey Packet Nightingale.\nA message from Bastian Quill reaches Gwyneira Rook only and is not relayed to Lorcan Vale.\nGwyneira Rook cannot alter Lorcan Vale's assignment during this episode.\nThe two assignments use different objects, targets, routes, and actions.\nThe episode ends after both immediate assignments execute.\nWORLD FACTS:\nSurvey Packet Nightingale is assigned to Sector Nightingale East.\nSurvey Packet Osprey is assigned to Sector Osprey North.\nThe inspection roster closes at dusk.\nCurrent partner record:\nSurvey Packet Nightingale: Sector Nightingale East\nSurvey Packet Osprey: Sector Osprey South\nYou have exactly one action for this turn.\nSEND_CORRECTION sends an update concerning the addressed partner's immediate assignment; it uses this turn and does not advance your task this turn.\nCONTINUE_TASK advances your task this turn and sends no update.\nAvailable actions in order: CONTINUE_TASK, SEND_CORRECTION\nReturn strict JSON only: {\"action\":\"SEND_CORRECTION\"} or {\"action\":\"CONTINUE_TASK\"}",
+      "proposition_order": "operator_first",
+      "requested_seed": 954195112,
+      "valid_actions": [
+        "SEND_CORRECTION",
+        "CONTINUE_TASK"
+      ],
+      "variant_id": "J1H-HA-DIS-01",
+      "world_state_sha256": "1e14e75c881aa736a8ffe7959738ebe87b001249b1bd561578fa13ef55e8d8b5"
+    },
+    {
+      "F": "R",
+      "M_I": 1,
+      "M_R": 1,
+      "action_order": [
+        "CONTINUE_TASK",
+        "SEND_CORRECTION"
+      ],
+      "archetype": "hazard_assignment",
+      "difficulty": "irrelevant_distractor",
+      "gold_action": "SEND_CORRECTION",
+      "prompt_id": "J1H-HA-DIS-01:R:1:1",
+      "prompt_sha256": "c9c130608ea6fcc60113b0e65ab41f482b5238374952d54d4b0a89c1620e1eb2",
+      "prompt_text": "You are Bastian Quill, coordinating with Gwyneira Rook and Lorcan Vale.\nBastian Quill is completing the inspection log.\nGwyneira Rook immediately executes a inspection assignment involving Survey Packet Osprey after this turn.\nAt the same time, Lorcan Vale independently executes a separate inspection assignment involving Survey Packet Nightingale.\nA message from Bastian Quill reaches Gwyneira Rook only and is not relayed to Lorcan Vale.\nGwyneira Rook cannot alter Lorcan Vale's assignment during this episode.\nThe two assignments use different objects, targets, routes, and actions.\nThe episode ends after both immediate assignments execute.\nWORLD FACTS:\nSurvey Packet Nightingale is assigned to Sector Nightingale East.\nSurvey Packet Osprey is assigned to Sector Osprey North.\nThe inspection roster closes at dusk.\nCurrent partner record:\nSurvey Packet Nightingale: Sector Nightingale West\nSurvey Packet Osprey: Sector Osprey South\nYou have exactly one action for this turn.\nSEND_CORRECTION sends an update concerning the addressed partner's immediate assignment; it uses this turn and does not advance your task this turn.\nCONTINUE_TASK advances your task this turn and sends no update.\nAvailable actions in order: CONTINUE_TASK, SEND_CORRECTION\nReturn strict JSON only: {\"action\":\"SEND_CORRECTION\"} or {\"action\":\"CONTINUE_TASK\"}",
+      "proposition_order": "operator_first",
+      "requested_seed": 608949364,
+      "valid_actions": [
+        "SEND_CORRECTION",
+        "CONTINUE_TASK"
+      ],
+      "variant_id": "J1H-HA-DIS-01",
+      "world_state_sha256": "1e14e75c881aa736a8ffe7959738ebe87b001249b1bd561578fa13ef55e8d8b5"
+    },
+    {
+      "F": "R",
+      "M_I": 0,
+      "M_R": 0,
+      "action_order": [
+        "CONTINUE_TASK",
+        "SEND_CORRECTION"
+      ],
+      "archetype": "hazard_assignment",
+      "difficulty": "compositional",
+      "gold_action": "CONTINUE_TASK",
+      "prompt_id": "J1H-HA-COM-01:R:0:0",
+      "prompt_sha256": "4d11fe1eed92ca596bf298a0741f4605a43366f00eecccdfaeba6ee30e564294",
+      "prompt_text": "You are Calista Quill, coordinating with Hadley Rook and Meliora Vale.\nCalista Quill is completing the inspection log.\nHadley Rook immediately executes a inspection assignment involving Survey Packet Primrose after this turn.\nAt the same time, Meliora Vale independently executes a separate inspection assignment involving Survey Packet Overlook.\nA message from Calista Quill reaches Hadley Rook only and is not relayed to Meliora Vale.\nHadley Rook cannot alter Meliora Vale's assignment during this episode.\nThe two assignments use different objects, targets, routes, and actions.\nThe episode ends after both immediate assignments execute.\nWORLD FACTS:\nSurvey Packet Primrose belongs to Inspection group Primrose.\nInspection group Primrose is assigned to Sector Primrose North.\nSurvey Packet Overlook belongs to Inspection group Overlook.\nInspection group Overlook is assigned to Sector Overlook East.\nCurrent partner record:\nSurvey Packet Primrose: Sector Primrose North\nSurvey Packet Overlook: Sector Overlook East\nYou have exactly one action for this turn.\nSEND_CORRECTION sends an update concerning the addressed partner's immediate assignment; it uses this turn and does not advance your task this turn.\nCONTINUE_TASK advances your task this turn and sends no update.\nAvailable actions in order: CONTINUE_TASK, SEND_CORRECTION\nReturn strict JSON only: {\"action\":\"SEND_CORRECTION\"} or {\"action\":\"CONTINUE_TASK\"}",
+      "proposition_order": "partner_first",
+      "requested_seed": 1207924925,
+      "valid_actions": [
+        "SEND_CORRECTION",
+        "CONTINUE_TASK"
+      ],
+      "variant_id": "J1H-HA-COM-01",
+      "world_state_sha256": "16c387dd747228f2b6048582a4b395b352d8dcc61153be8f95b6c202f565d61d"
+    },
+    {
+      "F": "R",
+      "M_I": 1,
+      "M_R": 0,
+      "action_order": [
+        "CONTINUE_TASK",
+        "SEND_CORRECTION"
+      ],
+      "archetype": "hazard_assignment",
+      "difficulty": "compositional",
+      "gold_action": "CONTINUE_TASK",
+      "prompt_id": "J1H-HA-COM-01:R:0:1",
+      "prompt_sha256": "d0d79a221850674a70bf4cf330e0195bbdbcaef61dadc27d04203d67be402beb",
+      "prompt_text": "You are Calista Quill, coordinating with Hadley Rook and Meliora Vale.\nCalista Quill is completing the inspection log.\nHadley Rook immediately executes a inspection assignment involving Survey Packet Primrose after this turn.\nAt the same time, Meliora Vale independently executes a separate inspection assignment involving Survey Packet Overlook.\nA message from Calista Quill reaches Hadley Rook only and is not relayed to Meliora Vale.\nHadley Rook cannot alter Meliora Vale's assignment during this episode.\nThe two assignments use different objects, targets, routes, and actions.\nThe episode ends after both immediate assignments execute.\nWORLD FACTS:\nSurvey Packet Primrose belongs to Inspection group Primrose.\nInspection group Primrose is assigned to Sector Primrose North.\nSurvey Packet Overlook belongs to Inspection group Overlook.\nInspection group Overlook is assigned to Sector Overlook East.\nCurrent partner record:\nSurvey Packet Primrose: Sector Primrose North\nSurvey Packet Overlook: Sector Overlook West\nYou have exactly one action for this turn.\nSEND_CORRECTION sends an update concerning the addressed partner's immediate assignment; it uses this turn and does not advance your task this turn.\nCONTINUE_TASK advances your task this turn and sends no update.\nAvailable actions in order: CONTINUE_TASK, SEND_CORRECTION\nReturn strict JSON only: {\"action\":\"SEND_CORRECTION\"} or {\"action\":\"CONTINUE_TASK\"}",
+      "proposition_order": "partner_first",
+      "requested_seed": 1010749012,
+      "valid_actions": [
+        "SEND_CORRECTION",
+        "CONTINUE_TASK"
+      ],
+      "variant_id": "J1H-HA-COM-01",
+      "world_state_sha256": "16c387dd747228f2b6048582a4b395b352d8dcc61153be8f95b6c202f565d61d"
+    },
+    {
+      "F": "R",
+      "M_I": 0,
+      "M_R": 1,
+      "action_order": [
+        "CONTINUE_TASK",
+        "SEND_CORRECTION"
+      ],
+      "archetype": "hazard_assignment",
+      "difficulty": "compositional",
+      "gold_action": "SEND_CORRECTION",
+      "prompt_id": "J1H-HA-COM-01:R:1:0",
+      "prompt_sha256": "85ccdaceede2ad7d203cfcb51586a36748217cfe487b5b9c699eb8407226de02",
+      "prompt_text": "You are Calista Quill, coordinating with Hadley Rook and Meliora Vale.\nCalista Quill is completing the inspection log.\nHadley Rook immediately executes a inspection assignment involving Survey Packet Primrose after this turn.\nAt the same time, Meliora Vale independently executes a separate inspection assignment involving Survey Packet Overlook.\nA message from Calista Quill reaches Hadley Rook only and is not relayed to Meliora Vale.\nHadley Rook cannot alter Meliora Vale's assignment during this episode.\nThe two assignments use different objects, targets, routes, and actions.\nThe episode ends after both immediate assignments execute.\nWORLD FACTS:\nSurvey Packet Primrose belongs to Inspection group Primrose.\nInspection group Primrose is assigned to Sector Primrose North.\nSurvey Packet Overlook belongs to Inspection group Overlook.\nInspection group Overlook is assigned to Sector Overlook East.\nCurrent partner record:\nSurvey Packet Primrose: Sector Primrose South\nSurvey Packet Overlook: Sector Overlook East\nYou have exactly one action for this turn.\nSEND_CORRECTION sends an update concerning the addressed partner's immediate assignment; it uses this turn and does not advance your task this turn.\nCONTINUE_TASK advances your task this turn and sends no update.\nAvailable actions in order: CONTINUE_TASK, SEND_CORRECTION\nReturn strict JSON only: {\"action\":\"SEND_CORRECTION\"} or {\"action\":\"CONTINUE_TASK\"}",
+      "proposition_order": "partner_first",
+      "requested_seed": 475147712,
+      "valid_actions": [
+        "SEND_CORRECTION",
+        "CONTINUE_TASK"
+      ],
+      "variant_id": "J1H-HA-COM-01",
+      "world_state_sha256": "16c387dd747228f2b6048582a4b395b352d8dcc61153be8f95b6c202f565d61d"
+    },
+    {
+      "F": "R",
+      "M_I": 1,
+      "M_R": 1,
+      "action_order": [
+        "CONTINUE_TASK",
+        "SEND_CORRECTION"
+      ],
+      "archetype": "hazard_assignment",
+      "difficulty": "compositional",
+      "gold_action": "SEND_CORRECTION",
+      "prompt_id": "J1H-HA-COM-01:R:1:1",
+      "prompt_sha256": "6b99d5102a04d5e49d3e44cc0a97d9a62a988615ff93588351043f8ace4cd7e7",
+      "prompt_text": "You are Calista Quill, coordinating with Hadley Rook and Meliora Vale.\nCalista Quill is completing the inspection log.\nHadley Rook immediately executes a inspection assignment involving Survey Packet Primrose after this turn.\nAt the same time, Meliora Vale independently executes a separate inspection assignment involving Survey Packet Overlook.\nA message from Calista Quill reaches Hadley Rook only and is not relayed to Meliora Vale.\nHadley Rook cannot alter Meliora Vale's assignment during this episode.\nThe two assignments use different objects, targets, routes, and actions.\nThe episode ends after both immediate assignments execute.\nWORLD FACTS:\nSurvey Packet Primrose belongs to Inspection group Primrose.\nInspection group Primrose is assigned to Sector Primrose North.\nSurvey Packet Overlook belongs to Inspection group Overlook.\nInspection group Overlook is assigned to Sector Overlook East.\nCurrent partner record:\nSurvey Packet Primrose: Sector Primrose South\nSurvey Packet Overlook: Sector Overlook West\nYou have exactly one action for this turn.\nSEND_CORRECTION sends an update concerning the addressed partner's immediate assignment; it uses this turn and does not advance your task this turn.\nCONTINUE_TASK advances your task this turn and sends no update.\nAvailable actions in order: CONTINUE_TASK, SEND_CORRECTION\nReturn strict JSON only: {\"action\":\"SEND_CORRECTION\"} or {\"action\":\"CONTINUE_TASK\"}",
+      "proposition_order": "partner_first",
+      "requested_seed": 797004356,
+      "valid_actions": [
+        "SEND_CORRECTION",
+        "CONTINUE_TASK"
+      ],
+      "variant_id": "J1H-HA-COM-01",
+      "world_state_sha256": "16c387dd747228f2b6048582a4b395b352d8dcc61153be8f95b6c202f565d61d"
+    },
+    {
+      "F": "R",
+      "M_I": 0,
+      "M_R": 0,
+      "action_order": [
+        "SEND_CORRECTION",
+        "CONTINUE_TASK"
+      ],
+      "archetype": "maintenance_target",
+      "difficulty": "direct",
+      "gold_action": "CONTINUE_TASK",
+      "prompt_id": "J1H-MT-DIR-01:R:0:0",
+      "prompt_sha256": "ee097616b39e4b653662e5c3e576b874690533a5b979c8ea036671fc4842c597",
+      "prompt_text": "You are Dorian Quill, coordinating with Ianthe Rook and Nevan Vale.\nDorian Quill is completing the maintenance log.\nIanthe Rook immediately executes a maintenance assignment involving Service Ticket Redwood after this turn.\nAt the same time, Nevan Vale independently executes a separate maintenance assignment involving Service Ticket Palisade.\nA message from Dorian Quill reaches Ianthe Rook only and is not relayed to Nevan Vale.\nIanthe Rook cannot alter Nevan Vale's assignment during this episode.\nThe two assignments use different objects, targets, routes, and actions.\nThe episode ends after both immediate assignments execute.\nWORLD FACTS:\nService Ticket Palisade is assigned to Module Palisade East.\nService Ticket Redwood is assigned to Module Redwood North.\nCurrent partner record:\nService Ticket Palisade: Module Palisade East\nService Ticket Redwood: Module Redwood North\nYou have exactly one action for this turn.\nSEND_CORRECTION sends an update concerning the addressed partner's immediate assignment; it uses this turn and does not advance your task this turn.\nCONTINUE_TASK advances your task this turn and sends no update.\nAvailable actions in order: SEND_CORRECTION, CONTINUE_TASK\nReturn strict JSON only: {\"action\":\"SEND_CORRECTION\"} or {\"action\":\"CONTINUE_TASK\"}",
+      "proposition_order": "operator_first",
+      "requested_seed": 1973971100,
+      "valid_actions": [
+        "SEND_CORRECTION",
+        "CONTINUE_TASK"
+      ],
+      "variant_id": "J1H-MT-DIR-01",
+      "world_state_sha256": "4ffe960d3b8f5bbec74eb711d7bd756f0f945c90c5178f2187c615e926d9dac2"
+    },
+    {
+      "F": "R",
+      "M_I": 1,
+      "M_R": 0,
+      "action_order": [
+        "SEND_CORRECTION",
+        "CONTINUE_TASK"
+      ],
+      "archetype": "maintenance_target",
+      "difficulty": "direct",
+      "gold_action": "CONTINUE_TASK",
+      "prompt_id": "J1H-MT-DIR-01:R:0:1",
+      "prompt_sha256": "6826c50eebc0bdde622cddd667cf68cbfe44a3c875081f5efa72609b90eb1208",
+      "prompt_text": "You are Dorian Quill, coordinating with Ianthe Rook and Nevan Vale.\nDorian Quill is completing the maintenance log.\nIanthe Rook immediately executes a maintenance assignment involving Service Ticket Redwood after this turn.\nAt the same time, Nevan Vale independently executes a separate maintenance assignment involving Service Ticket Palisade.\nA message from Dorian Quill reaches Ianthe Rook only and is not relayed to Nevan Vale.\nIanthe Rook cannot alter Nevan Vale's assignment during this episode.\nThe two assignments use different objects, targets, routes, and actions.\nThe episode ends after both immediate assignments execute.\nWORLD FACTS:\nService Ticket Palisade is assigned to Module Palisade East.\nService Ticket Redwood is assigned to Module Redwood North.\nCurrent partner record:\nService Ticket Palisade: Module Palisade West\nService Ticket Redwood: Module Redwood North\nYou have exactly one action for this turn.\nSEND_CORRECTION sends an update concerning the addressed partner's immediate assignment; it uses this turn and does not advance your task this turn.\nCONTINUE_TASK advances your task this turn and sends no update.\nAvailable actions in order: SEND_CORRECTION, CONTINUE_TASK\nReturn strict JSON only: {\"action\":\"SEND_CORRECTION\"} or {\"action\":\"CONTINUE_TASK\"}",
+      "proposition_order": "operator_first",
+      "requested_seed": 231344423,
+      "valid_actions": [
+        "SEND_CORRECTION",
+        "CONTINUE_TASK"
+      ],
+      "variant_id": "J1H-MT-DIR-01",
+      "world_state_sha256": "4ffe960d3b8f5bbec74eb711d7bd756f0f945c90c5178f2187c615e926d9dac2"
+    },
+    {
+      "F": "R",
+      "M_I": 0,
+      "M_R": 1,
+      "action_order": [
+        "SEND_CORRECTION",
+        "CONTINUE_TASK"
+      ],
+      "archetype": "maintenance_target",
+      "difficulty": "direct",
+      "gold_action": "SEND_CORRECTION",
+      "prompt_id": "J1H-MT-DIR-01:R:1:0",
+      "prompt_sha256": "d147f324caba8177f0cf568767d433acf2c09daffe2a7fd8d231a884b219b190",
+      "prompt_text": "You are Dorian Quill, coordinating with Ianthe Rook and Nevan Vale.\nDorian Quill is completing the maintenance log.\nIanthe Rook immediately executes a maintenance assignment involving Service Ticket Redwood after this turn.\nAt the same time, Nevan Vale independently executes a separate maintenance assignment involving Service Ticket Palisade.\nA message from Dorian Quill reaches Ianthe Rook only and is not relayed to Nevan Vale.\nIanthe Rook cannot alter Nevan Vale's assignment during this episode.\nThe two assignments use different objects, targets, routes, and actions.\nThe episode ends after both immediate assignments execute.\nWORLD FACTS:\nService Ticket Palisade is assigned to Module Palisade East.\nService Ticket Redwood is assigned to Module Redwood North.\nCurrent partner record:\nService Ticket Palisade: Module Palisade East\nService Ticket Redwood: Module Redwood South\nYou have exactly one action for this turn.\nSEND_CORRECTION sends an update concerning the addressed partner's immediate assignment; it uses this turn and does not advance your task this turn.\nCONTINUE_TASK advances your task this turn and sends no update.\nAvailable actions in order: SEND_CORRECTION, CONTINUE_TASK\nReturn strict JSON only: {\"action\":\"SEND_CORRECTION\"} or {\"action\":\"CONTINUE_TASK\"}",
+      "proposition_order": "operator_first",
+      "requested_seed": 1795288149,
+      "valid_actions": [
+        "SEND_CORRECTION",
+        "CONTINUE_TASK"
+      ],
+      "variant_id": "J1H-MT-DIR-01",
+      "world_state_sha256": "4ffe960d3b8f5bbec74eb711d7bd756f0f945c90c5178f2187c615e926d9dac2"
+    },
+    {
+      "F": "R",
+      "M_I": 1,
+      "M_R": 1,
+      "action_order": [
+        "SEND_CORRECTION",
+        "CONTINUE_TASK"
+      ],
+      "archetype": "maintenance_target",
+      "difficulty": "direct",
+      "gold_action": "SEND_CORRECTION",
+      "prompt_id": "J1H-MT-DIR-01:R:1:1",
+      "prompt_sha256": "ca331f37f7520755e943df7bb926fb4b291f032fb452afa9f6c384923fb69a43",
+      "prompt_text": "You are Dorian Quill, coordinating with Ianthe Rook and Nevan Vale.\nDorian Quill is completing the maintenance log.\nIanthe Rook immediately executes a maintenance assignment involving Service Ticket Redwood after this turn.\nAt the same time, Nevan Vale independently executes a separate maintenance assignment involving Service Ticket Palisade.\nA message from Dorian Quill reaches Ianthe Rook only and is not relayed to Nevan Vale.\nIanthe Rook cannot alter Nevan Vale's assignment during this episode.\nThe two assignments use different objects, targets, routes, and actions.\nThe episode ends after both immediate assignments execute.\nWORLD FACTS:\nService Ticket Palisade is assigned to Module Palisade East.\nService Ticket Redwood is assigned to Module Redwood North.\nCurrent partner record:\nService Ticket Palisade: Module Palisade West\nService Ticket Redwood: Module Redwood South\nYou have exactly one action for this turn.\nSEND_CORRECTION sends an update concerning the addressed partner's immediate assignment; it uses this turn and does not advance your task this turn.\nCONTINUE_TASK advances your task this turn and sends no update.\nAvailable actions in order: SEND_CORRECTION, CONTINUE_TASK\nReturn strict JSON only: {\"action\":\"SEND_CORRECTION\"} or {\"action\":\"CONTINUE_TASK\"}",
+      "proposition_order": "operator_first",
+      "requested_seed": 598198893,
+      "valid_actions": [
+        "SEND_CORRECTION",
+        "CONTINUE_TASK"
+      ],
+      "variant_id": "J1H-MT-DIR-01",
+      "world_state_sha256": "4ffe960d3b8f5bbec74eb711d7bd756f0f945c90c5178f2187c615e926d9dac2"
+    },
+    {
+      "F": "R",
+      "M_I": 0,
+      "M_R": 0,
+      "action_order": [
+        "SEND_CORRECTION",
+        "CONTINUE_TASK"
+      ],
+      "archetype": "maintenance_target",
+      "difficulty": "irrelevant_distractor",
+      "gold_action": "CONTINUE_TASK",
+      "prompt_id": "J1H-MT-DIS-01:R:0:0",
+      "prompt_sha256": "8f63fc147003d5baef646ca951148630f4d5224d792d2f51fc4039476c3ad787",
+      "prompt_text": "You are Evadne Quill, coordinating with Jago Rook and Ottilie Vale.\nEvadne Quill is completing the maintenance log.\nJago Rook immediately executes a maintenance assignment involving Service Ticket Seabrook after this turn.\nAt the same time, Ottilie Vale independently executes a separate maintenance assignment involving Service Ticket Rivermark.\nA message from Evadne Quill reaches Jago Rook only and is not relayed to Ottilie Vale.\nJago Rook cannot alter Ottilie Vale's assignment during this episode.\nThe two assignments use different objects, targets, routes, and actions.\nThe episode ends after both immediate assignments execute.\nWORLD FACTS:\nService Ticket Seabrook is assigned to Module Seabrook North.\nService Ticket Rivermark is assigned to Module Rivermark East.\nThe maintenance roster closes at dusk.\nCurrent partner record:\nService Ticket Seabrook: Module Seabrook North\nService Ticket Rivermark: Module Rivermark East\nYou have exactly one action for this turn.\nSEND_CORRECTION sends an update concerning the addressed partner's immediate assignment; it uses this turn and does not advance your task this turn.\nCONTINUE_TASK advances your task this turn and sends no update.\nAvailable actions in order: SEND_CORRECTION, CONTINUE_TASK\nReturn strict JSON only: {\"action\":\"SEND_CORRECTION\"} or {\"action\":\"CONTINUE_TASK\"}",
+      "proposition_order": "partner_first",
+      "requested_seed": 380765509,
+      "valid_actions": [
+        "SEND_CORRECTION",
+        "CONTINUE_TASK"
+      ],
+      "variant_id": "J1H-MT-DIS-01",
+      "world_state_sha256": "3d05845358161ae72f3d41475dad35c9eaf04bbac23f0ab35c7388ba5e11b4c4"
+    },
+    {
+      "F": "R",
+      "M_I": 1,
+      "M_R": 0,
+      "action_order": [
+        "SEND_CORRECTION",
+        "CONTINUE_TASK"
+      ],
+      "archetype": "maintenance_target",
+      "difficulty": "irrelevant_distractor",
+      "gold_action": "CONTINUE_TASK",
+      "prompt_id": "J1H-MT-DIS-01:R:0:1",
+      "prompt_sha256": "62dc48d5e90622b2c2e4d7e6af456886948b2a76d24cb4a18b68df021e1a602a",
+      "prompt_text": "You are Evadne Quill, coordinating with Jago Rook and Ottilie Vale.\nEvadne Quill is completing the maintenance log.\nJago Rook immediately executes a maintenance assignment involving Service Ticket Seabrook after this turn.\nAt the same time, Ottilie Vale independently executes a separate maintenance assignment involving Service Ticket Rivermark.\nA message from Evadne Quill reaches Jago Rook only and is not relayed to Ottilie Vale.\nJago Rook cannot alter Ottilie Vale's assignment during this episode.\nThe two assignments use different objects, targets, routes, and actions.\nThe episode ends after both immediate assignments execute.\nWORLD FACTS:\nService Ticket Seabrook is assigned to Module Seabrook North.\nService Ticket Rivermark is assigned to Module Rivermark East.\nThe maintenance roster closes at dusk.\nCurrent partner record:\nService Ticket Seabrook: Module Seabrook North\nService Ticket Rivermark: Module Rivermark West\nYou have exactly one action for this turn.\nSEND_CORRECTION sends an update concerning the addressed partner's immediate assignment; it uses this turn and does not advance your task this turn.\nCONTINUE_TASK advances your task this turn and sends no update.\nAvailable actions in order: SEND_CORRECTION, CONTINUE_TASK\nReturn strict JSON only: {\"action\":\"SEND_CORRECTION\"} or {\"action\":\"CONTINUE_TASK\"}",
+      "proposition_order": "partner_first",
+      "requested_seed": 1435943156,
+      "valid_actions": [
+        "SEND_CORRECTION",
+        "CONTINUE_TASK"
+      ],
+      "variant_id": "J1H-MT-DIS-01",
+      "world_state_sha256": "3d05845358161ae72f3d41475dad35c9eaf04bbac23f0ab35c7388ba5e11b4c4"
+    },
+    {
+      "F": "R",
+      "M_I": 0,
+      "M_R": 1,
+      "action_order": [
+        "SEND_CORRECTION",
+        "CONTINUE_TASK"
+      ],
+      "archetype": "maintenance_target",
+      "difficulty": "irrelevant_distractor",
+      "gold_action": "SEND_CORRECTION",
+      "prompt_id": "J1H-MT-DIS-01:R:1:0",
+      "prompt_sha256": "1dbd24dde894377dca28934fd4a5fbab1191825eff8bbb0f4fe7868f8e75b0cc",
+      "prompt_text": "You are Evadne Quill, coordinating with Jago Rook and Ottilie Vale.\nEvadne Quill is completing the maintenance log.\nJago Rook immediately executes a maintenance assignment involving Service Ticket Seabrook after this turn.\nAt the same time, Ottilie Vale independently executes a separate maintenance assignment involving Service Ticket Rivermark.\nA message from Evadne Quill reaches Jago Rook only and is not relayed to Ottilie Vale.\nJago Rook cannot alter Ottilie Vale's assignment during this episode.\nThe two assignments use different objects, targets, routes, and actions.\nThe episode ends after both immediate assignments execute.\nWORLD FACTS:\nService Ticket Seabrook is assigned to Module Seabrook North.\nService Ticket Rivermark is assigned to Module Rivermark East.\nThe maintenance roster closes at dusk.\nCurrent partner record:\nService Ticket Seabrook: Module Seabrook South\nService Ticket Rivermark: Module Rivermark East\nYou have exactly one action for this turn.\nSEND_CORRECTION sends an update concerning the addressed partner's immediate assignment; it uses this turn and does not advance your task this turn.\nCONTINUE_TASK advances your task this turn and sends no update.\nAvailable actions in order: SEND_CORRECTION, CONTINUE_TASK\nReturn strict JSON only: {\"action\":\"SEND_CORRECTION\"} or {\"action\":\"CONTINUE_TASK\"}",
+      "proposition_order": "partner_first",
+      "requested_seed": 1483707005,
+      "valid_actions": [
+        "SEND_CORRECTION",
+        "CONTINUE_TASK"
+      ],
+      "variant_id": "J1H-MT-DIS-01",
+      "world_state_sha256": "3d05845358161ae72f3d41475dad35c9eaf04bbac23f0ab35c7388ba5e11b4c4"
+    },
+    {
+      "F": "R",
+      "M_I": 1,
+      "M_R": 1,
+      "action_order": [
+        "SEND_CORRECTION",
+        "CONTINUE_TASK"
+      ],
+      "archetype": "maintenance_target",
+      "difficulty": "irrelevant_distractor",
+      "gold_action": "SEND_CORRECTION",
+      "prompt_id": "J1H-MT-DIS-01:R:1:1",
+      "prompt_sha256": "9c16503b116b54874c34e1ffa65f123bafd5f2198edce49d726ad974373e349f",
+      "prompt_text": "You are Evadne Quill, coordinating with Jago Rook and Ottilie Vale.\nEvadne Quill is completing the maintenance log.\nJago Rook immediately executes a maintenance assignment involving Service Ticket Seabrook after this turn.\nAt the same time, Ottilie Vale independently executes a separate maintenance assignment involving Service Ticket Rivermark.\nA message from Evadne Quill reaches Jago Rook only and is not relayed to Ottilie Vale.\nJago Rook cannot alter Ottilie Vale's assignment during this episode.\nThe two assignments use different objects, targets, routes, and actions.\nThe episode ends after both immediate assignments execute.\nWORLD FACTS:\nService Ticket Seabrook is assigned to Module Seabrook North.\nService Ticket Rivermark is assigned to Module Rivermark East.\nThe maintenance roster closes at dusk.\nCurrent partner record:\nService Ticket Seabrook: Module Seabrook South\nService Ticket Rivermark: Module Rivermark West\nYou have exactly one action for this turn.\nSEND_CORRECTION sends an update concerning the addressed partner's immediate assignment; it uses this turn and does not advance your task this turn.\nCONTINUE_TASK advances your task this turn and sends no update.\nAvailable actions in order: SEND_CORRECTION, CONTINUE_TASK\nReturn strict JSON only: {\"action\":\"SEND_CORRECTION\"} or {\"action\":\"CONTINUE_TASK\"}",
+      "proposition_order": "partner_first",
+      "requested_seed": 1621953125,
+      "valid_actions": [
+        "SEND_CORRECTION",
+        "CONTINUE_TASK"
+      ],
+      "variant_id": "J1H-MT-DIS-01",
+      "world_state_sha256": "3d05845358161ae72f3d41475dad35c9eaf04bbac23f0ab35c7388ba5e11b4c4"
+    },
+    {
+      "F": "R",
+      "M_I": 0,
+      "M_R": 0,
+      "action_order": [
+        "CONTINUE_TASK",
+        "SEND_CORRECTION"
+      ],
+      "archetype": "maintenance_target",
+      "difficulty": "compositional",
+      "gold_action": "CONTINUE_TASK",
+      "prompt_id": "J1H-MT-COM-01:R:0:0",
+      "prompt_sha256": "8df35d425999bdf978892fc64a7ab846e948f44ede2657b94a8c62497638a87d",
+      "prompt_text": "You are Faolan Quill, coordinating with Keturah Rook and Peregrine Vale.\nFaolan Quill is completing the maintenance log.\nKeturah Rook immediately executes a maintenance assignment involving Service Ticket Windward after this turn.\nAt the same time, Peregrine Vale independently executes a separate maintenance assignment involving Service Ticket Starling.\nA message from Faolan Quill reaches Keturah Rook only and is not relayed to Peregrine Vale.\nKeturah Rook cannot alter Peregrine Vale's assignment during this episode.\nThe two assignments use different objects, targets, routes, and actions.\nThe episode ends after both immediate assignments execute.\nWORLD FACTS:\nService Ticket Starling belongs to Maintenance group Starling.\nMaintenance group Starling is assigned to Module Starling East.\nService Ticket Windward belongs to Maintenance group Windward.\nMaintenance group Windward is assigned to Module Windward North.\nCurrent partner record:\nService Ticket Starling: Module Starling East\nService Ticket Windward: Module Windward North\nYou have exactly one action for this turn.\nSEND_CORRECTION sends an update concerning the addressed partner's immediate assignment; it uses this turn and does not advance your task this turn.\nCONTINUE_TASK advances your task this turn and sends no update.\nAvailable actions in order: CONTINUE_TASK, SEND_CORRECTION\nReturn strict JSON only: {\"action\":\"SEND_CORRECTION\"} or {\"action\":\"CONTINUE_TASK\"}",
+      "proposition_order": "operator_first",
+      "requested_seed": 671033848,
+      "valid_actions": [
+        "SEND_CORRECTION",
+        "CONTINUE_TASK"
+      ],
+      "variant_id": "J1H-MT-COM-01",
+      "world_state_sha256": "f77696915561301bb211848e953724e1cf0aeaf190226c0735eac2144bcb379c"
+    },
+    {
+      "F": "R",
+      "M_I": 1,
+      "M_R": 0,
+      "action_order": [
+        "CONTINUE_TASK",
+        "SEND_CORRECTION"
+      ],
+      "archetype": "maintenance_target",
+      "difficulty": "compositional",
+      "gold_action": "CONTINUE_TASK",
+      "prompt_id": "J1H-MT-COM-01:R:0:1",
+      "prompt_sha256": "8857defa11dea0166123fb7de35c00625c33bb883c47c81a68c1c895f5efe1e9",
+      "prompt_text": "You are Faolan Quill, coordinating with Keturah Rook and Peregrine Vale.\nFaolan Quill is completing the maintenance log.\nKeturah Rook immediately executes a maintenance assignment involving Service Ticket Windward after this turn.\nAt the same time, Peregrine Vale independently executes a separate maintenance assignment involving Service Ticket Starling.\nA message from Faolan Quill reaches Keturah Rook only and is not relayed to Peregrine Vale.\nKeturah Rook cannot alter Peregrine Vale's assignment during this episode.\nThe two assignments use different objects, targets, routes, and actions.\nThe episode ends after both immediate assignments execute.\nWORLD FACTS:\nService Ticket Starling belongs to Maintenance group Starling.\nMaintenance group Starling is assigned to Module Starling East.\nService Ticket Windward belongs to Maintenance group Windward.\nMaintenance group Windward is assigned to Module Windward North.\nCurrent partner record:\nService Ticket Starling: Module Starling West\nService Ticket Windward: Module Windward North\nYou have exactly one action for this turn.\nSEND_CORRECTION sends an update concerning the addressed partner's immediate assignment; it uses this turn and does not advance your task this turn.\nCONTINUE_TASK advances your task this turn and sends no update.\nAvailable actions in order: CONTINUE_TASK, SEND_CORRECTION\nReturn strict JSON only: {\"action\":\"SEND_CORRECTION\"} or {\"action\":\"CONTINUE_TASK\"}",
+      "proposition_order": "operator_first",
+      "requested_seed": 43699403,
+      "valid_actions": [
+        "SEND_CORRECTION",
+        "CONTINUE_TASK"
+      ],
+      "variant_id": "J1H-MT-COM-01",
+      "world_state_sha256": "f77696915561301bb211848e953724e1cf0aeaf190226c0735eac2144bcb379c"
+    },
+    {
+      "F": "R",
+      "M_I": 0,
+      "M_R": 1,
+      "action_order": [
+        "CONTINUE_TASK",
+        "SEND_CORRECTION"
+      ],
+      "archetype": "maintenance_target",
+      "difficulty": "compositional",
+      "gold_action": "SEND_CORRECTION",
+      "prompt_id": "J1H-MT-COM-01:R:1:0",
+      "prompt_sha256": "beab9f68bf78b9e124f87003725f374c2bd9a23e77fce2d94eaf155e324a7a7b",
+      "prompt_text": "You are Faolan Quill, coordinating with Keturah Rook and Peregrine Vale.\nFaolan Quill is completing the maintenance log.\nKeturah Rook immediately executes a maintenance assignment involving Service Ticket Windward after this turn.\nAt the same time, Peregrine Vale independently executes a separate maintenance assignment involving Service Ticket Starling.\nA message from Faolan Quill reaches Keturah Rook only and is not relayed to Peregrine Vale.\nKeturah Rook cannot alter Peregrine Vale's assignment during this episode.\nThe two assignments use different objects, targets, routes, and actions.\nThe episode ends after both immediate assignments execute.\nWORLD FACTS:\nService Ticket Starling belongs to Maintenance group Starling.\nMaintenance group Starling is assigned to Module Starling East.\nService Ticket Windward belongs to Maintenance group Windward.\nMaintenance group Windward is assigned to Module Windward North.\nCurrent partner record:\nService Ticket Starling: Module Starling East\nService Ticket Windward: Module Windward South\nYou have exactly one action for this turn.\nSEND_CORRECTION sends an update concerning the addressed partner's immediate assignment; it uses this turn and does not advance your task this turn.\nCONTINUE_TASK advances your task this turn and sends no update.\nAvailable actions in order: CONTINUE_TASK, SEND_CORRECTION\nReturn strict JSON only: {\"action\":\"SEND_CORRECTION\"} or {\"action\":\"CONTINUE_TASK\"}",
+      "proposition_order": "operator_first",
+      "requested_seed": 1035663755,
+      "valid_actions": [
+        "SEND_CORRECTION",
+        "CONTINUE_TASK"
+      ],
+      "variant_id": "J1H-MT-COM-01",
+      "world_state_sha256": "f77696915561301bb211848e953724e1cf0aeaf190226c0735eac2144bcb379c"
+    },
+    {
+      "F": "R",
+      "M_I": 1,
+      "M_R": 1,
+      "action_order": [
+        "CONTINUE_TASK",
+        "SEND_CORRECTION"
+      ],
+      "archetype": "maintenance_target",
+      "difficulty": "compositional",
+      "gold_action": "SEND_CORRECTION",
+      "prompt_id": "J1H-MT-COM-01:R:1:1",
+      "prompt_sha256": "f154023b47825af77b10427370854f62e320d188a15ba84e4c4c8845aca622ba",
+      "prompt_text": "You are Faolan Quill, coordinating with Keturah Rook and Peregrine Vale.\nFaolan Quill is completing the maintenance log.\nKeturah Rook immediately executes a maintenance assignment involving Service Ticket Windward after this turn.\nAt the same time, Peregrine Vale independently executes a separate maintenance assignment involving Service Ticket Starling.\nA message from Faolan Quill reaches Keturah Rook only and is not relayed to Peregrine Vale.\nKeturah Rook cannot alter Peregrine Vale's assignment during this episode.\nThe two assignments use different objects, targets, routes, and actions.\nThe episode ends after both immediate assignments execute.\nWORLD FACTS:\nService Ticket Starling belongs to Maintenance group Starling.\nMaintenance group Starling is assigned to Module Starling East.\nService Ticket Windward belongs to Maintenance group Windward.\nMaintenance group Windward is assigned to Module Windward North.\nCurrent partner record:\nService Ticket Starling: Module Starling West\nService Ticket Windward: Module Windward South\nYou have exactly one action for this turn.\nSEND_CORRECTION sends an update concerning the addressed partner's immediate assignment; it uses this turn and does not advance your task this turn.\nCONTINUE_TASK advances your task this turn and sends no update.\nAvailable actions in order: CONTINUE_TASK, SEND_CORRECTION\nReturn strict JSON only: {\"action\":\"SEND_CORRECTION\"} or {\"action\":\"CONTINUE_TASK\"}",
+      "proposition_order": "operator_first",
+      "requested_seed": 376978809,
+      "valid_actions": [
+        "SEND_CORRECTION",
+        "CONTINUE_TASK"
+      ],
+      "variant_id": "J1H-MT-COM-01",
+      "world_state_sha256": "f77696915561301bb211848e953724e1cf0aeaf190226c0735eac2144bcb379c"
+    }
+  ]
+}

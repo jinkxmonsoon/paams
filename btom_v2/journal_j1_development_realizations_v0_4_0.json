@@ -1,0 +1,534 @@
+{
+  "candidate_visible_value_overlap": 0,
+  "development_count": 18,
+  "realizations": [
+    {
+      "archetype": "resource_location",
+      "difficulty": "direct",
+      "model_visible": {
+        "alternate_context_value": "Annex Depot Lagoon Yara",
+        "alternate_task_value": "Annex Storage Birch Orla",
+        "focal_agent_name": "Rowan",
+        "partner_name": "Hadrian",
+        "relation_depth": 1,
+        "static_context": [],
+        "task_context": "stock intake",
+        "task_label": "stock intake operation",
+        "true_context_value": "Annex Bay Dawn Talia",
+        "true_task_value": "Annex Station Solace Jonas",
+        "values": [
+          "Annex Station Solace Jonas",
+          "Annex Storage Birch Orla",
+          "Annex Bay Dawn Talia",
+          "Annex Depot Lagoon Yara"
+        ]
+      },
+      "normalized_template_signature_sha256": "27074a27c56129eb5334e812832f00720fea9fc9ff1c8021d71b0d1969f94cca",
+      "realization_sha256": "363065e3ef0b5a1bf1c9f6d87e04a1b0db1bb4e6e7ef2a78d065b20ef8618c65",
+      "structural_semantic_signature_sha256": "a02e1155e08050ff1ed4b9b55f4b6f024887c687619a197fac41a8aab219f12e",
+      "template_family": 1,
+      "variant_id": "J1D-RL-DIR-01",
+      "world_state_sha256": "b494ec4e67d34f8607dbbb5a427e84919bb3474f1403bf38b877a49b85415d3c"
+    },
+    {
+      "archetype": "resource_location",
+      "difficulty": "irrelevant_distractor",
+      "model_visible": {
+        "alternate_context_value": "Annex Storage Ivory Iris",
+        "alternate_task_value": "Annex Depot Laurel Yara",
+        "focal_agent_name": "Dorian",
+        "partner_name": "Minerva",
+        "relation_depth": 1,
+        "static_context": [
+          "Annex Solace schedule remains unchanged"
+        ],
+        "task_context": "stock intake",
+        "task_label": "stock intake operation",
+        "true_context_value": "Annex Station Summit Damon",
+        "true_task_value": "Annex Bay Meridian Talia",
+        "values": [
+          "Annex Bay Meridian Talia",
+          "Annex Depot Laurel Yara",
+          "Annex Station Summit Damon",
+          "Annex Storage Ivory Iris"
+        ]
+      },
+      "normalized_template_signature_sha256": "20f725937c1d3086e36dbe12c2513ced41e06674924169645b701d8da23ec65c",
+      "realization_sha256": "3809aa7110add62bf203e618ef3fec49d8c45ea3f88326fce07bf52a27fb9db9",
+      "structural_semantic_signature_sha256": "2e48cfbee04b62f45edb993ec4bd6c1dfa5f68c71dc5f4a72376b97ad7ecd120",
+      "template_family": 1,
+      "variant_id": "J1D-RL-DIS-01",
+      "world_state_sha256": "5d3072d004b936b2557b8f7f6d165e7b9290c727779f993073d5a52c7080215f"
+    },
+    {
+      "archetype": "resource_location",
+      "difficulty": "compositional",
+      "model_visible": {
+        "alternate_context_value": "Annex Depot Grove Hugo",
+        "alternate_task_value": "Annex Storage Falcon Xenia",
+        "focal_agent_name": "Ines",
+        "partner_name": "Sabine",
+        "relation_depth": 2,
+        "static_context": [
+          "Annex Laurel schedule remains unchanged"
+        ],
+        "task_context": "stock intake",
+        "task_label": "stock intake operation",
+        "true_context_value": "Annex Bay Saffron Cora",
+        "true_task_value": "Annex Station Maple Silas",
+        "values": [
+          "Annex Station Maple Silas",
+          "Annex Storage Falcon Xenia",
+          "Annex Bay Saffron Cora",
+          "Annex Depot Grove Hugo"
+        ]
+      },
+      "normalized_template_signature_sha256": "8ab433d214f42400e1d192083d020423932437d0b782f308ee6ef428c21b9336",
+      "realization_sha256": "0a66b2511463abd55b95aa9b3f41e14b1ca9eac3eb1055ee4c9d32cc6191abda",
+      "structural_semantic_signature_sha256": "93cc607a12d74d32c4fe81ff30404f453af34e553de463f76ba3a4ae360ca679",
+      "template_family": 1,
+      "variant_id": "J1D-RL-COM-01",
+      "world_state_sha256": "2355225e7302883242d2f318002a41600f3f89763de29ce5a89c9832339fd5fe"
+    },
+    {
+      "archetype": "tool_placement",
+      "difficulty": "direct",
+      "model_visible": {
+        "alternate_context_value": "Annex Depot Lagoon Greta",
+        "alternate_task_value": "Annex Storage Birch Willa",
+        "focal_agent_name": "Esme",
+        "partner_name": "Nestor",
+        "relation_depth": 1,
+        "static_context": [],
+        "task_context": "bench setup",
+        "task_label": "bench setup operation",
+        "true_context_value": "Annex Bay Dawn Briar",
+        "true_task_value": "Annex Station Solace Rhea",
+        "values": [
+          "Annex Station Solace Rhea",
+          "Annex Storage Birch Willa",
+          "Annex Bay Dawn Briar",
+          "Annex Depot Lagoon Greta"
+        ]
+      },
+      "normalized_template_signature_sha256": "4a777354aa0cd1ce2adb53b5639bbc7a68b6859d97d3f21ef9cc01d75f0c57cd",
+      "realization_sha256": "2e584b4e7f26f39b6046b62661e915462410025e6a54cb77aa0053f585aa368f",
+      "structural_semantic_signature_sha256": "031d2008ae639d8ba35fe84358173310c7e4ea21fe79342e48b18fe0c13ffb8b",
+      "template_family": 1,
+      "variant_id": "J1D-TP-DIR-01",
+      "world_state_sha256": "617b9618c4663009eb529077c1f405c682ff2dd767a9e041600d22676c18b1be"
+    },
+    {
+      "archetype": "tool_placement",
+      "difficulty": "irrelevant_distractor",
+      "model_visible": {
+        "alternate_context_value": "Annex Depot Meridian Iris",
+        "alternate_task_value": "Annex Storage Dawn Yara",
+        "focal_agent_name": "Florian",
+        "partner_name": "Opal",
+        "relation_depth": 1,
+        "static_context": [
+          "Annex Willow schedule remains unchanged"
+        ],
+        "task_context": "bench setup",
+        "task_label": "bench setup operation",
+        "true_context_value": "Annex Bay Lagoon Damon",
+        "true_task_value": "Annex Station Birch Talia",
+        "values": [
+          "Annex Station Birch Talia",
+          "Annex Storage Dawn Yara",
+          "Annex Bay Lagoon Damon",
+          "Annex Depot Meridian Iris"
+        ]
+      },
+      "normalized_template_signature_sha256": "7671bb3bf8bf73417b86f117c08a29fec23092e329be6e9c16418c4260a8cfa8",
+      "realization_sha256": "8bc0f378a28c4143b22fe4ac62416b2c9d6cba75b35c645784eb9700225047a3",
+      "structural_semantic_signature_sha256": "fd1776cc46dde062956eb3e23fce3a302e072edc786b278f3ca534e948d501db",
+      "template_family": 1,
+      "variant_id": "J1D-TP-DIS-01",
+      "world_state_sha256": "268daaa930b7bf9b40f3eb9b6dda80c93e6adf4daf7dace38f36acbfeab8e77d"
+    },
+    {
+      "archetype": "tool_placement",
+      "difficulty": "compositional",
+      "model_visible": {
+        "alternate_context_value": "Annex Storage Comet Damon",
+        "alternate_task_value": "Annex Depot Mosaic Talia",
+        "focal_agent_name": "Florian",
+        "partner_name": "Opal",
+        "relation_depth": 2,
+        "static_context": [
+          "Annex Willow schedule remains unchanged"
+        ],
+        "task_context": "bench setup",
+        "task_label": "bench setup operation",
+        "true_context_value": "Annex Station Juniper Yara",
+        "true_task_value": "Annex Bay Ember Orla",
+        "values": [
+          "Annex Bay Ember Orla",
+          "Annex Depot Mosaic Talia",
+          "Annex Station Juniper Yara",
+          "Annex Storage Comet Damon"
+        ]
+      },
+      "normalized_template_signature_sha256": "45fbc306d4d96a26b521c5efd2a19ea87b9115d5b4748e6d104135960e61fdfc",
+      "realization_sha256": "ecb0148aa328c47757678397321287bf598015e05014e94bd388983017b5b106",
+      "structural_semantic_signature_sha256": "e7a64c0b0afbf21c51a12bdb99f89911beef53c325a0222c7ab5866cf3e20f15",
+      "template_family": 1,
+      "variant_id": "J1D-TP-COM-01",
+      "world_state_sha256": "b0e94aed1803ac2438663653be34ff4d1344f7b66ef7a7f2cc54f176230e949f"
+    },
+    {
+      "archetype": "rendezvous_destination",
+      "difficulty": "direct",
+      "model_visible": {
+        "alternate_context_value": "Annex Hub Ivory Vero",
+        "alternate_task_value": "Annex Dock Laurel Lumen",
+        "focal_agent_name": "Giselle",
+        "partner_name": "Percival",
+        "relation_depth": 1,
+        "static_context": [],
+        "task_context": "crew assembly",
+        "task_label": "crew assembly operation",
+        "true_context_value": "Annex Terminal Summit Quinn",
+        "true_task_value": "Annex Gate Meridian Greta",
+        "values": [
+          "Annex Gate Meridian Greta",
+          "Annex Dock Laurel Lumen",
+          "Annex Terminal Summit Quinn",
+          "Annex Hub Ivory Vero"
+        ]
+      },
+      "normalized_template_signature_sha256": "81bf44351541eba91dfce9c1dd1e55ec8c0af2158174d67ed769e791229f9410",
+      "realization_sha256": "4f49b7b1b8deee9fe396b98aa3aaf7c1cd133f2f3614925ea2abbca4122cecec",
+      "structural_semantic_signature_sha256": "ccc42d29a311f5955ccbe1e3a90bec1202c43c8c3aa5daf112ca429848435d6c",
+      "template_family": 1,
+      "variant_id": "J1D-RD-DIR-01",
+      "world_state_sha256": "e61cfc61ca6b4c825c0f8318f009888fc6638925d63e16222549e581aa7d7cf6"
+    },
+    {
+      "archetype": "rendezvous_destination",
+      "difficulty": "irrelevant_distractor",
+      "model_visible": {
+        "alternate_context_value": "Annex Gate Grove Rhea",
+        "alternate_task_value": "Annex Terminal Falcon Hugo",
+        "focal_agent_name": "Nestor",
+        "partner_name": "Esme",
+        "relation_depth": 1,
+        "static_context": [
+          "Annex Saffron schedule remains unchanged"
+        ],
+        "task_context": "crew assembly",
+        "task_label": "crew assembly operation",
+        "true_context_value": "Annex Hub Saffron Mara",
+        "true_task_value": "Annex Dock Maple Cora",
+        "values": [
+          "Annex Dock Maple Cora",
+          "Annex Terminal Falcon Hugo",
+          "Annex Hub Saffron Mara",
+          "Annex Gate Grove Rhea"
+        ]
+      },
+      "normalized_template_signature_sha256": "fc9c285b5937c1d7478622803982e1db2a578f16bfbea52474fcc80a9f2f8b43",
+      "realization_sha256": "081d7c5e6f3a38cc7d4d8a1163986741aaea618b927645f1e07e2545d16a0247",
+      "structural_semantic_signature_sha256": "460ca0490ca82f6c9097c9fabc4b5ccc965fe3aac7f4ff66ad51e1288edd596b",
+      "template_family": 1,
+      "variant_id": "J1D-RD-DIS-01",
+      "world_state_sha256": "08a3933fa779afe4bc7bbbda3f3037efd93df3d8b87386885c95dd3948ada8ca"
+    },
+    {
+      "archetype": "rendezvous_destination",
+      "difficulty": "compositional",
+      "model_visible": {
+        "alternate_context_value": "Annex Gate Harbor Hugo",
+        "alternate_task_value": "Annex Terminal Grove Xenia",
+        "focal_agent_name": "Amity",
+        "partner_name": "Jovian",
+        "relation_depth": 2,
+        "static_context": [
+          "Annex Kestrel schedule remains unchanged"
+        ],
+        "task_context": "crew assembly",
+        "task_label": "crew assembly operation",
+        "true_context_value": "Annex Hub Cedar Cora",
+        "true_task_value": "Annex Dock Saffron Silas",
+        "values": [
+          "Annex Dock Saffron Silas",
+          "Annex Terminal Grove Xenia",
+          "Annex Hub Cedar Cora",
+          "Annex Gate Harbor Hugo"
+        ]
+      },
+      "normalized_template_signature_sha256": "e4f7a16c64c975a6ae0547754a103710ac745412af16a8429e17d582786dbc39",
+      "realization_sha256": "c26ba6668028dae8df5ae0edb9aa9c8bca0dc7caf1ceba58ff89944d8e846963",
+      "structural_semantic_signature_sha256": "923132a9d26c17cb7c50868a4a09e3e15f01bd52a0f37288a0c4088dbf47a107",
+      "template_family": 1,
+      "variant_id": "J1D-RD-COM-01",
+      "world_state_sha256": "c2d0c03fb0ebb5226220019358ba36a4f6ed63814ce1f99b3cda1c76cb251419"
+    },
+    {
+      "archetype": "delivery_destination",
+      "difficulty": "direct",
+      "model_visible": {
+        "alternate_context_value": "Annex Gate Birch Mara",
+        "alternate_task_value": "Annex Terminal Nova Cora",
+        "focal_agent_name": "Katia",
+        "partner_name": "Basil",
+        "relation_depth": 1,
+        "static_context": [],
+        "task_context": "parcel routing",
+        "task_label": "parcel routing operation",
+        "true_context_value": "Annex Hub Solace Hugo",
+        "true_task_value": "Annex Dock Fjord Xenia",
+        "values": [
+          "Annex Dock Fjord Xenia",
+          "Annex Terminal Nova Cora",
+          "Annex Hub Solace Hugo",
+          "Annex Gate Birch Mara"
+        ]
+      },
+      "normalized_template_signature_sha256": "86df3d64f5667ade0f0ee89eb8c348e1d38483fa3e1e89433c09e1303de248e0",
+      "realization_sha256": "ef83b73023bc51f24a52831b28f52d98f0ac7826a5cbd6e6543371d3e7d383de",
+      "structural_semantic_signature_sha256": "05eb22fc6af20e9f316bd5019e7a7497da678e708bdb58d007f8d840975b8d0a",
+      "template_family": 1,
+      "variant_id": "J1D-DD-DIR-01",
+      "world_state_sha256": "65b609550421ea57852a7f1e29a2dd75c64c7f92f0530c28ad0e2e8235a7dee9"
+    },
+    {
+      "archetype": "delivery_destination",
+      "difficulty": "irrelevant_distractor",
+      "model_visible": {
+        "alternate_context_value": "Annex Terminal Cedar Quinn",
+        "alternate_task_value": "Annex Gate Saffron Greta",
+        "focal_agent_name": "Ines",
+        "partner_name": "Sabine",
+        "relation_depth": 1,
+        "static_context": [
+          "Annex Laurel schedule remains unchanged"
+        ],
+        "task_context": "parcel routing",
+        "task_label": "parcel routing operation",
+        "true_context_value": "Annex Dock Grove Lumen",
+        "true_task_value": "Annex Hub Falcon Briar",
+        "values": [
+          "Annex Hub Falcon Briar",
+          "Annex Gate Saffron Greta",
+          "Annex Dock Grove Lumen",
+          "Annex Terminal Cedar Quinn"
+        ]
+      },
+      "normalized_template_signature_sha256": "b61765b786de71092feada1a60a0b84338554aa19b08010203f13e737ca02605",
+      "realization_sha256": "ec9a7094eec2e7ae97b9ce153eaf783cc75d5e32a0f68f15297f51ec7d8afb33",
+      "structural_semantic_signature_sha256": "16ae84e86046b8a3d8a89bcaa07fb6fe418bfbdd9a81ee840a17d3918164aa8a",
+      "template_family": 1,
+      "variant_id": "J1D-DD-DIS-01",
+      "world_state_sha256": "6bcb9b21a6511886b3fd60f8cf29a7f88cfba701eebf5a3c06f25b1865da332a"
+    },
+    {
+      "archetype": "delivery_destination",
+      "difficulty": "compositional",
+      "model_visible": {
+        "alternate_context_value": "Annex Dock Kestrel Silas",
+        "alternate_task_value": "Annex Hub Cobalt Iris",
+        "focal_agent_name": "Celeste",
+        "partner_name": "Leander",
+        "relation_depth": 2,
+        "static_context": [
+          "Annex Juniper schedule remains unchanged"
+        ],
+        "task_context": "parcel routing",
+        "task_label": "parcel routing operation",
+        "true_context_value": "Annex Gate Jasper Nolan",
+        "true_task_value": "Annex Terminal Comet Damon",
+        "values": [
+          "Annex Terminal Comet Damon",
+          "Annex Hub Cobalt Iris",
+          "Annex Gate Jasper Nolan",
+          "Annex Dock Kestrel Silas"
+        ]
+      },
+      "normalized_template_signature_sha256": "1bdc546da26e59e22c1d208e50527851137ff74c3fbde996b653c939ddc09629",
+      "realization_sha256": "6545f129def508d3bac9f98ceedcbe5469f162d2a01a8cfb8b27db366e20a7bd",
+      "structural_semantic_signature_sha256": "a7fedcde26bb2470c69874aaef69854c995a38b0476fa72ea724de1aa5a8892d",
+      "template_family": 1,
+      "variant_id": "J1D-DD-COM-01",
+      "world_state_sha256": "f67235827ecebcb5ed7c9fc089fea7f1dfa9d7debce31cfde7b8ff8ed7deb754"
+    },
+    {
+      "archetype": "hazard_assignment",
+      "difficulty": "direct",
+      "model_visible": {
+        "alternate_context_value": "Annex Grid Ember Lumen",
+        "alternate_task_value": "Annex Sector Harbor Briar",
+        "focal_agent_name": "Esme",
+        "partner_name": "Nestor",
+        "relation_depth": 1,
+        "static_context": [],
+        "task_context": "perimeter review",
+        "task_label": "perimeter review operation",
+        "true_context_value": "Annex Zone Atlas Greta",
+        "true_task_value": "Annex Area Cedar Willa",
+        "values": [
+          "Annex Area Cedar Willa",
+          "Annex Sector Harbor Briar",
+          "Annex Zone Atlas Greta",
+          "Annex Grid Ember Lumen"
+        ]
+      },
+      "normalized_template_signature_sha256": "7e736c1c9a8dc30dd8a0b9203b3c58954b05ff58e799f513965a01b4721f04c7",
+      "realization_sha256": "a3f6dd9d446a6b47e1ae68238891580196d9859420977761ebcae84cd85251ba",
+      "structural_semantic_signature_sha256": "55626f570a81bb64a205e9f95f32d8b91e39179bc60f2cd6c69a77b12e7d32f6",
+      "template_family": 1,
+      "variant_id": "J1D-HA-DIR-01",
+      "world_state_sha256": "e5395ac8d91a5ab04c5b640f0183c6dc924908b63a39ec90ac34a350bdf54b5f"
+    },
+    {
+      "archetype": "hazard_assignment",
+      "difficulty": "irrelevant_distractor",
+      "model_visible": {
+        "alternate_context_value": "Annex Grid Kestrel Alden",
+        "alternate_task_value": "Annex Sector Cobalt Quinn",
+        "focal_agent_name": "Dorian",
+        "partner_name": "Minerva",
+        "relation_depth": 1,
+        "static_context": [
+          "Annex Solace schedule remains unchanged"
+        ],
+        "task_context": "perimeter review",
+        "task_label": "perimeter review operation",
+        "true_context_value": "Annex Zone Jasper Vero",
+        "true_task_value": "Annex Area Comet Lumen",
+        "values": [
+          "Annex Area Comet Lumen",
+          "Annex Sector Cobalt Quinn",
+          "Annex Zone Jasper Vero",
+          "Annex Grid Kestrel Alden"
+        ]
+      },
+      "normalized_template_signature_sha256": "b34ef8e3b9f73007354357dae9933c09d605fc865289eb17fbb28a5a39e85870",
+      "realization_sha256": "c953df531bb2f09d525ed72879de081935c16db2cd33289a2cbab42a21570f84",
+      "structural_semantic_signature_sha256": "2e295c3766c53279c076324592e0203ce53dd01a6895862a3dc35cf472600f93",
+      "template_family": 1,
+      "variant_id": "J1D-HA-DIS-01",
+      "world_state_sha256": "6ec87b9b195d38f932d951c5c476ba4f9765d35c2a630a450507b8e70bfcf70b"
+    },
+    {
+      "archetype": "hazard_assignment",
+      "difficulty": "compositional",
+      "model_visible": {
+        "alternate_context_value": "Annex Area Maple Iris",
+        "alternate_task_value": "Annex Zone Summit Yara",
+        "focal_agent_name": "Ines",
+        "partner_name": "Sabine",
+        "relation_depth": 2,
+        "static_context": [
+          "Annex Laurel schedule remains unchanged"
+        ],
+        "task_context": "perimeter review",
+        "task_label": "perimeter review operation",
+        "true_context_value": "Annex Grid Ivory Damon",
+        "true_task_value": "Annex Sector Laurel Talia",
+        "values": [
+          "Annex Sector Laurel Talia",
+          "Annex Zone Summit Yara",
+          "Annex Grid Ivory Damon",
+          "Annex Area Maple Iris"
+        ]
+      },
+      "normalized_template_signature_sha256": "876ebdcfdf663c0c7033bebf04b02af5b58352fe0f9baa63e844ed487bfbbb11",
+      "realization_sha256": "f95a6e550e5031ad7b34498adcb1bbeaf35e2b5adbbc3476b7e9da322fe088b6",
+      "structural_semantic_signature_sha256": "60f64f47763a894c80abf34cbc47dc7e306d5c1f3c6beb6a77172ca0721bf80a",
+      "template_family": 1,
+      "variant_id": "J1D-HA-COM-01",
+      "world_state_sha256": "5ffbe8aae46bb577cfc880fa09eb086082430a4e2d6dcb422ea812e86b53256c"
+    },
+    {
+      "archetype": "maintenance_target",
+      "difficulty": "direct",
+      "model_visible": {
+        "alternate_context_value": "Annex Pump Harbor Rhea",
+        "alternate_task_value": "Annex Valve Grove Hugo",
+        "focal_agent_name": "Florian",
+        "partner_name": "Opal",
+        "relation_depth": 1,
+        "static_context": [],
+        "task_context": "system upkeep",
+        "task_label": "system upkeep operation",
+        "true_context_value": "Annex Relay Cedar Mara",
+        "true_task_value": "Annex Sensor Saffron Cora",
+        "values": [
+          "Annex Sensor Saffron Cora",
+          "Annex Valve Grove Hugo",
+          "Annex Relay Cedar Mara",
+          "Annex Pump Harbor Rhea"
+        ]
+      },
+      "normalized_template_signature_sha256": "02da124a0cc80f7781a5b75508de68e7405bac3e0c717bb20b297cb3c4cdae0d",
+      "realization_sha256": "c1f39496a4c56c0ed0f3b4ed624966f5e81248d18da9aa1b00a7682f412538b9",
+      "structural_semantic_signature_sha256": "5407b0648b83bd24d3bf9c80b14c3d35e1a41ea9b6ce9910dee3155206020b2e",
+      "template_family": 1,
+      "variant_id": "J1D-MT-DIR-01",
+      "world_state_sha256": "128295a825432e66faa2814a3407e5dbf1ba792973273690c50e37901a31e0cc"
+    },
+    {
+      "archetype": "maintenance_target",
+      "difficulty": "irrelevant_distractor",
+      "model_visible": {
+        "alternate_context_value": "Annex Pump Nova Rhea",
+        "alternate_task_value": "Annex Valve Meadow Hugo",
+        "focal_agent_name": "Dorian",
+        "partner_name": "Minerva",
+        "relation_depth": 1,
+        "static_context": [
+          "Annex Solace schedule remains unchanged"
+        ],
+        "task_context": "system upkeep",
+        "task_label": "system upkeep operation",
+        "true_context_value": "Annex Relay Fjord Mara",
+        "true_task_value": "Annex Sensor Willow Cora",
+        "values": [
+          "Annex Sensor Willow Cora",
+          "Annex Valve Meadow Hugo",
+          "Annex Relay Fjord Mara",
+          "Annex Pump Nova Rhea"
+        ]
+      },
+      "normalized_template_signature_sha256": "3cdbf91334741e260c52d5847ed9cf47e32f24b8f85fbc5339c1e030cffae85e",
+      "realization_sha256": "4a5e0238ef49cdaeb749a7cc10cfaa95ca95361b315bc6e00b154aa3d8cf44e8",
+      "structural_semantic_signature_sha256": "b8dfc676f110196d75dacce19a69488033014165ef12af8c558c564087ceab81",
+      "template_family": 1,
+      "variant_id": "J1D-MT-DIS-01",
+      "world_state_sha256": "3c4256d2566d24f53142447d9a32695b1025a5ac15d0fe87de8f6a4ff0f7510a"
+    },
+    {
+      "archetype": "maintenance_target",
+      "difficulty": "compositional",
+      "model_visible": {
+        "alternate_context_value": "Annex Valve Cedar Silas",
+        "alternate_task_value": "Annex Pump Saffron Iris",
+        "focal_agent_name": "Percival",
+        "partner_name": "Giselle",
+        "relation_depth": 2,
+        "static_context": [
+          "Annex Summit schedule remains unchanged"
+        ],
+        "task_context": "system upkeep",
+        "task_label": "system upkeep operation",
+        "true_context_value": "Annex Sensor Grove Nolan",
+        "true_task_value": "Annex Relay Falcon Damon",
+        "values": [
+          "Annex Relay Falcon Damon",
+          "Annex Pump Saffron Iris",
+          "Annex Sensor Grove Nolan",
+          "Annex Valve Cedar Silas"
+        ]
+      },
+      "normalized_template_signature_sha256": "64a40f16fb9b1d00be30a66536e00b0fda74f26bdf9016e143908be8a89aebb3",
+      "realization_sha256": "4f723216cf06bed2438994afbd380bf78b94542b1c61de4f5bbad642db1c99fc",
+      "structural_semantic_signature_sha256": "a8c1035647380fbeea0e99ae3e99676d8038184342fe2aed67e08c6aa81dae0a",
+      "template_family": 1,
+      "variant_id": "J1D-MT-COM-01",
+      "world_state_sha256": "def3c4fa87837556b5d135af53ae2fd1bba47dd8fe601df178504953f4bf4921"
+    }
+  ]
+}

@@ -1,0 +1,69 @@
+{
+  "version": "journal-j1-v0.7.1",
+  "parent_version": "journal-j1-v0.7.0",
+  "parent_hashes": {
+    "journal_j1_lexical_ablation_design_v0_7_0.md": "a9aad808a988e6e616cfccf389383b8191946fbad0c863b2de67b3e16dc10900",
+    "journal_j1_lexical_ablation_power_precision_plan_v0_7_0.json": "fcce5be60ca484b2b1dabc7c2d3478148b5e055399dee42b62ae5654e552fbe2",
+    "journal_j1_lexical_ablation_power_precision_grid_v0_7_0.csv": "58987cb5063ad5e97a056cd7b55d7de9c866cad656073dba226dd91ff7932089"
+  },
+  "N_planned": 54,
+  "conditions": ["C0", "C1", "N0", "N1"],
+  "inferential_unit": "complete_four_condition_scenario_variant",
+  "primary_estimand": "Delta_I_neutral = mean_i(Y_i,N1 - Y_i,N0)",
+  "primary_test": "one-sided exact paired McNemar/binomial discordance test",
+  "alpha": 0.05,
+  "inherited_protocol_specific_SOEI": 0.25,
+  "neutral_primary_significant": "exact_one_sided_mcnemar_p <= 0.05",
+  "neutral_effect_material": "Delta_I_neutral >= 0.25",
+  "neutral_mismatch_persistence": "neutral_primary_significant AND neutral_effect_material",
+  "Lambda": "mean_i[(Y_i,C1-Y_i,C0)-(Y_i,N1-Y_i,N0)]",
+  "lambda_equivalence_margin": null,
+  "bootstrap": {
+    "resampling_unit": "complete four-condition scenario variant",
+    "replicates": 100000,
+    "confidence_level": 0.95,
+    "method": "ordinary percentile",
+    "quantile_convention": "R/NumPy type-7 linear interpolation",
+    "seed_literal": "journal-j1-lexical-ablation-bootstrap-v0.7.1",
+    "seed_algorithm": "SHA-256 UTF-8 literal; first 8 bytes unsigned big-endian; modulo 2**32",
+    "seed_integer": 1202210195,
+    "single_rng_stream": true
+  },
+  "moderation": {
+    "lexical_amplification_supported": "Lambda_CI95_lower > 0",
+    "reverse_lexical_moderation_supported": "Lambda_CI95_upper < 0",
+    "no_detected_lexical_moderation": "CI includes zero",
+    "non_equivalence_notice": "Failure to detect lexical moderation does not establish Lambda = 0 or interface equivalence."
+  },
+  "classification_priority": [
+    "technical_or_analysis_ineligible",
+    "mismatch_effect_with_lexical_amplification",
+    "label_independent_effect_neutral_stronger",
+    "label_independent_mismatch_effect",
+    "primarily_lexical_affordance_compatible",
+    "mechanism_inconclusive"
+  ],
+  "diagnostics": {
+    "headroom_boundary": [0.05, 0.95],
+    "neutral_mapping_warning": "abs(rate_A-rate_B) > 0.25",
+    "action_order_warning": "abs(message_first_rate-continue_first_rate) > 0.25",
+    "diagnostics_change_classification": false
+  },
+  "subgroups": ["archetype", "difficulty"],
+  "subgroups_descriptive_only": true,
+  "subgroups_change_classification": false,
+  "complete_variants_required": 54,
+  "imputation": false,
+  "fallback_action": false,
+  "parser_repair": false,
+  "outcome_dependent_retry": false,
+  "scenario_replacement": false,
+  "behavioral_files_loaded_automatically": false,
+  "behavioral_observations": 0,
+  "model_api_execution": false,
+  "scenarios_generated": false,
+  "prompts_generated": false,
+  "workflow_generated": false,
+  "120b_execution": false,
+  "icaart_reopened": false
+}

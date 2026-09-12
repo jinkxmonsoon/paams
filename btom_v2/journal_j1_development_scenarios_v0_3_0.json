@@ -1,0 +1,3766 @@
+{
+  "confirmatory_eligible": false,
+  "development_confirmatory_overlap": 0,
+  "development_count": 18,
+  "development_only": true,
+  "experiment": "journal_j1_causal_partner_belief",
+  "scenarios": [
+    {
+      "active_task_id": "j1d_rl_dir_01_active_task",
+      "archetype": "resource_location",
+      "available_action_ids": [
+        "j1d_rl_dir_01_correction_action",
+        "j1d_rl_dir_01_progress_action"
+      ],
+      "candidate_ordinal_in_cell": 1,
+      "correction_action_id": "j1d_rl_dir_01_correction_action",
+      "correction_content_semantic_value": "j1d_rl_dir_01_location_q_a",
+      "counterfactual_cells": [
+        {
+          "F": "R",
+          "M_I": 0,
+          "M_R": 0,
+          "available_action_ids": [
+            "j1d_rl_dir_01_correction_action",
+            "j1d_rl_dir_01_progress_action"
+          ],
+          "gold_action_class": "progress",
+          "objective_world_sha256": "9d5da6672aceaa69e6fa5544711a755f2d115487a329a9231491019d2de7a084",
+          "partner_q_value": "j1d_rl_dir_01_location_q_a",
+          "partner_r_value": "j1d_rl_dir_01_location_r_a"
+        },
+        {
+          "F": "R",
+          "M_I": 1,
+          "M_R": 0,
+          "available_action_ids": [
+            "j1d_rl_dir_01_correction_action",
+            "j1d_rl_dir_01_progress_action"
+          ],
+          "gold_action_class": "progress",
+          "objective_world_sha256": "9d5da6672aceaa69e6fa5544711a755f2d115487a329a9231491019d2de7a084",
+          "partner_q_value": "j1d_rl_dir_01_location_q_a",
+          "partner_r_value": "j1d_rl_dir_01_location_r_b"
+        },
+        {
+          "F": "R",
+          "M_I": 0,
+          "M_R": 1,
+          "available_action_ids": [
+            "j1d_rl_dir_01_correction_action",
+            "j1d_rl_dir_01_progress_action"
+          ],
+          "gold_action_class": "communicate",
+          "objective_world_sha256": "9d5da6672aceaa69e6fa5544711a755f2d115487a329a9231491019d2de7a084",
+          "partner_q_value": "j1d_rl_dir_01_location_q_b",
+          "partner_r_value": "j1d_rl_dir_01_location_r_a"
+        },
+        {
+          "F": "R",
+          "M_I": 1,
+          "M_R": 1,
+          "available_action_ids": [
+            "j1d_rl_dir_01_correction_action",
+            "j1d_rl_dir_01_progress_action"
+          ],
+          "gold_action_class": "communicate",
+          "objective_world_sha256": "9d5da6672aceaa69e6fa5544711a755f2d115487a329a9231491019d2de7a084",
+          "partner_q_value": "j1d_rl_dir_01_location_q_b",
+          "partner_r_value": "j1d_rl_dir_01_location_r_b"
+        },
+        {
+          "F": "B",
+          "M_I": 0,
+          "M_R": 0,
+          "available_action_ids": [
+            "j1d_rl_dir_01_correction_action",
+            "j1d_rl_dir_01_progress_action"
+          ],
+          "gold_action_class": "progress",
+          "objective_world_sha256": "9d5da6672aceaa69e6fa5544711a755f2d115487a329a9231491019d2de7a084",
+          "partner_q_value": "j1d_rl_dir_01_location_q_a",
+          "partner_r_value": "j1d_rl_dir_01_location_r_a"
+        },
+        {
+          "F": "B",
+          "M_I": 1,
+          "M_R": 0,
+          "available_action_ids": [
+            "j1d_rl_dir_01_correction_action",
+            "j1d_rl_dir_01_progress_action"
+          ],
+          "gold_action_class": "progress",
+          "objective_world_sha256": "9d5da6672aceaa69e6fa5544711a755f2d115487a329a9231491019d2de7a084",
+          "partner_q_value": "j1d_rl_dir_01_location_q_a",
+          "partner_r_value": "j1d_rl_dir_01_location_r_b"
+        },
+        {
+          "F": "B",
+          "M_I": 0,
+          "M_R": 1,
+          "available_action_ids": [
+            "j1d_rl_dir_01_correction_action",
+            "j1d_rl_dir_01_progress_action"
+          ],
+          "gold_action_class": "communicate",
+          "objective_world_sha256": "9d5da6672aceaa69e6fa5544711a755f2d115487a329a9231491019d2de7a084",
+          "partner_q_value": "j1d_rl_dir_01_location_q_b",
+          "partner_r_value": "j1d_rl_dir_01_location_r_a"
+        },
+        {
+          "F": "B",
+          "M_I": 1,
+          "M_R": 1,
+          "available_action_ids": [
+            "j1d_rl_dir_01_correction_action",
+            "j1d_rl_dir_01_progress_action"
+          ],
+          "gold_action_class": "communicate",
+          "objective_world_sha256": "9d5da6672aceaa69e6fa5544711a755f2d115487a329a9231491019d2de7a084",
+          "partner_q_value": "j1d_rl_dir_01_location_q_b",
+          "partner_r_value": "j1d_rl_dir_01_location_r_b"
+        }
+      ],
+      "difficulty": "direct",
+      "focal_agent_id": "j1d_rl_dir_01_focal_agent",
+      "future_renderable_facts": {
+        "active_task_id": "j1d_rl_dir_01_active_task",
+        "objective_values": [
+          "j1d_rl_dir_01_location_q_a",
+          "j1d_rl_dir_01_location_r_a"
+        ],
+        "represented_value_domain": [
+          "j1d_rl_dir_01_location_q_a",
+          "j1d_rl_dir_01_location_q_b",
+          "j1d_rl_dir_01_location_r_a",
+          "j1d_rl_dir_01_location_r_b"
+        ],
+        "static_context_facts": []
+      },
+      "gold_policy_rule": {
+        "communicate_value": 1,
+        "input_factor": "M_R",
+        "progress_value": 0
+      },
+      "internal_metadata_fields": [
+        "F",
+        "M_R",
+        "M_I",
+        "gold_action_class",
+        "difficulty",
+        "q_causal_dependency",
+        "r_noncausal_context"
+      ],
+      "namespace": "development",
+      "objective_world_facts": {
+        "active_task_id": "j1d_rl_dir_01_active_task",
+        "causal_task_rules": [
+          {
+            "if_partner_q_differs_from_truth": "communicate",
+            "if_partner_q_matches_truth": "progress"
+          }
+        ],
+        "difficulty_structure": {
+          "difficulty": "direct",
+          "parallel_relation_depth": 1
+        },
+        "focal_agent_knowledge": [
+          "j1d_rl_dir_01_location_q_a",
+          "j1d_rl_dir_01_location_r_a"
+        ],
+        "partner_next_step_rule": {
+          "active_task_id": "j1d_rl_dir_01_active_task",
+          "target_source": "q_proposition"
+        },
+        "q_truth": "j1d_rl_dir_01_location_q_a",
+        "r_truth": "j1d_rl_dir_01_location_r_a"
+      },
+      "partner_id": "j1d_rl_dir_01_partner",
+      "progress_action_id": "j1d_rl_dir_01_progress_action",
+      "q_causal_dependency": {
+        "dependency_edges": [
+          "j1d_rl_dir_01_active_resource_location->partner_next_active_step"
+        ],
+        "partner_next_active_step_target_source": "q_proposition_id",
+        "wrong_value_without_correction_conflicts_with_active_task": true
+      },
+      "q_false": "j1d_rl_dir_01_location_q_b",
+      "q_proposition_id": "j1d_rl_dir_01_active_resource_location",
+      "q_relation_depth": 1,
+      "q_semantic_type": "location",
+      "q_true": "j1d_rl_dir_01_location_q_a",
+      "r_false": "j1d_rl_dir_01_location_r_b",
+      "r_noncausal_context": {
+        "associated_context_id": "j1d_rl_dir_01_nonactive_context",
+        "changing_value_changes_gold_policy": false,
+        "dependency_edges_to_partner_next_active_step": []
+      },
+      "r_proposition_id": "j1d_rl_dir_01_other_resource_location",
+      "r_relation_depth": 1,
+      "r_semantic_type": "location",
+      "r_true": "j1d_rl_dir_01_location_r_a",
+      "semantic_signature_sha256": "a02e1155e08050ff1ed4b9b55f4b6f024887c687619a197fac41a8aab219f12e",
+      "static_context_facts": [],
+      "variant_id": "J1D-RL-DIR-01"
+    },
+    {
+      "active_task_id": "j1d_rl_dis_01_active_task",
+      "archetype": "resource_location",
+      "available_action_ids": [
+        "j1d_rl_dis_01_correction_action",
+        "j1d_rl_dis_01_progress_action"
+      ],
+      "candidate_ordinal_in_cell": 1,
+      "correction_action_id": "j1d_rl_dis_01_correction_action",
+      "correction_content_semantic_value": "j1d_rl_dis_01_location_q_a",
+      "counterfactual_cells": [
+        {
+          "F": "R",
+          "M_I": 0,
+          "M_R": 0,
+          "available_action_ids": [
+            "j1d_rl_dis_01_correction_action",
+            "j1d_rl_dis_01_progress_action"
+          ],
+          "gold_action_class": "progress",
+          "objective_world_sha256": "037848c5003723dc4aa33421d2f864d416fe7a37b22cbe70f1d67a5fc75a2d61",
+          "partner_q_value": "j1d_rl_dis_01_location_q_a",
+          "partner_r_value": "j1d_rl_dis_01_location_r_a"
+        },
+        {
+          "F": "R",
+          "M_I": 1,
+          "M_R": 0,
+          "available_action_ids": [
+            "j1d_rl_dis_01_correction_action",
+            "j1d_rl_dis_01_progress_action"
+          ],
+          "gold_action_class": "progress",
+          "objective_world_sha256": "037848c5003723dc4aa33421d2f864d416fe7a37b22cbe70f1d67a5fc75a2d61",
+          "partner_q_value": "j1d_rl_dis_01_location_q_a",
+          "partner_r_value": "j1d_rl_dis_01_location_r_b"
+        },
+        {
+          "F": "R",
+          "M_I": 0,
+          "M_R": 1,
+          "available_action_ids": [
+            "j1d_rl_dis_01_correction_action",
+            "j1d_rl_dis_01_progress_action"
+          ],
+          "gold_action_class": "communicate",
+          "objective_world_sha256": "037848c5003723dc4aa33421d2f864d416fe7a37b22cbe70f1d67a5fc75a2d61",
+          "partner_q_value": "j1d_rl_dis_01_location_q_b",
+          "partner_r_value": "j1d_rl_dis_01_location_r_a"
+        },
+        {
+          "F": "R",
+          "M_I": 1,
+          "M_R": 1,
+          "available_action_ids": [
+            "j1d_rl_dis_01_correction_action",
+            "j1d_rl_dis_01_progress_action"
+          ],
+          "gold_action_class": "communicate",
+          "objective_world_sha256": "037848c5003723dc4aa33421d2f864d416fe7a37b22cbe70f1d67a5fc75a2d61",
+          "partner_q_value": "j1d_rl_dis_01_location_q_b",
+          "partner_r_value": "j1d_rl_dis_01_location_r_b"
+        },
+        {
+          "F": "B",
+          "M_I": 0,
+          "M_R": 0,
+          "available_action_ids": [
+            "j1d_rl_dis_01_correction_action",
+            "j1d_rl_dis_01_progress_action"
+          ],
+          "gold_action_class": "progress",
+          "objective_world_sha256": "037848c5003723dc4aa33421d2f864d416fe7a37b22cbe70f1d67a5fc75a2d61",
+          "partner_q_value": "j1d_rl_dis_01_location_q_a",
+          "partner_r_value": "j1d_rl_dis_01_location_r_a"
+        },
+        {
+          "F": "B",
+          "M_I": 1,
+          "M_R": 0,
+          "available_action_ids": [
+            "j1d_rl_dis_01_correction_action",
+            "j1d_rl_dis_01_progress_action"
+          ],
+          "gold_action_class": "progress",
+          "objective_world_sha256": "037848c5003723dc4aa33421d2f864d416fe7a37b22cbe70f1d67a5fc75a2d61",
+          "partner_q_value": "j1d_rl_dis_01_location_q_a",
+          "partner_r_value": "j1d_rl_dis_01_location_r_b"
+        },
+        {
+          "F": "B",
+          "M_I": 0,
+          "M_R": 1,
+          "available_action_ids": [
+            "j1d_rl_dis_01_correction_action",
+            "j1d_rl_dis_01_progress_action"
+          ],
+          "gold_action_class": "communicate",
+          "objective_world_sha256": "037848c5003723dc4aa33421d2f864d416fe7a37b22cbe70f1d67a5fc75a2d61",
+          "partner_q_value": "j1d_rl_dis_01_location_q_b",
+          "partner_r_value": "j1d_rl_dis_01_location_r_a"
+        },
+        {
+          "F": "B",
+          "M_I": 1,
+          "M_R": 1,
+          "available_action_ids": [
+            "j1d_rl_dis_01_correction_action",
+            "j1d_rl_dis_01_progress_action"
+          ],
+          "gold_action_class": "communicate",
+          "objective_world_sha256": "037848c5003723dc4aa33421d2f864d416fe7a37b22cbe70f1d67a5fc75a2d61",
+          "partner_q_value": "j1d_rl_dis_01_location_q_b",
+          "partner_r_value": "j1d_rl_dis_01_location_r_b"
+        }
+      ],
+      "difficulty": "irrelevant_distractor",
+      "focal_agent_id": "j1d_rl_dis_01_focal_agent",
+      "future_renderable_facts": {
+        "active_task_id": "j1d_rl_dis_01_active_task",
+        "objective_values": [
+          "j1d_rl_dis_01_location_q_a",
+          "j1d_rl_dis_01_location_r_a"
+        ],
+        "represented_value_domain": [
+          "j1d_rl_dis_01_location_q_a",
+          "j1d_rl_dis_01_location_q_b",
+          "j1d_rl_dis_01_location_r_a",
+          "j1d_rl_dis_01_location_r_b"
+        ],
+        "static_context_facts": [
+          {
+            "fact_id": "j1d_rl_dis_01_ambient_schedule",
+            "value": "j1d_rl_dis_01_schedule_slot"
+          }
+        ]
+      },
+      "gold_policy_rule": {
+        "communicate_value": 1,
+        "input_factor": "M_R",
+        "progress_value": 0
+      },
+      "internal_metadata_fields": [
+        "F",
+        "M_R",
+        "M_I",
+        "gold_action_class",
+        "difficulty",
+        "q_causal_dependency",
+        "r_noncausal_context"
+      ],
+      "namespace": "development",
+      "objective_world_facts": {
+        "active_task_id": "j1d_rl_dis_01_active_task",
+        "causal_task_rules": [
+          {
+            "if_partner_q_differs_from_truth": "communicate",
+            "if_partner_q_matches_truth": "progress"
+          }
+        ],
+        "difficulty_structure": {
+          "difficulty": "irrelevant_distractor",
+          "parallel_relation_depth": 1
+        },
+        "focal_agent_knowledge": [
+          "j1d_rl_dis_01_location_q_a",
+          "j1d_rl_dis_01_location_r_a"
+        ],
+        "partner_next_step_rule": {
+          "active_task_id": "j1d_rl_dis_01_active_task",
+          "target_source": "q_proposition"
+        },
+        "q_truth": "j1d_rl_dis_01_location_q_a",
+        "r_truth": "j1d_rl_dis_01_location_r_a"
+      },
+      "partner_id": "j1d_rl_dis_01_partner",
+      "progress_action_id": "j1d_rl_dis_01_progress_action",
+      "q_causal_dependency": {
+        "dependency_edges": [
+          "j1d_rl_dis_01_active_resource_location->partner_next_active_step"
+        ],
+        "partner_next_active_step_target_source": "q_proposition_id",
+        "wrong_value_without_correction_conflicts_with_active_task": true
+      },
+      "q_false": "j1d_rl_dis_01_location_q_b",
+      "q_proposition_id": "j1d_rl_dis_01_active_resource_location",
+      "q_relation_depth": 1,
+      "q_semantic_type": "location",
+      "q_true": "j1d_rl_dis_01_location_q_a",
+      "r_false": "j1d_rl_dis_01_location_r_b",
+      "r_noncausal_context": {
+        "associated_context_id": "j1d_rl_dis_01_nonactive_context",
+        "changing_value_changes_gold_policy": false,
+        "dependency_edges_to_partner_next_active_step": []
+      },
+      "r_proposition_id": "j1d_rl_dis_01_other_resource_location",
+      "r_relation_depth": 1,
+      "r_semantic_type": "location",
+      "r_true": "j1d_rl_dis_01_location_r_a",
+      "semantic_signature_sha256": "2e48cfbee04b62f45edb993ec4bd6c1dfa5f68c71dc5f4a72376b97ad7ecd120",
+      "static_context_facts": [
+        {
+          "fact_id": "j1d_rl_dis_01_ambient_schedule",
+          "value": "j1d_rl_dis_01_schedule_slot"
+        }
+      ],
+      "variant_id": "J1D-RL-DIS-01"
+    },
+    {
+      "active_task_id": "j1d_rl_com_01_active_task",
+      "archetype": "resource_location",
+      "available_action_ids": [
+        "j1d_rl_com_01_correction_action",
+        "j1d_rl_com_01_progress_action"
+      ],
+      "candidate_ordinal_in_cell": 1,
+      "correction_action_id": "j1d_rl_com_01_correction_action",
+      "correction_content_semantic_value": "j1d_rl_com_01_location_q_a",
+      "counterfactual_cells": [
+        {
+          "F": "R",
+          "M_I": 0,
+          "M_R": 0,
+          "available_action_ids": [
+            "j1d_rl_com_01_correction_action",
+            "j1d_rl_com_01_progress_action"
+          ],
+          "gold_action_class": "progress",
+          "objective_world_sha256": "f61d07c744960f7123442f2aafae534cbb1bc2fe402c50651c54f94ea930ac60",
+          "partner_q_value": "j1d_rl_com_01_location_q_a",
+          "partner_r_value": "j1d_rl_com_01_location_r_a"
+        },
+        {
+          "F": "R",
+          "M_I": 1,
+          "M_R": 0,
+          "available_action_ids": [
+            "j1d_rl_com_01_correction_action",
+            "j1d_rl_com_01_progress_action"
+          ],
+          "gold_action_class": "progress",
+          "objective_world_sha256": "f61d07c744960f7123442f2aafae534cbb1bc2fe402c50651c54f94ea930ac60",
+          "partner_q_value": "j1d_rl_com_01_location_q_a",
+          "partner_r_value": "j1d_rl_com_01_location_r_b"
+        },
+        {
+          "F": "R",
+          "M_I": 0,
+          "M_R": 1,
+          "available_action_ids": [
+            "j1d_rl_com_01_correction_action",
+            "j1d_rl_com_01_progress_action"
+          ],
+          "gold_action_class": "communicate",
+          "objective_world_sha256": "f61d07c744960f7123442f2aafae534cbb1bc2fe402c50651c54f94ea930ac60",
+          "partner_q_value": "j1d_rl_com_01_location_q_b",
+          "partner_r_value": "j1d_rl_com_01_location_r_a"
+        },
+        {
+          "F": "R",
+          "M_I": 1,
+          "M_R": 1,
+          "available_action_ids": [
+            "j1d_rl_com_01_correction_action",
+            "j1d_rl_com_01_progress_action"
+          ],
+          "gold_action_class": "communicate",
+          "objective_world_sha256": "f61d07c744960f7123442f2aafae534cbb1bc2fe402c50651c54f94ea930ac60",
+          "partner_q_value": "j1d_rl_com_01_location_q_b",
+          "partner_r_value": "j1d_rl_com_01_location_r_b"
+        },
+        {
+          "F": "B",
+          "M_I": 0,
+          "M_R": 0,
+          "available_action_ids": [
+            "j1d_rl_com_01_correction_action",
+            "j1d_rl_com_01_progress_action"
+          ],
+          "gold_action_class": "progress",
+          "objective_world_sha256": "f61d07c744960f7123442f2aafae534cbb1bc2fe402c50651c54f94ea930ac60",
+          "partner_q_value": "j1d_rl_com_01_location_q_a",
+          "partner_r_value": "j1d_rl_com_01_location_r_a"
+        },
+        {
+          "F": "B",
+          "M_I": 1,
+          "M_R": 0,
+          "available_action_ids": [
+            "j1d_rl_com_01_correction_action",
+            "j1d_rl_com_01_progress_action"
+          ],
+          "gold_action_class": "progress",
+          "objective_world_sha256": "f61d07c744960f7123442f2aafae534cbb1bc2fe402c50651c54f94ea930ac60",
+          "partner_q_value": "j1d_rl_com_01_location_q_a",
+          "partner_r_value": "j1d_rl_com_01_location_r_b"
+        },
+        {
+          "F": "B",
+          "M_I": 0,
+          "M_R": 1,
+          "available_action_ids": [
+            "j1d_rl_com_01_correction_action",
+            "j1d_rl_com_01_progress_action"
+          ],
+          "gold_action_class": "communicate",
+          "objective_world_sha256": "f61d07c744960f7123442f2aafae534cbb1bc2fe402c50651c54f94ea930ac60",
+          "partner_q_value": "j1d_rl_com_01_location_q_b",
+          "partner_r_value": "j1d_rl_com_01_location_r_a"
+        },
+        {
+          "F": "B",
+          "M_I": 1,
+          "M_R": 1,
+          "available_action_ids": [
+            "j1d_rl_com_01_correction_action",
+            "j1d_rl_com_01_progress_action"
+          ],
+          "gold_action_class": "communicate",
+          "objective_world_sha256": "f61d07c744960f7123442f2aafae534cbb1bc2fe402c50651c54f94ea930ac60",
+          "partner_q_value": "j1d_rl_com_01_location_q_b",
+          "partner_r_value": "j1d_rl_com_01_location_r_b"
+        }
+      ],
+      "difficulty": "compositional",
+      "focal_agent_id": "j1d_rl_com_01_focal_agent",
+      "future_renderable_facts": {
+        "active_task_id": "j1d_rl_com_01_active_task",
+        "objective_values": [
+          "j1d_rl_com_01_location_q_a",
+          "j1d_rl_com_01_location_r_a"
+        ],
+        "represented_value_domain": [
+          "j1d_rl_com_01_location_q_a",
+          "j1d_rl_com_01_location_q_b",
+          "j1d_rl_com_01_location_r_a",
+          "j1d_rl_com_01_location_r_b"
+        ],
+        "static_context_facts": [
+          {
+            "fact_id": "j1d_rl_com_01_category_map",
+            "value": "j1d_rl_com_01_mapping"
+          }
+        ]
+      },
+      "gold_policy_rule": {
+        "communicate_value": 1,
+        "input_factor": "M_R",
+        "progress_value": 0
+      },
+      "internal_metadata_fields": [
+        "F",
+        "M_R",
+        "M_I",
+        "gold_action_class",
+        "difficulty",
+        "q_causal_dependency",
+        "r_noncausal_context"
+      ],
+      "namespace": "development",
+      "objective_world_facts": {
+        "active_task_id": "j1d_rl_com_01_active_task",
+        "causal_task_rules": [
+          {
+            "if_partner_q_differs_from_truth": "communicate",
+            "if_partner_q_matches_truth": "progress"
+          }
+        ],
+        "difficulty_structure": {
+          "difficulty": "compositional",
+          "parallel_relation_depth": 2
+        },
+        "focal_agent_knowledge": [
+          "j1d_rl_com_01_location_q_a",
+          "j1d_rl_com_01_location_r_a"
+        ],
+        "parallel_relation_chains": [
+          {
+            "subject": "j1d_rl_com_01_active_item",
+            "value": "j1d_rl_com_01_location_q_a",
+            "via": "j1d_rl_com_01_active_category"
+          },
+          {
+            "subject": "j1d_rl_com_01_other_item",
+            "value": "j1d_rl_com_01_location_r_a",
+            "via": "j1d_rl_com_01_other_category"
+          }
+        ],
+        "partner_next_step_rule": {
+          "active_task_id": "j1d_rl_com_01_active_task",
+          "target_source": "q_proposition"
+        },
+        "q_truth": "j1d_rl_com_01_location_q_a",
+        "r_truth": "j1d_rl_com_01_location_r_a"
+      },
+      "partner_id": "j1d_rl_com_01_partner",
+      "progress_action_id": "j1d_rl_com_01_progress_action",
+      "q_causal_dependency": {
+        "dependency_edges": [
+          "j1d_rl_com_01_active_resource_location->partner_next_active_step"
+        ],
+        "partner_next_active_step_target_source": "q_proposition_id",
+        "wrong_value_without_correction_conflicts_with_active_task": true
+      },
+      "q_false": "j1d_rl_com_01_location_q_b",
+      "q_proposition_id": "j1d_rl_com_01_active_resource_location",
+      "q_relation_depth": 2,
+      "q_semantic_type": "location",
+      "q_true": "j1d_rl_com_01_location_q_a",
+      "r_false": "j1d_rl_com_01_location_r_b",
+      "r_noncausal_context": {
+        "associated_context_id": "j1d_rl_com_01_nonactive_context",
+        "changing_value_changes_gold_policy": false,
+        "dependency_edges_to_partner_next_active_step": []
+      },
+      "r_proposition_id": "j1d_rl_com_01_other_resource_location",
+      "r_relation_depth": 2,
+      "r_semantic_type": "location",
+      "r_true": "j1d_rl_com_01_location_r_a",
+      "semantic_signature_sha256": "93cc607a12d74d32c4fe81ff30404f453af34e553de463f76ba3a4ae360ca679",
+      "static_context_facts": [
+        {
+          "fact_id": "j1d_rl_com_01_category_map",
+          "value": "j1d_rl_com_01_mapping"
+        }
+      ],
+      "variant_id": "J1D-RL-COM-01"
+    },
+    {
+      "active_task_id": "j1d_tp_dir_01_active_task",
+      "archetype": "tool_placement",
+      "available_action_ids": [
+        "j1d_tp_dir_01_correction_action",
+        "j1d_tp_dir_01_progress_action"
+      ],
+      "candidate_ordinal_in_cell": 1,
+      "correction_action_id": "j1d_tp_dir_01_correction_action",
+      "correction_content_semantic_value": "j1d_tp_dir_01_location_q_a",
+      "counterfactual_cells": [
+        {
+          "F": "R",
+          "M_I": 0,
+          "M_R": 0,
+          "available_action_ids": [
+            "j1d_tp_dir_01_correction_action",
+            "j1d_tp_dir_01_progress_action"
+          ],
+          "gold_action_class": "progress",
+          "objective_world_sha256": "718eb49a6e3ec9dc26b8f4e4bfe6d2c8f30d326648d728afadaf23ad721d6971",
+          "partner_q_value": "j1d_tp_dir_01_location_q_a",
+          "partner_r_value": "j1d_tp_dir_01_location_r_a"
+        },
+        {
+          "F": "R",
+          "M_I": 1,
+          "M_R": 0,
+          "available_action_ids": [
+            "j1d_tp_dir_01_correction_action",
+            "j1d_tp_dir_01_progress_action"
+          ],
+          "gold_action_class": "progress",
+          "objective_world_sha256": "718eb49a6e3ec9dc26b8f4e4bfe6d2c8f30d326648d728afadaf23ad721d6971",
+          "partner_q_value": "j1d_tp_dir_01_location_q_a",
+          "partner_r_value": "j1d_tp_dir_01_location_r_b"
+        },
+        {
+          "F": "R",
+          "M_I": 0,
+          "M_R": 1,
+          "available_action_ids": [
+            "j1d_tp_dir_01_correction_action",
+            "j1d_tp_dir_01_progress_action"
+          ],
+          "gold_action_class": "communicate",
+          "objective_world_sha256": "718eb49a6e3ec9dc26b8f4e4bfe6d2c8f30d326648d728afadaf23ad721d6971",
+          "partner_q_value": "j1d_tp_dir_01_location_q_b",
+          "partner_r_value": "j1d_tp_dir_01_location_r_a"
+        },
+        {
+          "F": "R",
+          "M_I": 1,
+          "M_R": 1,
+          "available_action_ids": [
+            "j1d_tp_dir_01_correction_action",
+            "j1d_tp_dir_01_progress_action"
+          ],
+          "gold_action_class": "communicate",
+          "objective_world_sha256": "718eb49a6e3ec9dc26b8f4e4bfe6d2c8f30d326648d728afadaf23ad721d6971",
+          "partner_q_value": "j1d_tp_dir_01_location_q_b",
+          "partner_r_value": "j1d_tp_dir_01_location_r_b"
+        },
+        {
+          "F": "B",
+          "M_I": 0,
+          "M_R": 0,
+          "available_action_ids": [
+            "j1d_tp_dir_01_correction_action",
+            "j1d_tp_dir_01_progress_action"
+          ],
+          "gold_action_class": "progress",
+          "objective_world_sha256": "718eb49a6e3ec9dc26b8f4e4bfe6d2c8f30d326648d728afadaf23ad721d6971",
+          "partner_q_value": "j1d_tp_dir_01_location_q_a",
+          "partner_r_value": "j1d_tp_dir_01_location_r_a"
+        },
+        {
+          "F": "B",
+          "M_I": 1,
+          "M_R": 0,
+          "available_action_ids": [
+            "j1d_tp_dir_01_correction_action",
+            "j1d_tp_dir_01_progress_action"
+          ],
+          "gold_action_class": "progress",
+          "objective_world_sha256": "718eb49a6e3ec9dc26b8f4e4bfe6d2c8f30d326648d728afadaf23ad721d6971",
+          "partner_q_value": "j1d_tp_dir_01_location_q_a",
+          "partner_r_value": "j1d_tp_dir_01_location_r_b"
+        },
+        {
+          "F": "B",
+          "M_I": 0,
+          "M_R": 1,
+          "available_action_ids": [
+            "j1d_tp_dir_01_correction_action",
+            "j1d_tp_dir_01_progress_action"
+          ],
+          "gold_action_class": "communicate",
+          "objective_world_sha256": "718eb49a6e3ec9dc26b8f4e4bfe6d2c8f30d326648d728afadaf23ad721d6971",
+          "partner_q_value": "j1d_tp_dir_01_location_q_b",
+          "partner_r_value": "j1d_tp_dir_01_location_r_a"
+        },
+        {
+          "F": "B",
+          "M_I": 1,
+          "M_R": 1,
+          "available_action_ids": [
+            "j1d_tp_dir_01_correction_action",
+            "j1d_tp_dir_01_progress_action"
+          ],
+          "gold_action_class": "communicate",
+          "objective_world_sha256": "718eb49a6e3ec9dc26b8f4e4bfe6d2c8f30d326648d728afadaf23ad721d6971",
+          "partner_q_value": "j1d_tp_dir_01_location_q_b",
+          "partner_r_value": "j1d_tp_dir_01_location_r_b"
+        }
+      ],
+      "difficulty": "direct",
+      "focal_agent_id": "j1d_tp_dir_01_focal_agent",
+      "future_renderable_facts": {
+        "active_task_id": "j1d_tp_dir_01_active_task",
+        "objective_values": [
+          "j1d_tp_dir_01_location_q_a",
+          "j1d_tp_dir_01_location_r_a"
+        ],
+        "represented_value_domain": [
+          "j1d_tp_dir_01_location_q_a",
+          "j1d_tp_dir_01_location_q_b",
+          "j1d_tp_dir_01_location_r_a",
+          "j1d_tp_dir_01_location_r_b"
+        ],
+        "static_context_facts": []
+      },
+      "gold_policy_rule": {
+        "communicate_value": 1,
+        "input_factor": "M_R",
+        "progress_value": 0
+      },
+      "internal_metadata_fields": [
+        "F",
+        "M_R",
+        "M_I",
+        "gold_action_class",
+        "difficulty",
+        "q_causal_dependency",
+        "r_noncausal_context"
+      ],
+      "namespace": "development",
+      "objective_world_facts": {
+        "active_task_id": "j1d_tp_dir_01_active_task",
+        "causal_task_rules": [
+          {
+            "if_partner_q_differs_from_truth": "communicate",
+            "if_partner_q_matches_truth": "progress"
+          }
+        ],
+        "difficulty_structure": {
+          "difficulty": "direct",
+          "parallel_relation_depth": 1
+        },
+        "focal_agent_knowledge": [
+          "j1d_tp_dir_01_location_q_a",
+          "j1d_tp_dir_01_location_r_a"
+        ],
+        "partner_next_step_rule": {
+          "active_task_id": "j1d_tp_dir_01_active_task",
+          "target_source": "q_proposition"
+        },
+        "q_truth": "j1d_tp_dir_01_location_q_a",
+        "r_truth": "j1d_tp_dir_01_location_r_a"
+      },
+      "partner_id": "j1d_tp_dir_01_partner",
+      "progress_action_id": "j1d_tp_dir_01_progress_action",
+      "q_causal_dependency": {
+        "dependency_edges": [
+          "j1d_tp_dir_01_required_tool_location->partner_next_active_step"
+        ],
+        "partner_next_active_step_target_source": "q_proposition_id",
+        "wrong_value_without_correction_conflicts_with_active_task": true
+      },
+      "q_false": "j1d_tp_dir_01_location_q_b",
+      "q_proposition_id": "j1d_tp_dir_01_required_tool_location",
+      "q_relation_depth": 1,
+      "q_semantic_type": "location",
+      "q_true": "j1d_tp_dir_01_location_q_a",
+      "r_false": "j1d_tp_dir_01_location_r_b",
+      "r_noncausal_context": {
+        "associated_context_id": "j1d_tp_dir_01_nonactive_context",
+        "changing_value_changes_gold_policy": false,
+        "dependency_edges_to_partner_next_active_step": []
+      },
+      "r_proposition_id": "j1d_tp_dir_01_other_tool_location",
+      "r_relation_depth": 1,
+      "r_semantic_type": "location",
+      "r_true": "j1d_tp_dir_01_location_r_a",
+      "semantic_signature_sha256": "031d2008ae639d8ba35fe84358173310c7e4ea21fe79342e48b18fe0c13ffb8b",
+      "static_context_facts": [],
+      "variant_id": "J1D-TP-DIR-01"
+    },
+    {
+      "active_task_id": "j1d_tp_dis_01_active_task",
+      "archetype": "tool_placement",
+      "available_action_ids": [
+        "j1d_tp_dis_01_correction_action",
+        "j1d_tp_dis_01_progress_action"
+      ],
+      "candidate_ordinal_in_cell": 1,
+      "correction_action_id": "j1d_tp_dis_01_correction_action",
+      "correction_content_semantic_value": "j1d_tp_dis_01_location_q_a",
+      "counterfactual_cells": [
+        {
+          "F": "R",
+          "M_I": 0,
+          "M_R": 0,
+          "available_action_ids": [
+            "j1d_tp_dis_01_correction_action",
+            "j1d_tp_dis_01_progress_action"
+          ],
+          "gold_action_class": "progress",
+          "objective_world_sha256": "afbbc5b4ed89594f761567ec7b6ccae2c6b428b356a5a26bfa3442e5ab10d42b",
+          "partner_q_value": "j1d_tp_dis_01_location_q_a",
+          "partner_r_value": "j1d_tp_dis_01_location_r_a"
+        },
+        {
+          "F": "R",
+          "M_I": 1,
+          "M_R": 0,
+          "available_action_ids": [
+            "j1d_tp_dis_01_correction_action",
+            "j1d_tp_dis_01_progress_action"
+          ],
+          "gold_action_class": "progress",
+          "objective_world_sha256": "afbbc5b4ed89594f761567ec7b6ccae2c6b428b356a5a26bfa3442e5ab10d42b",
+          "partner_q_value": "j1d_tp_dis_01_location_q_a",
+          "partner_r_value": "j1d_tp_dis_01_location_r_b"
+        },
+        {
+          "F": "R",
+          "M_I": 0,
+          "M_R": 1,
+          "available_action_ids": [
+            "j1d_tp_dis_01_correction_action",
+            "j1d_tp_dis_01_progress_action"
+          ],
+          "gold_action_class": "communicate",
+          "objective_world_sha256": "afbbc5b4ed89594f761567ec7b6ccae2c6b428b356a5a26bfa3442e5ab10d42b",
+          "partner_q_value": "j1d_tp_dis_01_location_q_b",
+          "partner_r_value": "j1d_tp_dis_01_location_r_a"
+        },
+        {
+          "F": "R",
+          "M_I": 1,
+          "M_R": 1,
+          "available_action_ids": [
+            "j1d_tp_dis_01_correction_action",
+            "j1d_tp_dis_01_progress_action"
+          ],
+          "gold_action_class": "communicate",
+          "objective_world_sha256": "afbbc5b4ed89594f761567ec7b6ccae2c6b428b356a5a26bfa3442e5ab10d42b",
+          "partner_q_value": "j1d_tp_dis_01_location_q_b",
+          "partner_r_value": "j1d_tp_dis_01_location_r_b"
+        },
+        {
+          "F": "B",
+          "M_I": 0,
+          "M_R": 0,
+          "available_action_ids": [
+            "j1d_tp_dis_01_correction_action",
+            "j1d_tp_dis_01_progress_action"
+          ],
+          "gold_action_class": "progress",
+          "objective_world_sha256": "afbbc5b4ed89594f761567ec7b6ccae2c6b428b356a5a26bfa3442e5ab10d42b",
+          "partner_q_value": "j1d_tp_dis_01_location_q_a",
+          "partner_r_value": "j1d_tp_dis_01_location_r_a"
+        },
+        {
+          "F": "B",
+          "M_I": 1,
+          "M_R": 0,
+          "available_action_ids": [
+            "j1d_tp_dis_01_correction_action",
+            "j1d_tp_dis_01_progress_action"
+          ],
+          "gold_action_class": "progress",
+          "objective_world_sha256": "afbbc5b4ed89594f761567ec7b6ccae2c6b428b356a5a26bfa3442e5ab10d42b",
+          "partner_q_value": "j1d_tp_dis_01_location_q_a",
+          "partner_r_value": "j1d_tp_dis_01_location_r_b"
+        },
+        {
+          "F": "B",
+          "M_I": 0,
+          "M_R": 1,
+          "available_action_ids": [
+            "j1d_tp_dis_01_correction_action",
+            "j1d_tp_dis_01_progress_action"
+          ],
+          "gold_action_class": "communicate",
+          "objective_world_sha256": "afbbc5b4ed89594f761567ec7b6ccae2c6b428b356a5a26bfa3442e5ab10d42b",
+          "partner_q_value": "j1d_tp_dis_01_location_q_b",
+          "partner_r_value": "j1d_tp_dis_01_location_r_a"
+        },
+        {
+          "F": "B",
+          "M_I": 1,
+          "M_R": 1,
+          "available_action_ids": [
+            "j1d_tp_dis_01_correction_action",
+            "j1d_tp_dis_01_progress_action"
+          ],
+          "gold_action_class": "communicate",
+          "objective_world_sha256": "afbbc5b4ed89594f761567ec7b6ccae2c6b428b356a5a26bfa3442e5ab10d42b",
+          "partner_q_value": "j1d_tp_dis_01_location_q_b",
+          "partner_r_value": "j1d_tp_dis_01_location_r_b"
+        }
+      ],
+      "difficulty": "irrelevant_distractor",
+      "focal_agent_id": "j1d_tp_dis_01_focal_agent",
+      "future_renderable_facts": {
+        "active_task_id": "j1d_tp_dis_01_active_task",
+        "objective_values": [
+          "j1d_tp_dis_01_location_q_a",
+          "j1d_tp_dis_01_location_r_a"
+        ],
+        "represented_value_domain": [
+          "j1d_tp_dis_01_location_q_a",
+          "j1d_tp_dis_01_location_q_b",
+          "j1d_tp_dis_01_location_r_a",
+          "j1d_tp_dis_01_location_r_b"
+        ],
+        "static_context_facts": [
+          {
+            "fact_id": "j1d_tp_dis_01_ambient_schedule",
+            "value": "j1d_tp_dis_01_schedule_slot"
+          }
+        ]
+      },
+      "gold_policy_rule": {
+        "communicate_value": 1,
+        "input_factor": "M_R",
+        "progress_value": 0
+      },
+      "internal_metadata_fields": [
+        "F",
+        "M_R",
+        "M_I",
+        "gold_action_class",
+        "difficulty",
+        "q_causal_dependency",
+        "r_noncausal_context"
+      ],
+      "namespace": "development",
+      "objective_world_facts": {
+        "active_task_id": "j1d_tp_dis_01_active_task",
+        "causal_task_rules": [
+          {
+            "if_partner_q_differs_from_truth": "communicate",
+            "if_partner_q_matches_truth": "progress"
+          }
+        ],
+        "difficulty_structure": {
+          "difficulty": "irrelevant_distractor",
+          "parallel_relation_depth": 1
+        },
+        "focal_agent_knowledge": [
+          "j1d_tp_dis_01_location_q_a",
+          "j1d_tp_dis_01_location_r_a"
+        ],
+        "partner_next_step_rule": {
+          "active_task_id": "j1d_tp_dis_01_active_task",
+          "target_source": "q_proposition"
+        },
+        "q_truth": "j1d_tp_dis_01_location_q_a",
+        "r_truth": "j1d_tp_dis_01_location_r_a"
+      },
+      "partner_id": "j1d_tp_dis_01_partner",
+      "progress_action_id": "j1d_tp_dis_01_progress_action",
+      "q_causal_dependency": {
+        "dependency_edges": [
+          "j1d_tp_dis_01_required_tool_location->partner_next_active_step"
+        ],
+        "partner_next_active_step_target_source": "q_proposition_id",
+        "wrong_value_without_correction_conflicts_with_active_task": true
+      },
+      "q_false": "j1d_tp_dis_01_location_q_b",
+      "q_proposition_id": "j1d_tp_dis_01_required_tool_location",
+      "q_relation_depth": 1,
+      "q_semantic_type": "location",
+      "q_true": "j1d_tp_dis_01_location_q_a",
+      "r_false": "j1d_tp_dis_01_location_r_b",
+      "r_noncausal_context": {
+        "associated_context_id": "j1d_tp_dis_01_nonactive_context",
+        "changing_value_changes_gold_policy": false,
+        "dependency_edges_to_partner_next_active_step": []
+      },
+      "r_proposition_id": "j1d_tp_dis_01_other_tool_location",
+      "r_relation_depth": 1,
+      "r_semantic_type": "location",
+      "r_true": "j1d_tp_dis_01_location_r_a",
+      "semantic_signature_sha256": "fd1776cc46dde062956eb3e23fce3a302e072edc786b278f3ca534e948d501db",
+      "static_context_facts": [
+        {
+          "fact_id": "j1d_tp_dis_01_ambient_schedule",
+          "value": "j1d_tp_dis_01_schedule_slot"
+        }
+      ],
+      "variant_id": "J1D-TP-DIS-01"
+    },
+    {
+      "active_task_id": "j1d_tp_com_01_active_task",
+      "archetype": "tool_placement",
+      "available_action_ids": [
+        "j1d_tp_com_01_correction_action",
+        "j1d_tp_com_01_progress_action"
+      ],
+      "candidate_ordinal_in_cell": 1,
+      "correction_action_id": "j1d_tp_com_01_correction_action",
+      "correction_content_semantic_value": "j1d_tp_com_01_location_q_a",
+      "counterfactual_cells": [
+        {
+          "F": "R",
+          "M_I": 0,
+          "M_R": 0,
+          "available_action_ids": [
+            "j1d_tp_com_01_correction_action",
+            "j1d_tp_com_01_progress_action"
+          ],
+          "gold_action_class": "progress",
+          "objective_world_sha256": "ed44fe8cfc4ca973edc87991a64e7d14922f66ebda9f055855293bc3caad9b30",
+          "partner_q_value": "j1d_tp_com_01_location_q_a",
+          "partner_r_value": "j1d_tp_com_01_location_r_a"
+        },
+        {
+          "F": "R",
+          "M_I": 1,
+          "M_R": 0,
+          "available_action_ids": [
+            "j1d_tp_com_01_correction_action",
+            "j1d_tp_com_01_progress_action"
+          ],
+          "gold_action_class": "progress",
+          "objective_world_sha256": "ed44fe8cfc4ca973edc87991a64e7d14922f66ebda9f055855293bc3caad9b30",
+          "partner_q_value": "j1d_tp_com_01_location_q_a",
+          "partner_r_value": "j1d_tp_com_01_location_r_b"
+        },
+        {
+          "F": "R",
+          "M_I": 0,
+          "M_R": 1,
+          "available_action_ids": [
+            "j1d_tp_com_01_correction_action",
+            "j1d_tp_com_01_progress_action"
+          ],
+          "gold_action_class": "communicate",
+          "objective_world_sha256": "ed44fe8cfc4ca973edc87991a64e7d14922f66ebda9f055855293bc3caad9b30",
+          "partner_q_value": "j1d_tp_com_01_location_q_b",
+          "partner_r_value": "j1d_tp_com_01_location_r_a"
+        },
+        {
+          "F": "R",
+          "M_I": 1,
+          "M_R": 1,
+          "available_action_ids": [
+            "j1d_tp_com_01_correction_action",
+            "j1d_tp_com_01_progress_action"
+          ],
+          "gold_action_class": "communicate",
+          "objective_world_sha256": "ed44fe8cfc4ca973edc87991a64e7d14922f66ebda9f055855293bc3caad9b30",
+          "partner_q_value": "j1d_tp_com_01_location_q_b",
+          "partner_r_value": "j1d_tp_com_01_location_r_b"
+        },
+        {
+          "F": "B",
+          "M_I": 0,
+          "M_R": 0,
+          "available_action_ids": [
+            "j1d_tp_com_01_correction_action",
+            "j1d_tp_com_01_progress_action"
+          ],
+          "gold_action_class": "progress",
+          "objective_world_sha256": "ed44fe8cfc4ca973edc87991a64e7d14922f66ebda9f055855293bc3caad9b30",
+          "partner_q_value": "j1d_tp_com_01_location_q_a",
+          "partner_r_value": "j1d_tp_com_01_location_r_a"
+        },
+        {
+          "F": "B",
+          "M_I": 1,
+          "M_R": 0,
+          "available_action_ids": [
+            "j1d_tp_com_01_correction_action",
+            "j1d_tp_com_01_progress_action"
+          ],
+          "gold_action_class": "progress",
+          "objective_world_sha256": "ed44fe8cfc4ca973edc87991a64e7d14922f66ebda9f055855293bc3caad9b30",
+          "partner_q_value": "j1d_tp_com_01_location_q_a",
+          "partner_r_value": "j1d_tp_com_01_location_r_b"
+        },
+        {
+          "F": "B",
+          "M_I": 0,
+          "M_R": 1,
+          "available_action_ids": [
+            "j1d_tp_com_01_correction_action",
+            "j1d_tp_com_01_progress_action"
+          ],
+          "gold_action_class": "communicate",
+          "objective_world_sha256": "ed44fe8cfc4ca973edc87991a64e7d14922f66ebda9f055855293bc3caad9b30",
+          "partner_q_value": "j1d_tp_com_01_location_q_b",
+          "partner_r_value": "j1d_tp_com_01_location_r_a"
+        },
+        {
+          "F": "B",
+          "M_I": 1,
+          "M_R": 1,
+          "available_action_ids": [
+            "j1d_tp_com_01_correction_action",
+            "j1d_tp_com_01_progress_action"
+          ],
+          "gold_action_class": "communicate",
+          "objective_world_sha256": "ed44fe8cfc4ca973edc87991a64e7d14922f66ebda9f055855293bc3caad9b30",
+          "partner_q_value": "j1d_tp_com_01_location_q_b",
+          "partner_r_value": "j1d_tp_com_01_location_r_b"
+        }
+      ],
+      "difficulty": "compositional",
+      "focal_agent_id": "j1d_tp_com_01_focal_agent",
+      "future_renderable_facts": {
+        "active_task_id": "j1d_tp_com_01_active_task",
+        "objective_values": [
+          "j1d_tp_com_01_location_q_a",
+          "j1d_tp_com_01_location_r_a"
+        ],
+        "represented_value_domain": [
+          "j1d_tp_com_01_location_q_a",
+          "j1d_tp_com_01_location_q_b",
+          "j1d_tp_com_01_location_r_a",
+          "j1d_tp_com_01_location_r_b"
+        ],
+        "static_context_facts": [
+          {
+            "fact_id": "j1d_tp_com_01_category_map",
+            "value": "j1d_tp_com_01_mapping"
+          }
+        ]
+      },
+      "gold_policy_rule": {
+        "communicate_value": 1,
+        "input_factor": "M_R",
+        "progress_value": 0
+      },
+      "internal_metadata_fields": [
+        "F",
+        "M_R",
+        "M_I",
+        "gold_action_class",
+        "difficulty",
+        "q_causal_dependency",
+        "r_noncausal_context"
+      ],
+      "namespace": "development",
+      "objective_world_facts": {
+        "active_task_id": "j1d_tp_com_01_active_task",
+        "causal_task_rules": [
+          {
+            "if_partner_q_differs_from_truth": "communicate",
+            "if_partner_q_matches_truth": "progress"
+          }
+        ],
+        "difficulty_structure": {
+          "difficulty": "compositional",
+          "parallel_relation_depth": 2
+        },
+        "focal_agent_knowledge": [
+          "j1d_tp_com_01_location_q_a",
+          "j1d_tp_com_01_location_r_a"
+        ],
+        "parallel_relation_chains": [
+          {
+            "subject": "j1d_tp_com_01_active_item",
+            "value": "j1d_tp_com_01_location_q_a",
+            "via": "j1d_tp_com_01_active_category"
+          },
+          {
+            "subject": "j1d_tp_com_01_other_item",
+            "value": "j1d_tp_com_01_location_r_a",
+            "via": "j1d_tp_com_01_other_category"
+          }
+        ],
+        "partner_next_step_rule": {
+          "active_task_id": "j1d_tp_com_01_active_task",
+          "target_source": "q_proposition"
+        },
+        "q_truth": "j1d_tp_com_01_location_q_a",
+        "r_truth": "j1d_tp_com_01_location_r_a"
+      },
+      "partner_id": "j1d_tp_com_01_partner",
+      "progress_action_id": "j1d_tp_com_01_progress_action",
+      "q_causal_dependency": {
+        "dependency_edges": [
+          "j1d_tp_com_01_required_tool_location->partner_next_active_step"
+        ],
+        "partner_next_active_step_target_source": "q_proposition_id",
+        "wrong_value_without_correction_conflicts_with_active_task": true
+      },
+      "q_false": "j1d_tp_com_01_location_q_b",
+      "q_proposition_id": "j1d_tp_com_01_required_tool_location",
+      "q_relation_depth": 2,
+      "q_semantic_type": "location",
+      "q_true": "j1d_tp_com_01_location_q_a",
+      "r_false": "j1d_tp_com_01_location_r_b",
+      "r_noncausal_context": {
+        "associated_context_id": "j1d_tp_com_01_nonactive_context",
+        "changing_value_changes_gold_policy": false,
+        "dependency_edges_to_partner_next_active_step": []
+      },
+      "r_proposition_id": "j1d_tp_com_01_other_tool_location",
+      "r_relation_depth": 2,
+      "r_semantic_type": "location",
+      "r_true": "j1d_tp_com_01_location_r_a",
+      "semantic_signature_sha256": "e7a64c0b0afbf21c51a12bdb99f89911beef53c325a0222c7ab5866cf3e20f15",
+      "static_context_facts": [
+        {
+          "fact_id": "j1d_tp_com_01_category_map",
+          "value": "j1d_tp_com_01_mapping"
+        }
+      ],
+      "variant_id": "J1D-TP-COM-01"
+    },
+    {
+      "active_task_id": "j1d_rd_dir_01_active_task",
+      "archetype": "rendezvous_destination",
+      "available_action_ids": [
+        "j1d_rd_dir_01_correction_action",
+        "j1d_rd_dir_01_progress_action"
+      ],
+      "candidate_ordinal_in_cell": 1,
+      "correction_action_id": "j1d_rd_dir_01_correction_action",
+      "correction_content_semantic_value": "j1d_rd_dir_01_destination_q_a",
+      "counterfactual_cells": [
+        {
+          "F": "R",
+          "M_I": 0,
+          "M_R": 0,
+          "available_action_ids": [
+            "j1d_rd_dir_01_correction_action",
+            "j1d_rd_dir_01_progress_action"
+          ],
+          "gold_action_class": "progress",
+          "objective_world_sha256": "84528b67e2999f0586b075698c2f5baef8ddccc8104a75482591967305515a39",
+          "partner_q_value": "j1d_rd_dir_01_destination_q_a",
+          "partner_r_value": "j1d_rd_dir_01_destination_r_a"
+        },
+        {
+          "F": "R",
+          "M_I": 1,
+          "M_R": 0,
+          "available_action_ids": [
+            "j1d_rd_dir_01_correction_action",
+            "j1d_rd_dir_01_progress_action"
+          ],
+          "gold_action_class": "progress",
+          "objective_world_sha256": "84528b67e2999f0586b075698c2f5baef8ddccc8104a75482591967305515a39",
+          "partner_q_value": "j1d_rd_dir_01_destination_q_a",
+          "partner_r_value": "j1d_rd_dir_01_destination_r_b"
+        },
+        {
+          "F": "R",
+          "M_I": 0,
+          "M_R": 1,
+          "available_action_ids": [
+            "j1d_rd_dir_01_correction_action",
+            "j1d_rd_dir_01_progress_action"
+          ],
+          "gold_action_class": "communicate",
+          "objective_world_sha256": "84528b67e2999f0586b075698c2f5baef8ddccc8104a75482591967305515a39",
+          "partner_q_value": "j1d_rd_dir_01_destination_q_b",
+          "partner_r_value": "j1d_rd_dir_01_destination_r_a"
+        },
+        {
+          "F": "R",
+          "M_I": 1,
+          "M_R": 1,
+          "available_action_ids": [
+            "j1d_rd_dir_01_correction_action",
+            "j1d_rd_dir_01_progress_action"
+          ],
+          "gold_action_class": "communicate",
+          "objective_world_sha256": "84528b67e2999f0586b075698c2f5baef8ddccc8104a75482591967305515a39",
+          "partner_q_value": "j1d_rd_dir_01_destination_q_b",
+          "partner_r_value": "j1d_rd_dir_01_destination_r_b"
+        },
+        {
+          "F": "B",
+          "M_I": 0,
+          "M_R": 0,
+          "available_action_ids": [
+            "j1d_rd_dir_01_correction_action",
+            "j1d_rd_dir_01_progress_action"
+          ],
+          "gold_action_class": "progress",
+          "objective_world_sha256": "84528b67e2999f0586b075698c2f5baef8ddccc8104a75482591967305515a39",
+          "partner_q_value": "j1d_rd_dir_01_destination_q_a",
+          "partner_r_value": "j1d_rd_dir_01_destination_r_a"
+        },
+        {
+          "F": "B",
+          "M_I": 1,
+          "M_R": 0,
+          "available_action_ids": [
+            "j1d_rd_dir_01_correction_action",
+            "j1d_rd_dir_01_progress_action"
+          ],
+          "gold_action_class": "progress",
+          "objective_world_sha256": "84528b67e2999f0586b075698c2f5baef8ddccc8104a75482591967305515a39",
+          "partner_q_value": "j1d_rd_dir_01_destination_q_a",
+          "partner_r_value": "j1d_rd_dir_01_destination_r_b"
+        },
+        {
+          "F": "B",
+          "M_I": 0,
+          "M_R": 1,
+          "available_action_ids": [
+            "j1d_rd_dir_01_correction_action",
+            "j1d_rd_dir_01_progress_action"
+          ],
+          "gold_action_class": "communicate",
+          "objective_world_sha256": "84528b67e2999f0586b075698c2f5baef8ddccc8104a75482591967305515a39",
+          "partner_q_value": "j1d_rd_dir_01_destination_q_b",
+          "partner_r_value": "j1d_rd_dir_01_destination_r_a"
+        },
+        {
+          "F": "B",
+          "M_I": 1,
+          "M_R": 1,
+          "available_action_ids": [
+            "j1d_rd_dir_01_correction_action",
+            "j1d_rd_dir_01_progress_action"
+          ],
+          "gold_action_class": "communicate",
+          "objective_world_sha256": "84528b67e2999f0586b075698c2f5baef8ddccc8104a75482591967305515a39",
+          "partner_q_value": "j1d_rd_dir_01_destination_q_b",
+          "partner_r_value": "j1d_rd_dir_01_destination_r_b"
+        }
+      ],
+      "difficulty": "direct",
+      "focal_agent_id": "j1d_rd_dir_01_focal_agent",
+      "future_renderable_facts": {
+        "active_task_id": "j1d_rd_dir_01_active_task",
+        "objective_values": [
+          "j1d_rd_dir_01_destination_q_a",
+          "j1d_rd_dir_01_destination_r_a"
+        ],
+        "represented_value_domain": [
+          "j1d_rd_dir_01_destination_q_a",
+          "j1d_rd_dir_01_destination_q_b",
+          "j1d_rd_dir_01_destination_r_a",
+          "j1d_rd_dir_01_destination_r_b"
+        ],
+        "static_context_facts": []
+      },
+      "gold_policy_rule": {
+        "communicate_value": 1,
+        "input_factor": "M_R",
+        "progress_value": 0
+      },
+      "internal_metadata_fields": [
+        "F",
+        "M_R",
+        "M_I",
+        "gold_action_class",
+        "difficulty",
+        "q_causal_dependency",
+        "r_noncausal_context"
+      ],
+      "namespace": "development",
+      "objective_world_facts": {
+        "active_task_id": "j1d_rd_dir_01_active_task",
+        "causal_task_rules": [
+          {
+            "if_partner_q_differs_from_truth": "communicate",
+            "if_partner_q_matches_truth": "progress"
+          }
+        ],
+        "difficulty_structure": {
+          "difficulty": "direct",
+          "parallel_relation_depth": 1
+        },
+        "focal_agent_knowledge": [
+          "j1d_rd_dir_01_destination_q_a",
+          "j1d_rd_dir_01_destination_r_a"
+        ],
+        "partner_next_step_rule": {
+          "active_task_id": "j1d_rd_dir_01_active_task",
+          "target_source": "q_proposition"
+        },
+        "q_truth": "j1d_rd_dir_01_destination_q_a",
+        "r_truth": "j1d_rd_dir_01_destination_r_a"
+      },
+      "partner_id": "j1d_rd_dir_01_partner",
+      "progress_action_id": "j1d_rd_dir_01_progress_action",
+      "q_causal_dependency": {
+        "dependency_edges": [
+          "j1d_rd_dir_01_active_rendezvous_destination->partner_next_active_step"
+        ],
+        "partner_next_active_step_target_source": "q_proposition_id",
+        "wrong_value_without_correction_conflicts_with_active_task": true
+      },
+      "q_false": "j1d_rd_dir_01_destination_q_b",
+      "q_proposition_id": "j1d_rd_dir_01_active_rendezvous_destination",
+      "q_relation_depth": 1,
+      "q_semantic_type": "destination",
+      "q_true": "j1d_rd_dir_01_destination_q_a",
+      "r_false": "j1d_rd_dir_01_destination_r_b",
+      "r_noncausal_context": {
+        "associated_context_id": "j1d_rd_dir_01_nonactive_context",
+        "changing_value_changes_gold_policy": false,
+        "dependency_edges_to_partner_next_active_step": []
+      },
+      "r_proposition_id": "j1d_rd_dir_01_other_movement_destination",
+      "r_relation_depth": 1,
+      "r_semantic_type": "destination",
+      "r_true": "j1d_rd_dir_01_destination_r_a",
+      "semantic_signature_sha256": "ccc42d29a311f5955ccbe1e3a90bec1202c43c8c3aa5daf112ca429848435d6c",
+      "static_context_facts": [],
+      "variant_id": "J1D-RD-DIR-01"
+    },
+    {
+      "active_task_id": "j1d_rd_dis_01_active_task",
+      "archetype": "rendezvous_destination",
+      "available_action_ids": [
+        "j1d_rd_dis_01_correction_action",
+        "j1d_rd_dis_01_progress_action"
+      ],
+      "candidate_ordinal_in_cell": 1,
+      "correction_action_id": "j1d_rd_dis_01_correction_action",
+      "correction_content_semantic_value": "j1d_rd_dis_01_destination_q_a",
+      "counterfactual_cells": [
+        {
+          "F": "R",
+          "M_I": 0,
+          "M_R": 0,
+          "available_action_ids": [
+            "j1d_rd_dis_01_correction_action",
+            "j1d_rd_dis_01_progress_action"
+          ],
+          "gold_action_class": "progress",
+          "objective_world_sha256": "5dfa39cf83097ab5581cc9d3db46c3ed6d0ad3f0ffe1a16a529ed6c76fbe54fb",
+          "partner_q_value": "j1d_rd_dis_01_destination_q_a",
+          "partner_r_value": "j1d_rd_dis_01_destination_r_a"
+        },
+        {
+          "F": "R",
+          "M_I": 1,
+          "M_R": 0,
+          "available_action_ids": [
+            "j1d_rd_dis_01_correction_action",
+            "j1d_rd_dis_01_progress_action"
+          ],
+          "gold_action_class": "progress",
+          "objective_world_sha256": "5dfa39cf83097ab5581cc9d3db46c3ed6d0ad3f0ffe1a16a529ed6c76fbe54fb",
+          "partner_q_value": "j1d_rd_dis_01_destination_q_a",
+          "partner_r_value": "j1d_rd_dis_01_destination_r_b"
+        },
+        {
+          "F": "R",
+          "M_I": 0,
+          "M_R": 1,
+          "available_action_ids": [
+            "j1d_rd_dis_01_correction_action",
+            "j1d_rd_dis_01_progress_action"
+          ],
+          "gold_action_class": "communicate",
+          "objective_world_sha256": "5dfa39cf83097ab5581cc9d3db46c3ed6d0ad3f0ffe1a16a529ed6c76fbe54fb",
+          "partner_q_value": "j1d_rd_dis_01_destination_q_b",
+          "partner_r_value": "j1d_rd_dis_01_destination_r_a"
+        },
+        {
+          "F": "R",
+          "M_I": 1,
+          "M_R": 1,
+          "available_action_ids": [
+            "j1d_rd_dis_01_correction_action",
+            "j1d_rd_dis_01_progress_action"
+          ],
+          "gold_action_class": "communicate",
+          "objective_world_sha256": "5dfa39cf83097ab5581cc9d3db46c3ed6d0ad3f0ffe1a16a529ed6c76fbe54fb",
+          "partner_q_value": "j1d_rd_dis_01_destination_q_b",
+          "partner_r_value": "j1d_rd_dis_01_destination_r_b"
+        },
+        {
+          "F": "B",
+          "M_I": 0,
+          "M_R": 0,
+          "available_action_ids": [
+            "j1d_rd_dis_01_correction_action",
+            "j1d_rd_dis_01_progress_action"
+          ],
+          "gold_action_class": "progress",
+          "objective_world_sha256": "5dfa39cf83097ab5581cc9d3db46c3ed6d0ad3f0ffe1a16a529ed6c76fbe54fb",
+          "partner_q_value": "j1d_rd_dis_01_destination_q_a",
+          "partner_r_value": "j1d_rd_dis_01_destination_r_a"
+        },
+        {
+          "F": "B",
+          "M_I": 1,
+          "M_R": 0,
+          "available_action_ids": [
+            "j1d_rd_dis_01_correction_action",
+            "j1d_rd_dis_01_progress_action"
+          ],
+          "gold_action_class": "progress",
+          "objective_world_sha256": "5dfa39cf83097ab5581cc9d3db46c3ed6d0ad3f0ffe1a16a529ed6c76fbe54fb",
+          "partner_q_value": "j1d_rd_dis_01_destination_q_a",
+          "partner_r_value": "j1d_rd_dis_01_destination_r_b"
+        },
+        {
+          "F": "B",
+          "M_I": 0,
+          "M_R": 1,
+          "available_action_ids": [
+            "j1d_rd_dis_01_correction_action",
+            "j1d_rd_dis_01_progress_action"
+          ],
+          "gold_action_class": "communicate",
+          "objective_world_sha256": "5dfa39cf83097ab5581cc9d3db46c3ed6d0ad3f0ffe1a16a529ed6c76fbe54fb",
+          "partner_q_value": "j1d_rd_dis_01_destination_q_b",
+          "partner_r_value": "j1d_rd_dis_01_destination_r_a"
+        },
+        {
+          "F": "B",
+          "M_I": 1,
+          "M_R": 1,
+          "available_action_ids": [
+            "j1d_rd_dis_01_correction_action",
+            "j1d_rd_dis_01_progress_action"
+          ],
+          "gold_action_class": "communicate",
+          "objective_world_sha256": "5dfa39cf83097ab5581cc9d3db46c3ed6d0ad3f0ffe1a16a529ed6c76fbe54fb",
+          "partner_q_value": "j1d_rd_dis_01_destination_q_b",
+          "partner_r_value": "j1d_rd_dis_01_destination_r_b"
+        }
+      ],
+      "difficulty": "irrelevant_distractor",
+      "focal_agent_id": "j1d_rd_dis_01_focal_agent",
+      "future_renderable_facts": {
+        "active_task_id": "j1d_rd_dis_01_active_task",
+        "objective_values": [
+          "j1d_rd_dis_01_destination_q_a",
+          "j1d_rd_dis_01_destination_r_a"
+        ],
+        "represented_value_domain": [
+          "j1d_rd_dis_01_destination_q_a",
+          "j1d_rd_dis_01_destination_q_b",
+          "j1d_rd_dis_01_destination_r_a",
+          "j1d_rd_dis_01_destination_r_b"
+        ],
+        "static_context_facts": [
+          {
+            "fact_id": "j1d_rd_dis_01_ambient_schedule",
+            "value": "j1d_rd_dis_01_schedule_slot"
+          }
+        ]
+      },
+      "gold_policy_rule": {
+        "communicate_value": 1,
+        "input_factor": "M_R",
+        "progress_value": 0
+      },
+      "internal_metadata_fields": [
+        "F",
+        "M_R",
+        "M_I",
+        "gold_action_class",
+        "difficulty",
+        "q_causal_dependency",
+        "r_noncausal_context"
+      ],
+      "namespace": "development",
+      "objective_world_facts": {
+        "active_task_id": "j1d_rd_dis_01_active_task",
+        "causal_task_rules": [
+          {
+            "if_partner_q_differs_from_truth": "communicate",
+            "if_partner_q_matches_truth": "progress"
+          }
+        ],
+        "difficulty_structure": {
+          "difficulty": "irrelevant_distractor",
+          "parallel_relation_depth": 1
+        },
+        "focal_agent_knowledge": [
+          "j1d_rd_dis_01_destination_q_a",
+          "j1d_rd_dis_01_destination_r_a"
+        ],
+        "partner_next_step_rule": {
+          "active_task_id": "j1d_rd_dis_01_active_task",
+          "target_source": "q_proposition"
+        },
+        "q_truth": "j1d_rd_dis_01_destination_q_a",
+        "r_truth": "j1d_rd_dis_01_destination_r_a"
+      },
+      "partner_id": "j1d_rd_dis_01_partner",
+      "progress_action_id": "j1d_rd_dis_01_progress_action",
+      "q_causal_dependency": {
+        "dependency_edges": [
+          "j1d_rd_dis_01_active_rendezvous_destination->partner_next_active_step"
+        ],
+        "partner_next_active_step_target_source": "q_proposition_id",
+        "wrong_value_without_correction_conflicts_with_active_task": true
+      },
+      "q_false": "j1d_rd_dis_01_destination_q_b",
+      "q_proposition_id": "j1d_rd_dis_01_active_rendezvous_destination",
+      "q_relation_depth": 1,
+      "q_semantic_type": "destination",
+      "q_true": "j1d_rd_dis_01_destination_q_a",
+      "r_false": "j1d_rd_dis_01_destination_r_b",
+      "r_noncausal_context": {
+        "associated_context_id": "j1d_rd_dis_01_nonactive_context",
+        "changing_value_changes_gold_policy": false,
+        "dependency_edges_to_partner_next_active_step": []
+      },
+      "r_proposition_id": "j1d_rd_dis_01_other_movement_destination",
+      "r_relation_depth": 1,
+      "r_semantic_type": "destination",
+      "r_true": "j1d_rd_dis_01_destination_r_a",
+      "semantic_signature_sha256": "460ca0490ca82f6c9097c9fabc4b5ccc965fe3aac7f4ff66ad51e1288edd596b",
+      "static_context_facts": [
+        {
+          "fact_id": "j1d_rd_dis_01_ambient_schedule",
+          "value": "j1d_rd_dis_01_schedule_slot"
+        }
+      ],
+      "variant_id": "J1D-RD-DIS-01"
+    },
+    {
+      "active_task_id": "j1d_rd_com_01_active_task",
+      "archetype": "rendezvous_destination",
+      "available_action_ids": [
+        "j1d_rd_com_01_correction_action",
+        "j1d_rd_com_01_progress_action"
+      ],
+      "candidate_ordinal_in_cell": 1,
+      "correction_action_id": "j1d_rd_com_01_correction_action",
+      "correction_content_semantic_value": "j1d_rd_com_01_destination_q_a",
+      "counterfactual_cells": [
+        {
+          "F": "R",
+          "M_I": 0,
+          "M_R": 0,
+          "available_action_ids": [
+            "j1d_rd_com_01_correction_action",
+            "j1d_rd_com_01_progress_action"
+          ],
+          "gold_action_class": "progress",
+          "objective_world_sha256": "89c402951d0a58fe4cdad9442120c448f7ee944abd85df67c4913309e488000b",
+          "partner_q_value": "j1d_rd_com_01_destination_q_a",
+          "partner_r_value": "j1d_rd_com_01_destination_r_a"
+        },
+        {
+          "F": "R",
+          "M_I": 1,
+          "M_R": 0,
+          "available_action_ids": [
+            "j1d_rd_com_01_correction_action",
+            "j1d_rd_com_01_progress_action"
+          ],
+          "gold_action_class": "progress",
+          "objective_world_sha256": "89c402951d0a58fe4cdad9442120c448f7ee944abd85df67c4913309e488000b",
+          "partner_q_value": "j1d_rd_com_01_destination_q_a",
+          "partner_r_value": "j1d_rd_com_01_destination_r_b"
+        },
+        {
+          "F": "R",
+          "M_I": 0,
+          "M_R": 1,
+          "available_action_ids": [
+            "j1d_rd_com_01_correction_action",
+            "j1d_rd_com_01_progress_action"
+          ],
+          "gold_action_class": "communicate",
+          "objective_world_sha256": "89c402951d0a58fe4cdad9442120c448f7ee944abd85df67c4913309e488000b",
+          "partner_q_value": "j1d_rd_com_01_destination_q_b",
+          "partner_r_value": "j1d_rd_com_01_destination_r_a"
+        },
+        {
+          "F": "R",
+          "M_I": 1,
+          "M_R": 1,
+          "available_action_ids": [
+            "j1d_rd_com_01_correction_action",
+            "j1d_rd_com_01_progress_action"
+          ],
+          "gold_action_class": "communicate",
+          "objective_world_sha256": "89c402951d0a58fe4cdad9442120c448f7ee944abd85df67c4913309e488000b",
+          "partner_q_value": "j1d_rd_com_01_destination_q_b",
+          "partner_r_value": "j1d_rd_com_01_destination_r_b"
+        },
+        {
+          "F": "B",
+          "M_I": 0,
+          "M_R": 0,
+          "available_action_ids": [
+            "j1d_rd_com_01_correction_action",
+            "j1d_rd_com_01_progress_action"
+          ],
+          "gold_action_class": "progress",
+          "objective_world_sha256": "89c402951d0a58fe4cdad9442120c448f7ee944abd85df67c4913309e488000b",
+          "partner_q_value": "j1d_rd_com_01_destination_q_a",
+          "partner_r_value": "j1d_rd_com_01_destination_r_a"
+        },
+        {
+          "F": "B",
+          "M_I": 1,
+          "M_R": 0,
+          "available_action_ids": [
+            "j1d_rd_com_01_correction_action",
+            "j1d_rd_com_01_progress_action"
+          ],
+          "gold_action_class": "progress",
+          "objective_world_sha256": "89c402951d0a58fe4cdad9442120c448f7ee944abd85df67c4913309e488000b",
+          "partner_q_value": "j1d_rd_com_01_destination_q_a",
+          "partner_r_value": "j1d_rd_com_01_destination_r_b"
+        },
+        {
+          "F": "B",
+          "M_I": 0,
+          "M_R": 1,
+          "available_action_ids": [
+            "j1d_rd_com_01_correction_action",
+            "j1d_rd_com_01_progress_action"
+          ],
+          "gold_action_class": "communicate",
+          "objective_world_sha256": "89c402951d0a58fe4cdad9442120c448f7ee944abd85df67c4913309e488000b",
+          "partner_q_value": "j1d_rd_com_01_destination_q_b",
+          "partner_r_value": "j1d_rd_com_01_destination_r_a"
+        },
+        {
+          "F": "B",
+          "M_I": 1,
+          "M_R": 1,
+          "available_action_ids": [
+            "j1d_rd_com_01_correction_action",
+            "j1d_rd_com_01_progress_action"
+          ],
+          "gold_action_class": "communicate",
+          "objective_world_sha256": "89c402951d0a58fe4cdad9442120c448f7ee944abd85df67c4913309e488000b",
+          "partner_q_value": "j1d_rd_com_01_destination_q_b",
+          "partner_r_value": "j1d_rd_com_01_destination_r_b"
+        }
+      ],
+      "difficulty": "compositional",
+      "focal_agent_id": "j1d_rd_com_01_focal_agent",
+      "future_renderable_facts": {
+        "active_task_id": "j1d_rd_com_01_active_task",
+        "objective_values": [
+          "j1d_rd_com_01_destination_q_a",
+          "j1d_rd_com_01_destination_r_a"
+        ],
+        "represented_value_domain": [
+          "j1d_rd_com_01_destination_q_a",
+          "j1d_rd_com_01_destination_q_b",
+          "j1d_rd_com_01_destination_r_a",
+          "j1d_rd_com_01_destination_r_b"
+        ],
+        "static_context_facts": [
+          {
+            "fact_id": "j1d_rd_com_01_category_map",
+            "value": "j1d_rd_com_01_mapping"
+          }
+        ]
+      },
+      "gold_policy_rule": {
+        "communicate_value": 1,
+        "input_factor": "M_R",
+        "progress_value": 0
+      },
+      "internal_metadata_fields": [
+        "F",
+        "M_R",
+        "M_I",
+        "gold_action_class",
+        "difficulty",
+        "q_causal_dependency",
+        "r_noncausal_context"
+      ],
+      "namespace": "development",
+      "objective_world_facts": {
+        "active_task_id": "j1d_rd_com_01_active_task",
+        "causal_task_rules": [
+          {
+            "if_partner_q_differs_from_truth": "communicate",
+            "if_partner_q_matches_truth": "progress"
+          }
+        ],
+        "difficulty_structure": {
+          "difficulty": "compositional",
+          "parallel_relation_depth": 2
+        },
+        "focal_agent_knowledge": [
+          "j1d_rd_com_01_destination_q_a",
+          "j1d_rd_com_01_destination_r_a"
+        ],
+        "parallel_relation_chains": [
+          {
+            "subject": "j1d_rd_com_01_active_item",
+            "value": "j1d_rd_com_01_destination_q_a",
+            "via": "j1d_rd_com_01_active_category"
+          },
+          {
+            "subject": "j1d_rd_com_01_other_item",
+            "value": "j1d_rd_com_01_destination_r_a",
+            "via": "j1d_rd_com_01_other_category"
+          }
+        ],
+        "partner_next_step_rule": {
+          "active_task_id": "j1d_rd_com_01_active_task",
+          "target_source": "q_proposition"
+        },
+        "q_truth": "j1d_rd_com_01_destination_q_a",
+        "r_truth": "j1d_rd_com_01_destination_r_a"
+      },
+      "partner_id": "j1d_rd_com_01_partner",
+      "progress_action_id": "j1d_rd_com_01_progress_action",
+      "q_causal_dependency": {
+        "dependency_edges": [
+          "j1d_rd_com_01_active_rendezvous_destination->partner_next_active_step"
+        ],
+        "partner_next_active_step_target_source": "q_proposition_id",
+        "wrong_value_without_correction_conflicts_with_active_task": true
+      },
+      "q_false": "j1d_rd_com_01_destination_q_b",
+      "q_proposition_id": "j1d_rd_com_01_active_rendezvous_destination",
+      "q_relation_depth": 2,
+      "q_semantic_type": "destination",
+      "q_true": "j1d_rd_com_01_destination_q_a",
+      "r_false": "j1d_rd_com_01_destination_r_b",
+      "r_noncausal_context": {
+        "associated_context_id": "j1d_rd_com_01_nonactive_context",
+        "changing_value_changes_gold_policy": false,
+        "dependency_edges_to_partner_next_active_step": []
+      },
+      "r_proposition_id": "j1d_rd_com_01_other_movement_destination",
+      "r_relation_depth": 2,
+      "r_semantic_type": "destination",
+      "r_true": "j1d_rd_com_01_destination_r_a",
+      "semantic_signature_sha256": "923132a9d26c17cb7c50868a4a09e3e15f01bd52a0f37288a0c4088dbf47a107",
+      "static_context_facts": [
+        {
+          "fact_id": "j1d_rd_com_01_category_map",
+          "value": "j1d_rd_com_01_mapping"
+        }
+      ],
+      "variant_id": "J1D-RD-COM-01"
+    },
+    {
+      "active_task_id": "j1d_dd_dir_01_active_task",
+      "archetype": "delivery_destination",
+      "available_action_ids": [
+        "j1d_dd_dir_01_correction_action",
+        "j1d_dd_dir_01_progress_action"
+      ],
+      "candidate_ordinal_in_cell": 1,
+      "correction_action_id": "j1d_dd_dir_01_correction_action",
+      "correction_content_semantic_value": "j1d_dd_dir_01_destination_q_a",
+      "counterfactual_cells": [
+        {
+          "F": "R",
+          "M_I": 0,
+          "M_R": 0,
+          "available_action_ids": [
+            "j1d_dd_dir_01_correction_action",
+            "j1d_dd_dir_01_progress_action"
+          ],
+          "gold_action_class": "progress",
+          "objective_world_sha256": "84a1246a77ed28fc74b3bf45b02f7f7ce3e11ad128998439f34bfa8f9760fa88",
+          "partner_q_value": "j1d_dd_dir_01_destination_q_a",
+          "partner_r_value": "j1d_dd_dir_01_destination_r_a"
+        },
+        {
+          "F": "R",
+          "M_I": 1,
+          "M_R": 0,
+          "available_action_ids": [
+            "j1d_dd_dir_01_correction_action",
+            "j1d_dd_dir_01_progress_action"
+          ],
+          "gold_action_class": "progress",
+          "objective_world_sha256": "84a1246a77ed28fc74b3bf45b02f7f7ce3e11ad128998439f34bfa8f9760fa88",
+          "partner_q_value": "j1d_dd_dir_01_destination_q_a",
+          "partner_r_value": "j1d_dd_dir_01_destination_r_b"
+        },
+        {
+          "F": "R",
+          "M_I": 0,
+          "M_R": 1,
+          "available_action_ids": [
+            "j1d_dd_dir_01_correction_action",
+            "j1d_dd_dir_01_progress_action"
+          ],
+          "gold_action_class": "communicate",
+          "objective_world_sha256": "84a1246a77ed28fc74b3bf45b02f7f7ce3e11ad128998439f34bfa8f9760fa88",
+          "partner_q_value": "j1d_dd_dir_01_destination_q_b",
+          "partner_r_value": "j1d_dd_dir_01_destination_r_a"
+        },
+        {
+          "F": "R",
+          "M_I": 1,
+          "M_R": 1,
+          "available_action_ids": [
+            "j1d_dd_dir_01_correction_action",
+            "j1d_dd_dir_01_progress_action"
+          ],
+          "gold_action_class": "communicate",
+          "objective_world_sha256": "84a1246a77ed28fc74b3bf45b02f7f7ce3e11ad128998439f34bfa8f9760fa88",
+          "partner_q_value": "j1d_dd_dir_01_destination_q_b",
+          "partner_r_value": "j1d_dd_dir_01_destination_r_b"
+        },
+        {
+          "F": "B",
+          "M_I": 0,
+          "M_R": 0,
+          "available_action_ids": [
+            "j1d_dd_dir_01_correction_action",
+            "j1d_dd_dir_01_progress_action"
+          ],
+          "gold_action_class": "progress",
+          "objective_world_sha256": "84a1246a77ed28fc74b3bf45b02f7f7ce3e11ad128998439f34bfa8f9760fa88",
+          "partner_q_value": "j1d_dd_dir_01_destination_q_a",
+          "partner_r_value": "j1d_dd_dir_01_destination_r_a"
+        },
+        {
+          "F": "B",
+          "M_I": 1,
+          "M_R": 0,
+          "available_action_ids": [
+            "j1d_dd_dir_01_correction_action",
+            "j1d_dd_dir_01_progress_action"
+          ],
+          "gold_action_class": "progress",
+          "objective_world_sha256": "84a1246a77ed28fc74b3bf45b02f7f7ce3e11ad128998439f34bfa8f9760fa88",
+          "partner_q_value": "j1d_dd_dir_01_destination_q_a",
+          "partner_r_value": "j1d_dd_dir_01_destination_r_b"
+        },
+        {
+          "F": "B",
+          "M_I": 0,
+          "M_R": 1,
+          "available_action_ids": [
+            "j1d_dd_dir_01_correction_action",
+            "j1d_dd_dir_01_progress_action"
+          ],
+          "gold_action_class": "communicate",
+          "objective_world_sha256": "84a1246a77ed28fc74b3bf45b02f7f7ce3e11ad128998439f34bfa8f9760fa88",
+          "partner_q_value": "j1d_dd_dir_01_destination_q_b",
+          "partner_r_value": "j1d_dd_dir_01_destination_r_a"
+        },
+        {
+          "F": "B",
+          "M_I": 1,
+          "M_R": 1,
+          "available_action_ids": [
+            "j1d_dd_dir_01_correction_action",
+            "j1d_dd_dir_01_progress_action"
+          ],
+          "gold_action_class": "communicate",
+          "objective_world_sha256": "84a1246a77ed28fc74b3bf45b02f7f7ce3e11ad128998439f34bfa8f9760fa88",
+          "partner_q_value": "j1d_dd_dir_01_destination_q_b",
+          "partner_r_value": "j1d_dd_dir_01_destination_r_b"
+        }
+      ],
+      "difficulty": "direct",
+      "focal_agent_id": "j1d_dd_dir_01_focal_agent",
+      "future_renderable_facts": {
+        "active_task_id": "j1d_dd_dir_01_active_task",
+        "objective_values": [
+          "j1d_dd_dir_01_destination_q_a",
+          "j1d_dd_dir_01_destination_r_a"
+        ],
+        "represented_value_domain": [
+          "j1d_dd_dir_01_destination_q_a",
+          "j1d_dd_dir_01_destination_q_b",
+          "j1d_dd_dir_01_destination_r_a",
+          "j1d_dd_dir_01_destination_r_b"
+        ],
+        "static_context_facts": []
+      },
+      "gold_policy_rule": {
+        "communicate_value": 1,
+        "input_factor": "M_R",
+        "progress_value": 0
+      },
+      "internal_metadata_fields": [
+        "F",
+        "M_R",
+        "M_I",
+        "gold_action_class",
+        "difficulty",
+        "q_causal_dependency",
+        "r_noncausal_context"
+      ],
+      "namespace": "development",
+      "objective_world_facts": {
+        "active_task_id": "j1d_dd_dir_01_active_task",
+        "causal_task_rules": [
+          {
+            "if_partner_q_differs_from_truth": "communicate",
+            "if_partner_q_matches_truth": "progress"
+          }
+        ],
+        "difficulty_structure": {
+          "difficulty": "direct",
+          "parallel_relation_depth": 1
+        },
+        "focal_agent_knowledge": [
+          "j1d_dd_dir_01_destination_q_a",
+          "j1d_dd_dir_01_destination_r_a"
+        ],
+        "partner_next_step_rule": {
+          "active_task_id": "j1d_dd_dir_01_active_task",
+          "target_source": "q_proposition"
+        },
+        "q_truth": "j1d_dd_dir_01_destination_q_a",
+        "r_truth": "j1d_dd_dir_01_destination_r_a"
+      },
+      "partner_id": "j1d_dd_dir_01_partner",
+      "progress_action_id": "j1d_dd_dir_01_progress_action",
+      "q_causal_dependency": {
+        "dependency_edges": [
+          "j1d_dd_dir_01_active_payload_destination->partner_next_active_step"
+        ],
+        "partner_next_active_step_target_source": "q_proposition_id",
+        "wrong_value_without_correction_conflicts_with_active_task": true
+      },
+      "q_false": "j1d_dd_dir_01_destination_q_b",
+      "q_proposition_id": "j1d_dd_dir_01_active_payload_destination",
+      "q_relation_depth": 1,
+      "q_semantic_type": "destination",
+      "q_true": "j1d_dd_dir_01_destination_q_a",
+      "r_false": "j1d_dd_dir_01_destination_r_b",
+      "r_noncausal_context": {
+        "associated_context_id": "j1d_dd_dir_01_nonactive_context",
+        "changing_value_changes_gold_policy": false,
+        "dependency_edges_to_partner_next_active_step": []
+      },
+      "r_proposition_id": "j1d_dd_dir_01_other_payload_destination",
+      "r_relation_depth": 1,
+      "r_semantic_type": "destination",
+      "r_true": "j1d_dd_dir_01_destination_r_a",
+      "semantic_signature_sha256": "05eb22fc6af20e9f316bd5019e7a7497da678e708bdb58d007f8d840975b8d0a",
+      "static_context_facts": [],
+      "variant_id": "J1D-DD-DIR-01"
+    },
+    {
+      "active_task_id": "j1d_dd_dis_01_active_task",
+      "archetype": "delivery_destination",
+      "available_action_ids": [
+        "j1d_dd_dis_01_correction_action",
+        "j1d_dd_dis_01_progress_action"
+      ],
+      "candidate_ordinal_in_cell": 1,
+      "correction_action_id": "j1d_dd_dis_01_correction_action",
+      "correction_content_semantic_value": "j1d_dd_dis_01_destination_q_a",
+      "counterfactual_cells": [
+        {
+          "F": "R",
+          "M_I": 0,
+          "M_R": 0,
+          "available_action_ids": [
+            "j1d_dd_dis_01_correction_action",
+            "j1d_dd_dis_01_progress_action"
+          ],
+          "gold_action_class": "progress",
+          "objective_world_sha256": "e7b82811b64df7011e74ca4b6016085e231e533a7fe4cf4e23693ab23cf85892",
+          "partner_q_value": "j1d_dd_dis_01_destination_q_a",
+          "partner_r_value": "j1d_dd_dis_01_destination_r_a"
+        },
+        {
+          "F": "R",
+          "M_I": 1,
+          "M_R": 0,
+          "available_action_ids": [
+            "j1d_dd_dis_01_correction_action",
+            "j1d_dd_dis_01_progress_action"
+          ],
+          "gold_action_class": "progress",
+          "objective_world_sha256": "e7b82811b64df7011e74ca4b6016085e231e533a7fe4cf4e23693ab23cf85892",
+          "partner_q_value": "j1d_dd_dis_01_destination_q_a",
+          "partner_r_value": "j1d_dd_dis_01_destination_r_b"
+        },
+        {
+          "F": "R",
+          "M_I": 0,
+          "M_R": 1,
+          "available_action_ids": [
+            "j1d_dd_dis_01_correction_action",
+            "j1d_dd_dis_01_progress_action"
+          ],
+          "gold_action_class": "communicate",
+          "objective_world_sha256": "e7b82811b64df7011e74ca4b6016085e231e533a7fe4cf4e23693ab23cf85892",
+          "partner_q_value": "j1d_dd_dis_01_destination_q_b",
+          "partner_r_value": "j1d_dd_dis_01_destination_r_a"
+        },
+        {
+          "F": "R",
+          "M_I": 1,
+          "M_R": 1,
+          "available_action_ids": [
+            "j1d_dd_dis_01_correction_action",
+            "j1d_dd_dis_01_progress_action"
+          ],
+          "gold_action_class": "communicate",
+          "objective_world_sha256": "e7b82811b64df7011e74ca4b6016085e231e533a7fe4cf4e23693ab23cf85892",
+          "partner_q_value": "j1d_dd_dis_01_destination_q_b",
+          "partner_r_value": "j1d_dd_dis_01_destination_r_b"
+        },
+        {
+          "F": "B",
+          "M_I": 0,
+          "M_R": 0,
+          "available_action_ids": [
+            "j1d_dd_dis_01_correction_action",
+            "j1d_dd_dis_01_progress_action"
+          ],
+          "gold_action_class": "progress",
+          "objective_world_sha256": "e7b82811b64df7011e74ca4b6016085e231e533a7fe4cf4e23693ab23cf85892",
+          "partner_q_value": "j1d_dd_dis_01_destination_q_a",
+          "partner_r_value": "j1d_dd_dis_01_destination_r_a"
+        },
+        {
+          "F": "B",
+          "M_I": 1,
+          "M_R": 0,
+          "available_action_ids": [
+            "j1d_dd_dis_01_correction_action",
+            "j1d_dd_dis_01_progress_action"
+          ],
+          "gold_action_class": "progress",
+          "objective_world_sha256": "e7b82811b64df7011e74ca4b6016085e231e533a7fe4cf4e23693ab23cf85892",
+          "partner_q_value": "j1d_dd_dis_01_destination_q_a",
+          "partner_r_value": "j1d_dd_dis_01_destination_r_b"
+        },
+        {
+          "F": "B",
+          "M_I": 0,
+          "M_R": 1,
+          "available_action_ids": [
+            "j1d_dd_dis_01_correction_action",
+            "j1d_dd_dis_01_progress_action"
+          ],
+          "gold_action_class": "communicate",
+          "objective_world_sha256": "e7b82811b64df7011e74ca4b6016085e231e533a7fe4cf4e23693ab23cf85892",
+          "partner_q_value": "j1d_dd_dis_01_destination_q_b",
+          "partner_r_value": "j1d_dd_dis_01_destination_r_a"
+        },
+        {
+          "F": "B",
+          "M_I": 1,
+          "M_R": 1,
+          "available_action_ids": [
+            "j1d_dd_dis_01_correction_action",
+            "j1d_dd_dis_01_progress_action"
+          ],
+          "gold_action_class": "communicate",
+          "objective_world_sha256": "e7b82811b64df7011e74ca4b6016085e231e533a7fe4cf4e23693ab23cf85892",
+          "partner_q_value": "j1d_dd_dis_01_destination_q_b",
+          "partner_r_value": "j1d_dd_dis_01_destination_r_b"
+        }
+      ],
+      "difficulty": "irrelevant_distractor",
+      "focal_agent_id": "j1d_dd_dis_01_focal_agent",
+      "future_renderable_facts": {
+        "active_task_id": "j1d_dd_dis_01_active_task",
+        "objective_values": [
+          "j1d_dd_dis_01_destination_q_a",
+          "j1d_dd_dis_01_destination_r_a"
+        ],
+        "represented_value_domain": [
+          "j1d_dd_dis_01_destination_q_a",
+          "j1d_dd_dis_01_destination_q_b",
+          "j1d_dd_dis_01_destination_r_a",
+          "j1d_dd_dis_01_destination_r_b"
+        ],
+        "static_context_facts": [
+          {
+            "fact_id": "j1d_dd_dis_01_ambient_schedule",
+            "value": "j1d_dd_dis_01_schedule_slot"
+          }
+        ]
+      },
+      "gold_policy_rule": {
+        "communicate_value": 1,
+        "input_factor": "M_R",
+        "progress_value": 0
+      },
+      "internal_metadata_fields": [
+        "F",
+        "M_R",
+        "M_I",
+        "gold_action_class",
+        "difficulty",
+        "q_causal_dependency",
+        "r_noncausal_context"
+      ],
+      "namespace": "development",
+      "objective_world_facts": {
+        "active_task_id": "j1d_dd_dis_01_active_task",
+        "causal_task_rules": [
+          {
+            "if_partner_q_differs_from_truth": "communicate",
+            "if_partner_q_matches_truth": "progress"
+          }
+        ],
+        "difficulty_structure": {
+          "difficulty": "irrelevant_distractor",
+          "parallel_relation_depth": 1
+        },
+        "focal_agent_knowledge": [
+          "j1d_dd_dis_01_destination_q_a",
+          "j1d_dd_dis_01_destination_r_a"
+        ],
+        "partner_next_step_rule": {
+          "active_task_id": "j1d_dd_dis_01_active_task",
+          "target_source": "q_proposition"
+        },
+        "q_truth": "j1d_dd_dis_01_destination_q_a",
+        "r_truth": "j1d_dd_dis_01_destination_r_a"
+      },
+      "partner_id": "j1d_dd_dis_01_partner",
+      "progress_action_id": "j1d_dd_dis_01_progress_action",
+      "q_causal_dependency": {
+        "dependency_edges": [
+          "j1d_dd_dis_01_active_payload_destination->partner_next_active_step"
+        ],
+        "partner_next_active_step_target_source": "q_proposition_id",
+        "wrong_value_without_correction_conflicts_with_active_task": true
+      },
+      "q_false": "j1d_dd_dis_01_destination_q_b",
+      "q_proposition_id": "j1d_dd_dis_01_active_payload_destination",
+      "q_relation_depth": 1,
+      "q_semantic_type": "destination",
+      "q_true": "j1d_dd_dis_01_destination_q_a",
+      "r_false": "j1d_dd_dis_01_destination_r_b",
+      "r_noncausal_context": {
+        "associated_context_id": "j1d_dd_dis_01_nonactive_context",
+        "changing_value_changes_gold_policy": false,
+        "dependency_edges_to_partner_next_active_step": []
+      },
+      "r_proposition_id": "j1d_dd_dis_01_other_payload_destination",
+      "r_relation_depth": 1,
+      "r_semantic_type": "destination",
+      "r_true": "j1d_dd_dis_01_destination_r_a",
+      "semantic_signature_sha256": "16ae84e86046b8a3d8a89bcaa07fb6fe418bfbdd9a81ee840a17d3918164aa8a",
+      "static_context_facts": [
+        {
+          "fact_id": "j1d_dd_dis_01_ambient_schedule",
+          "value": "j1d_dd_dis_01_schedule_slot"
+        }
+      ],
+      "variant_id": "J1D-DD-DIS-01"
+    },
+    {
+      "active_task_id": "j1d_dd_com_01_active_task",
+      "archetype": "delivery_destination",
+      "available_action_ids": [
+        "j1d_dd_com_01_correction_action",
+        "j1d_dd_com_01_progress_action"
+      ],
+      "candidate_ordinal_in_cell": 1,
+      "correction_action_id": "j1d_dd_com_01_correction_action",
+      "correction_content_semantic_value": "j1d_dd_com_01_destination_q_a",
+      "counterfactual_cells": [
+        {
+          "F": "R",
+          "M_I": 0,
+          "M_R": 0,
+          "available_action_ids": [
+            "j1d_dd_com_01_correction_action",
+            "j1d_dd_com_01_progress_action"
+          ],
+          "gold_action_class": "progress",
+          "objective_world_sha256": "4d6947db729cb621c7c304d4cc84dcaef2a539038278c99474d99d553b9b6e90",
+          "partner_q_value": "j1d_dd_com_01_destination_q_a",
+          "partner_r_value": "j1d_dd_com_01_destination_r_a"
+        },
+        {
+          "F": "R",
+          "M_I": 1,
+          "M_R": 0,
+          "available_action_ids": [
+            "j1d_dd_com_01_correction_action",
+            "j1d_dd_com_01_progress_action"
+          ],
+          "gold_action_class": "progress",
+          "objective_world_sha256": "4d6947db729cb621c7c304d4cc84dcaef2a539038278c99474d99d553b9b6e90",
+          "partner_q_value": "j1d_dd_com_01_destination_q_a",
+          "partner_r_value": "j1d_dd_com_01_destination_r_b"
+        },
+        {
+          "F": "R",
+          "M_I": 0,
+          "M_R": 1,
+          "available_action_ids": [
+            "j1d_dd_com_01_correction_action",
+            "j1d_dd_com_01_progress_action"
+          ],
+          "gold_action_class": "communicate",
+          "objective_world_sha256": "4d6947db729cb621c7c304d4cc84dcaef2a539038278c99474d99d553b9b6e90",
+          "partner_q_value": "j1d_dd_com_01_destination_q_b",
+          "partner_r_value": "j1d_dd_com_01_destination_r_a"
+        },
+        {
+          "F": "R",
+          "M_I": 1,
+          "M_R": 1,
+          "available_action_ids": [
+            "j1d_dd_com_01_correction_action",
+            "j1d_dd_com_01_progress_action"
+          ],
+          "gold_action_class": "communicate",
+          "objective_world_sha256": "4d6947db729cb621c7c304d4cc84dcaef2a539038278c99474d99d553b9b6e90",
+          "partner_q_value": "j1d_dd_com_01_destination_q_b",
+          "partner_r_value": "j1d_dd_com_01_destination_r_b"
+        },
+        {
+          "F": "B",
+          "M_I": 0,
+          "M_R": 0,
+          "available_action_ids": [
+            "j1d_dd_com_01_correction_action",
+            "j1d_dd_com_01_progress_action"
+          ],
+          "gold_action_class": "progress",
+          "objective_world_sha256": "4d6947db729cb621c7c304d4cc84dcaef2a539038278c99474d99d553b9b6e90",
+          "partner_q_value": "j1d_dd_com_01_destination_q_a",
+          "partner_r_value": "j1d_dd_com_01_destination_r_a"
+        },
+        {
+          "F": "B",
+          "M_I": 1,
+          "M_R": 0,
+          "available_action_ids": [
+            "j1d_dd_com_01_correction_action",
+            "j1d_dd_com_01_progress_action"
+          ],
+          "gold_action_class": "progress",
+          "objective_world_sha256": "4d6947db729cb621c7c304d4cc84dcaef2a539038278c99474d99d553b9b6e90",
+          "partner_q_value": "j1d_dd_com_01_destination_q_a",
+          "partner_r_value": "j1d_dd_com_01_destination_r_b"
+        },
+        {
+          "F": "B",
+          "M_I": 0,
+          "M_R": 1,
+          "available_action_ids": [
+            "j1d_dd_com_01_correction_action",
+            "j1d_dd_com_01_progress_action"
+          ],
+          "gold_action_class": "communicate",
+          "objective_world_sha256": "4d6947db729cb621c7c304d4cc84dcaef2a539038278c99474d99d553b9b6e90",
+          "partner_q_value": "j1d_dd_com_01_destination_q_b",
+          "partner_r_value": "j1d_dd_com_01_destination_r_a"
+        },
+        {
+          "F": "B",
+          "M_I": 1,
+          "M_R": 1,
+          "available_action_ids": [
+            "j1d_dd_com_01_correction_action",
+            "j1d_dd_com_01_progress_action"
+          ],
+          "gold_action_class": "communicate",
+          "objective_world_sha256": "4d6947db729cb621c7c304d4cc84dcaef2a539038278c99474d99d553b9b6e90",
+          "partner_q_value": "j1d_dd_com_01_destination_q_b",
+          "partner_r_value": "j1d_dd_com_01_destination_r_b"
+        }
+      ],
+      "difficulty": "compositional",
+      "focal_agent_id": "j1d_dd_com_01_focal_agent",
+      "future_renderable_facts": {
+        "active_task_id": "j1d_dd_com_01_active_task",
+        "objective_values": [
+          "j1d_dd_com_01_destination_q_a",
+          "j1d_dd_com_01_destination_r_a"
+        ],
+        "represented_value_domain": [
+          "j1d_dd_com_01_destination_q_a",
+          "j1d_dd_com_01_destination_q_b",
+          "j1d_dd_com_01_destination_r_a",
+          "j1d_dd_com_01_destination_r_b"
+        ],
+        "static_context_facts": [
+          {
+            "fact_id": "j1d_dd_com_01_category_map",
+            "value": "j1d_dd_com_01_mapping"
+          }
+        ]
+      },
+      "gold_policy_rule": {
+        "communicate_value": 1,
+        "input_factor": "M_R",
+        "progress_value": 0
+      },
+      "internal_metadata_fields": [
+        "F",
+        "M_R",
+        "M_I",
+        "gold_action_class",
+        "difficulty",
+        "q_causal_dependency",
+        "r_noncausal_context"
+      ],
+      "namespace": "development",
+      "objective_world_facts": {
+        "active_task_id": "j1d_dd_com_01_active_task",
+        "causal_task_rules": [
+          {
+            "if_partner_q_differs_from_truth": "communicate",
+            "if_partner_q_matches_truth": "progress"
+          }
+        ],
+        "difficulty_structure": {
+          "difficulty": "compositional",
+          "parallel_relation_depth": 2
+        },
+        "focal_agent_knowledge": [
+          "j1d_dd_com_01_destination_q_a",
+          "j1d_dd_com_01_destination_r_a"
+        ],
+        "parallel_relation_chains": [
+          {
+            "subject": "j1d_dd_com_01_active_item",
+            "value": "j1d_dd_com_01_destination_q_a",
+            "via": "j1d_dd_com_01_active_category"
+          },
+          {
+            "subject": "j1d_dd_com_01_other_item",
+            "value": "j1d_dd_com_01_destination_r_a",
+            "via": "j1d_dd_com_01_other_category"
+          }
+        ],
+        "partner_next_step_rule": {
+          "active_task_id": "j1d_dd_com_01_active_task",
+          "target_source": "q_proposition"
+        },
+        "q_truth": "j1d_dd_com_01_destination_q_a",
+        "r_truth": "j1d_dd_com_01_destination_r_a"
+      },
+      "partner_id": "j1d_dd_com_01_partner",
+      "progress_action_id": "j1d_dd_com_01_progress_action",
+      "q_causal_dependency": {
+        "dependency_edges": [
+          "j1d_dd_com_01_active_payload_destination->partner_next_active_step"
+        ],
+        "partner_next_active_step_target_source": "q_proposition_id",
+        "wrong_value_without_correction_conflicts_with_active_task": true
+      },
+      "q_false": "j1d_dd_com_01_destination_q_b",
+      "q_proposition_id": "j1d_dd_com_01_active_payload_destination",
+      "q_relation_depth": 2,
+      "q_semantic_type": "destination",
+      "q_true": "j1d_dd_com_01_destination_q_a",
+      "r_false": "j1d_dd_com_01_destination_r_b",
+      "r_noncausal_context": {
+        "associated_context_id": "j1d_dd_com_01_nonactive_context",
+        "changing_value_changes_gold_policy": false,
+        "dependency_edges_to_partner_next_active_step": []
+      },
+      "r_proposition_id": "j1d_dd_com_01_other_payload_destination",
+      "r_relation_depth": 2,
+      "r_semantic_type": "destination",
+      "r_true": "j1d_dd_com_01_destination_r_a",
+      "semantic_signature_sha256": "a7fedcde26bb2470c69874aaef69854c995a38b0476fa72ea724de1aa5a8892d",
+      "static_context_facts": [
+        {
+          "fact_id": "j1d_dd_com_01_category_map",
+          "value": "j1d_dd_com_01_mapping"
+        }
+      ],
+      "variant_id": "J1D-DD-COM-01"
+    },
+    {
+      "active_task_id": "j1d_ha_dir_01_active_task",
+      "archetype": "hazard_assignment",
+      "available_action_ids": [
+        "j1d_ha_dir_01_correction_action",
+        "j1d_ha_dir_01_progress_action"
+      ],
+      "candidate_ordinal_in_cell": 1,
+      "correction_action_id": "j1d_ha_dir_01_correction_action",
+      "correction_content_semantic_value": "j1d_ha_dir_01_sector_q_a",
+      "counterfactual_cells": [
+        {
+          "F": "R",
+          "M_I": 0,
+          "M_R": 0,
+          "available_action_ids": [
+            "j1d_ha_dir_01_correction_action",
+            "j1d_ha_dir_01_progress_action"
+          ],
+          "gold_action_class": "progress",
+          "objective_world_sha256": "e732678708f607291eb8b527095a51315fed11ddd145d445ab0232797804b64e",
+          "partner_q_value": "j1d_ha_dir_01_sector_q_a",
+          "partner_r_value": "j1d_ha_dir_01_sector_r_a"
+        },
+        {
+          "F": "R",
+          "M_I": 1,
+          "M_R": 0,
+          "available_action_ids": [
+            "j1d_ha_dir_01_correction_action",
+            "j1d_ha_dir_01_progress_action"
+          ],
+          "gold_action_class": "progress",
+          "objective_world_sha256": "e732678708f607291eb8b527095a51315fed11ddd145d445ab0232797804b64e",
+          "partner_q_value": "j1d_ha_dir_01_sector_q_a",
+          "partner_r_value": "j1d_ha_dir_01_sector_r_b"
+        },
+        {
+          "F": "R",
+          "M_I": 0,
+          "M_R": 1,
+          "available_action_ids": [
+            "j1d_ha_dir_01_correction_action",
+            "j1d_ha_dir_01_progress_action"
+          ],
+          "gold_action_class": "communicate",
+          "objective_world_sha256": "e732678708f607291eb8b527095a51315fed11ddd145d445ab0232797804b64e",
+          "partner_q_value": "j1d_ha_dir_01_sector_q_b",
+          "partner_r_value": "j1d_ha_dir_01_sector_r_a"
+        },
+        {
+          "F": "R",
+          "M_I": 1,
+          "M_R": 1,
+          "available_action_ids": [
+            "j1d_ha_dir_01_correction_action",
+            "j1d_ha_dir_01_progress_action"
+          ],
+          "gold_action_class": "communicate",
+          "objective_world_sha256": "e732678708f607291eb8b527095a51315fed11ddd145d445ab0232797804b64e",
+          "partner_q_value": "j1d_ha_dir_01_sector_q_b",
+          "partner_r_value": "j1d_ha_dir_01_sector_r_b"
+        },
+        {
+          "F": "B",
+          "M_I": 0,
+          "M_R": 0,
+          "available_action_ids": [
+            "j1d_ha_dir_01_correction_action",
+            "j1d_ha_dir_01_progress_action"
+          ],
+          "gold_action_class": "progress",
+          "objective_world_sha256": "e732678708f607291eb8b527095a51315fed11ddd145d445ab0232797804b64e",
+          "partner_q_value": "j1d_ha_dir_01_sector_q_a",
+          "partner_r_value": "j1d_ha_dir_01_sector_r_a"
+        },
+        {
+          "F": "B",
+          "M_I": 1,
+          "M_R": 0,
+          "available_action_ids": [
+            "j1d_ha_dir_01_correction_action",
+            "j1d_ha_dir_01_progress_action"
+          ],
+          "gold_action_class": "progress",
+          "objective_world_sha256": "e732678708f607291eb8b527095a51315fed11ddd145d445ab0232797804b64e",
+          "partner_q_value": "j1d_ha_dir_01_sector_q_a",
+          "partner_r_value": "j1d_ha_dir_01_sector_r_b"
+        },
+        {
+          "F": "B",
+          "M_I": 0,
+          "M_R": 1,
+          "available_action_ids": [
+            "j1d_ha_dir_01_correction_action",
+            "j1d_ha_dir_01_progress_action"
+          ],
+          "gold_action_class": "communicate",
+          "objective_world_sha256": "e732678708f607291eb8b527095a51315fed11ddd145d445ab0232797804b64e",
+          "partner_q_value": "j1d_ha_dir_01_sector_q_b",
+          "partner_r_value": "j1d_ha_dir_01_sector_r_a"
+        },
+        {
+          "F": "B",
+          "M_I": 1,
+          "M_R": 1,
+          "available_action_ids": [
+            "j1d_ha_dir_01_correction_action",
+            "j1d_ha_dir_01_progress_action"
+          ],
+          "gold_action_class": "communicate",
+          "objective_world_sha256": "e732678708f607291eb8b527095a51315fed11ddd145d445ab0232797804b64e",
+          "partner_q_value": "j1d_ha_dir_01_sector_q_b",
+          "partner_r_value": "j1d_ha_dir_01_sector_r_b"
+        }
+      ],
+      "difficulty": "direct",
+      "focal_agent_id": "j1d_ha_dir_01_focal_agent",
+      "future_renderable_facts": {
+        "active_task_id": "j1d_ha_dir_01_active_task",
+        "objective_values": [
+          "j1d_ha_dir_01_sector_q_a",
+          "j1d_ha_dir_01_sector_r_a"
+        ],
+        "represented_value_domain": [
+          "j1d_ha_dir_01_sector_q_a",
+          "j1d_ha_dir_01_sector_q_b",
+          "j1d_ha_dir_01_sector_r_a",
+          "j1d_ha_dir_01_sector_r_b"
+        ],
+        "static_context_facts": []
+      },
+      "gold_policy_rule": {
+        "communicate_value": 1,
+        "input_factor": "M_R",
+        "progress_value": 0
+      },
+      "internal_metadata_fields": [
+        "F",
+        "M_R",
+        "M_I",
+        "gold_action_class",
+        "difficulty",
+        "q_causal_dependency",
+        "r_noncausal_context"
+      ],
+      "namespace": "development",
+      "objective_world_facts": {
+        "active_task_id": "j1d_ha_dir_01_active_task",
+        "causal_task_rules": [
+          {
+            "if_partner_q_differs_from_truth": "communicate",
+            "if_partner_q_matches_truth": "progress"
+          }
+        ],
+        "difficulty_structure": {
+          "difficulty": "direct",
+          "parallel_relation_depth": 1
+        },
+        "focal_agent_knowledge": [
+          "j1d_ha_dir_01_sector_q_a",
+          "j1d_ha_dir_01_sector_r_a"
+        ],
+        "partner_next_step_rule": {
+          "active_task_id": "j1d_ha_dir_01_active_task",
+          "target_source": "q_proposition"
+        },
+        "q_truth": "j1d_ha_dir_01_sector_q_a",
+        "r_truth": "j1d_ha_dir_01_sector_r_a"
+      },
+      "partner_id": "j1d_ha_dir_01_partner",
+      "progress_action_id": "j1d_ha_dir_01_progress_action",
+      "q_causal_dependency": {
+        "dependency_edges": [
+          "j1d_ha_dir_01_active_hazard_sector->partner_next_active_step"
+        ],
+        "partner_next_active_step_target_source": "q_proposition_id",
+        "wrong_value_without_correction_conflicts_with_active_task": true
+      },
+      "q_false": "j1d_ha_dir_01_sector_q_b",
+      "q_proposition_id": "j1d_ha_dir_01_active_hazard_sector",
+      "q_relation_depth": 1,
+      "q_semantic_type": "sector",
+      "q_true": "j1d_ha_dir_01_sector_q_a",
+      "r_false": "j1d_ha_dir_01_sector_r_b",
+      "r_noncausal_context": {
+        "associated_context_id": "j1d_ha_dir_01_nonactive_context",
+        "changing_value_changes_gold_policy": false,
+        "dependency_edges_to_partner_next_active_step": []
+      },
+      "r_proposition_id": "j1d_ha_dir_01_other_hazard_sector",
+      "r_relation_depth": 1,
+      "r_semantic_type": "sector",
+      "r_true": "j1d_ha_dir_01_sector_r_a",
+      "semantic_signature_sha256": "55626f570a81bb64a205e9f95f32d8b91e39179bc60f2cd6c69a77b12e7d32f6",
+      "static_context_facts": [],
+      "variant_id": "J1D-HA-DIR-01"
+    },
+    {
+      "active_task_id": "j1d_ha_dis_01_active_task",
+      "archetype": "hazard_assignment",
+      "available_action_ids": [
+        "j1d_ha_dis_01_correction_action",
+        "j1d_ha_dis_01_progress_action"
+      ],
+      "candidate_ordinal_in_cell": 1,
+      "correction_action_id": "j1d_ha_dis_01_correction_action",
+      "correction_content_semantic_value": "j1d_ha_dis_01_sector_q_a",
+      "counterfactual_cells": [
+        {
+          "F": "R",
+          "M_I": 0,
+          "M_R": 0,
+          "available_action_ids": [
+            "j1d_ha_dis_01_correction_action",
+            "j1d_ha_dis_01_progress_action"
+          ],
+          "gold_action_class": "progress",
+          "objective_world_sha256": "d367829068467b313a5e25817a6b491eaa3ea3798405b333135421b1355c1571",
+          "partner_q_value": "j1d_ha_dis_01_sector_q_a",
+          "partner_r_value": "j1d_ha_dis_01_sector_r_a"
+        },
+        {
+          "F": "R",
+          "M_I": 1,
+          "M_R": 0,
+          "available_action_ids": [
+            "j1d_ha_dis_01_correction_action",
+            "j1d_ha_dis_01_progress_action"
+          ],
+          "gold_action_class": "progress",
+          "objective_world_sha256": "d367829068467b313a5e25817a6b491eaa3ea3798405b333135421b1355c1571",
+          "partner_q_value": "j1d_ha_dis_01_sector_q_a",
+          "partner_r_value": "j1d_ha_dis_01_sector_r_b"
+        },
+        {
+          "F": "R",
+          "M_I": 0,
+          "M_R": 1,
+          "available_action_ids": [
+            "j1d_ha_dis_01_correction_action",
+            "j1d_ha_dis_01_progress_action"
+          ],
+          "gold_action_class": "communicate",
+          "objective_world_sha256": "d367829068467b313a5e25817a6b491eaa3ea3798405b333135421b1355c1571",
+          "partner_q_value": "j1d_ha_dis_01_sector_q_b",
+          "partner_r_value": "j1d_ha_dis_01_sector_r_a"
+        },
+        {
+          "F": "R",
+          "M_I": 1,
+          "M_R": 1,
+          "available_action_ids": [
+            "j1d_ha_dis_01_correction_action",
+            "j1d_ha_dis_01_progress_action"
+          ],
+          "gold_action_class": "communicate",
+          "objective_world_sha256": "d367829068467b313a5e25817a6b491eaa3ea3798405b333135421b1355c1571",
+          "partner_q_value": "j1d_ha_dis_01_sector_q_b",
+          "partner_r_value": "j1d_ha_dis_01_sector_r_b"
+        },
+        {
+          "F": "B",
+          "M_I": 0,
+          "M_R": 0,
+          "available_action_ids": [
+            "j1d_ha_dis_01_correction_action",
+            "j1d_ha_dis_01_progress_action"
+          ],
+          "gold_action_class": "progress",
+          "objective_world_sha256": "d367829068467b313a5e25817a6b491eaa3ea3798405b333135421b1355c1571",
+          "partner_q_value": "j1d_ha_dis_01_sector_q_a",
+          "partner_r_value": "j1d_ha_dis_01_sector_r_a"
+        },
+        {
+          "F": "B",
+          "M_I": 1,
+          "M_R": 0,
+          "available_action_ids": [
+            "j1d_ha_dis_01_correction_action",
+            "j1d_ha_dis_01_progress_action"
+          ],
+          "gold_action_class": "progress",
+          "objective_world_sha256": "d367829068467b313a5e25817a6b491eaa3ea3798405b333135421b1355c1571",
+          "partner_q_value": "j1d_ha_dis_01_sector_q_a",
+          "partner_r_value": "j1d_ha_dis_01_sector_r_b"
+        },
+        {
+          "F": "B",
+          "M_I": 0,
+          "M_R": 1,
+          "available_action_ids": [
+            "j1d_ha_dis_01_correction_action",
+            "j1d_ha_dis_01_progress_action"
+          ],
+          "gold_action_class": "communicate",
+          "objective_world_sha256": "d367829068467b313a5e25817a6b491eaa3ea3798405b333135421b1355c1571",
+          "partner_q_value": "j1d_ha_dis_01_sector_q_b",
+          "partner_r_value": "j1d_ha_dis_01_sector_r_a"
+        },
+        {
+          "F": "B",
+          "M_I": 1,
+          "M_R": 1,
+          "available_action_ids": [
+            "j1d_ha_dis_01_correction_action",
+            "j1d_ha_dis_01_progress_action"
+          ],
+          "gold_action_class": "communicate",
+          "objective_world_sha256": "d367829068467b313a5e25817a6b491eaa3ea3798405b333135421b1355c1571",
+          "partner_q_value": "j1d_ha_dis_01_sector_q_b",
+          "partner_r_value": "j1d_ha_dis_01_sector_r_b"
+        }
+      ],
+      "difficulty": "irrelevant_distractor",
+      "focal_agent_id": "j1d_ha_dis_01_focal_agent",
+      "future_renderable_facts": {
+        "active_task_id": "j1d_ha_dis_01_active_task",
+        "objective_values": [
+          "j1d_ha_dis_01_sector_q_a",
+          "j1d_ha_dis_01_sector_r_a"
+        ],
+        "represented_value_domain": [
+          "j1d_ha_dis_01_sector_q_a",
+          "j1d_ha_dis_01_sector_q_b",
+          "j1d_ha_dis_01_sector_r_a",
+          "j1d_ha_dis_01_sector_r_b"
+        ],
+        "static_context_facts": [
+          {
+            "fact_id": "j1d_ha_dis_01_ambient_schedule",
+            "value": "j1d_ha_dis_01_schedule_slot"
+          }
+        ]
+      },
+      "gold_policy_rule": {
+        "communicate_value": 1,
+        "input_factor": "M_R",
+        "progress_value": 0
+      },
+      "internal_metadata_fields": [
+        "F",
+        "M_R",
+        "M_I",
+        "gold_action_class",
+        "difficulty",
+        "q_causal_dependency",
+        "r_noncausal_context"
+      ],
+      "namespace": "development",
+      "objective_world_facts": {
+        "active_task_id": "j1d_ha_dis_01_active_task",
+        "causal_task_rules": [
+          {
+            "if_partner_q_differs_from_truth": "communicate",
+            "if_partner_q_matches_truth": "progress"
+          }
+        ],
+        "difficulty_structure": {
+          "difficulty": "irrelevant_distractor",
+          "parallel_relation_depth": 1
+        },
+        "focal_agent_knowledge": [
+          "j1d_ha_dis_01_sector_q_a",
+          "j1d_ha_dis_01_sector_r_a"
+        ],
+        "partner_next_step_rule": {
+          "active_task_id": "j1d_ha_dis_01_active_task",
+          "target_source": "q_proposition"
+        },
+        "q_truth": "j1d_ha_dis_01_sector_q_a",
+        "r_truth": "j1d_ha_dis_01_sector_r_a"
+      },
+      "partner_id": "j1d_ha_dis_01_partner",
+      "progress_action_id": "j1d_ha_dis_01_progress_action",
+      "q_causal_dependency": {
+        "dependency_edges": [
+          "j1d_ha_dis_01_active_hazard_sector->partner_next_active_step"
+        ],
+        "partner_next_active_step_target_source": "q_proposition_id",
+        "wrong_value_without_correction_conflicts_with_active_task": true
+      },
+      "q_false": "j1d_ha_dis_01_sector_q_b",
+      "q_proposition_id": "j1d_ha_dis_01_active_hazard_sector",
+      "q_relation_depth": 1,
+      "q_semantic_type": "sector",
+      "q_true": "j1d_ha_dis_01_sector_q_a",
+      "r_false": "j1d_ha_dis_01_sector_r_b",
+      "r_noncausal_context": {
+        "associated_context_id": "j1d_ha_dis_01_nonactive_context",
+        "changing_value_changes_gold_policy": false,
+        "dependency_edges_to_partner_next_active_step": []
+      },
+      "r_proposition_id": "j1d_ha_dis_01_other_hazard_sector",
+      "r_relation_depth": 1,
+      "r_semantic_type": "sector",
+      "r_true": "j1d_ha_dis_01_sector_r_a",
+      "semantic_signature_sha256": "2e295c3766c53279c076324592e0203ce53dd01a6895862a3dc35cf472600f93",
+      "static_context_facts": [
+        {
+          "fact_id": "j1d_ha_dis_01_ambient_schedule",
+          "value": "j1d_ha_dis_01_schedule_slot"
+        }
+      ],
+      "variant_id": "J1D-HA-DIS-01"
+    },
+    {
+      "active_task_id": "j1d_ha_com_01_active_task",
+      "archetype": "hazard_assignment",
+      "available_action_ids": [
+        "j1d_ha_com_01_correction_action",
+        "j1d_ha_com_01_progress_action"
+      ],
+      "candidate_ordinal_in_cell": 1,
+      "correction_action_id": "j1d_ha_com_01_correction_action",
+      "correction_content_semantic_value": "j1d_ha_com_01_sector_q_a",
+      "counterfactual_cells": [
+        {
+          "F": "R",
+          "M_I": 0,
+          "M_R": 0,
+          "available_action_ids": [
+            "j1d_ha_com_01_correction_action",
+            "j1d_ha_com_01_progress_action"
+          ],
+          "gold_action_class": "progress",
+          "objective_world_sha256": "1d6a31516c8ca36beeb337aa71f593e7ff6db3b53e91c6513c4d4ae62a3888d3",
+          "partner_q_value": "j1d_ha_com_01_sector_q_a",
+          "partner_r_value": "j1d_ha_com_01_sector_r_a"
+        },
+        {
+          "F": "R",
+          "M_I": 1,
+          "M_R": 0,
+          "available_action_ids": [
+            "j1d_ha_com_01_correction_action",
+            "j1d_ha_com_01_progress_action"
+          ],
+          "gold_action_class": "progress",
+          "objective_world_sha256": "1d6a31516c8ca36beeb337aa71f593e7ff6db3b53e91c6513c4d4ae62a3888d3",
+          "partner_q_value": "j1d_ha_com_01_sector_q_a",
+          "partner_r_value": "j1d_ha_com_01_sector_r_b"
+        },
+        {
+          "F": "R",
+          "M_I": 0,
+          "M_R": 1,
+          "available_action_ids": [
+            "j1d_ha_com_01_correction_action",
+            "j1d_ha_com_01_progress_action"
+          ],
+          "gold_action_class": "communicate",
+          "objective_world_sha256": "1d6a31516c8ca36beeb337aa71f593e7ff6db3b53e91c6513c4d4ae62a3888d3",
+          "partner_q_value": "j1d_ha_com_01_sector_q_b",
+          "partner_r_value": "j1d_ha_com_01_sector_r_a"
+        },
+        {
+          "F": "R",
+          "M_I": 1,
+          "M_R": 1,
+          "available_action_ids": [
+            "j1d_ha_com_01_correction_action",
+            "j1d_ha_com_01_progress_action"
+          ],
+          "gold_action_class": "communicate",
+          "objective_world_sha256": "1d6a31516c8ca36beeb337aa71f593e7ff6db3b53e91c6513c4d4ae62a3888d3",
+          "partner_q_value": "j1d_ha_com_01_sector_q_b",
+          "partner_r_value": "j1d_ha_com_01_sector_r_b"
+        },
+        {
+          "F": "B",
+          "M_I": 0,
+          "M_R": 0,
+          "available_action_ids": [
+            "j1d_ha_com_01_correction_action",
+            "j1d_ha_com_01_progress_action"
+          ],
+          "gold_action_class": "progress",
+          "objective_world_sha256": "1d6a31516c8ca36beeb337aa71f593e7ff6db3b53e91c6513c4d4ae62a3888d3",
+          "partner_q_value": "j1d_ha_com_01_sector_q_a",
+          "partner_r_value": "j1d_ha_com_01_sector_r_a"
+        },
+        {
+          "F": "B",
+          "M_I": 1,
+          "M_R": 0,
+          "available_action_ids": [
+            "j1d_ha_com_01_correction_action",
+            "j1d_ha_com_01_progress_action"
+          ],
+          "gold_action_class": "progress",
+          "objective_world_sha256": "1d6a31516c8ca36beeb337aa71f593e7ff6db3b53e91c6513c4d4ae62a3888d3",
+          "partner_q_value": "j1d_ha_com_01_sector_q_a",
+          "partner_r_value": "j1d_ha_com_01_sector_r_b"
+        },
+        {
+          "F": "B",
+          "M_I": 0,
+          "M_R": 1,
+          "available_action_ids": [
+            "j1d_ha_com_01_correction_action",
+            "j1d_ha_com_01_progress_action"
+          ],
+          "gold_action_class": "communicate",
+          "objective_world_sha256": "1d6a31516c8ca36beeb337aa71f593e7ff6db3b53e91c6513c4d4ae62a3888d3",
+          "partner_q_value": "j1d_ha_com_01_sector_q_b",
+          "partner_r_value": "j1d_ha_com_01_sector_r_a"
+        },
+        {
+          "F": "B",
+          "M_I": 1,
+          "M_R": 1,
+          "available_action_ids": [
+            "j1d_ha_com_01_correction_action",
+            "j1d_ha_com_01_progress_action"
+          ],
+          "gold_action_class": "communicate",
+          "objective_world_sha256": "1d6a31516c8ca36beeb337aa71f593e7ff6db3b53e91c6513c4d4ae62a3888d3",
+          "partner_q_value": "j1d_ha_com_01_sector_q_b",
+          "partner_r_value": "j1d_ha_com_01_sector_r_b"
+        }
+      ],
+      "difficulty": "compositional",
+      "focal_agent_id": "j1d_ha_com_01_focal_agent",
+      "future_renderable_facts": {
+        "active_task_id": "j1d_ha_com_01_active_task",
+        "objective_values": [
+          "j1d_ha_com_01_sector_q_a",
+          "j1d_ha_com_01_sector_r_a"
+        ],
+        "represented_value_domain": [
+          "j1d_ha_com_01_sector_q_a",
+          "j1d_ha_com_01_sector_q_b",
+          "j1d_ha_com_01_sector_r_a",
+          "j1d_ha_com_01_sector_r_b"
+        ],
+        "static_context_facts": [
+          {
+            "fact_id": "j1d_ha_com_01_category_map",
+            "value": "j1d_ha_com_01_mapping"
+          }
+        ]
+      },
+      "gold_policy_rule": {
+        "communicate_value": 1,
+        "input_factor": "M_R",
+        "progress_value": 0
+      },
+      "internal_metadata_fields": [
+        "F",
+        "M_R",
+        "M_I",
+        "gold_action_class",
+        "difficulty",
+        "q_causal_dependency",
+        "r_noncausal_context"
+      ],
+      "namespace": "development",
+      "objective_world_facts": {
+        "active_task_id": "j1d_ha_com_01_active_task",
+        "causal_task_rules": [
+          {
+            "if_partner_q_differs_from_truth": "communicate",
+            "if_partner_q_matches_truth": "progress"
+          }
+        ],
+        "difficulty_structure": {
+          "difficulty": "compositional",
+          "parallel_relation_depth": 2
+        },
+        "focal_agent_knowledge": [
+          "j1d_ha_com_01_sector_q_a",
+          "j1d_ha_com_01_sector_r_a"
+        ],
+        "parallel_relation_chains": [
+          {
+            "subject": "j1d_ha_com_01_active_item",
+            "value": "j1d_ha_com_01_sector_q_a",
+            "via": "j1d_ha_com_01_active_category"
+          },
+          {
+            "subject": "j1d_ha_com_01_other_item",
+            "value": "j1d_ha_com_01_sector_r_a",
+            "via": "j1d_ha_com_01_other_category"
+          }
+        ],
+        "partner_next_step_rule": {
+          "active_task_id": "j1d_ha_com_01_active_task",
+          "target_source": "q_proposition"
+        },
+        "q_truth": "j1d_ha_com_01_sector_q_a",
+        "r_truth": "j1d_ha_com_01_sector_r_a"
+      },
+      "partner_id": "j1d_ha_com_01_partner",
+      "progress_action_id": "j1d_ha_com_01_progress_action",
+      "q_causal_dependency": {
+        "dependency_edges": [
+          "j1d_ha_com_01_active_hazard_sector->partner_next_active_step"
+        ],
+        "partner_next_active_step_target_source": "q_proposition_id",
+        "wrong_value_without_correction_conflicts_with_active_task": true
+      },
+      "q_false": "j1d_ha_com_01_sector_q_b",
+      "q_proposition_id": "j1d_ha_com_01_active_hazard_sector",
+      "q_relation_depth": 2,
+      "q_semantic_type": "sector",
+      "q_true": "j1d_ha_com_01_sector_q_a",
+      "r_false": "j1d_ha_com_01_sector_r_b",
+      "r_noncausal_context": {
+        "associated_context_id": "j1d_ha_com_01_nonactive_context",
+        "changing_value_changes_gold_policy": false,
+        "dependency_edges_to_partner_next_active_step": []
+      },
+      "r_proposition_id": "j1d_ha_com_01_other_hazard_sector",
+      "r_relation_depth": 2,
+      "r_semantic_type": "sector",
+      "r_true": "j1d_ha_com_01_sector_r_a",
+      "semantic_signature_sha256": "60f64f47763a894c80abf34cbc47dc7e306d5c1f3c6beb6a77172ca0721bf80a",
+      "static_context_facts": [
+        {
+          "fact_id": "j1d_ha_com_01_category_map",
+          "value": "j1d_ha_com_01_mapping"
+        }
+      ],
+      "variant_id": "J1D-HA-COM-01"
+    },
+    {
+      "active_task_id": "j1d_mt_dir_01_active_task",
+      "archetype": "maintenance_target",
+      "available_action_ids": [
+        "j1d_mt_dir_01_correction_action",
+        "j1d_mt_dir_01_progress_action"
+      ],
+      "candidate_ordinal_in_cell": 1,
+      "correction_action_id": "j1d_mt_dir_01_correction_action",
+      "correction_content_semantic_value": "j1d_mt_dir_01_component_q_a",
+      "counterfactual_cells": [
+        {
+          "F": "R",
+          "M_I": 0,
+          "M_R": 0,
+          "available_action_ids": [
+            "j1d_mt_dir_01_correction_action",
+            "j1d_mt_dir_01_progress_action"
+          ],
+          "gold_action_class": "progress",
+          "objective_world_sha256": "e188e6c8ebd25f1b5a3177da86598e2e148305a9dc30d667da09c917500a6194",
+          "partner_q_value": "j1d_mt_dir_01_component_q_a",
+          "partner_r_value": "j1d_mt_dir_01_component_r_a"
+        },
+        {
+          "F": "R",
+          "M_I": 1,
+          "M_R": 0,
+          "available_action_ids": [
+            "j1d_mt_dir_01_correction_action",
+            "j1d_mt_dir_01_progress_action"
+          ],
+          "gold_action_class": "progress",
+          "objective_world_sha256": "e188e6c8ebd25f1b5a3177da86598e2e148305a9dc30d667da09c917500a6194",
+          "partner_q_value": "j1d_mt_dir_01_component_q_a",
+          "partner_r_value": "j1d_mt_dir_01_component_r_b"
+        },
+        {
+          "F": "R",
+          "M_I": 0,
+          "M_R": 1,
+          "available_action_ids": [
+            "j1d_mt_dir_01_correction_action",
+            "j1d_mt_dir_01_progress_action"
+          ],
+          "gold_action_class": "communicate",
+          "objective_world_sha256": "e188e6c8ebd25f1b5a3177da86598e2e148305a9dc30d667da09c917500a6194",
+          "partner_q_value": "j1d_mt_dir_01_component_q_b",
+          "partner_r_value": "j1d_mt_dir_01_component_r_a"
+        },
+        {
+          "F": "R",
+          "M_I": 1,
+          "M_R": 1,
+          "available_action_ids": [
+            "j1d_mt_dir_01_correction_action",
+            "j1d_mt_dir_01_progress_action"
+          ],
+          "gold_action_class": "communicate",
+          "objective_world_sha256": "e188e6c8ebd25f1b5a3177da86598e2e148305a9dc30d667da09c917500a6194",
+          "partner_q_value": "j1d_mt_dir_01_component_q_b",
+          "partner_r_value": "j1d_mt_dir_01_component_r_b"
+        },
+        {
+          "F": "B",
+          "M_I": 0,
+          "M_R": 0,
+          "available_action_ids": [
+            "j1d_mt_dir_01_correction_action",
+            "j1d_mt_dir_01_progress_action"
+          ],
+          "gold_action_class": "progress",
+          "objective_world_sha256": "e188e6c8ebd25f1b5a3177da86598e2e148305a9dc30d667da09c917500a6194",
+          "partner_q_value": "j1d_mt_dir_01_component_q_a",
+          "partner_r_value": "j1d_mt_dir_01_component_r_a"
+        },
+        {
+          "F": "B",
+          "M_I": 1,
+          "M_R": 0,
+          "available_action_ids": [
+            "j1d_mt_dir_01_correction_action",
+            "j1d_mt_dir_01_progress_action"
+          ],
+          "gold_action_class": "progress",
+          "objective_world_sha256": "e188e6c8ebd25f1b5a3177da86598e2e148305a9dc30d667da09c917500a6194",
+          "partner_q_value": "j1d_mt_dir_01_component_q_a",
+          "partner_r_value": "j1d_mt_dir_01_component_r_b"
+        },
+        {
+          "F": "B",
+          "M_I": 0,
+          "M_R": 1,
+          "available_action_ids": [
+            "j1d_mt_dir_01_correction_action",
+            "j1d_mt_dir_01_progress_action"
+          ],
+          "gold_action_class": "communicate",
+          "objective_world_sha256": "e188e6c8ebd25f1b5a3177da86598e2e148305a9dc30d667da09c917500a6194",
+          "partner_q_value": "j1d_mt_dir_01_component_q_b",
+          "partner_r_value": "j1d_mt_dir_01_component_r_a"
+        },
+        {
+          "F": "B",
+          "M_I": 1,
+          "M_R": 1,
+          "available_action_ids": [
+            "j1d_mt_dir_01_correction_action",
+            "j1d_mt_dir_01_progress_action"
+          ],
+          "gold_action_class": "communicate",
+          "objective_world_sha256": "e188e6c8ebd25f1b5a3177da86598e2e148305a9dc30d667da09c917500a6194",
+          "partner_q_value": "j1d_mt_dir_01_component_q_b",
+          "partner_r_value": "j1d_mt_dir_01_component_r_b"
+        }
+      ],
+      "difficulty": "direct",
+      "focal_agent_id": "j1d_mt_dir_01_focal_agent",
+      "future_renderable_facts": {
+        "active_task_id": "j1d_mt_dir_01_active_task",
+        "objective_values": [
+          "j1d_mt_dir_01_component_q_a",
+          "j1d_mt_dir_01_component_r_a"
+        ],
+        "represented_value_domain": [
+          "j1d_mt_dir_01_component_q_a",
+          "j1d_mt_dir_01_component_q_b",
+          "j1d_mt_dir_01_component_r_a",
+          "j1d_mt_dir_01_component_r_b"
+        ],
+        "static_context_facts": []
+      },
+      "gold_policy_rule": {
+        "communicate_value": 1,
+        "input_factor": "M_R",
+        "progress_value": 0
+      },
+      "internal_metadata_fields": [
+        "F",
+        "M_R",
+        "M_I",
+        "gold_action_class",
+        "difficulty",
+        "q_causal_dependency",
+        "r_noncausal_context"
+      ],
+      "namespace": "development",
+      "objective_world_facts": {
+        "active_task_id": "j1d_mt_dir_01_active_task",
+        "causal_task_rules": [
+          {
+            "if_partner_q_differs_from_truth": "communicate",
+            "if_partner_q_matches_truth": "progress"
+          }
+        ],
+        "difficulty_structure": {
+          "difficulty": "direct",
+          "parallel_relation_depth": 1
+        },
+        "focal_agent_knowledge": [
+          "j1d_mt_dir_01_component_q_a",
+          "j1d_mt_dir_01_component_r_a"
+        ],
+        "partner_next_step_rule": {
+          "active_task_id": "j1d_mt_dir_01_active_task",
+          "target_source": "q_proposition"
+        },
+        "q_truth": "j1d_mt_dir_01_component_q_a",
+        "r_truth": "j1d_mt_dir_01_component_r_a"
+      },
+      "partner_id": "j1d_mt_dir_01_partner",
+      "progress_action_id": "j1d_mt_dir_01_progress_action",
+      "q_causal_dependency": {
+        "dependency_edges": [
+          "j1d_mt_dir_01_active_maintenance_component->partner_next_active_step"
+        ],
+        "partner_next_active_step_target_source": "q_proposition_id",
+        "wrong_value_without_correction_conflicts_with_active_task": true
+      },
+      "q_false": "j1d_mt_dir_01_component_q_b",
+      "q_proposition_id": "j1d_mt_dir_01_active_maintenance_component",
+      "q_relation_depth": 1,
+      "q_semantic_type": "component",
+      "q_true": "j1d_mt_dir_01_component_q_a",
+      "r_false": "j1d_mt_dir_01_component_r_b",
+      "r_noncausal_context": {
+        "associated_context_id": "j1d_mt_dir_01_nonactive_context",
+        "changing_value_changes_gold_policy": false,
+        "dependency_edges_to_partner_next_active_step": []
+      },
+      "r_proposition_id": "j1d_mt_dir_01_other_maintenance_component",
+      "r_relation_depth": 1,
+      "r_semantic_type": "component",
+      "r_true": "j1d_mt_dir_01_component_r_a",
+      "semantic_signature_sha256": "5407b0648b83bd24d3bf9c80b14c3d35e1a41ea9b6ce9910dee3155206020b2e",
+      "static_context_facts": [],
+      "variant_id": "J1D-MT-DIR-01"
+    },
+    {
+      "active_task_id": "j1d_mt_dis_01_active_task",
+      "archetype": "maintenance_target",
+      "available_action_ids": [
+        "j1d_mt_dis_01_correction_action",
+        "j1d_mt_dis_01_progress_action"
+      ],
+      "candidate_ordinal_in_cell": 1,
+      "correction_action_id": "j1d_mt_dis_01_correction_action",
+      "correction_content_semantic_value": "j1d_mt_dis_01_component_q_a",
+      "counterfactual_cells": [
+        {
+          "F": "R",
+          "M_I": 0,
+          "M_R": 0,
+          "available_action_ids": [
+            "j1d_mt_dis_01_correction_action",
+            "j1d_mt_dis_01_progress_action"
+          ],
+          "gold_action_class": "progress",
+          "objective_world_sha256": "2df49029bf6b45eba5a4cf3330c04dfd82f960438ad4eb89487af9b63cd1e7e7",
+          "partner_q_value": "j1d_mt_dis_01_component_q_a",
+          "partner_r_value": "j1d_mt_dis_01_component_r_a"
+        },
+        {
+          "F": "R",
+          "M_I": 1,
+          "M_R": 0,
+          "available_action_ids": [
+            "j1d_mt_dis_01_correction_action",
+            "j1d_mt_dis_01_progress_action"
+          ],
+          "gold_action_class": "progress",
+          "objective_world_sha256": "2df49029bf6b45eba5a4cf3330c04dfd82f960438ad4eb89487af9b63cd1e7e7",
+          "partner_q_value": "j1d_mt_dis_01_component_q_a",
+          "partner_r_value": "j1d_mt_dis_01_component_r_b"
+        },
+        {
+          "F": "R",
+          "M_I": 0,
+          "M_R": 1,
+          "available_action_ids": [
+            "j1d_mt_dis_01_correction_action",
+            "j1d_mt_dis_01_progress_action"
+          ],
+          "gold_action_class": "communicate",
+          "objective_world_sha256": "2df49029bf6b45eba5a4cf3330c04dfd82f960438ad4eb89487af9b63cd1e7e7",
+          "partner_q_value": "j1d_mt_dis_01_component_q_b",
+          "partner_r_value": "j1d_mt_dis_01_component_r_a"
+        },
+        {
+          "F": "R",
+          "M_I": 1,
+          "M_R": 1,
+          "available_action_ids": [
+            "j1d_mt_dis_01_correction_action",
+            "j1d_mt_dis_01_progress_action"
+          ],
+          "gold_action_class": "communicate",
+          "objective_world_sha256": "2df49029bf6b45eba5a4cf3330c04dfd82f960438ad4eb89487af9b63cd1e7e7",
+          "partner_q_value": "j1d_mt_dis_01_component_q_b",
+          "partner_r_value": "j1d_mt_dis_01_component_r_b"
+        },
+        {
+          "F": "B",
+          "M_I": 0,
+          "M_R": 0,
+          "available_action_ids": [
+            "j1d_mt_dis_01_correction_action",
+            "j1d_mt_dis_01_progress_action"
+          ],
+          "gold_action_class": "progress",
+          "objective_world_sha256": "2df49029bf6b45eba5a4cf3330c04dfd82f960438ad4eb89487af9b63cd1e7e7",
+          "partner_q_value": "j1d_mt_dis_01_component_q_a",
+          "partner_r_value": "j1d_mt_dis_01_component_r_a"
+        },
+        {
+          "F": "B",
+          "M_I": 1,
+          "M_R": 0,
+          "available_action_ids": [
+            "j1d_mt_dis_01_correction_action",
+            "j1d_mt_dis_01_progress_action"
+          ],
+          "gold_action_class": "progress",
+          "objective_world_sha256": "2df49029bf6b45eba5a4cf3330c04dfd82f960438ad4eb89487af9b63cd1e7e7",
+          "partner_q_value": "j1d_mt_dis_01_component_q_a",
+          "partner_r_value": "j1d_mt_dis_01_component_r_b"
+        },
+        {
+          "F": "B",
+          "M_I": 0,
+          "M_R": 1,
+          "available_action_ids": [
+            "j1d_mt_dis_01_correction_action",
+            "j1d_mt_dis_01_progress_action"
+          ],
+          "gold_action_class": "communicate",
+          "objective_world_sha256": "2df49029bf6b45eba5a4cf3330c04dfd82f960438ad4eb89487af9b63cd1e7e7",
+          "partner_q_value": "j1d_mt_dis_01_component_q_b",
+          "partner_r_value": "j1d_mt_dis_01_component_r_a"
+        },
+        {
+          "F": "B",
+          "M_I": 1,
+          "M_R": 1,
+          "available_action_ids": [
+            "j1d_mt_dis_01_correction_action",
+            "j1d_mt_dis_01_progress_action"
+          ],
+          "gold_action_class": "communicate",
+          "objective_world_sha256": "2df49029bf6b45eba5a4cf3330c04dfd82f960438ad4eb89487af9b63cd1e7e7",
+          "partner_q_value": "j1d_mt_dis_01_component_q_b",
+          "partner_r_value": "j1d_mt_dis_01_component_r_b"
+        }
+      ],
+      "difficulty": "irrelevant_distractor",
+      "focal_agent_id": "j1d_mt_dis_01_focal_agent",
+      "future_renderable_facts": {
+        "active_task_id": "j1d_mt_dis_01_active_task",
+        "objective_values": [
+          "j1d_mt_dis_01_component_q_a",
+          "j1d_mt_dis_01_component_r_a"
+        ],
+        "represented_value_domain": [
+          "j1d_mt_dis_01_component_q_a",
+          "j1d_mt_dis_01_component_q_b",
+          "j1d_mt_dis_01_component_r_a",
+          "j1d_mt_dis_01_component_r_b"
+        ],
+        "static_context_facts": [
+          {
+            "fact_id": "j1d_mt_dis_01_ambient_schedule",
+            "value": "j1d_mt_dis_01_schedule_slot"
+          }
+        ]
+      },
+      "gold_policy_rule": {
+        "communicate_value": 1,
+        "input_factor": "M_R",
+        "progress_value": 0
+      },
+      "internal_metadata_fields": [
+        "F",
+        "M_R",
+        "M_I",
+        "gold_action_class",
+        "difficulty",
+        "q_causal_dependency",
+        "r_noncausal_context"
+      ],
+      "namespace": "development",
+      "objective_world_facts": {
+        "active_task_id": "j1d_mt_dis_01_active_task",
+        "causal_task_rules": [
+          {
+            "if_partner_q_differs_from_truth": "communicate",
+            "if_partner_q_matches_truth": "progress"
+          }
+        ],
+        "difficulty_structure": {
+          "difficulty": "irrelevant_distractor",
+          "parallel_relation_depth": 1
+        },
+        "focal_agent_knowledge": [
+          "j1d_mt_dis_01_component_q_a",
+          "j1d_mt_dis_01_component_r_a"
+        ],
+        "partner_next_step_rule": {
+          "active_task_id": "j1d_mt_dis_01_active_task",
+          "target_source": "q_proposition"
+        },
+        "q_truth": "j1d_mt_dis_01_component_q_a",
+        "r_truth": "j1d_mt_dis_01_component_r_a"
+      },
+      "partner_id": "j1d_mt_dis_01_partner",
+      "progress_action_id": "j1d_mt_dis_01_progress_action",
+      "q_causal_dependency": {
+        "dependency_edges": [
+          "j1d_mt_dis_01_active_maintenance_component->partner_next_active_step"
+        ],
+        "partner_next_active_step_target_source": "q_proposition_id",
+        "wrong_value_without_correction_conflicts_with_active_task": true
+      },
+      "q_false": "j1d_mt_dis_01_component_q_b",
+      "q_proposition_id": "j1d_mt_dis_01_active_maintenance_component",
+      "q_relation_depth": 1,
+      "q_semantic_type": "component",
+      "q_true": "j1d_mt_dis_01_component_q_a",
+      "r_false": "j1d_mt_dis_01_component_r_b",
+      "r_noncausal_context": {
+        "associated_context_id": "j1d_mt_dis_01_nonactive_context",
+        "changing_value_changes_gold_policy": false,
+        "dependency_edges_to_partner_next_active_step": []
+      },
+      "r_proposition_id": "j1d_mt_dis_01_other_maintenance_component",
+      "r_relation_depth": 1,
+      "r_semantic_type": "component",
+      "r_true": "j1d_mt_dis_01_component_r_a",
+      "semantic_signature_sha256": "b8dfc676f110196d75dacce19a69488033014165ef12af8c558c564087ceab81",
+      "static_context_facts": [
+        {
+          "fact_id": "j1d_mt_dis_01_ambient_schedule",
+          "value": "j1d_mt_dis_01_schedule_slot"
+        }
+      ],
+      "variant_id": "J1D-MT-DIS-01"
+    },
+    {
+      "active_task_id": "j1d_mt_com_01_active_task",
+      "archetype": "maintenance_target",
+      "available_action_ids": [
+        "j1d_mt_com_01_correction_action",
+        "j1d_mt_com_01_progress_action"
+      ],
+      "candidate_ordinal_in_cell": 1,
+      "correction_action_id": "j1d_mt_com_01_correction_action",
+      "correction_content_semantic_value": "j1d_mt_com_01_component_q_a",
+      "counterfactual_cells": [
+        {
+          "F": "R",
+          "M_I": 0,
+          "M_R": 0,
+          "available_action_ids": [
+            "j1d_mt_com_01_correction_action",
+            "j1d_mt_com_01_progress_action"
+          ],
+          "gold_action_class": "progress",
+          "objective_world_sha256": "0244056f013264dc73bafa554cfdb6b55671847f6e60f8c8fc67637518925933",
+          "partner_q_value": "j1d_mt_com_01_component_q_a",
+          "partner_r_value": "j1d_mt_com_01_component_r_a"
+        },
+        {
+          "F": "R",
+          "M_I": 1,
+          "M_R": 0,
+          "available_action_ids": [
+            "j1d_mt_com_01_correction_action",
+            "j1d_mt_com_01_progress_action"
+          ],
+          "gold_action_class": "progress",
+          "objective_world_sha256": "0244056f013264dc73bafa554cfdb6b55671847f6e60f8c8fc67637518925933",
+          "partner_q_value": "j1d_mt_com_01_component_q_a",
+          "partner_r_value": "j1d_mt_com_01_component_r_b"
+        },
+        {
+          "F": "R",
+          "M_I": 0,
+          "M_R": 1,
+          "available_action_ids": [
+            "j1d_mt_com_01_correction_action",
+            "j1d_mt_com_01_progress_action"
+          ],
+          "gold_action_class": "communicate",
+          "objective_world_sha256": "0244056f013264dc73bafa554cfdb6b55671847f6e60f8c8fc67637518925933",
+          "partner_q_value": "j1d_mt_com_01_component_q_b",
+          "partner_r_value": "j1d_mt_com_01_component_r_a"
+        },
+        {
+          "F": "R",
+          "M_I": 1,
+          "M_R": 1,
+          "available_action_ids": [
+            "j1d_mt_com_01_correction_action",
+            "j1d_mt_com_01_progress_action"
+          ],
+          "gold_action_class": "communicate",
+          "objective_world_sha256": "0244056f013264dc73bafa554cfdb6b55671847f6e60f8c8fc67637518925933",
+          "partner_q_value": "j1d_mt_com_01_component_q_b",
+          "partner_r_value": "j1d_mt_com_01_component_r_b"
+        },
+        {
+          "F": "B",
+          "M_I": 0,
+          "M_R": 0,
+          "available_action_ids": [
+            "j1d_mt_com_01_correction_action",
+            "j1d_mt_com_01_progress_action"
+          ],
+          "gold_action_class": "progress",
+          "objective_world_sha256": "0244056f013264dc73bafa554cfdb6b55671847f6e60f8c8fc67637518925933",
+          "partner_q_value": "j1d_mt_com_01_component_q_a",
+          "partner_r_value": "j1d_mt_com_01_component_r_a"
+        },
+        {
+          "F": "B",
+          "M_I": 1,
+          "M_R": 0,
+          "available_action_ids": [
+            "j1d_mt_com_01_correction_action",
+            "j1d_mt_com_01_progress_action"
+          ],
+          "gold_action_class": "progress",
+          "objective_world_sha256": "0244056f013264dc73bafa554cfdb6b55671847f6e60f8c8fc67637518925933",
+          "partner_q_value": "j1d_mt_com_01_component_q_a",
+          "partner_r_value": "j1d_mt_com_01_component_r_b"
+        },
+        {
+          "F": "B",
+          "M_I": 0,
+          "M_R": 1,
+          "available_action_ids": [
+            "j1d_mt_com_01_correction_action",
+            "j1d_mt_com_01_progress_action"
+          ],
+          "gold_action_class": "communicate",
+          "objective_world_sha256": "0244056f013264dc73bafa554cfdb6b55671847f6e60f8c8fc67637518925933",
+          "partner_q_value": "j1d_mt_com_01_component_q_b",
+          "partner_r_value": "j1d_mt_com_01_component_r_a"
+        },
+        {
+          "F": "B",
+          "M_I": 1,
+          "M_R": 1,
+          "available_action_ids": [
+            "j1d_mt_com_01_correction_action",
+            "j1d_mt_com_01_progress_action"
+          ],
+          "gold_action_class": "communicate",
+          "objective_world_sha256": "0244056f013264dc73bafa554cfdb6b55671847f6e60f8c8fc67637518925933",
+          "partner_q_value": "j1d_mt_com_01_component_q_b",
+          "partner_r_value": "j1d_mt_com_01_component_r_b"
+        }
+      ],
+      "difficulty": "compositional",
+      "focal_agent_id": "j1d_mt_com_01_focal_agent",
+      "future_renderable_facts": {
+        "active_task_id": "j1d_mt_com_01_active_task",
+        "objective_values": [
+          "j1d_mt_com_01_component_q_a",
+          "j1d_mt_com_01_component_r_a"
+        ],
+        "represented_value_domain": [
+          "j1d_mt_com_01_component_q_a",
+          "j1d_mt_com_01_component_q_b",
+          "j1d_mt_com_01_component_r_a",
+          "j1d_mt_com_01_component_r_b"
+        ],
+        "static_context_facts": [
+          {
+            "fact_id": "j1d_mt_com_01_category_map",
+            "value": "j1d_mt_com_01_mapping"
+          }
+        ]
+      },
+      "gold_policy_rule": {
+        "communicate_value": 1,
+        "input_factor": "M_R",
+        "progress_value": 0
+      },
+      "internal_metadata_fields": [
+        "F",
+        "M_R",
+        "M_I",
+        "gold_action_class",
+        "difficulty",
+        "q_causal_dependency",
+        "r_noncausal_context"
+      ],
+      "namespace": "development",
+      "objective_world_facts": {
+        "active_task_id": "j1d_mt_com_01_active_task",
+        "causal_task_rules": [
+          {
+            "if_partner_q_differs_from_truth": "communicate",
+            "if_partner_q_matches_truth": "progress"
+          }
+        ],
+        "difficulty_structure": {
+          "difficulty": "compositional",
+          "parallel_relation_depth": 2
+        },
+        "focal_agent_knowledge": [
+          "j1d_mt_com_01_component_q_a",
+          "j1d_mt_com_01_component_r_a"
+        ],
+        "parallel_relation_chains": [
+          {
+            "subject": "j1d_mt_com_01_active_item",
+            "value": "j1d_mt_com_01_component_q_a",
+            "via": "j1d_mt_com_01_active_category"
+          },
+          {
+            "subject": "j1d_mt_com_01_other_item",
+            "value": "j1d_mt_com_01_component_r_a",
+            "via": "j1d_mt_com_01_other_category"
+          }
+        ],
+        "partner_next_step_rule": {
+          "active_task_id": "j1d_mt_com_01_active_task",
+          "target_source": "q_proposition"
+        },
+        "q_truth": "j1d_mt_com_01_component_q_a",
+        "r_truth": "j1d_mt_com_01_component_r_a"
+      },
+      "partner_id": "j1d_mt_com_01_partner",
+      "progress_action_id": "j1d_mt_com_01_progress_action",
+      "q_causal_dependency": {
+        "dependency_edges": [
+          "j1d_mt_com_01_active_maintenance_component->partner_next_active_step"
+        ],
+        "partner_next_active_step_target_source": "q_proposition_id",
+        "wrong_value_without_correction_conflicts_with_active_task": true
+      },
+      "q_false": "j1d_mt_com_01_component_q_b",
+      "q_proposition_id": "j1d_mt_com_01_active_maintenance_component",
+      "q_relation_depth": 2,
+      "q_semantic_type": "component",
+      "q_true": "j1d_mt_com_01_component_q_a",
+      "r_false": "j1d_mt_com_01_component_r_b",
+      "r_noncausal_context": {
+        "associated_context_id": "j1d_mt_com_01_nonactive_context",
+        "changing_value_changes_gold_policy": false,
+        "dependency_edges_to_partner_next_active_step": []
+      },
+      "r_proposition_id": "j1d_mt_com_01_other_maintenance_component",
+      "r_relation_depth": 2,
+      "r_semantic_type": "component",
+      "r_true": "j1d_mt_com_01_component_r_a",
+      "semantic_signature_sha256": "a8c1035647380fbeea0e99ae3e99676d8038184342fe2aed67e08c6aa81dae0a",
+      "static_context_facts": [
+        {
+          "fact_id": "j1d_mt_com_01_category_map",
+          "value": "j1d_mt_com_01_mapping"
+        }
+      ],
+      "variant_id": "J1D-MT-COM-01"
+    }
+  ],
+  "stage": "development_semantic_scenarios"
+}

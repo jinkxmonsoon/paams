@@ -1,0 +1,9 @@
+metric,value
+candidate_realization_count,360
+development_realization_count,18
+development_prompt_count,144
+rb_pair_count,72
+rb_exact_token_parity_count,72
+rb_max_abs_token_difference,0
+prohibited_visible_term_count,0
+passed,True
