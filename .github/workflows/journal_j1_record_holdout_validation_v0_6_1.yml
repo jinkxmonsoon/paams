@@ -1,0 +1,65 @@
+name: Journal J1 record holdout official pre-execution validation v0.6.1
+on:
+  push:
+permissions:
+  contents: read
+jobs:
+  validate:
+    if: github.event.head_commit.message == 'Validate Journal J1 record holdout before execution [journal-j1-v0.6.1]'
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - name: Check out exact SHA
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.sha }}
+      - name: Set up Python 3.11
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Initialize artifacts
+        run: |
+          mkdir -p artifact
+          printf '%s\n' "$GITHUB_SHA" > artifact/source_commit_sha.txt
+          printf '{"behavioral_observations":0,"model_api_execution":false,"confirmatory_prompts_generated":false,"icaart_reopened":false,"harmony_validation_status":"pending_official_pre_execution_validation","holdout_execution_ready":false}\n' > artifact/workflow_status.json
+          sha256sum btom_v2/journal_j1_record_holdout_prompting_v0_6_1.py tests/test_journal_j1_record_holdout_v0_6_1.py .github/workflows/journal_j1_record_holdout_validation_v0_6_1.yml btom_v2/journal_j1_record_holdout_preexecution_amendment_v0_6_1.md > artifact/implementation_hashes.txt
+      - name: Verify parent hashes
+        run: |
+          python - <<'PY' > artifact/parent_hashes.json
+          import json
+          from btom_v2.journal_j1_record_holdout_prompting_v0_6_1 import verify_parent_hashes
+          print(json.dumps(verify_parent_hashes(), indent=2, sort_keys=True))
+          PY
+      - name: Install frozen dependencies
+        run: |
+          python -m pip install --retries 0 tiktoken==0.13.0 openai-harmony==0.0.8 pytest==8.4.2
+          python - <<'PY' > artifact/dependency_versions.txt
+          import importlib.metadata as m
+          for p in ('tiktoken','openai-harmony','pytest'): print(f'{p}=={m.version(p)}')
+          PY
+      - name: Generate source artifacts
+        run: python -m btom_v2.journal_j1_record_holdout_prompting_v0_6_1 --output-dir artifact
+      - name: Run full test suite
+        shell: bash
+        run: |
+          set -o pipefail
+          PYTHONDONTWRITEBYTECODE=1 python -m pytest -q 2>&1 | tee artifact/pytest.log
+      - name: Official Harmony validation
+        id: harmony
+        continue-on-error: true
+        run: python -m btom_v2.journal_j1_record_holdout_prompting_v0_6_1 --output-dir artifact --harmony-validate
+      - name: Upload validation artifact
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: journal-j1-record-holdout-validation-v0.6.1-${{ github.run_id }}
+          path: artifact/
+          retention-days: 30
+          if-no-files-found: error
+      - name: Enforce readiness
+        if: always()
+        run: |
+          python - <<'PY'
+          import json
+          assert json.load(open('artifact/workflow_status.json'))['holdout_execution_ready'] is True
+          PY
