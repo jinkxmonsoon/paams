@@ -5,7 +5,7 @@ permissions:
   contents: read
 jobs:
   execute:
-    if: github.event.head_commit.message == 'Execute Journal J1 record-only held-out causal-control validation [journal-j1-v0.6.2]'
+    if: github.event.head_commit.message == 'Retry Journal J1 record-only held-out causal-control validation [journal-j1-v0.6.2b]'
     runs-on: ubuntu-latest
     timeout-minutes: 90
     steps:
@@ -17,7 +17,7 @@ jobs:
           python-version: '3.11'
       - name: Initialize artifact
         run: |
-          mkdir -p artifact/validation artifact/execution
+          mkdir -p artifact/validation
           printf '%s\n' "$GITHUB_SHA" > artifact/source_commit_sha.txt
           printf '{"requested_calls":72,"attempted_calls":0,"complete_calls":0,"technical_pass":false,"behavioral_observations":0,"confirmatory_prompts_generated":false,"icaart_reopened":false}\n' > artifact/workflow_status.json
           sha256sum btom_v2/run_journal_j1_record_holdout_v0_6_2.py btom_v2/journal_j1_record_holdout_execution_manifest_v0_6_2.json tests/test_journal_j1_record_holdout_execution_v0_6_2.py .github/workflows/journal_j1_record_holdout_execution_v0_6_2.yml > artifact/implementation_hashes.txt
