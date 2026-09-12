@@ -1,0 +1,66 @@
+name: Journal J1 prompt validation v0.4.1
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - name: Check out exact triggering SHA
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.sha }}
+      - name: Set up Python 3.11
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Initialize artifact directory
+        run: |
+          mkdir -p journal-j1-validation-artifact/generated
+          printf '{"model_api_execution":false,"behavioral_observations":0,"confirmatory_prompts_generated":false,"icaart_reopened":false,"pilot_ready":false}\n' > journal-j1-validation-artifact/workflow_status.json
+      - name: Verify immutable inputs
+        shell: bash
+        run: |
+          set -o pipefail
+          cat > journal-j1-validation-artifact/immutable_input_hashes.txt <<'EOF'
+          64c3b7fad886471830e4dfcb7160254fb83d829725010f1896fcd96396cbb247  btom_v2/journal_j1_confirmatory_candidate_frame_v0_3_0.json
+          4df0dd30a98bd333d4538fa3aa31e4712253152a5a7c189aabb0f1d0034da81f  btom_v2/journal_j1_confirmatory_selection_v0_3_0.json
+          ecf40e43a6d992311344f385d7b9ff57ca6abb14ccc3d4e5c0257caa5bf21c9f  btom_v2/journal_j1_development_scenarios_v0_3_0.json
+          170ffbe618901b667d43567a2b42a8ad49fa96b5cb7f3bb723b55354e66af24e  btom_v2/journal_j1_candidate_realizations_v0_4_0.json
+          83bb47c38c431946524d6876c233ed4e9589ff47d9e2ea99dbc350a7a66b96fb  btom_v2/journal_j1_development_realizations_v0_4_0.json
+          bb4e33c2a47fdb2a47e10bab2b0e4932eb5c7c536b317fc5e3ebc41505349dd1  btom_v2/journal_j1_development_prompts_v0_4_0.json
+          EOF
+          sha256sum --check journal-j1-validation-artifact/immutable_input_hashes.txt
+      - name: Install frozen validation dependencies
+        shell: bash
+        run: |
+          set -o pipefail
+          python -m pip install --retries 0 tiktoken==0.13.0 openai-harmony==0.0.8 pytest==8.4.2
+          python - <<'PY' > journal-j1-validation-artifact/dependency_versions.txt
+          import importlib.metadata
+          for package in ('tiktoken', 'openai-harmony', 'pytest'):
+              print(f'{package}=={importlib.metadata.version(package)}')
+          PY
+      - name: Run tests
+        shell: bash
+        run: |
+          set -o pipefail
+          PYTHONDONTWRITEBYTECODE=1 python -m pytest -q 2>&1 | tee journal-j1-validation-artifact/pytest.log
+      - name: Generate tokenizer-validated artifacts
+        run: |
+          python -m btom_v2.journal_j1_development_prompting_v0_4_1 --output-dir journal-j1-validation-artifact/generated
+          cp journal-j1-validation-artifact/generated/tokenizer_candidate_table.json journal-j1-validation-artifact/tokenizer_candidate_table.json
+          cp journal-j1-validation-artifact/generated/workflow_status.json journal-j1-validation-artifact/workflow_status.json
+      - name: Upload validation outputs
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: journal-j1-prompt-validation-v0.4.1-${{ github.run_id }}
+          path: journal-j1-validation-artifact/
+          retention-days: 30
+          if-no-files-found: error
