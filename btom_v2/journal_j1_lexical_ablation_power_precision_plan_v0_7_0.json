@@ -1,0 +1,130 @@
+{
+  "120b_deferred": true,
+  "alpha": 0.05,
+  "behavioral_observations": 0,
+  "bootstrap_configuration_frozen": false,
+  "calls_per_variant": 4,
+  "candidate_N": [
+    18,
+    24,
+    36,
+    54,
+    72
+  ],
+  "candidate_summary": {
+    "18": {
+      "exact_strata_balance_eligible": true,
+      "mean_power_across_grid": 0.40951350799732633,
+      "minimum_power_across_grid": 0.3271500544706707,
+      "scientifically_power_eligible": false,
+      "variants_per_stratum": 1
+    },
+    "24": {
+      "exact_strata_balance_eligible": false,
+      "mean_power_across_grid": 0.6034846852073642,
+      "minimum_power_across_grid": 0.4631222115935098,
+      "scientifically_power_eligible": false,
+      "variants_per_stratum": null
+    },
+    "36": {
+      "exact_strata_balance_eligible": true,
+      "mean_power_across_grid": 0.8241058650382761,
+      "minimum_power_across_grid": 0.6779493812606359,
+      "scientifically_power_eligible": false,
+      "variants_per_stratum": 2
+    },
+    "54": {
+      "exact_strata_balance_eligible": true,
+      "mean_power_across_grid": 0.940922700540006,
+      "minimum_power_across_grid": 0.8507662106017377,
+      "scientifically_power_eligible": true,
+      "variants_per_stratum": 3
+    },
+    "72": {
+      "exact_strata_balance_eligible": true,
+      "mean_power_across_grid": 0.9788928224382966,
+      "minimum_power_across_grid": 0.9370519593661363,
+      "scientifically_power_eligible": true,
+      "variants_per_stratum": 4
+    }
+  },
+  "confidence_intervals_required_later": [
+    "Delta_I_neutral",
+    "Lambda"
+  ],
+  "current_workflow_timeout_minutes": 90,
+  "design": {
+    "M_R_fixed": 0,
+    "conditions": [
+      "C0",
+      "C1",
+      "N0",
+      "N1"
+    ],
+    "factors": {
+      "LEXICAL_INTERFACE": [
+        "CUED",
+        "NEUTRAL"
+      ],
+      "M_I": [
+        0,
+        1
+      ]
+    },
+    "inferential_unit": "scenario_variant",
+    "neutral_mapping_counterbalanced": true
+  },
+  "experiment_role": "mechanism_ablation",
+  "final_prompts_generated": false,
+  "final_scenarios_generated": false,
+  "first_future_model": "openai/gpt-oss-20b",
+  "historical_effect_context": 0.6666666666666666,
+  "historical_effect_used_for_power_selection": false,
+  "historical_positive_directionality_observed": true,
+  "icaart_reopened": false,
+  "inherited_SOEI": 0.25,
+  "inter_call_delay_seconds": 20,
+  "key_secondary_hypothesis": "J-H3b-L2: Lambda estimates lexical moderation",
+  "lambda_precision": {
+    "attainable_values": [
+      -2,
+      -1,
+      0,
+      1,
+      2
+    ],
+    "mean_se_upper_bound_formula": "2/sqrt(N), conservative descriptive bound",
+    "scale_diagnostic": "1/sqrt(N), not power",
+    "worst_case_sd_bound": 2.0
+  },
+  "minimum_required_power": 0.8,
+  "model_api_execution": false,
+  "planning_reverse_discordance_grid": [
+    0.0,
+    0.025,
+    0.05,
+    0.1
+  ],
+  "planning_status": "sample_size_selected",
+  "primary_estimand": "Delta_I_neutral = mean_i(Y_i,N1 - Y_i,N0)",
+  "primary_hypothesis": "J-H3b-L1: Delta_I_neutral > 0",
+  "primary_test": "one-sided exact paired McNemar/binomial discordance test",
+  "product": "journal",
+  "sample_size_selection_rule": "smallest N with exact 18-strata balance and minimum exact power across all p_minus values >= 0.80; assess operational feasibility afterward",
+  "scientific_question": "Does a causally irrelevant mismatch in represented partner state continue to increase communication under lexically opaque rather than correction-cued action labels?",
+  "secondary_estimands": [
+    "Delta_I_cued",
+    "Lambda = mean_i((Y_i,C1-Y_i,C0)-(Y_i,N1-Y_i,N0))",
+    "baseline_label_effect",
+    "mismatch_label_effect"
+  ],
+  "selected_N": 54,
+  "selected_delay_only_minutes": 71.66666666666667,
+  "selected_delay_only_seconds": 4300,
+  "selected_single_run_delay_budget_feasible": true,
+  "selected_total_calls": 216,
+  "selected_variants_per_stratum": 3,
+  "soei_provenance": "inherited from the previously frozen J1 scenario-control criterion; not selected from v0.6.2",
+  "strata_count": 18,
+  "version": "journal-j1-v0.7.0"
+}
