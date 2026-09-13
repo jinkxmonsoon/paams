@@ -5,7 +5,7 @@ permissions:
   contents: read
 jobs:
   validate:
-    if: github.event.head_commit.message == 'Build Journal J1-L publication-grade lexical ablation [journal-j1-l-v1.0.0]'
+    if: github.event.head_commit.message == 'Repair Journal J1-L publication-grade bank [journal-j1-l-v1.0.0-r1]'
     runs-on: ubuntu-latest
     timeout-minutes: 30
     steps:
