@@ -1,0 +1,41 @@
+name: Journal J1-L publication-grade pre-execution validation v1.0.0
+on:
+  push:
+permissions:
+  contents: read
+jobs:
+  validate:
+    if: github.event.head_commit.message == 'Repair Journal J1-L publication-grade bank [journal-j1-l-v1.0.0-r1]'
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - name: Check out exact source SHA
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.sha }}
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Initialize artifact directory
+        run: mkdir -p artifact && touch artifact/pytest.log
+      - name: Install frozen dependencies
+        run: python -m pip install tiktoken==0.13.0 openai-harmony==0.0.8 pytest==8.4.2
+      - name: Verify parent hashes
+        run: python -c 'from btom_v2.journal_j1_l_build_v1_0_0 import parent_hash_audit; assert parent_hash_audit()["pass"]'
+      - name: Generate complete artifact
+        run: python -m btom_v2.journal_j1_l_build_v1_0_0 --output-dir artifact --source-commit-sha "$GITHUB_SHA"
+      - name: Run focused tests
+        shell: bash
+        run: set -o pipefail; PYTHONDONTWRITEBYTECODE=1 python -m pytest -q tests/test_journal_j1_l_build_v1_0_0.py | tee artifact/pytest.log
+      - name: Run applicable repository suite
+        shell: bash
+        run: set -o pipefail; PYTHONDONTWRITEBYTECODE=1 python -m pytest -q --deselect tests/test_journal_j1_development_prompts_v0_4_1.py::test_actions_tokenizer_generation | tee -a artifact/pytest.log
+      - name: Enforce execution readiness
+        run: python -c 'import json; assert json.load(open("artifact/workflow_status.json"))["execution_ready"] is True'
+      - name: Upload validation artifact
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: journal-j1-l-validation-v1.0.0-${{ github.run_id }}
+          path: artifact/
+          retention-days: 30

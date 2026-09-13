@@ -1,0 +1,77 @@
+{
+  "N": 54,
+  "artifact_outputs": [
+    "journal_j1_l_scenarios_v1_0_0.json",
+    "journal_j1_l_prompts_v1_0_0.json",
+    "journal_j1_l_request_order_v1_0_0.json",
+    "journal_j1_l_expanded_manifest_v1_0_0.json",
+    "journal_j1_l_scenario_audit_v1_0_0.json",
+    "journal_j1_l_scenario_audit_v1_0_0.csv",
+    "journal_j1_l_prompt_audit_v1_0_0.json",
+    "journal_j1_l_prompt_audit_v1_0_0.csv",
+    "journal_j1_l_harmony_prompt_audit_v1_0_0.json",
+    "journal_j1_l_harmony_prompt_audit_v1_0_0.csv",
+    "journal_j1_l_harmony_variant_audit_v1_0_0.json",
+    "journal_j1_l_harmony_variant_audit_v1_0_0.csv",
+    "journal_j1_l_disjointness_audit_v1_0_0.json",
+    "journal_j1_l_nuisance_audit_v1_0_0.json",
+    "workflow_status.json",
+    "dependency_versions.txt",
+    "source_commit_sha.txt",
+    "implementation_hashes.txt",
+    "pytest.log"
+  ],
+  "conditions": [
+    "C0",
+    "C1",
+    "N0",
+    "N1"
+  ],
+  "execution_ready_rule": "Fail closed on parent hashes, exact bank/strata, semantic realization, q/r comparability, 54 unique normalized signatures and world hashes, derived causal isolation, parsed definition disjointness, nuisance/seed/sequence balance, strict prompt invariance, lexical safety, 216 prompts, and 54/54 official Harmony parity with maximum difference zero.",
+  "future_model_calls": 216,
+  "harmony_requirement": "Official complete-conversation GPT-OSS rendering must have C0=C1 and N0=N1 token counts for every variant.",
+  "nuisance_rule": "Each binary marginal is 27/27; each stratum is 2/1; orientations are 9/9; pairwise cells are 13 or 14.",
+  "planned_model": "openai/gpt-oss-20b",
+  "product": "JOURNAL_ONLY",
+  "schedule_rule": "Four 54-request rounds, one condition per variant per round, each condition total 54; round margins 27/27 and condition cells 13/14.",
+  "scientific_parents": {
+    "analysis": {
+      "commit": "8c9fcdef625a152bcefaa47556aa1835322a7d4a",
+      "version": "journal-j1-v0.7.1"
+    },
+    "design_power": {
+      "commit": "9e4622c34261fde8ca041ffaa4c9f84a9b703819",
+      "version": "journal-j1-v0.7.0"
+    }
+  },
+  "scientific_validity_repairs": {
+    "action_order": "Semantic-order nuisance controls descriptions, available labels, and JSON choices.",
+    "archetype_realization": "Six distinct model-facing proposition families.",
+    "causal_isolation": "Derived from intersections of explicit actionable atoms.",
+    "comparability": "q and r materialize true and false alternatives with matched structural fields.",
+    "condition_invariance": "Within-interface record-value canonical identity and cross-interface label-only identity required.",
+    "disjointness": "Recursive categorized inventories of definition-only prior banks.",
+    "message_semantics": "One-entry partner-record update; uses turn; focal task does not advance.",
+    "schedule": "Three distinct Latin families per stratum; global family counts 14/14/13/13; interleaved rounds.",
+    "structural_replication": "Three semantic microstructures per stratum; 54 canonical signatures and world hashes required."
+  },
+  "seed_rule": "SHA-256 UTF-8 of journal-j1-lexical-ablation-paired-seed-v1.0.0|<variant_id>; first eight bytes unsigned big-endian modulo 2**31-1; map zero to one.",
+  "sequence_families": {
+    "counts": [
+      14,
+      14,
+      13,
+      13
+    ],
+    "per_stratum": "three distinct of four",
+    "round_order": "deterministically interleaved"
+  },
+  "status": {
+    "120b_execution": false,
+    "GROQ_API_KEY_read": false,
+    "behavioral_observations": 0,
+    "icaart_reopened": false,
+    "model_api_execution": false
+  },
+  "version": "journal-j1-l-v1.0.0-r1"
+}
